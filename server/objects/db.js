@@ -14,7 +14,7 @@ exports.connectDb = () => {
 
     con.query("create table if not exists users", function (err, result) {
       if (err) throw err;
-      console.log("Table users created"); //create users database
+      console.log("Table users created!"); //create users database
     });
   });
 };
