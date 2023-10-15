@@ -1,25 +1,20 @@
 const dotenv = require("dotenv");
-const mysql = require("mysql");
-
-var con = mysql.createConnection({
-  host: "localhost",
-  user: process.env.user,
-  password: process.env.password,
-});
+const mysql = require("mysql2");
 
 exports.connectDb = () => {
+  var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+  });
+
   con.connect(function (err) {
     if (err) throw err;
     console.log("Connected to MySQL!");
 
-    con.query("create database if not exists main", function (err, result) {
+    con.query("create table if not exists users", function (err, result) {
       if (err) throw err;
-      console.log("Database created"); //create database
-
-      con.query("create table if not exists users", function (err, result) {
-        if (err) throw err;
-        console.log("Table users created"); //create users database
-      });
+      console.log("Table users created"); //create users database
     });
   });
 };
