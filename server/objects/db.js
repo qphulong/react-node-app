@@ -1,20 +1,29 @@
 const dotenv = require("dotenv");
-const mysql = require("mysql2");
 
-exports.connectDb = () => {
-  var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-  });
+dotenv.config();
 
-  con.connect(function (err) {
-    if (err) throw err;
-    console.log("Connected to MySQL!");
+const { MongoClient, ServerApiVersion } = require("mongodb");
+const uri = process.env.DB_URI;
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  },
+});
 
-    con.query("create table if not exists users", function (err, result) {
-      if (err) throw err;
-      console.log("Table users created!"); //create users database
-    });
-  });
+async function run() {
+  try {
+    await client.connect();
+    await client.db("Tung").command({ ping: 1 });
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
+  } finally {
+    await client.close();
+  }
+}
+
+module.exports = {
+  run,
 };
