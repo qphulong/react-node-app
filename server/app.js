@@ -25,6 +25,11 @@ app.get("*", (req, res) => {
 });
 //long
 
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+
+dotenv.config();
+
 const connectToDB = () => {
   const uri = process.env.DB_URI; //lấy từ file uri
   mongoose.connect(uri).then(() => console.log("Connected to db"));
