@@ -25,5 +25,13 @@ app.get("*", (req, res) => {
 });
 //long
 
-const db = require("./objects/db");
-db.connectToDB();
+const connectToDB = () => {
+  const uri = process.env.DB_URI; //lấy từ file uri
+  mongoose.connect(uri).then(() => console.log("Connected to db"));
+
+  mongoose.connection.on("error", (err) => {
+    console.log(`DB connection error: ${err.messsage}`);
+  });
+};
+
+connectToDB();

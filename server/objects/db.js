@@ -3,15 +3,29 @@ const mongoose = require("mongoose");
 
 dotenv.config();
 
-const connectToDB = () => {
-  const uri = process.env.DB_URI; //lấy từ file uri
-  mongoose.connect(uri).then(() => console.log("Connected to db"));
+const schema = new mongoose.Schema({
+  content: {
+    type: String,
+    required: "Content is required",
+    minlength: 1,
+    maxlength: 300,
+  },
 
-  mongoose.connection.on("error", (err) => {
-    console.log(`DB connection error: ${err.messsage}`);
-  });
-};
+  postId: {
+    type: String,
+    required: "PostID is required",
+    minlength: 1,
+    maxlength: 100,
+  },
 
-module.exports = {
-  connectToDB,
-};
+  time: {
+    type: Date,
+    required: "Time is required",
+  },
+
+  deleteAfter: {
+    type: Number,
+  },
+});
+
+module.exports = mongoose.model("Post", schema);
