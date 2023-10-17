@@ -26,4 +26,4 @@ app.get("*", (req, res) => {
 //long
 
 const db = require("./objects/db");
-db.run().catch(console.dir);
+db.connectToDB();
