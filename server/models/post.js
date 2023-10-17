@@ -1,7 +1,4 @@
-const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-
-dotenv.config();
 
 const schema = new mongoose.Schema({
   content: {
@@ -19,13 +16,10 @@ const schema = new mongoose.Schema({
   },
 
   time: {
-    type: Date,
+    type: String,
     required: "Time is required",
-  },
-
-  deleteAfter: {
-    type: Number,
   },
 });
 
 module.exports = mongoose.model("Post", schema);
+//to the collection named "posts"
