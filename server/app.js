@@ -12,8 +12,6 @@ const bodyParser = require("body-parser");
 
 const postRoute = require("./routes/post");
 
-const expressValidator = require("expre");
-
 dotenv.config();
 
 const uri = process.env.DB_URI; //lấy từ file uri
@@ -24,7 +22,6 @@ mongoose.connection.on("error", (err) => {
 });
 
 app.use(bodyParser.json()); //middleware to interpret json
-app.use(expressValidator());
 app.use("/", postRoute);
 
 app.get("/api", (req, res) => {

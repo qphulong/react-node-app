@@ -1,14 +1,16 @@
 const express = require("express");
 const postController = require("../controllers/post");
-const postValidator = require("../validators");
+const { query } = require("express-validator");
 
 const router = express.Router();
 
+router.get("/posts", postController.getPosts);
 router.post(
   "/posts",
-  postValidator.createPostValidator, //call this validation middleware first to validate
+  query("content").notEmpty(), //call this validation middleware first to validate
+  query("postId").notEmpty(),
   postController.createPost //then call this to upload post to database
 );
 //call to create posts
 
-router.module.exports = router;
+module.exports = router;

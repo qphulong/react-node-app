@@ -20,3 +20,11 @@ exports.createPost = (req, res) => {
       console.error(error);
     });
 };
+
+exports.getPosts = (req, res) => {
+  const posts = Post.find()
+    .then((posts) => {
+      res.status(200).json({ posts: posts }); //retrieve all collection on posts
+    })
+    .catch((err) => console.log(err));
+};
