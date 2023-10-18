@@ -22,8 +22,10 @@ exports.createPost = (req, res) => {
     });
 };
 
+//retrieve all posts from MongoDB
 exports.getPosts = (req, res) => {
   const posts = Post.find()
+    .select("content postId time") //only select columns content, postId, and time
     .then((posts) => {
       res.status(200).json({ posts: posts }); //retrieve all collection on posts
     })
