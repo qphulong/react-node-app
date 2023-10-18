@@ -8,6 +8,12 @@ const app = express();
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 
+const bodyParser = require("body-parser");
+
+const postRoute = require("./routes/post");
+
+const expressValidator = require("expre");
+
 dotenv.config();
 
 const uri = process.env.DB_URI; //lấy từ file uri
@@ -17,9 +23,8 @@ mongoose.connection.on("error", (err) => {
   console.log(`DB connection error: ${err.messsage}`);
 });
 
-const bodyParser = require("body-parser");
 app.use(bodyParser.json()); //middleware to interpret json
-const postRoute = require("./routes/post");
+app.use(expressValidator());
 app.use("/", postRoute);
 
 app.get("/api", (req, res) => {
