@@ -19,6 +19,10 @@ const schema = new mongoose.Schema({
     type: String,
     required: "Time is required",
   },
+
+  deleteAfter: {
+    type: Number,
+  },
 });
 
 module.exports = mongoose.model("Post", schema);
