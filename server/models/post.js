@@ -3,21 +3,21 @@ const mongoose = require("mongoose");
 const schema = new mongoose.Schema({
   content: {
     type: String,
-    required: "Content is required",
+    required: true,
     minlength: 1,
     maxlength: 300,
   },
 
   postId: {
     type: String,
-    required: "PostID is required",
+    required: true,
     minlength: 1,
     maxlength: 100,
   },
 
   time: {
     type: String,
-    required: "Time is required",
+    required: true,
   },
 
   deleteAfter: {
