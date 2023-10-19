@@ -21,6 +21,8 @@ mongoose.connection.on("error", (err) => {
   console.log(`DB connection error: ${err.messsage}`);
 });
 
+app.set("view engine", "ejs");
+
 app.use(bodyParser.json()); //middleware to interpret json
 app.use("/", postRoute);
 

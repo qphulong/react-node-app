@@ -5,6 +5,7 @@ const { query } = require("express-validator");
 const router = express.Router();
 
 router.get("/posts", postController.getPosts);
+
 router.post(
   "/posts",
   query("content").notEmpty(), //call this validation middleware first to validate

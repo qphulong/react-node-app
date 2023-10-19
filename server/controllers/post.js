@@ -27,7 +27,7 @@ exports.getPosts = (req, res) => {
   const posts = Post.find()
     .select("content postId time") //only select columns content, postId, and time
     .then((posts) => {
-      res.status(200).json({ posts: posts }); //retrieve all collection on posts
+      res.render("post", { posts }); //render to ejs file, which is the View component
     })
     .catch((err) => console.log(err));
 };
