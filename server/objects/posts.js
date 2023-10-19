@@ -1,39 +1,36 @@
-class Post {
-  deleteAfter = 0; //tự xoá bài
+function Post(content, postId, timeStamp) {
+  this.content = content;
+  this.postId = postId;
+  this.timeStamp = timeStamp;
+  this.deleteAfter = 0;
+  this.likes = 0;
+} //constructor for prototype
 
-  likes = 0; //số lượt like
+Post.prototype.fromJson = function (json) {
+  const { content, postId, timeStamp } = json;
+  const post = new Post(content, postId, timeStamp);
+  post.likes = json.likes || 0;
+  post.deleteAfter = json.deleteAfter || 0;
+  return post;
+};
 
-  constructor(content, postId, timeStamp) {
-    this.content = content;
-    this.postId = postId;
-    this.timeStamp = timeStamp;
-  }
+Post.prototype.toJson = function () {
+  return {
+    content: this.content,
+    postId: this.postId,
+    timeStamp: this.timeStamp,
+    likes: this.likes,
+    deleteAfter: this.deleteAfter,
+  };
+};
 
-  static fromJson(json) {
-    //static để ta có thể dễ dàng tạo object từ json
-    const { content, postId, timeStamp } = json; //lấy các field từ json
-    return new Post(content, postId, timeStamp);
-  }
-
-  toJson() {
-    return {
-      content: this.content,
-      postId: this.postId,
-      timeStamp: this.timeStamp,
-    };
-  }
-
-  convertToDoc() {
-    //doi thanh document de up len MongoDB
-    return {
-      content: this.content,
-      postId: this.postId,
-      timeStamp: this.timeStamp,
-      likes: this.likes,
-      deleteAfter: this.deleteAfter,
-    };
-  }
-}
+const jsonPost = {
+  content: "Sample Content",
+  postId: 1,
+  timeStamp: Date.now(),
+  likes: 10,
+  deleteAfter: 0,
+};
 
 class PostDao {
   constructor() {}

@@ -23,6 +23,11 @@ const schema = new mongoose.Schema({
   deleteAfter: {
     type: Number,
   },
+
+  likes: {
+    type: Number,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Post", schema);
