@@ -24,7 +24,7 @@ mongoose.connection.on("error", (err) => {
 app.set("view engine", "ejs");
 
 app.use(bodyParser.json()); //middleware to interpret json
-app.use("/", postRoute);
+app.use("/posts", postRoute); //route for posts
 
 app.get("/api", (req, res) => {
   res.json({ message: "Hello from the backend!" });
