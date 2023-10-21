@@ -17,16 +17,14 @@ async function addLikeToPost(postId) {
 }
 
 async function editPost(postId, newContent) {
-  try {
-    const post = await Post.findOne({ postId });
-    if (post) {
-      //if post is not null
-      await post.editPost(newContent);
-      console.log(`Content edited to post with ID: ${postId}`);
-    } else {
-      console.log(`Post with ID ${postId} not found.`);
-    }
-  } catch (error) {
-    console.error("Error editing content:", error);
-  }
+  await Post.updateOne({ postId: postId }, { content: newContent });
 }
+
+async function deletePost(postId) {
+  await Post.deleteOne({ postId: postId }); //delete post
+}
+
+module.exports = {
+  addLikeToPost,
+  editPost,
+};
