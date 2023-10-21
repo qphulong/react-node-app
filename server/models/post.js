@@ -30,5 +30,11 @@ const schema = new mongoose.Schema({
   },
 });
 
+schema.methods.addLike = async function () {
+  this.likes++;
+
+  await this.save(); //save to database
+};
+
 module.exports = mongoose.model("Post", schema);
 //to the collection named "posts"
