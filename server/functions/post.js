@@ -24,6 +24,10 @@ async function deletePost(postId) {
   await Post.deleteOne({ postId: postId }); //delete post
 }
 
+async function run() {
+  Post.watch().on("change", (data) => console.log("New data changed: ", data));
+}
+
 module.exports = {
   addLikeToPost,
   editPost,
