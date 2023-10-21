@@ -36,5 +36,11 @@ schema.methods.addLike = async function () {
   await this.save(); //save to database
 };
 
+schema.method.editPost = async function (newContent) {
+  this.content = newContent;
+
+  await this.save();
+};
+
 module.exports = mongoose.model("Post", schema);
 //to the collection named "posts"
