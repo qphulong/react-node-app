@@ -27,4 +27,5 @@ async function deletePost(postId) {
 module.exports = {
   addLikeToPost,
   editPost,
+  deletePost,
 };

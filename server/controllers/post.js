@@ -1,4 +1,5 @@
 const Post = require("../models/post");
+const postFunctions = require("../functions/post");
 
 exports.createPost = (req, res) => {
   const post = new Post(req.body);
@@ -30,4 +31,15 @@ exports.getPosts = (req, res) => {
       res.render("post", { posts }); //render to ejs file, which is the View component
     })
     .catch((err) => console.log(err));
+};
+
+exports.deletePost = (req, res) => {
+  const postId = req.body.postId;
+  postFunctions.deletePost(postId);
+};
+
+exports.editPost = (req, res) => {
+  const postId = req.body.postId;
+  const newContent = req.body.newContent;
+  postFunctions.editPost(postId, newContent); //edit content
 };

@@ -14,4 +14,8 @@ router.post(
 );
 //call to create posts
 
+router.delete("/", postController.deletePost); //delete post
+
+router.put("/", postController.editPost); //edit post with PUT request
+
 module.exports = router;
