@@ -35,11 +35,11 @@ exports.getPosts = (req, res) => {
 
 exports.deletePost = (req, res) => {
   const postId = req.body.postId;
-  postFunctions.deletePost(postId);
+  postFunctions.deletePost(postId); //delete post with postId in API
 };
 
 exports.editPost = (req, res) => {
   const postId = req.body.postId;
   const newContent = req.body.newContent;
-  postFunctions.editPost(postId, newContent); //edit content
+  postFunctions.editPost(postId, newContent); //edit content with postId in API
 };
