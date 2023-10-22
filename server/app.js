@@ -11,6 +11,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
 const postRoute = require("./routes/post");
+const postFunctions = require("./functions/post");
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ app.listen(PORT, () => {
 });
 
 const incomingRouter = require("./routes/incoming");
+const post = require("./models/post");
 app.use("/current-profile", incomingRouter); //retrieve current username
 
 // Have Node serve the files for our built React app
@@ -45,3 +47,5 @@ app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
 });
 //long
+
+postFunctions.run(); //run change watch for mongodb

@@ -32,4 +32,5 @@ module.exports = {
   addLikeToPost,
   editPost,
   deletePost,
+  run,
 };
