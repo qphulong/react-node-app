@@ -15,14 +15,14 @@ const postFunctions = require("./functions/post");
 
 dotenv.config();
 
-const uri = process.env.DB_URI; //lấy từ file uri
+const uri = process.env.DB_URI; //get uri from env (for secure reasons)
 mongoose.connect(uri).then(() => console.log("Connected to db"));
 
 mongoose.connection.on("error", (err) => {
   console.log(`DB connection error: ${err.messsage}`);
 });
 
-app.set("view engine", "ejs");
+app.set("view engine", "ejs"); //set view engine for ejs file
 
 app.use(bodyParser.json()); //middleware to interpret json
 app.use("/posts", postRoute); //route for posts
