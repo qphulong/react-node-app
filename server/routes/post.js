@@ -18,4 +18,6 @@ router.delete("/", postController.deletePost); //delete post
 
 router.put("/", postController.editPost); //edit post with PUT request
 
+router.post("/comments", postController.addComment); //add comment
+
 module.exports = router;

@@ -45,5 +45,11 @@ postSchema.method.editPost = async function (newContent) {
   await this.save();
 };
 
+postSchema.method.addComment = async function (comment) {
+  this.comments.push(comment);
+
+  await this.save();
+};
+
 module.exports = mongoose.model("Post", postSchema);
 //to the collection named "posts"

@@ -28,9 +28,28 @@ async function run() {
   Post.watch().on("change", (data) => console.log("New data changed: ", data));
 }
 
+async function addComment(postId, comment) {
+  Post.findOne({ postId: postId }, (err, post) => {
+    if (err) {
+      console.error(err);
+    } else {
+      post.addComment(comment); //add comment to the post
+
+      post.save((err, updatedPost) => {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log("New comment added:", updatedPost);
+        }
+      });
+    }
+  });
+}
+
 module.exports = {
   addLikeToPost,
   editPost,
   deletePost,
   run,
+  addComment,
 };
