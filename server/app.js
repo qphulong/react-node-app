@@ -13,6 +13,10 @@ const bodyParser = require("body-parser");
 const postRoute = require("./routes/post");
 const postFunctions = require("./functions/post");
 
+const userRoute = require("./routes/user");
+
+const incomingRoute = require("./routes/incoming");
+
 dotenv.config();
 
 const uri = process.env.DB_URI; //get uri from env (for secure reasons)
@@ -35,8 +39,9 @@ app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
 
-const incomingRouter = require("./routes/incoming");
-app.use("/current-profile", incomingRouter); //retrieve current username
+app.use("/current-profile", incomingRoute); //retrieve current username
+
+app.use("/user", userRoute);
 
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, "../client/build")));
