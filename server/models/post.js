@@ -31,6 +31,12 @@ const postSchema = new mongoose.Schema({
   },
 
   comments: [Comment.schema],
+
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User", //reference to another schema
+    required: true,
+  },
 });
 
 postSchema.methods.addLike = async function () {
