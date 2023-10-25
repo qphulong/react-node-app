@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const AutoIncrement = require("mongoose-sequence");
+
 const userSchema = new mongoose.Schema({
   userId: {
     type: String,
@@ -17,5 +19,7 @@ const userSchema = new mongoose.Schema({
 
   friends: [userSchema],
 });
+
+userSchema.plugin(AutoIncrement, { id: "order_seq", inc_field: "userId" }); //auto increment id
 
 module.exports = mongoose.model("User", userSchema);
