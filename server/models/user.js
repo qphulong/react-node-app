@@ -10,6 +10,11 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
 
+  password: {
+    type: String,
+    required: true,
+  },
+
   friends: [userSchema],
 });
 
