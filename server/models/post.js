@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { commentSchema } = require("./comment");
+const Comment = require("./comment");
 
 const postSchema = new mongoose.Schema({
   content: {
@@ -29,6 +29,8 @@ const postSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+
+  comments: [Comment.schema],
 });
 
 postSchema.methods.addLike = async function () {

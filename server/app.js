@@ -36,7 +36,6 @@ app.listen(PORT, () => {
 });
 
 const incomingRouter = require("./routes/incoming");
-const post = require("./models/post");
 app.use("/current-profile", incomingRouter); //retrieve current username
 
 // Have Node serve the files for our built React app
