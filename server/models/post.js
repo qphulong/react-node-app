@@ -29,8 +29,6 @@ const postSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-
-  comments: [commentSchema], //array of comments
 });
 
 postSchema.methods.addLike = async function () {
