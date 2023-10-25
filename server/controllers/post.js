@@ -47,5 +47,5 @@ exports.editPost = (req, res) => {
 exports.addComment = (req, res) => {
   const postId = req.body.postId;
   const comment = req.body.comment;
-  postFunctions.addComment(postId, comment); //edit content with postId in API
+  postFunctions.addComment(postId, comment); //add comment with postId in API
 };
