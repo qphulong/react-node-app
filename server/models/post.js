@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const { commentSchema } = require("./comment");
 
-const schema = new mongoose.Schema({
+const postSchema = new mongoose.Schema({
   content: {
     type: String,
     required: true,
@@ -28,19 +29,21 @@ const schema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+
+  comments: [commentSchema], //array of comments
 });
 
-schema.methods.addLike = async function () {
+postSchema.methods.addLike = async function () {
   this.likes++;
 
   await this.save(); //save to database
 };
 
-schema.method.editPost = async function (newContent) {
+postSchema.method.editPost = async function (newContent) {
   this.content = newContent;
 
   await this.save();
 };
 
-module.exports = mongoose.model("Post", schema);
+module.exports = mongoose.model("Post", postSchema);
 //to the collection named "posts"
