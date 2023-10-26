@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const AutoIncrement = require("mongoose-sequence")(mongoose);
 
@@ -9,7 +10,7 @@ const userSchema = new mongoose.Schema({
   },
 
   profilePic: {
-    type: String,
+    type: String, // to store url of profile picture
   },
 
   password: {
@@ -26,5 +27,23 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.plugin(AutoIncrement, { id: "order_seq", inc_field: "userId" }); //auto increment id
+
+//middleware to hash password
+userSchema.pre("save", async function (next) {
+  try {
+    // hash password if only editing / new user
+    if (!this.isModified("password")) {
+      return next();
+    }
+
+    //hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(this.password, salt);
+    this.password = hashedPassword;
+    next();
+  } catch (error) {
+    return next(error);
+  }
+});
 
 module.exports = mongoose.model("User", userSchema);
