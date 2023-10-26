@@ -17,7 +17,12 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
 
-  friends: [userSchema],
+  friends: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User", // 'User' is the model name of the userSchema
+    },
+  ], // change to avoid circular reference
 });
 
 userSchema.plugin(AutoIncrement, { id: "order_seq", inc_field: "userId" }); //auto increment id

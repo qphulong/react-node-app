@@ -15,3 +15,7 @@ async function changePassword(userId, newPassword, confirmPassword) {
     console.log("User not found with the given userId.");
   }
 }
+
+module.exports = {
+  changePassword,
+};
