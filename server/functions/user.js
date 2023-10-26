@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const bcrypt = require("bcrypt");
 
 async function signIn(userId, inputPassword) {
   const user = await User.findOne({ userId: userId }); //find user
