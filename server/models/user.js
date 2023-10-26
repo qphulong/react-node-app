@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-const AutoIncrement = require("mongoose-sequence");
+const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const userSchema = new mongoose.Schema({
   userId: {
-    type: String,
+    type: Number,
     required: true,
   },
 
