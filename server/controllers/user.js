@@ -1,6 +1,12 @@
 const userFunctions = require("../functions/user");
 
-exports.signIn = (req, res) => {};
+exports.signIn = (req, res) => {
+  const password = req.body.password;
+
+  const newUser = new User({
+    password: password,
+  });
+};
 
 exports.signUp = (req, res) => {};
 

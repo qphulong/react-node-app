@@ -1,11 +1,9 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
-const AutoIncrement = require("mongoose-sequence")(mongoose);
-
 const userSchema = new mongoose.Schema({
   userId: {
-    type: Number,
+    type: String,
     required: true,
   },
 
@@ -25,8 +23,6 @@ const userSchema = new mongoose.Schema({
     },
   ], // change to avoid circular reference
 });
-
-userSchema.plugin(AutoIncrement, { id: "order_seq", inc_field: "userId" }); //auto increment id
 
 //middleware to hash password
 userSchema.pre("save", async function (next) {
