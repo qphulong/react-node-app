@@ -12,8 +12,10 @@ exports.signUp = (req, res) => {
 
   newUser
     .save()
-    .then(() => {
-      console.log("Sign up successfully.");
+    .then((savedUser) => {
+      res.json({
+        user: savedUser,
+      });
     })
     .catch((error) => {
       console.error("Error saving user:", error);
