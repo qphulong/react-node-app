@@ -1,5 +1,19 @@
 const User = require("../models/user");
 
+async function signIn(userId, inputPassword) {
+  const existingPassword = await getPasswordByUserId(userId); //retrieve the current password
+
+  if (existingPassword) {
+    if (existingPassword === inputPassword) {
+      console.log("Login successfully!");
+    } else {
+      console.log("Password doesn't match with the current one.");
+    }
+  } else {
+    console.log("User not found with the given userId.");
+  }
+}
+
 async function changePassword(userId, newPassword, confirmPassword) {
   const existingPassword = await getPasswordByUserId(userId); //retrieve the current password
 
@@ -17,5 +31,6 @@ async function changePassword(userId, newPassword, confirmPassword) {
 }
 
 module.exports = {
+  signIn,
   changePassword,
 };
