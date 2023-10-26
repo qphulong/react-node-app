@@ -8,7 +8,6 @@ async function signIn(userId, inputPassword) {
 
   if (isPasswordValid) {
     //check if the existing password is the same as the input password
-    await User.updateOne({ userId: userId }, { password: newPassword });
     console.log("Login successfully!");
   } else {
     console.log("Password doesn't match");
@@ -22,7 +21,10 @@ async function changePassword(userId, newPassword, confirmPassword) {
 
   if (isPasswordValid) {
     //check if the existing password is the same as the confirm password
-    await User.updateOne({ userId: userId }, { password: newPassword });
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    await User.updateOne({ userId: userId }, { password: hashedPassword });
     console.log("Password updated successfully!");
   } else {
     console.log("Password doesn't match");
