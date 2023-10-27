@@ -31,7 +31,7 @@ async function changePassword(userId, newPassword, confirmPassword) {
   }
 }
 
-async function addFriend(userId, friendId) {
+async function removeFriend(userId, friendId) {
   if (userId === friendId) {
     console.log("Cannot add the same friend");
     return;
@@ -49,23 +49,26 @@ async function addFriend(userId, friendId) {
         if (err) {
           console.log("Error removing friend:", err);
         } else {
-          console.log("Friend removed successfully.");
+          friend.updateOne(
+            { userId: friendId },
+            { $pull: { friends: userId } },
+            (err, result) => {
+              if (err) {
+                console.log("Error removing friend:", err);
+              } else {
+                console.log("Remove friend successfully");
+              }
+            } //delete bidirectionally
+          );
         }
       }
     );
 
-    user
-      .save()
-      .then((user) => {
-        console.log("Friend removed successfully " + friendId);
-      })
-      .catch((error) => {
-        console.error("Error saving user:", error);
-      });
+    user.save();
   }
 }
 
-async function removeFriend(userId, friendId) {
+async function addFriend(userId, friendId) {
   if (userId === friendId) {
     console.log("Cannot add the same friend");
     return;
@@ -75,7 +78,8 @@ async function removeFriend(userId, friendId) {
 
   const friend = await User.findOne({ userId: friendId }); //find friend
 
-  user.updateOne();
+  user.friends.push(friend._id);
+  friend.friends.push(user._id); //add in two directions
 
   user
     .save()
@@ -91,4 +95,5 @@ module.exports = {
   signIn,
   changePassword,
   addFriend,
+  removeFriend,
 };
