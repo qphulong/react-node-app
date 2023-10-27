@@ -65,6 +65,7 @@ async function removeFriend(userId, friendId) {
     );
 
     user.save();
+    friend.save();
   }
 }
 
@@ -84,7 +85,14 @@ async function addFriend(userId, friendId) {
   user
     .save()
     .then((user) => {
-      console.log("Added friend with id " + friendId);
+      friend
+        .save()
+        .then((user) => {
+          console.log("Friend added successfully");
+        })
+        .catch((error) => {
+          console.error("Error saving user:", error);
+        });
     })
     .catch((error) => {
       console.error("Error saving user:", error);
