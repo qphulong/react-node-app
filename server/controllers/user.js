@@ -37,3 +37,10 @@ exports.changePassword = (req, res) => {
 
   userFunctions.changePassword(userId, newPassword, confirmPassword);
 };
+
+exports.addFriend = (req, res) => {
+  const userId = req.body.userId;
+  const friendId = req.body.friendId;
+
+  userFunctions.addFriend(userId, friendId);
+};
