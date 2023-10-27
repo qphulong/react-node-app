@@ -41,12 +41,46 @@ async function addFriend(userId, friendId) {
 
   const friend = await User.findOne({ userId: friendId }); //find friend
 
-  user.friends.push(friend._id);
+  if (friend) {
+    User.updateOne(
+      { userId: userId },
+      { $pull: { friends: friendId } }, //delete friend
+      (err, result) => {
+        if (err) {
+          console.log("Error removing friend:", err);
+        } else {
+          console.log("Friend removed successfully.");
+        }
+      }
+    );
+
+    user
+      .save()
+      .then((user) => {
+        console.log("Friend removed successfully " + friendId);
+      })
+      .catch((error) => {
+        console.error("Error saving user:", error);
+      });
+  }
+}
+
+async function removeFriend(userId, friendId) {
+  if (userId === friendId) {
+    console.log("Cannot add the same friend");
+    return;
+  }
+
+  const user = await User.findOne({ userId: userId }); //find user
+
+  const friend = await User.findOne({ userId: friendId }); //find friend
+
+  user.updateOne();
 
   user
     .save()
     .then((user) => {
-      console.log("Added friend");
+      console.log("Added friend with id " + friendId);
     })
     .catch((error) => {
       console.error("Error saving user:", error);

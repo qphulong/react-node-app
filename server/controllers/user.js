@@ -44,3 +44,10 @@ exports.addFriend = (req, res) => {
 
   userFunctions.addFriend(userId, friendId);
 };
+
+exports.removeFriend = (req, res) => {
+  const userId = req.body.userId;
+  const friendId = req.body.friendId;
+
+  userFunctions.removeFriend(userId, friendId);
+};
