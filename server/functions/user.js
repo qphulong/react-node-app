@@ -39,22 +39,18 @@ async function addFriend(userId, friendId) {
 
   const user = await User.findOne({ userId: userId }); //find user
 
-  //find friend
-  User.findOne({ userId: friendId }, (err, userB) => {
-    if (err) {
-      console.log("Error when adding friend");
-    } else {
-      user.friends.push(userB._id);
+  const friend = await User.findOne({ userId: friendId }); //find friend
 
-      user.save((err) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("New friend added");
-        }
-      });
-    }
-  });
+  user.friends.push(friend._id);
+
+  user
+    .save()
+    .then((user) => {
+      console.log("Added friend");
+    })
+    .catch((error) => {
+      console.error("Error saving user:", error);
+    });
 }
 
 module.exports = {
