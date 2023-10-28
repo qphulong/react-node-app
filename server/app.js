@@ -17,6 +17,12 @@ const userRoute = require("./routes/user");
 
 const incomingRoute = require("./routes/incoming");
 
+const multer = require("multer");
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+});
+
 dotenv.config();
 
 const uri = process.env.DB_URI; //get uri from env (for secure reasons)
