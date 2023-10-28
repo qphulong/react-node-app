@@ -42,30 +42,26 @@ async function removeFriend(userId, friendId) {
   const friend = await User.findOne({ userId: friendId }); //find friend
 
   if (friend) {
-    User.updateOne(
-      { userId: userId },
-      { $pull: { friends: friendId } }, //delete friend
-      (err, result) => {
-        if (err) {
-          console.log("Error removing friend:", err);
-        } else {
-          friend.updateOne(
-            { userId: friendId },
-            { $pull: { friends: userId } },
-            (err, result) => {
-              if (err) {
-                console.log("Error removing friend:", err);
-              } else {
-                console.log("Remove friend successfully");
-              }
-            } //delete bidirectionally
-          );
-        }
-      }
-    );
+    user.friends.pull(friend._id);
+    friend.friends.pull(user._id);
+    // User.updateOne({ userId: userId }, { $pull: { friends: friendId } }); //delete friend
+    // User.updateOne({ userId: friendId }, { $pull: { friends: userId } }); //delete bidirectionally
 
-    user.save();
-    friend.save();
+    user
+      .save()
+      .then((user) => {
+        friend
+          .save()
+          .then((user) => {
+            console.log("Friend removed successfully");
+          })
+          .catch((error) => {
+            console.error("Error saving user:", error);
+          });
+      })
+      .catch((error) => {
+        console.error("Error saving user:", error);
+      });
   }
 }
 
