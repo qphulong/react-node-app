@@ -17,6 +17,8 @@ const userRoute = require("./routes/user");
 
 const incomingRoute = require("./routes/incoming");
 
+const storageRoute = require("./routes/storage");
+
 const multer = require("multer");
 
 const upload = multer({
@@ -47,7 +49,11 @@ app.listen(PORT, () => {
 
 app.use("/current-profile", incomingRoute); //retrieve current username
 
-app.use("/user", userRoute);
+app.use("/user", userRoute); //for route user
+
+app.use("/storage", storageRoute); //storage route
+
+postFunctions.run(); //run change watch for mongodb
 
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, "../client/build")));
@@ -57,5 +63,3 @@ app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
 });
 //long
-
-postFunctions.run(); //run change watch for mongodb
