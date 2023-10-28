@@ -44,8 +44,6 @@ async function removeFriend(userId, friendId) {
   if (friend) {
     user.friends.pull(friend._id);
     friend.friends.pull(user._id);
-    // User.updateOne({ userId: userId }, { $pull: { friends: friendId } }); //delete friend
-    // User.updateOne({ userId: friendId }, { $pull: { friends: userId } }); //delete bidirectionally
 
     user
       .save()
@@ -62,6 +60,8 @@ async function removeFriend(userId, friendId) {
       .catch((error) => {
         console.error("Error saving user:", error);
       });
+  } else {
+    console.log("Friend does not exists");
   }
 }
 
