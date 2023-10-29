@@ -23,3 +23,5 @@ exports.uploadFile = (req, res) => {
 
   blobWriter.end(req.file.buffer);
 };
+
+const retrieveImages = (req, res) => {};
