@@ -29,11 +29,3 @@ exports.getDownloadUrls = (postId) => {
     }
   });
 };
-
-getDownloadUrls(postId)
-  .then((downloadUrls) => {
-    console.log("Download URLs:", downloadUrls);
-  })
-  .catch((error) => {
-    console.error("Error:", error);
-  });
