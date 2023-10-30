@@ -1,11 +1,11 @@
-const firebase = require("../firebase/firebase");
+const storage = require("../firebase/storage");
 
 exports.uploadFile = (req, res) => {
   if (!req.file) {
     return res.status(400).send("Error: No files found");
   }
 
-  const blob = firebase.bucket.file(req.file.originalname);
+  const blob = storage.bucket.file(req.file.originalname);
 
   const blobWriter = blob.createWriteStream({
     metadata: {

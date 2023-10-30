@@ -1,7 +1,39 @@
-const firebase = require("../firebase/firebase");
+const storage = require("../firebase/storage");
 
-exports.retrieveImages = (postId) => {
-  return new Promise((resolve, reject) => {
-    let images = [];
+const bucket = storage.bucket();
+
+exports.getDownloadUrls = (postId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const [files] = await bucket.getFiles({
+        prefix: postId,
+      });
+
+      const downloadUrls = [];
+
+      for (const file of files) {
+        const [url] = await file.getSignedUrl({
+          action: "read",
+          expires: Date.now() + 60 * 1000, // Link expires in 1 minute, adjust as needed
+        });
+
+        downloadUrls.push({
+          name: file.name,
+          downloadUrl: url,
+        });
+      }
+
+      resolve(downloadUrls);
+    } catch (error) {
+      reject(error);
+    }
   });
-}; //promise use for asynchronous programming with callback
+};
+
+getDownloadUrls(postId)
+  .then((downloadUrls) => {
+    console.log("Download URLs:", downloadUrls);
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });

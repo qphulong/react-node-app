@@ -1,7 +1,7 @@
 const storageController = require("../controllers/storage");
 const express = require("express");
 
-const router = express.Router;
+const router = express.Router();
 
 router.post("/upload", storageController.uploadFile);
 
