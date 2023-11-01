@@ -3,13 +3,38 @@ const userController = require("../controllers/user");
 
 const router = express.Router();
 
-router.post("/sign-up", userController.signUp);
+router.post(
+  "/sign-up",
+  query("userId").notEmpty(), //call this validation middleware first to validate
+  query("password").notEmpty(),
+  userController.signUp
+);
 
-router.post("/sign-in", userController.signIn);
+router.post(
+  "/sign-in",
+  query("userId").notEmpty(), //call this validation middleware first to validate
+  query("password").notEmpty(),
+  userController.signIn
+);
 
-router.put("/friends", userController.addFriend);
-router.delete("/friends", userController.removeFriend);
+router.put(
+  "/friends",
+  query("userId").notEmpty(), //call this validation middleware first to validate
+  query("friendId").notEmpty(),
+  userController.addFriend
+);
+router.delete(
+  "/friends",
+  query("userId").notEmpty(), //call this validation middleware first to validate
+  query("friendiD").notEmpty(),
+  userController.removeFriend
+);
 
-router.put("/password", userController.changePassword);
+router.put(
+  "/password",
+  query("userId").notEmpty(), //call this validation middleware first to validate
+  query("password").notEmpty(),
+  userController.changePassword
+);
 
 module.exports = router;
