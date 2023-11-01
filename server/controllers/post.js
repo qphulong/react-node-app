@@ -28,6 +28,12 @@ exports.getPosts = (req, res) => {
   const posts = Post.find()
     .select("content postId time") //only select columns content, postId, and time
     .then((posts) => {
+      // const page = parseInt(req.query.page) || 1; //get page
+      // const postsPerPage = 10; //maximum post per page
+      // const startIndex = (page - 1) * postsPerPage;
+      // const endIndex = startIndex + postsPerPage;
+      // const responsePosts = posts.slice(startIndex, endIndex);
+
       res.render("post", { posts }); //render to ejs file, which is the View component
     })
     .catch((err) => console.log(err));
