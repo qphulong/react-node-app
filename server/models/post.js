@@ -7,6 +7,12 @@ const postSchema = new mongoose.Schema({
     required: true,
     minlength: 1,
     maxlength: 300,
+    validate: {
+      validator: function (content) {
+        return content.length <= 1000;
+      },
+      message: "Too many characters. Maximum allowed is 1000.",
+    },
   },
 
   postId: {
@@ -36,6 +42,16 @@ const postSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User", //reference to another schema
     required: true,
+  },
+
+  imageUrls: {
+    type: [String],
+    validate: {
+      validator: function (array) {
+        return array.length <= 5;
+      },
+      message: "Too many images. Maximum allowed is 5.",
+    },
   },
 });
 
