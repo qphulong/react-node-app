@@ -1,6 +1,6 @@
 const storage = require("../firebase/storage");
 
-const bucket = storage.bucket();
+const bucket = storage.bucket;
 
 exports.getDownloadUrls = (postId) => {
   return new Promise(async (resolve, reject) => {
@@ -14,7 +14,7 @@ exports.getDownloadUrls = (postId) => {
       for (const file of files) {
         const [url] = await file.getSignedUrl({
           action: "read",
-          expires: Date.now() + 60 * 1000, // Link expires in 1 minute, adjust as needed
+          expires: Date.now() + 60 * 5000, // Link expires in 5 minute
         });
 
         downloadUrls.push({

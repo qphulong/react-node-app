@@ -5,4 +5,6 @@ const router = express.Router();
 
 router.post("/upload", storageController.uploadFile);
 
+router.post("/download", storageController.retrieveImages);
+
 module.exports = router;
