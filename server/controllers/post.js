@@ -1,10 +1,36 @@
 const Post = require("../models/post");
 const postFunctions = require("../functions/post");
+const User = require("../models/user");
 
-exports.createPost = (req, res) => {
-  const post = new Post(req.body);
+exports.createPost = async (req, res) => {
+  const {
+    content,
+    postId,
+    time,
+    deleteAfter,
+    likes,
+    comments,
+    userId,
+    imageUrls,
+  } = req.body;
 
-  console.log(req.body);
+  console.log(userId);
+
+  const user = await User.findOne({ userId: userId }); //find user
+  if (!user) {
+    return res.status(400).json({ message: "User not found" });
+  }
+
+  const post = new Post({
+    content,
+    postId,
+    time,
+    deleteAfter,
+    likes,
+    comments,
+    imageUrls,
+    user: user,
+  }); //create new post
 
   post
     .save()
