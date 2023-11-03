@@ -27,24 +27,20 @@ exports.createPost = (req, res) => {
 exports.getPosts = (req, res) => {
   const userId = req.body.userId;
 
-  // Find friends of the user
   User.findOne({ user: userId })
-    .populate({
-      path: "friends", // friends field
-      populate: {
-        path: "userId", // populate inside the `friends` array
-        select: "userId", // select field to retrieve
-      },
-    })
-    .select("friends") // Select the friends field from
+    .populate("friends", "userId") // Populate friends field (reference to the User schema) and select userId field
     .exec()
-    .then((userWithFriends) => {
-      // Extract friend objects from the populated friends field
-      const friends = userWithFriends.friends.map((friend) => friend.userId);
+    .then((user) => {
+      if (!user) {
+        // user not found
+        return res.status(404).json({ message: "User not found" });
+      }
 
-      // Get posts from friends
+      // get userId values of Friends (populated above)
+      const userIdArray = user.friends.map((friend) => friend.userId);
+
       Post.find({ user: { $in: friends.map((friend) => friend._id) } })
-        .populate("userId") // Populate the user field in posts
+        .populate("user") // to check condition of userId is matched with the reference to the User schema from the Post schema
         .select("content postId time") // Specify the fields you want to retrieve from Post
         .exec()
         .then((posts) => {
@@ -52,8 +48,8 @@ exports.getPosts = (req, res) => {
         })
         .catch((err) => console.log(err));
     })
-    .catch((error) => {
-      console.error(error);
+    .catch((err) => {
+      console.error(err);
     });
 };
 
