@@ -23,17 +23,14 @@ exports.createPost = (req, res) => {
     });
 };
 
-//retrieve all posts from MongoDB
+//retrieve all posts from my id and my friends
 exports.getPosts = (req, res) => {
-  const posts = Post.find()
+  const userId = req.body.userId;
+
+  const posts = Post.find({ user: userId })
+    .populate("user") //populate customer user field
     .select("content postId time") //only select columns content, postId, and time
     .then((posts) => {
-      // const page = parseInt(req.query.page) || 1; //get page
-      // const postsPerPage = 10; //maximum post per page
-      // const startIndex = (page - 1) * postsPerPage;
-      // const endIndex = startIndex + postsPerPage;
-      // const responsePosts = posts.slice(startIndex, endIndex);
-
       res.render("post", { posts }); //render to ejs file, which is the View component
     })
     .catch((err) => console.log(err));
