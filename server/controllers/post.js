@@ -53,24 +53,26 @@ exports.createPost = async (req, res) => {
 exports.getPosts = (req, res) => {
   const userId = req.body.userId;
 
-  User.findOne({ user: userId })
-    .populate("friends", "userId") // Populate friends field (reference to the User schema) and select userId field
+  User.findOne({ userId: userId })
+    .populate("friends", "userId") // join friends field (reference to the User schema) and select userId field (of the referenced schema)
     .exec()
     .then((user) => {
+      //user with passed userId
       if (!user) {
         // user not found
         return res.status(404).json({ message: "User not found" });
       }
 
       // get userId values of Friends (populated above)
-      const userIdArray = user.friends.map((friend) => friend.userId);
+      const friends = user.friends.map((friend) => friend.userId);
 
-      Post.find({ user: { $in: friends.map((friend) => friend._id) } })
+      Post.find({ user: { $in: friends } })
         .populate("user") // to check condition of userId is matched with the reference to the User schema from the Post schema
         .select("content postId time") // Specify the fields you want to retrieve from Post
         .exec()
         .then((posts) => {
-          res.render("post", { posts: posts });
+          res.json({ posts: posts });
+          // res.render("post", { posts: posts });
         })
         .catch((err) => console.log(err));
     })
