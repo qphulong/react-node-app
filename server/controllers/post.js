@@ -63,13 +63,13 @@ exports.getPosts = (req, res) => {
         return res.status(404).json({ message: "User not found" });
       }
 
-      // get userId values of Friends (populated above)
-      const friends = user.friends.map((friend) => friend.userId);
+      // get id values of Friends (populated above)
+      const friends = user.friends.map((friend) => friend._id);
+      console.log(friends);
 
+      // find using document _id value
       Post.find({ user: { $in: friends } })
-        .populate("user") // to check condition of userId is matched with the reference to the User schema from the Post schema
         .select("content postId time") // Specify the fields you want to retrieve from Post
-        .exec()
         .then((posts) => {
           res.json({ posts: posts });
           // res.render("post", { posts: posts });
