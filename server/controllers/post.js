@@ -27,13 +27,34 @@ exports.createPost = (req, res) => {
 exports.getPosts = (req, res) => {
   const userId = req.body.userId;
 
-  const posts = Post.find({ user: userId })
-    .populate("user") //populate customer user field
-    .select("content postId time") //only select columns content, postId, and time
-    .then((posts) => {
-      res.render("post", { posts }); //render to ejs file, which is the View component
+  // Find friends of the user
+  User.findOne({ user: userId })
+    .populate({
+      path: "friends", // friends field
+      populate: {
+        path: "userId", // populate inside the `friends` array
+        select: "userId", // select field to retrieve
+      },
     })
-    .catch((err) => console.log(err));
+    .select("friends") // Select the friends field from
+    .exec()
+    .then((userWithFriends) => {
+      // Extract friend objects from the populated friends field
+      const friends = userWithFriends.friends.map((friend) => friend.userId);
+
+      // Get posts from friends
+      Post.find({ user: { $in: friends.map((friend) => friend._id) } })
+        .populate("userId") // Populate the user field in posts
+        .select("content postId time") // Specify the fields you want to retrieve from Post
+        .exec()
+        .then((posts) => {
+          res.render("post", { posts: posts });
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 };
 
 exports.deletePost = (req, res) => {
