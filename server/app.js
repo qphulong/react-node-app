@@ -7,19 +7,14 @@ const app = express();
 
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-
+const multer = require("multer");
 const bodyParser = require("body-parser");
 
 const postRoute = require("./routes/post");
 const postFunctions = require("./functions/post");
-
 const userRoute = require("./routes/user");
-
 const incomingRoute = require("./routes/incoming");
-
 const storageRoute = require("./routes/storage");
-
-const multer = require("multer");
 
 const upload = multer({
   storage: multer.memoryStorage(),
