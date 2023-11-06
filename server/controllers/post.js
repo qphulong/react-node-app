@@ -57,13 +57,13 @@ exports.getPosts = (req, res) => {
     .populate("friends", "userId") // join friends field (reference to the User schema) and select userId field (of the referenced schema)
     .exec()
     .then((user) => {
-      //user with passed userId
+      //current user with passed userId
       if (!user) {
         // user not found
         return res.status(404).json({ message: "User not found" });
       }
 
-      // get id values of Friends (populated above)
+      // get id values of Friends (populated above) of the current user
       const friends = user.friends.map((friend) => friend._id);
       console.log(friends);
 
