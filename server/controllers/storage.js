@@ -5,6 +5,10 @@ const multer = require('multer')
 const firebase = require('./firebase')
 const app = express()
 
+const upload = multer({
+  storage: multer.memoryStorage()
+})
+
 exports.uploadFile = (req, res) => {
   if (!req.file) {
     return res.status(400).send("Error: No files found");
