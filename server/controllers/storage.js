@@ -1,22 +1,21 @@
 const storage = require("../firebase/storage");
 const storageFunctions = require("../functions/storage");
-const express = require('express')
-const multer = require('multer')
-const firebase = require('./firebase')
-const app = express()
+
+const multer = require("multer");
 
 const upload = multer({
-  storage: multer.memoryStorage()
-})
+  storage: multer.memoryStorage(),
+});
 
 exports.uploadFile = (req, res) => {
   if (!req.file) {
     return res.status(400).send("Error: No files found");
   }
+
   const blob = storage.bucket.file(req.file.originalname);
   const blobWriter = blob.createWriteStream({
     metadata: {
-      contentType: req.file.mimetype,
+      contentType: req.file.mimetype, //image
     },
   });
   blobWriter.on("error", (err) => {
