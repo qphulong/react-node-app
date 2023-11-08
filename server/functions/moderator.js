@@ -55,12 +55,11 @@ async function changePassword(moderatorId, newPassword, confirmPassword) {
 async function removePost(postId) {
     try {
         const post = await Post.findById(postId);
-        if (!post) {
-            throw new Error(`Post with ID ${postId} not found`);
+        if (post) {
+            await post.deletePost();
+        } else {
+            console.error(`Post with ID ${postId} not found`);
         }
-
-        // Implement logic to handle removal of the post here
-
 
         console.log(`Post with ID ${postId} removed successfully.`);
     } catch (error) {
