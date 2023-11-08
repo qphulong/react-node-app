@@ -7,9 +7,9 @@ const upload = multer({
   storage: multer.memoryStorage(),
 });
 
-exports.uploadFile = (req, res) => {
+exports.uploadImages = (req, res) => {
   if (!req.file) {
-    return res.status(400).send("Error: No files found");
+    return res.status(400).send("Error: No images found");
   }
 
   const blob = storage.bucket.file(req.file.originalname);
@@ -22,7 +22,7 @@ exports.uploadFile = (req, res) => {
     console.log(err); //error uploading file
   });
   blobWriter.on("finish", () => {
-    res.status(200).send("File uploaded.");
+    res.status(200).send("Image uploaded.");
   });
   blobWriter.end(req.file.buffer);
 };
