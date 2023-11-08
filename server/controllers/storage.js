@@ -7,27 +7,47 @@ const upload = multer({
   storage: multer.memoryStorage(),
 });
 
-exports.uploadImages = (req, res) => {
-  if (!req.file) {
-    return res.status(400).send("Error: No images found");
+exports.uploadFile = (req, res) => {
+  if (!req.files) {
+    return res.status(400).send("Error: No files found");
   }
 
-  const postId = req.body.postId;
+  const files = req.files;
+  const uploadPromises = [];
 
-  const blob = storage.bucket.file(postId + "/" + req.file.originalname);
+  for (const file of files) {
+    const blob = storage.bucket.file(file.originalname);
+    const blobWriter = blob.createWriteStream({
+      metadata: {
+        contentType: file.mimetype,
+      },
+    });
 
-  const blobWriter = blob.createWriteStream({
-    metadata: {
-      contentType: req.file.mimetype, //image
-    },
-  });
-  blobWriter.on("error", (err) => {
-    console.log(err); //error uploading file
-  });
-  blobWriter.on("finish", () => {
-    res.status(200).send("Image uploaded.");
-  });
-  blobWriter.end(req.file.buffer);
+    blobWriter.on("error", (err) => {
+      console.log(err); // error uploading file
+      return Promise.reject(err);
+    });
+
+    blobWriter.on("finish", () => {
+      console.log(`${file.originalname} uploaded successfully`);
+    });
+
+    blobWriter.end(file.buffer);
+
+    uploadPromises.push(new Promise((resolve, reject) => {
+      blobWriter.on("finish", resolve);
+      blobWriter.on("error", reject);
+    }));
+  }
+
+  Promise.all(uploadPromises)
+    .then(() => {
+      res.status(200).send("All files uploaded successfully.");
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error uploading files.");
+    });
 };
 
 exports.retrieveImages = (req, res) => {
