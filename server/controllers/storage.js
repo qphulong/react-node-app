@@ -12,7 +12,10 @@ exports.uploadImages = (req, res) => {
     return res.status(400).send("Error: No images found");
   }
 
-  const blob = storage.bucket.file(req.file.originalname);
+  const postId = req.body.postId;
+
+  const blob = storage.bucket.file(postId + "/" + req.file.originalname);
+
   const blobWriter = blob.createWriteStream({
     metadata: {
       contentType: req.file.mimetype, //image
