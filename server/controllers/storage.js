@@ -42,11 +42,11 @@ exports.uploadImage = (req, res) => {
 
   Promise.all(uploadPromises)
     .then(() => {
-      res.status(200).send("All files uploaded successfully.");
+      res.status(200).send("All Images uploaded successfully.");
     })
     .catch((err) => {
       console.error(err);
-      res.status(500).send("Error uploading files.");
+      res.status(500).send("Error uploading Images.");
     });
 };
 
