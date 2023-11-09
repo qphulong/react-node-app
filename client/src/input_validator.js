@@ -1,5 +1,3 @@
-const Post = require("../models/post");
-
 wordCount = 0;
 currentLength = 0;
 lastChar = null;
@@ -8,7 +6,7 @@ var isAlphaOrNumber = function (ch) {
   return /^[A-Za-z0-9]$/.test(ch); //regex
 };
 
-function textChanged(post) {
+export function textChanged(post) {
   const length = post.content.length;
 
   if (post.content.length > currentLength) {
