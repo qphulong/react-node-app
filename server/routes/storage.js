@@ -3,7 +3,7 @@ const express = require("express");
 
 const router = express.Router();
 
-router.post("/upload", storageController.uploadImage);
+router.post("/upload", storageController.uploadImages);
 
 router.post("/download", storageController.retrieveImages);
 
