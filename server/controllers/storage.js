@@ -15,7 +15,7 @@ exports.uploadImage = (req, res) => {
   const uploadPromises = [];
 
   for (const file of files) {
-    const blob = storage.bucket.file(file.originalname);
+    const blob = storage.bucket.file(postId + "/" + req.file.originalname);
     const blobWriter = blob.createWriteStream({
       metadata: {
         contentType: file.mimetype,
