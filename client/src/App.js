@@ -7,16 +7,19 @@ import Home from "./pages/home/home";
 import Profile from "./pages/profile/profile";
 import {
   createBrowserRouter,
+  Navigate,
   Outlet,
   RouterProvider,
 } from "react-router-dom";
 function App() {
 
+  const currentUser = true;
+
   const Layout = () => {
     return(
       <div>
         <NavBar/>
-        <div>
+        <div style={{display: 'flex'}}>
             <LeftBar/>
             <Outlet/>
             <RightBar/>
@@ -25,12 +28,31 @@ function App() {
     )
   }
 
+  const ProtectedRouter = ({children}) => {
+    if(!currentUser){
+      return <Navigate to={'/login'}/>
+    }
+
+    return children
+  }
+
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout/>,
+      element: (
+        <ProtectedRouter>
+          <Layout/>
+        </ProtectedRouter>
+      ),
       children: [
-
+        {
+          path: "/",
+          element: <Home/>,
+        },
+        {
+          path: "/profile/:id",
+          element: <Profile/>,
+        },
       ]
     },
     {
