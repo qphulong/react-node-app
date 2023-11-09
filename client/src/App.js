@@ -1,9 +1,9 @@
-import React from "react";
+import Profile from "./pages/profile/Profile.js"
 
 function App() {
   return (
       <div>
-          <h1>Hello world</h1>
+        <Profile/>
       </div>
   );
 }
