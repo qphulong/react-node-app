@@ -1,8 +1,6 @@
 const storage = require("../firebase/storage");
 const storageFunctions = require("../functions/storage");
 
-const multer = require("multer");
-
 const upload = multer({
   storage: multer.memoryStorage(),
 });
