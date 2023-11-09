@@ -1,10 +1,12 @@
+const postFunctions = require("../functions/post");
+
 class PostNode {
   post;
 
   next = null;
 }
 
-export class PostLinkedList {
+export class PostQueue {
   head = new PostNode();
 
   insert(newPost) {
@@ -18,26 +20,13 @@ export class PostLinkedList {
     current.next.post = newPost;
   }
 
-  searchById(id) {
-    current = head;
-    while (current != null) {
-      if (current.post.postId == id) {
-        return current.post;
-      }
-      current = current.next;
-    }
+  pop() {
+    current = new Node(head);
 
-    return null;
-  }
+    let temp = head.next;
+    head = temp;
 
-  delete(id) {
-    current = head;
-    while (current != null && current.next != null) {
-      if (current.next.post.postId == id) {
-        current.next = current.next.next;
-      }
-      current = current.next;
-    }
+    return current;
   }
 }
 
@@ -47,14 +36,17 @@ export class ModeratedPostRepository {
   addForConsideration(post) {
     this.postsForConsideration.insert(post);
   }
-  delete(id) {
-    this.postsForConsideration.delete(id);
 
-    //delete from schema too
-  }
-  keep(id) {
-    this.postsForConsideration.delete(id);
+  consider() {
+    considerId = this.postsForConsideration.pop();
 
-    //do nothing
+    this.delete = () => {
+      //remove post from schema
+      postFunctions.deletePost(this.considerId);
+    };
+
+    this.keep = () => {
+      //remove from queue only and then do nothing
+    };
   }
 }
