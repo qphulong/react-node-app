@@ -28,4 +28,5 @@ export function textChanged(post) {
   }
 
   lastChar = post.content.charAt(length - 1);
+  currentLength = post.content.length;
 }
