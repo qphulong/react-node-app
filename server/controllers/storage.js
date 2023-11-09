@@ -1,5 +1,6 @@
 const storage = require("../firebase/storage");
 const storageFunctions = require("../functions/storage");
+const multer = require("multer");
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -32,10 +33,12 @@ exports.uploadImage = (req, res) => {
 
     blobWriter.end(file.buffer);
 
-    uploadPromises.push(new Promise((resolve, reject) => {
-      blobWriter.on("finish", resolve);
-      blobWriter.on("error", reject);
-    }));
+    uploadPromises.push(
+      new Promise((resolve, reject) => {
+        blobWriter.on("finish", resolve);
+        blobWriter.on("error", reject);
+      })
+    );
   }
 
   Promise.all(uploadPromises)
