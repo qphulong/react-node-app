@@ -1,4 +1,5 @@
 import './register.scss'
+import { Link } from 'react-router-dom';
 
 function Register(){
     return (
@@ -10,7 +11,9 @@ function Register(){
                         Share unforgetable memories and daily life stories only for your families and friends here.
                     </p>
                     <span>Do you have an account?</span>
-                    <button>Login</button>
+                    <Link to={`/Login`}>
+                        <button>Login</button>
+                    </Link>
                 </div>
                 <div className = "right">
                     <h1>Register</h1>
