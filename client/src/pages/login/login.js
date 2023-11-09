@@ -11,7 +11,7 @@ function Login(){
                         Share unforgetable memories and daily life stories only for your families and friends here.
                     </p>
                     <span>Don't you have an account?</span>
-                    <Link to={`/Register`}>
+                    <Link to={`/register`}>
                         <button>Register</button>
                     </Link>
                 </div>

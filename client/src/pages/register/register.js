@@ -11,7 +11,7 @@ function Register(){
                         Share unforgetable memories and daily life stories only for your families and friends here.
                     </p>
                     <span>Do you have an account?</span>
-                    <Link to={`/Login`}>
+                    <Link to={`/login`}>
                         <button>Login</button>
                     </Link>
                 </div>
