@@ -1,4 +1,5 @@
-import Profile from "./pages/profile/Profile.js"
+import Profile from "./pages/profile/Profile";
+
 
 function App() {
   return (
