@@ -16,7 +16,7 @@ export default function () {
   return (
     <div className='profile'>
         <div className='images'>
-            <img src={Background} alt="ok bro" className='cover'/>
+            <img src={Background} alt="" className='cover'/>
             <img src={Background} alt="" className='profilePic'/>
         </div>
         <div className="profileContainer">
@@ -49,7 +49,7 @@ export default function () {
                 
               </div>
               <button>
-                  follow
+                  Follow
                 </button>
             </div>
             <div className="right">
