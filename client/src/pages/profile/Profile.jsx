@@ -17,7 +17,7 @@ export default function () {
             <img src="./assets/tmp.png" alt="" className='profilePic'/>
         </div>
         <div className="profileContainer">
-          <div className="uiInfo">
+          <div className="uInfo">
             <div className="left">
               <a href="https://www.facebook.com/">
                 <FacebookTwoToneIcon fontSize="large"/>
@@ -43,10 +43,11 @@ export default function () {
                   <LanguageIcon fontSize="large"/>
                   <span>VietNam</span>
                 </div>
-                <button>
+                
+              </div>
+              <button>
                   follow
                 </button>
-              </div>
             </div>
             <div className="right">
               <EmailIcon/>
