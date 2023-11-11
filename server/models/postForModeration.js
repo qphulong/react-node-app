@@ -19,4 +19,4 @@ postForModerationSchema.methods.delete = async function () {
   }
 };
 
-module.exports = mongoose.model("PostForModeration", postForModerationSchema);
+module.exports = mongoose.model("ModerationPost", postForModerationSchema);
