@@ -1,4 +1,5 @@
 const postFunctions = require("../functions/post");
+const PostsForConsideration = require("../models/postForModeration");
 
 class PostNode {
   post;
@@ -8,6 +9,18 @@ class PostNode {
 
 export class PostQueue {
   head = new PostNode();
+
+  constructor() {
+    PostsForConsideration.find({}, (err, documents) => {
+      if (err) {
+        console.error(err);
+      } else {
+        documents.forEach((document) => {
+          this.insert(document); //add to queue
+        });
+      }
+    });
+  }
 
   insert(newPost) {
     current = head;
@@ -48,5 +61,7 @@ export class ModeratedPostRepository {
     this.keep = () => {
       //remove from queue only and then do nothing
     };
+
+    postsForConsideration.delete(); //delete from schema
   }
 }
