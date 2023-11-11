@@ -13,8 +13,9 @@ const bodyParser = require("body-parser");
 const postRoute = require("./routes/post");
 const postFunctions = require("./functions/post");
 const userRoute = require("./routes/user");
-const incomingRoute = require("./routes/incoming");
 const storageRoute = require("./routes/storage");
+
+const { CurrentUser } = require("./appController");
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -42,8 +43,6 @@ app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
 
-app.use("/current-profile", incomingRoute); //retrieve current username
-
 app.use("/user", userRoute); //for route user
 
 app.use("/storage", storageRoute); //storage route
@@ -58,3 +57,9 @@ app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
 });
 //long
+
+let currentUser = new CurrentUser(); //current user
+
+module.exports = {
+  currentUser,
+};

@@ -49,7 +49,7 @@ exports.createPost = async (req, res) => {
     });
 };
 
-//retrieve all posts from my id and my friends
+//retrieve all posts from my user and my friends
 exports.getPosts = (req, res) => {
   const userId = req.body.userId;
 
@@ -95,4 +95,10 @@ exports.addComment = (req, res) => {
   const postId = req.body.postId;
   const comment = req.body.comment;
   postFunctions.addComment(postId, comment); //add comment with postId in API
+};
+
+exports.reportPost = (req, res) => {
+  const postId = req.body.postId;
+
+  postFunctions.reportPost(postId); //report post
 };

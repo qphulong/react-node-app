@@ -46,6 +46,25 @@ async function addComment(postId, comment) {
   });
 }
 
+async function reportPost(postId) {
+  try {
+    const post = await Post.findOne({ postId });
+    if (post) {
+      //if post is not null
+      const id = post._id;
+
+      const newPostForConsideration = new PostForModeration({
+        post: post,
+      });
+      //add to the report schema
+    } else {
+      console.log(`Post with ID ${postId} not found.`);
+    }
+  } catch (error) {
+    console.error("Error adding like:", error);
+  }
+}
+
 module.exports = {
   addLikeToPost,
   editPost,
