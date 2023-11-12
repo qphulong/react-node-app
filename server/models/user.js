@@ -22,6 +22,11 @@ const userSchema = new mongoose.Schema({
       ref: "User", // 'User' is the model name of the userSchema
     },
   ], // change to avoid circular reference
+
+  isContentModerator: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 //middleware to hash password

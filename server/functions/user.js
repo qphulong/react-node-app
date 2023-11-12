@@ -11,7 +11,7 @@ async function signIn(userId, inputPassword) {
     //check if the existing password is the same as the input password
     console.log("Login successfully!");
 
-    currentUser.set(userId); //set currentUser to this id
+    currentUser.set(user.userId, user.isContentModerator); //set currentUser to this id
   } else {
     console.log("Password doesn't match");
   }
