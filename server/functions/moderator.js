@@ -1,6 +1,9 @@
 const { currentUser } = require("../app");
 const Post = require("../models/post");
 const bcrypt = require("bcrypt");
+const { ModeratedPostRepository } = require("../repositories/moderator");
+
+let repositoryModerator = new ModeratedPostRepository(); //repository for managing posts
 
 async function removePost(postId) {
   if (currentUser.isContentModerator == false) {
@@ -20,6 +23,8 @@ async function removePost(postId) {
     console.error("Error removing post:", error.message);
   }
 }
+
+function consider() {}
 
 module.exports = {
   removePost,
