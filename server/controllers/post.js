@@ -1,6 +1,5 @@
 const Post = require("../models/post");
 const postFunctions = require("../functions/post");
-const path = require("path");
 
 exports.createPost = async (req, res) => {
   const { content, postId, time, deleteAfter, userId } = req.body; //get from json
@@ -40,12 +39,12 @@ exports.createPost = async (req, res) => {
     });
 };
 
-//retrieve all posts from my id and my friends
+//retrieve all posts from my user and my friends
 exports.getPosts = (req, res) => {
   const userId = req.body.userId;
 
   User.findOne({ userId: userId })
-    .populate("friends", "userId") // join friends field (which references to the User schema) and select userId field (of the referenced schema)
+    .populate("friends", "userId") // join friends field (reference to the User schema) and select userId field (of the referenced schema)
     .exec()
     .then((user) => {
       //current user with passed userId
@@ -54,7 +53,7 @@ exports.getPosts = (req, res) => {
         return res.status(404).json({ message: "User not found" });
       }
 
-      // get id values of all Friends (populated above) of the current user
+      // get id values of Friends (populated above) of the current user
       const friends = user.friends.map((friend) => friend._id);
       console.log(friends);
 
@@ -91,5 +90,5 @@ exports.addComment = (req, res) => {
 exports.reportPost = (req, res) => {
   const postId = req.body.postId;
 
-  postFunctions.reportPost(postId);
+  postFunctions.reportPost(postId); //report post
 };

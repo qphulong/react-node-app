@@ -65,7 +65,7 @@ async function reportPost(postId) {
   }
 }
 
-async function addImages() {
+async function addImages(postId) {
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, "uploads/");
@@ -79,6 +79,22 @@ async function addImages() {
   });
 
   const upload = multer({ storage: storage });
+
+  Post.findOne({ postId: postId }, (err, post) => {
+    if (err) {
+      console.error(err);
+    } else {
+      post.addImages(req.files.map((file) => file.path)); //add image to a buffer
+
+      post.save((err, updatedPost) => {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log("New comment added:", updatedPost);
+        }
+      });
+    }
+  });
 }
 
 module.exports = {

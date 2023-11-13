@@ -73,7 +73,13 @@ postSchema.method.addComment = async function (comment) {
   await this.save();
 };
 
-postSchema.methods.deletePost = async function () {
+postSchema.method.addImages = async function (images) {
+  this.images.push(images);
+
+  await this.save();
+};
+
+postSchema.method.deletePost = async function () {
   try {
     // Delete the post from the database
     await this.remove();
