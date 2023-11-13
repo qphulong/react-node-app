@@ -59,7 +59,7 @@ exports.getPosts = (req, res) => {
 
       // find using document _id value
       Post.find({ user: { $in: friends } })
-        .select("content postId time") // Specify the fields you want to retrieve from Post
+        .select("content postId time images") // Specify the fields you want to retrieve from Post
         .then((posts) => {
           res.render("post", { posts: posts });
         })
