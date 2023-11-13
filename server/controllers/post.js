@@ -1,18 +1,9 @@
 const Post = require("../models/post");
 const postFunctions = require("../functions/post");
-const User = require("../models/user");
+const path = require("path");
 
 exports.createPost = async (req, res) => {
-  const {
-    content,
-    postId,
-    time,
-    deleteAfter,
-    likes,
-    comments,
-    userId,
-    imageUrls,
-  } = req.body;
+  const { content, postId, time, deleteAfter, userId } = req.body; //get from json
 
   console.log(userId);
 
@@ -26,9 +17,9 @@ exports.createPost = async (req, res) => {
     postId,
     time,
     deleteAfter,
-    likes,
-    comments,
-    imageUrls,
+    likes: 0,
+    comments: [],
+    images: [],
     user: user,
   }); //create new post
 

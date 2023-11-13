@@ -44,8 +44,8 @@ const postSchema = new mongoose.Schema({
     required: true,
   },
 
-  imageUrls: {
-    type: [String],
+  images: {
+    type: [Buffer],
     validate: {
       validator: function (array) {
         return array.length <= 5;
@@ -61,13 +61,13 @@ postSchema.methods.addLike = async function () {
   await this.save(); //save to database
 };
 
-postSchema.methods.editPost = async function (newContent) {
+postSchema.method.editPost = async function (newContent) {
   this.content = newContent;
 
   await this.save();
 };
 
-postSchema.methods.addComment = async function (comment) {
+postSchema.method.addComment = async function (comment) {
   this.comments.push(comment);
 
   await this.save();

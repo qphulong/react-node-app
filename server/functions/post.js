@@ -1,8 +1,7 @@
 const Post = require("../models/post");
-const PostForModeration = require("../models/postForModeration");
 
 //find a specific posst and a like to it
-async function addLikeToPost(postId) {
+async function addLike(postId) {
   try {
     const post = await Post.findOne({ postId });
     if (post) {
@@ -66,11 +65,28 @@ async function reportPost(postId) {
   }
 }
 
+async function addImages() {
+  const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "uploads/");
+    },
+    filename: function (req, file, cb) {
+      cb(
+        null,
+        file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+      );
+    },
+  });
+
+  const upload = multer({ storage: storage });
+}
+
 module.exports = {
-  addLikeToPost,
+  addLike,
   editPost,
   deletePost,
   run,
   addComment,
+  addImages,
   reportPost,
 };
