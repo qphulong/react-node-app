@@ -24,11 +24,13 @@ const userSchema = new mongoose.Schema({
     isContentModerator: {
         type: Boolean,
         required: true,
+        default: false,
     },
 
     isAdmin: {
         type: Boolean,
         required: true,
+        default: false,
     },
 });
 
