@@ -50,17 +50,25 @@ export class ModeratedPostRepository {
     this.postsForConsideration.insert(post);
   }
 
-  consider() {
+  async consider(res) {
     considerId = this.postsForConsideration.pop();
 
-    this.delete = () => {
+    this.delete = async () => {
       //remove post from schema
       postFunctions.deletePost(this.considerId);
     };
 
-    this.keep = () => {
+    this.keep = async () => {
       //remove from queue only and then do nothing
     };
+
+    let option = res.body.option;
+
+    if (option == "delete") {
+      await this.delete();
+    } else if (option == "keep") {
+      await this.keep();
+    }
 
     postsForConsideration.delete(); //delete from schema
   }
