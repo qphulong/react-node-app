@@ -26,5 +26,5 @@ async function assignModerator(userId) {
 }
 
 module.exports = {
-    assignToModerator,
+    assignModerator,
 };
