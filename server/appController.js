@@ -1,4 +1,4 @@
-export class CurrentUser {
+class CurrentUser {
   userId = "";
   isContentModerator = null;
 
@@ -7,3 +7,7 @@ export class CurrentUser {
     this.isContentModerator = isContentModerator;
   }
 }
+
+module.exports = {
+  CurrentUser,
+};

@@ -11,14 +11,13 @@ class PostQueue {
   head = new PostNode();
 
   constructor() {
-    PostsForConsideration.find({}, (err, documents) => {
-      if (err) {
-        console.error(err);
-      } else {
-        documents.forEach((document) => {
-          this.insert(document); //add to queue
-        });
-      }
+    this.loadPosts();
+  }
+
+  async loadPosts() {
+    const posts = await PostsForConsideration.find({});
+    posts.forEach((post) => {
+      this.insert(post);
     });
   }
 
@@ -43,33 +42,19 @@ class PostQueue {
   }
 }
 
-export class ModeratedPostRepository {
-  postsForConsideration = new PostLinkedList();
+class ModeratedPostRepository {
+  postsForConsideration = new PostQueue();
 
   addForConsideration(post) {
     this.postsForConsideration.insert(post);
   }
 
-  async consider(req) {
-    considerId = this.postsForConsideration.pop();
-
-    this.delete = async () => {
-      //remove post from schema
-      postFunctions.deletePost(this.considerId);
-    };
-
-    this.keep = async () => {
-      //remove from queue only and then do nothing
-    };
-
-    let option = req.body.option;
-
-    if (option == "delete") {
-      await this.delete();
-    } else if (option == "keep") {
-      await this.keep();
-    }
-
-    postsForConsideration.delete(); //delete from schema
-  }
+  delete = async (considerId) => {
+    //remove post from schema (if post violate)
+    await postFunctions.deletePost(considerId);
+  };
 }
+
+module.exports = {
+  ModeratedPostRepository,
+};
