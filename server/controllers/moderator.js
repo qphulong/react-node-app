@@ -57,8 +57,8 @@ exports.working = (req, res) => {
   `);
 };
 
-exports.remove = (req, res) => {
-  moderatorRepo.delete(req.body.considerId);
+exports.remove = async (req, res) => {
+  await postFunctions.deletePost(considerId); //delete from schema
 };
 
 exports.keep = (req, res) => {};

@@ -33,6 +33,7 @@ class PostQueue {
   }
 
   pop() {
+    //get first element and delete from queue
     current = new Node(head);
 
     let temp = head.next;
@@ -48,11 +49,6 @@ class ModeratedPostRepository {
   addForConsideration(post) {
     this.postsForConsideration.insert(post);
   }
-
-  delete = async (considerId) => {
-    //remove post from schema (if post violate)
-    await postFunctions.deletePost(considerId);
-  };
 }
 
 module.exports = {
