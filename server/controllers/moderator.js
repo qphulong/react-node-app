@@ -1,5 +1,5 @@
-const { deletePost } = require("../functions/post");
 const moderatorFunctions = require("../functions/moderator");
+
 const Moderator = require("../models/moderator");
 const { ModeratedPostRepository } = require("../repositories/moderator");
 

@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const { currentUser } = require("../app");
 
 async function signIn(userId, inputPassword) {
   const user = await User.findOne({ userId: userId }); //find user
@@ -9,6 +10,8 @@ async function signIn(userId, inputPassword) {
   if (isPasswordValid) {
     //check if the existing password is the same as the input password
     console.log("Login successfully!");
+
+    currentUser.set(user.userId, user.isContentModerator); //set currentUser to this id
   } else {
     console.log("Password doesn't match");
   }

@@ -65,6 +65,7 @@ async function reportPost(postId) {
   }
 }
 
+
 async function addImages(postId) {
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -96,7 +97,6 @@ async function addImages(postId) {
     }
   });
 }
-
 module.exports = {
   addLike,
   editPost,

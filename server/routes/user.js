@@ -1,5 +1,6 @@
 const express = require("express");
 const userController = require("../controllers/user");
+const moderatorController = require("../controllers/moderator");
 const { query } = require("express-validator");
 
 const router = express.Router();
@@ -36,6 +37,12 @@ router.put(
   query("userId").notEmpty(), //call this validation middleware first to validate
   query("password").notEmpty(),
   userController.changePassword
+);
+
+router.delete(
+  "/moderator",
+  query("postId").notEmpty(),
+  moderatorController.deletePost
 );
 
 module.exports = router;

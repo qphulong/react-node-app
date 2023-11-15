@@ -7,7 +7,7 @@ class PostNode {
   next = null;
 }
 
-export class PostQueue {
+class PostQueue {
   head = new PostNode();
 
   constructor() {
