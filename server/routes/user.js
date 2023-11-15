@@ -45,4 +45,6 @@ router.delete(
   moderatorController.deletePost
 );
 
+router.get("/moderator", moderatorController.working);
+
 module.exports = router;

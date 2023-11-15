@@ -50,7 +50,7 @@ export class ModeratedPostRepository {
     this.postsForConsideration.insert(post);
   }
 
-  async consider(res) {
+  async consider(req) {
     considerId = this.postsForConsideration.pop();
 
     this.delete = async () => {
@@ -62,7 +62,7 @@ export class ModeratedPostRepository {
       //remove from queue only and then do nothing
     };
 
-    let option = res.body.option;
+    let option = req.body.option;
 
     if (option == "delete") {
       await this.delete();

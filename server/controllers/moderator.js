@@ -11,6 +11,6 @@ exports.deletePost = (req, res) => {
 };
 
 exports.working = (req, res) => {
-  moderatorRepo.consider(); //let content moderator consider posts
+  moderatorRepo.consider(req); //let content moderator consider posts
   res.status(300).send("Moderator is considering");
 };
