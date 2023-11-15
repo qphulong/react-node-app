@@ -1,6 +1,8 @@
 const userFunctions = require("../functions/user");
 const User = require("../models/user");
 
+const app = require("../app");
+
 exports.signUp = (req, res) => {
   const userId = req.body.userId;
   const password = req.body.password;
@@ -26,7 +28,7 @@ exports.signIn = (req, res) => {
   const userId = req.body.userId;
   const password = req.body.password;
 
-  userFunctions.signIn(userId, password);
+  userFunctions.signIn(currentUser, userId, password);
 };
 
 exports.changePassword = (req, res) => {

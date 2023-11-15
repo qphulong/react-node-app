@@ -1,11 +1,10 @@
-const { currentUser } = require("../app");
 const Post = require("../models/post");
 const bcrypt = require("bcrypt");
 const { ModeratedPostRepository } = require("../repositories/moderator");
 
 let repositoryModerator = new ModeratedPostRepository(); //repository for managing posts
 
-async function removePost(postId) {
+async function removePost(currentUser, postId) {
   if (currentUser.isContentModerator == false) {
     return; //if not moderator then stop
   }

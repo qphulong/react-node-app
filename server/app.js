@@ -58,8 +58,4 @@ app.get("*", (req, res) => {
 });
 //long
 
-let currentUser = new CurrentUser(); //current user
-
-module.exports = {
-  currentUser,
-};
+exports.currentUser = new CurrentUser(); //current user
