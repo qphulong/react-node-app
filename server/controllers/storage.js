@@ -6,7 +6,7 @@ const upload = multer({
   storage: multer.memoryStorage(),
 });
 
-exports.uploadImage = (req, res) => {
+exports.uploadImages = (req, res) => {
   if (!req.files) {
     return res.status(400).send("Error: No Image found");
   }

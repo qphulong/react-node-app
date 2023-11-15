@@ -1,18 +1,8 @@
 const Post = require("../models/post");
 const postFunctions = require("../functions/post");
-const User = require("../models/user");
 
 exports.createPost = async (req, res) => {
-  const {
-    content,
-    postId,
-    time,
-    deleteAfter,
-    likes,
-    comments,
-    userId,
-    imageUrls,
-  } = req.body;
+  const { content, postId, time, deleteAfter, userId } = req.body; //get from json
 
   console.log(userId);
 
@@ -26,9 +16,9 @@ exports.createPost = async (req, res) => {
     postId,
     time,
     deleteAfter,
-    likes,
-    comments,
-    imageUrls,
+    likes: 0,
+    comments: [],
+    images: [],
     user: user,
   }); //create new post
 
@@ -69,7 +59,7 @@ exports.getPosts = (req, res) => {
 
       // find using document _id value
       Post.find({ user: { $in: friends } })
-        .select("content postId time") // Specify the fields you want to retrieve from Post
+        .select("content postId time images") // Specify the fields you want to retrieve from Post
         .then((posts) => {
           res.render("post", { posts: posts });
         })

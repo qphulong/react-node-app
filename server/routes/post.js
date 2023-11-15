@@ -21,4 +21,6 @@ router.put("/", postController.editPost); //edit post with PUT request
 
 router.post("/comments", postController.addComment); //add comment
 
+router.put("/report", postController.reportPost); //report post
+
 module.exports = router;
