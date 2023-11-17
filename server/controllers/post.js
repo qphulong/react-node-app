@@ -2,7 +2,7 @@ const Post = require("../models/post");
 const postFunctions = require("../functions/post");
 
 exports.createPost = async (req, res) => {
-  const { content, postId, time, deleteAfter, userId } = req.body; //get from json
+  const { content, postId, deleteAfter, userId } = req.body; //get from json
 
   console.log(userId);
 
@@ -14,7 +14,6 @@ exports.createPost = async (req, res) => {
   const post = new Post({
     content,
     postId,
-    time,
     deleteAfter,
     likes: 0,
     comments: [],

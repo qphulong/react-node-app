@@ -22,9 +22,9 @@ const postSchema = new mongoose.Schema({
     maxlength: 100,
   },
 
-  time: {
-    type: String,
-    required: true,
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
 
   deleteAfter: {
@@ -54,6 +54,16 @@ const postSchema = new mongoose.Schema({
     },
   },
 });
+
+postSchema.pre("save", function (next) {
+  //set expires
+  if (this.deleteAfter) {
+    this._ttl = this.deleteAfter * 3600; //expire docs after a number of hours
+  }
+  next();
+});
+
+postSchema.index({ createdAt: 1 }, { expireAfterSeconds: "_ttl" }); //index and conduct expire after seconds
 
 postSchema.methods.addLike = async function () {
   this.likes++;
@@ -87,6 +97,12 @@ postSchema.method.deletePost = async function () {
     console.log(`Post with ID ${this.postId} deleted successfully.`);
   } catch (error) {
     console.error("Error deleting post:", error.message);
+  }
+};
+
+postSchema.method.autoDelete = async function () {
+  if (deleteAfter <= 0) {
+    return;
   }
 };
 
