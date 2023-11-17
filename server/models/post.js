@@ -57,7 +57,7 @@ const postSchema = new mongoose.Schema({
 
 postSchema.pre("save", function (next) {
   //set expires
-  if (this.deleteAfter) {
+  if (this.deleteAfter && this.deleteAfter > 0) {
     this._ttl = this.deleteAfter * 3600; //expire docs after a number of hours
   }
   next();
@@ -97,12 +97,6 @@ postSchema.method.deletePost = async function () {
     console.log(`Post with ID ${this.postId} deleted successfully.`);
   } catch (error) {
     console.error("Error deleting post:", error.message);
-  }
-};
-
-postSchema.method.autoDelete = async function () {
-  if (deleteAfter <= 0) {
-    return;
   }
 };
 
