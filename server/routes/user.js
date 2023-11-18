@@ -51,14 +51,20 @@ router.get("/moderator", (req, res) => {
 });
 
 //keep button (keep a post)
-router.post("/keep", (req, res) => {
+router.put("/moderator/keep", (req, res) => {
   res.status(200).send("Keep function executed");
 });
 
 //remove button (remove a violating post)
-router.post("/remove", moderatorController.deletePost);
+router.put("/moderator/remove", moderatorController.deletePost);
 
 //admin show all users
 router.get("/admin", adminController.showAllUsers);
+
+//assign moderator
+router.put("/admin/assing", adminController.assignModerator);
+
+//unassign moderator
+router.put("/admin/unassign", adminController.unassignModerator);
 
 module.exports = router;
