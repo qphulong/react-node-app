@@ -1,6 +1,7 @@
 const express = require("express");
 const userController = require("../controllers/user");
 const moderatorController = require("../controllers/moderator");
+const adminController = require("../controllers/admin");
 const { query } = require("express-validator");
 
 const router = express.Router();
@@ -56,5 +57,8 @@ router.post("/keep", (req, res) => {
 
 //remove button (remove a violating post)
 router.post("/remove", moderatorController.deletePost);
+
+//admin show all users
+router.get("/admin", adminController.showAllUsers);
 
 module.exports = router;
