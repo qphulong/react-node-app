@@ -62,7 +62,7 @@ router.put("/moderator/remove", moderatorController.deletePost);
 router.get("/admin", adminController.showAllUsers);
 
 //assign moderator
-router.put("/admin/assing", adminController.assignModerator);
+router.put("/admin/assign", adminController.assignModerator);
 
 //unassign moderator
 router.put("/admin/unassign", adminController.unassignModerator);
