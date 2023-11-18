@@ -4,9 +4,12 @@ const { ModeratedPostRepository } = require("../repositories/moderator");
 
 let moderatorRepo = new ModeratedPostRepository(); //use this repository
 
+//delete a violating post
 exports.deletePost = (req, res) => {
   const postId = req.body.postId;
   moderatorFunctions.removePost(postId);
+
+  res.redirect("/moderator");
 };
 
 exports.working = (req, res) => {
@@ -57,8 +60,6 @@ exports.working = (req, res) => {
   `);
 };
 
-exports.remove = async (req, res) => {
-  await postFunctions.deletePost(considerId); //delete from schema
+exports.keep = (req, res) => {
+  res.redirect("/moderator"); //redirect to the working moderator route
 };
-
-exports.keep = (req, res) => {};

@@ -46,15 +46,15 @@ router.delete(
 );
 
 router.get("/moderator", (req, res) => {
-  moderatorController.working;
+  moderatorController.working; //start working
 });
 
-//keep button
+//keep button (keep a post)
 router.post("/keep", (req, res) => {
   res.status(200).send("Keep function executed");
 });
 
-//remove button
+//remove button (remove a violating post)
 router.post("/remove", moderatorController.deletePost);
 
 module.exports = router;
