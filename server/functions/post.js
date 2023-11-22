@@ -39,6 +39,9 @@ async function checkPostLimit(postContent, images) {
 }
 
 async function editPost(postId, newContent) {
+  if (newContent.length > MAX_POST_LENGTH) {
+    throw new Error("Post content exceeds the maximum length of " + MAX_POST_LENGTH + " characters.");
+  }
   await Post.updateOne({ postId: postId }, { content: newContent });
 }
 
