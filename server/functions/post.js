@@ -109,6 +109,9 @@ async function addImages(postId) {
     if (err) {
       console.error(err);
     } else {
+      if (req.files.length > MAX_IMAGES_PER_POST) {
+        throw new Error("You can only upload a maximum of " + MAX_IMAGES_PER_POST + " images per post.");
+      }
       post.addImages(req.files.map((file) => file.path)); //add image to a buffer
 
       post.save((err, updatedPost) => {
