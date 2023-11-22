@@ -1,5 +1,7 @@
 const Post = require("../models/post");
 
+const MAX_LETTERS_LIMIT = 900;
+const MAX_IMAGES_LIMIT = 5;
 //find a specific posst and a like to it
 async function addLike(postId) {
   try {
@@ -13,6 +15,26 @@ async function addLike(postId) {
     }
   } catch (error) {
     console.error("Error adding like:", error);
+  }
+}
+
+async function checkPostLimit(postContent, images) {
+  try {
+    // Check letter limit
+    if (postContent.length > MAX_LETTERS_LIMIT) {
+      throw new Error(`Post content exceeds the maximum limit of ${MAX_LETTERS_LIMIT} characters.`);
+    }
+
+    // Check images limit
+    if (images.length > MAX_IMAGES_LIMIT) {
+      throw new Error(`Exceeded the maximum limit of ${MAX_IMAGES_LIMIT} images per post.`);
+    }
+
+    // If both checks pass, return true
+    return true;
+  } catch (error) {
+    console.error("Error checking post limit:", error.message);
+    return false;
   }
 }
 
@@ -96,6 +118,8 @@ async function addImages(postId) {
     }
   });
 }
+
+
 
 module.exports = {
   addLike,
