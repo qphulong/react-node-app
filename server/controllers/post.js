@@ -1,6 +1,26 @@
 const Post = require("../models/post");
 const postFunctions = require("../functions/post");
+const MAX_LETTERS_LIMIT = 900;
+const MAX_IMAGES_LIMIT = 5;
+async function checkPostLimit(postContent, images) {
+  try {
+    // Check letter limit
+    if (postContent.length > MAX_LETTERS_LIMIT) {
+      throw new Error(`Post content exceeds the maximum limit of ${MAX_LETTERS_LIMIT} characters.`);
+    }
 
+    // Check images limit
+    if (images.length > MAX_IMAGES_LIMIT) {
+      throw new Error(`Exceeded the maximum limit of ${MAX_IMAGES_LIMIT} images per post.`);
+    }
+
+    // If both checks pass, return true
+    return true;
+  } catch (error) {
+    console.error("Error checking post limit:", error.message);
+    return false;
+  }
+}
 exports.createPost = async (req, res) => {
   const { content, postId, deleteAfter, userId } = req.body; //get from json
 

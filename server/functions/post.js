@@ -18,25 +18,7 @@ async function addLike(postId) {
   }
 }
 
-async function checkPostLimit(postContent, images) {
-  try {
-    // Check letter limit
-    if (postContent.length > MAX_LETTERS_LIMIT) {
-      throw new Error(`Post content exceeds the maximum limit of ${MAX_LETTERS_LIMIT} characters.`);
-    }
 
-    // Check images limit
-    if (images.length > MAX_IMAGES_LIMIT) {
-      throw new Error(`Exceeded the maximum limit of ${MAX_IMAGES_LIMIT} images per post.`);
-    }
-
-    // If both checks pass, return true
-    return true;
-  } catch (error) {
-    console.error("Error checking post limit:", error.message);
-    return false;
-  }
-}
 
 async function editPost(postId, newContent) {
   if (newContent.length > MAX_POST_LENGTH) {
