@@ -1,7 +1,6 @@
 const Post = require("../models/post");
-
-const MAX_LETTERS_LIMIT = 900;
-const MAX_IMAGES_LIMIT = 5;
+const MAX_POST_LENGTH = 900;
+const MAX_IMAGES_PER_POST = 5;
 //find a specific posst and a like to it
 async function addLike(postId) {
   try {
@@ -18,12 +17,32 @@ async function addLike(postId) {
   }
 }
 
+exports.checkPostLimit = (postContent = null, images = null) => {
+  try {
+    // Check letter limit
+    if (postContent != null && postContent.length > MAX_LETTERS_LIMIT) {
+      throw new Error(
+        `Post content exceeds the maximum limit of ${MAX_LETTERS_LIMIT} characters.`
+      );
+    }
 
+    // Check images limit
+    if (images != null && images.length > MAX_IMAGES_LIMIT) {
+      throw new Error(
+        `Exceeded the maximum limit of ${MAX_IMAGES_LIMIT} images per post.`
+      );
+    }
+
+    // If both checks pass, return true
+    return true;
+  } catch (error) {
+    console.error("Error checking post limit:", error.message);
+    return false;
+  }
+};
 
 async function editPost(postId, newContent) {
-  if (newContent.length > MAX_POST_LENGTH) {
-    throw new Error("Post content exceeds the maximum length of " + MAX_POST_LENGTH + " characters.");
-  }
+  checkPostLimits(newContent);
   await Post.updateOne({ postId: postId }, { content: newContent });
 }
 
@@ -92,7 +111,11 @@ async function addImages(postId) {
       console.error(err);
     } else {
       if (req.files.length > MAX_IMAGES_PER_POST) {
-        throw new Error("You can only upload a maximum of " + MAX_IMAGES_PER_POST + " images per post.");
+        throw new Error(
+          "You can only upload a maximum of " +
+            MAX_IMAGES_PER_POST +
+            " images per post."
+        );
       }
       post.addImages(req.files.map((file) => file.path)); //add image to a buffer
 
@@ -106,8 +129,6 @@ async function addImages(postId) {
     }
   });
 }
-
-
 
 module.exports = {
   addLike,
