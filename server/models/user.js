@@ -16,6 +16,11 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
 
+    authenticationPassword: {
+        type: String,
+        require: false,
+    },
+
     friends: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User", // 'User' is the model name of the userSchema
@@ -51,5 +56,23 @@ userSchema.pre("save", async function(next) {
         return next(error);
     }
 });
+
+userSchema.pre("save", async function(next) {
+    try {
+        // hash authenticationPassword if only editing / new user
+        if (!this.isModified("authenticationPassword")) {
+            return next();
+        }
+
+        //hash password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(this.authenticationPassword, salt);
+        this.authenticationPassword = hashedPassword;
+        next();
+    } catch (error) {
+        return next(error);
+    }
+});
+
 
 module.exports = mongoose.model("User", userSchema);
