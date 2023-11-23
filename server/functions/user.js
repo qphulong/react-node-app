@@ -68,7 +68,7 @@ async function removeFriend(userId, friendId) {
     }
 }
 
-async function addFriend(userId, friendId, authenticationPassword) {
+async function addFriend(userId, friendId) {
     if (userId === friendId) {
         console.log("Cannot add the same friend");
         return;
@@ -98,14 +98,36 @@ async function addFriend(userId, friendId, authenticationPassword) {
         });
 }
 
-// Function to generate a link to add a friend using UUID
-function generateAddFriendLink(userId) {
+// Function to generate a link to add a friend using UUID and save it to user.friendshipLink
+async function generateAddFriendLink(userId, linkPassword) {
     const linkId = uuid.v4();
-    return `/addFriend/${userId}/${linkId}`;
+
+    try {
+        const user = await User.findOne({ userId: userId });
+
+        if (!user) {
+            console.log("User not found");
+            return null;
+        }
+
+        // Save the linkId to user.friendshipLink
+        user.friendshipLink = {
+            linkId: linkId,
+            password: linkPassword,
+        };
+
+        await user.save();
+
+        // Return the generated link
+        return `/addFriend/${userId}/${linkId}`;
+    } catch (error) {
+        console.error("Error generating addFriend link:", error);
+        return null;
+    }
 }
 
 // Function to accept the link and add a friend if the authentication password is correct
-async function linkAddFriend(userId, authenticationPassword, friendId, linkId) {
+async function linkAddFriend(userId, linkPassword, friendId, linkId) {
     const user = await User.findOne({ userId: userId });
 
     if (!user) {
@@ -120,7 +142,8 @@ async function linkAddFriend(userId, authenticationPassword, friendId, linkId) {
     }
 
     // Check if the authentication password is correct
-    const isPasswordValid = await bcrypt.compare(authenticationPassword, user.friendshipLink.password);
+    const isPasswordValid = await bcrypt.compare(linkPassword, user.friendshipLink.password);
+    //above could be user.friendshipLink.password or friend.friendshipLink.password
 
     if (isPasswordValid) {
         // Add friend if the authentication password is correct

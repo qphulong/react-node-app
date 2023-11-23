@@ -16,9 +16,13 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
 
-    authenticationPassword: {
-        type: String,
-        require: false,
+    friendshipLink: {
+        linkId: {
+            type: String,
+        },
+        password: {
+            type: String,
+        },
     },
 
     friends: [{
