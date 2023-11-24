@@ -1,7 +1,5 @@
 const Post = require("../models/post");
 const postFunctions = require("../functions/post");
-const MAX_LETTERS_LIMIT = 900;
-const MAX_IMAGES_LIMIT = 5;
 
 exports.createPost = async (req, res) => {
   const { content, postId, deleteAfter, userId } = req.body; //get from json
