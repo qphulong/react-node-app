@@ -23,7 +23,7 @@ exports.createPost = async (req, res) => {
     user: user,
   }); //create new post
 
-  postFunctions.checkPostLimit(content, images);
+  postFunctions.checkPostLimit(content, images); //check post limit
 
   post
     .save()
