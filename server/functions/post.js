@@ -1,6 +1,9 @@
 const Post = require("../models/post");
+const Comment = require("../models/comment");
+
 const MAX_LETTERS_LIMIT = 900;
 const MAX_IMAGES_PER_POST = 5;
+
 //find a specific posst and a like to it
 async function addLike(postId) {
   try {
@@ -62,9 +65,17 @@ async function addComment(postId, comment) {
       throw new Error("Post not found");
     }
 
-    post.addComment(comment); // Add comment to the post
-    const updatedPost = await post.save();
-    console.log("New comment added:", updatedPost);
+    const newComment = new Comment({
+      content: comment,
+      user: post.user,
+      likes: 0,
+    });
+
+    await newComment.save(); // Save comment to database
+
+    post.addComment(newComment); // Add comment to the post
+
+    await post.save();
   } catch (err) {
     console.error(err);
   }

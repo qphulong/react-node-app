@@ -65,7 +65,7 @@ postSchema.pre("save", function (next) {
 
 postSchema.index({ createdAt: 1 }, { expireAfterSeconds: "_ttl" }); //index and conduct expire after seconds
 
-postSchema.methodss.addLike = async function () {
+postSchema.methods.addLike = async function () {
   this.likes++;
 
   await this.save(); //save to database

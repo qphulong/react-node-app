@@ -4,8 +4,6 @@ const postFunctions = require("../functions/post");
 exports.createPost = async (req, res) => {
   const { content, postId, deleteAfter, userId } = req.body; //get from json
 
-  console.log(userId);
-
   const user = await User.findOne({ userId: userId }); //find user
   if (!user) {
     return res.status(400).json({ message: "User not found" });
