@@ -35,19 +35,11 @@ app.set("view engine", "ejs"); //set view engine for ejs file
 app.use(bodyParser.json()); //middleware to interpret json
 app.use("/posts", postRoute); //route for posts
 
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello from the backend!" });
-});
-
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-});
+postFunctions.run(); //run change watch for mongodb
 
 app.use("/user", userRoute); //for route user
 
 app.use("/storage", storageRoute); //storage route
-
-postFunctions.run(); //run change watch for mongodb
 
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, "../client/build")));
@@ -57,5 +49,9 @@ app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
 });
 //long
+
+app.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
+});
 
 exports.currentUser = new CurrentUser(); //current user

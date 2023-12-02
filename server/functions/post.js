@@ -55,21 +55,19 @@ async function run() {
 }
 
 async function addComment(postId, comment) {
-  Post.findOne({ postId: postId }, (err, post) => {
-    if (err) {
-      console.error(err);
-    } else {
-      post.addComment(comment); //add comment to the post
+  try {
+    const post = await Post.findOne({ postId: postId });
 
-      post.save((err, updatedPost) => {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log("New comment added:", updatedPost);
-        }
-      });
+    if (!post) {
+      throw new Error("Post not found");
     }
-  });
+
+    post.addComment(comment); // Add comment to the post
+    const updatedPost = await post.save();
+    console.log("New comment added:", updatedPost);
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 async function reportPost(postId) {

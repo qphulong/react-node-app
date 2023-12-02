@@ -65,31 +65,31 @@ postSchema.pre("save", function (next) {
 
 postSchema.index({ createdAt: 1 }, { expireAfterSeconds: "_ttl" }); //index and conduct expire after seconds
 
-postSchema.methods.addLike = async function () {
+postSchema.methodss.addLike = async function () {
   this.likes++;
 
   await this.save(); //save to database
 };
 
-postSchema.method.editPost = async function (newContent) {
+postSchema.methods.editPost = async function (newContent) {
   this.content = newContent;
 
   await this.save();
 };
 
-postSchema.method.addComment = async function (comment) {
+postSchema.methods.addComment = async function (comment) {
   this.comments.push(comment);
 
   await this.save();
 };
 
-postSchema.method.addImages = async function (images) {
+postSchema.methods.addImages = async function (images) {
   this.images.push(images);
 
   await this.save();
 };
 
-postSchema.method.deletePost = async function () {
+postSchema.methods.deletePost = async function () {
   try {
     // Delete the post from the database
     await this.remove();
