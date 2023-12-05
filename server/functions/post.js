@@ -132,7 +132,7 @@ async function addImages(postId) {
         if (err) {
           console.error(err);
         } else {
-          console.log("New comment added:", updatedPost);
+          console.log("New post added:", updatedPost);
         }
       });
     }
