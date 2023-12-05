@@ -11,11 +11,18 @@ const upload = multer({
   },
 });
 
-router.post("/upload", upload.single("file"), (req, res) => {
-  const file = req.file;
-  console.log(req.file);
-  console.log("Uploaded file:", file.filename);
-  res.send("File uploaded successfully!");
+router.post("/upload", upload.array("files", 5), (req, res) => {
+  const uploadedFiles = req.files;
+
+  if (!uploadedFiles || uploadedFiles.length === 0) {
+    return res.status(400).send("No files were uploaded.");
+  }
+
+  uploadedFiles.forEach((file) => {
+    console.log("Uploaded file:", file.filename);
+  });
+
+  res.send("Files uploaded successfully!");
 }); //upload image
 
 // router.post("/download", storageController.retrieveImages);
