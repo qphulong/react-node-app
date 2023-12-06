@@ -1,5 +1,7 @@
 const express = require("express");
 const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
 
 const router = express.Router();
 
@@ -20,10 +22,32 @@ router.post("/upload", upload.array("files", 5), (req, res) => {
 
   uploadedFiles.forEach((file) => {
     console.log("Uploaded file:", file.filename);
+
+    // get the old path of the uploaded file
+    const oldPath = path.join(__dirname, "..", file.path);
+
+    // get the new path with the correct extension
+    const newFileNameWithExt = `${file.filename}${path.extname(
+      file.originalname
+    )}`;
+    const newPath = path.join(__dirname, "..", "uploads", newFileNameWithExt);
+
+    // rname the file with the correct extension
+    fs.rename(oldPath, newPath, (err) => {
+      if (err) {
+        console.error("Error renaming file:", err);
+      }
+    });
   });
 
   res.send("Files uploaded successfully!");
-}); //upload image
+
+  fs.unlink(oldPath, (err) => {
+    if (err) {
+      console.error("Error deleting file:", err);
+    }
+  });
+});
 
 router.use("/upload", express.static("uploads"));
 
