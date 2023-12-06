@@ -25,6 +25,6 @@ router.post("/upload", upload.array("files", 5), (req, res) => {
   res.send("Files uploaded successfully!");
 }); //upload image
 
-// router.post("/download", storageController.retrieveImages);
+router.use("/upload", express.static("uploads"));
 
 module.exports = router;
