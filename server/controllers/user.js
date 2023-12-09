@@ -53,3 +53,19 @@ exports.removeFriend = (req, res) => {
 
   userFunctions.removeFriend(userId, friendId);
 };
+
+exports.friendLink = (req, res) => {
+  const userId = req.body.userId;
+  const password = req.body.password;
+
+  userFunctions.generateAddFriendLink(userId, password);
+};
+
+exports.acceptFriendLink = (req, res) => {
+  const userId = req.body.userId;
+  const friendId = req.body.friendId;
+  const linkId = req.body.linkId;
+  const linkPassword = req.body.linkPassword;
+
+  userFunctions.linkAddFriend(userId, linkPassword, friendId, linkId);
+};
