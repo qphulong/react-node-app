@@ -65,11 +65,11 @@ exports.friendLink = async (req, res) => {
   });
 };
 
-exports.acceptFriendLink = (req, res) => {
+exports.acceptFriendLink = async (req, res) => {
   const userId = req.body.userId;
   const friendId = req.body.friendId;
   const linkId = req.body.linkId;
   const linkPassword = req.body.linkPassword;
 
-  userFunctions.linkAddFriend(userId, linkPassword, friendId, linkId);
+  await userFunctions.linkAddFriend(userId, linkPassword, friendId, linkId);
 };
