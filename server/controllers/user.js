@@ -54,11 +54,15 @@ exports.removeFriend = (req, res) => {
   userFunctions.removeFriend(userId, friendId);
 };
 
-exports.friendLink = (req, res) => {
+exports.friendLink = async (req, res) => {
   const userId = req.body.userId;
   const password = req.body.password;
 
-  userFunctions.generateAddFriendLink(userId, password);
+  const link = await userFunctions.generateAddFriendLink(userId, password);
+
+  res.json({
+    friendLink: link,
+  });
 };
 
 exports.acceptFriendLink = (req, res) => {

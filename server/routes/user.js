@@ -67,4 +67,8 @@ router.put("/admin/assign", adminController.assignModerator);
 //unassign moderator
 router.put("/admin/unassign", adminController.unassignModerator);
 
+router.put("/add-friends", userController.friendLink);
+
+router.post("/add-friends", userController.acceptFriendLink);
+
 module.exports = router;

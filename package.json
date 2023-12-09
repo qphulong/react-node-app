@@ -2,10 +2,11 @@
     "name": "react-node-app",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "app.js",
     "scripts": {
-        "start": "node server/index.js",
-        "build": "cd client && npm install && npm run build"
+        "server": "npx nodemon server/app.js",
+        "client": "cd client && npm start",
+        "run": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
     },
     "engines": {
         "node": "20.8.0"
@@ -14,6 +15,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "concurrently": "^8.2.2",
         "cors": "^2.8.5",
         "express": "^4.18.2",
         "mysql": "^2.18.1",

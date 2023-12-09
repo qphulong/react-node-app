@@ -14,7 +14,7 @@ const storageRoute = require("./routes/storage");
 
 const { CurrentUser } = require("./appController");
 
-app.use("cors");
+app.use(cors());
 
 dotenv.config();
 const PORT = process.env.PORT || 3001;
