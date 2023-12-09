@@ -8,9 +8,6 @@ const router = express.Router();
 const upload = multer({
   dest: "uploads/",
   array: "images", //array
-  limits: {
-    fileCount: 5, // Limit to 5 files
-  },
 });
 
 router.post("/upload", upload.array("files", 5), (req, res) => {
