@@ -126,7 +126,7 @@ async function generateAddFriendLink(userId, linkPassword) {
   }
 }
 
-// Function to accept the link and add a friend if the authentication password is correct
+// Function to accept the link and add a friend (person ưhwo is adding) if the authentication password is correct
 async function linkAddFriend(userId, linkPassword, friendId, linkId) {
   const user = await User.findOne({ userId: userId });
 
@@ -142,10 +142,8 @@ async function linkAddFriend(userId, linkPassword, friendId, linkId) {
   }
 
   // Check if the authentication password is correct
-  const isPasswordValid = await bcrypt.compare(
-    linkPassword,
-    user.friendshipLink.password
-  );
+  console.log(linkPassword, user.friendshipLink.password);
+  const isPasswordValid = linkPassword === user.friendshipLink.password;
   //above could be user.friendshipLink.password or friend.friendshipLink.password
 
   if (isPasswordValid) {
