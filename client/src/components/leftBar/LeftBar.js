@@ -48,6 +48,7 @@ const LeftBar = () => {
                 <div className='user'>
                     <img src='https://images.pexels.com/photos/2055500/pexels-photo-2055500.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' alt=''/>
                     <span>Jony Doe</span>
+                    <MoreHorizIcon/>
                 </div>
             </div>
         </div>
