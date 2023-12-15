@@ -1,5 +1,6 @@
 import React from "react";
 import Login from "./pages/login/Login";
+import Register from "./pages/register/Register";
 
 function App() {
   // const [data, setData] = React.useState(null);
