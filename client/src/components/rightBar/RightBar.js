@@ -14,9 +14,10 @@ function RightBar(){
                                 <span>TMK </span>    
                                 Changed their cover picture
                             </p>
+                            <span>1 min ago</span>
                         </div>
 
-                        <span>1 min ago</span>
+                       
                     </div>
 
                     <div className='user'>
@@ -27,9 +28,10 @@ function RightBar(){
                                 <span>TMK </span>    
                                 Changed their cover picture
                             </p>
+                            <span>1 min ago</span>
                         </div>
 
-                        <span>1 min ago</span>
+                        
                     </div>
 
                     <div className='user'>
@@ -40,9 +42,10 @@ function RightBar(){
                                 <span>TMK </span>    
                                 Changed their cover picture
                             </p>
+                            <span>1 min ago</span>
                         </div>
 
-                        <span>1 min ago</span>
+                        
                     </div>
 
                     <div className='user'>
@@ -53,9 +56,10 @@ function RightBar(){
                                 <span>TMK </span>    
                                 Changed their cover picture
                             </p>
+                            <span>1 min ago</span>
                         </div>
 
-                        <span>1 min ago</span>
+                        
                     </div>
                 </div>
 

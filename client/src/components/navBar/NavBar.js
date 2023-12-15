@@ -10,19 +10,20 @@ const NavBar = () => {
         <div className='navBar'>
             <div className='left'>
                 <Link to = '/' style={{textDecoration: 'None'}}>
-                    <span>OnlyMe</span>
+                    <div className='logo'>
+                        <span>OnlyMe</span>
+                    </div>
                 </Link>
-                <HomeOutlinedIcon/>
-                <Brightness6Icon/>
-
-                <div className='dateTime'>
+                <HomeOutlinedIcon style={{ fontSize: 30 }}/>
+                <Brightness6Icon style={{ fontSize: 30 }}/>
+            </div>
+            <div className='dateTime'>
                     14th December 2023
-                </div>
             </div>
             <div className='right'>
-                <PersonOutlineOutlinedIcon/>
-                <EmailOutlinedIcon/>
-                <NotificationsNoneOutlinedIcon/>
+                <PersonOutlineOutlinedIcon style={{ fontSize: 30 }}/>
+                <EmailOutlinedIcon style={{ fontSize: 30 }}/>
+                <NotificationsNoneOutlinedIcon style={{ fontSize: 30 }}/>
 
                 <div className='user'>
                     <img src='https://images.pexels.com/photos/2055500/pexels-photo-2055500.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' alt=''/>
