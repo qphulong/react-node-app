@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital@0;1&family=Lily+Script+One&display=swap');
+
+body {
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+
 .login{
 height: 100vh;
 background-color: rgb(193,190,255);
@@ -25,7 +32,8 @@ justify-content: center;
             h1{
                 font-size: 60px;
                 line-height: 100px;
-                
+                font-family: 'Lily Script One', sans-serif;
+                font-weight: 400;
             }
 
             p{
