@@ -4,9 +4,7 @@ function RightBar(){
     return (
         <div className = "rightBar">
             <div className='container'>
-                
-
-                <div className='item'>
+                <div className='latest-activites'>
                     <span>Latest Activities</span>
                     <div className='user'>
                         <div className='userInfo'>
@@ -61,7 +59,7 @@ function RightBar(){
                     </div>
                 </div>
 
-                <div className='item'>
+                <div className='online-friends'>
                     <span>Online Friends</span>
 
                     <div className='user'>

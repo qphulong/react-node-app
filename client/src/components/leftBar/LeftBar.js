@@ -43,7 +43,7 @@ const LeftBar = () => {
                     </div>
                 </div>
                 <div className='button-container'>
-                    <Button>Tweet</Button>
+                    <button>Tweet</button>
                 </div>
                 
 

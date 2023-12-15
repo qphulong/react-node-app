@@ -32,14 +32,17 @@
         }
         .button-container{
             text-align: center;
+            margin-top: 40px;
             button{
                 background-color: #B26457;
                 color: white;
-                border-radius: 20px;
+                border: none;
+                justify-content: center;
+                align-items: center;
+                border-radius: 30px;
                 width: 150px;
-                height: 30px;
-                margin-top: 40px;
-                padding: 25px 30px 25px 30px;
+                padding: 15px 25px;
+                
             }
     
         }
