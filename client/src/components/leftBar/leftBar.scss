@@ -1,3 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital@0;1&family=Lily+Script+One&display=swap');
+
+.leftBar{
+    font-family: 'Josefin Sans', sans-serif;
+    margin: 0;
+}
+
+
 .leftBar{
     flex: 2;
     position: sticky;
@@ -8,35 +16,64 @@
         .menu{
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 30px;
+            
             .item{
-            display: flex;
-            align-items: center;
-            gap: 10px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 25px;
                 span{
-
-                }
+                    display: inline-block;
+                    margin: 0;
+                    padding-top: 5px;
+                }     
             }
         }
-
-        button{
-            background-color: black;
-            border-radius: 20px;
-            width: 150px;
-            height: 30px;
-            margin-top: 150px;
+        .button-container{
+            text-align: center;
+            button{
+                background-color: #B26457;
+                color: white;
+                border-radius: 20px;
+                width: 150px;
+                height: 30px;
+                margin-top: 40px;
+                padding: 25px 30px 25px 30px;
+            }
+    
         }
-
+        
         .user{
+            margin-top: 20px;
             display: flex;
+            position: absolute;
+            bottom: 0;
+            margin-bottom: 20px;
             align-items: center;
+            flex-direction: row;
             gap: 10px;
             font-weight: 700;
             img{
-                width: 30px;
-                height: 30px;
+                width: 50px;
+                height: 50px;
                 border-radius: 50%;
                 object-fit: cover;
+            }
+            .user-info{
+                
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                .user-name{
+                    font-size: 18px;
+                    font-weight: 600;
+                }
+
+                .user-email{
+                    font-size: 16px;
+                    font-weight: 500;
+                }
             }
         }
     }

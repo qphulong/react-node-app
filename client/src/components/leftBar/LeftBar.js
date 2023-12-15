@@ -13,41 +13,47 @@ const LeftBar = () => {
             <div className='container'>
                 <div className='menu'>
                     <div className='item'>
-                        <HomeOutlinedIcon/>
+                        <HomeOutlinedIcon style={{ fontSize: 30 }}/>
                         <span>Home</span>
                     </div>
 
                     <div className='item'>
-                        <NotificationsNoneOutlinedIcon/>
+                        <NotificationsNoneOutlinedIcon style={{ fontSize: 30 }}/>
                         <span>Notifications</span>
                     </div>
 
                     <div className='item'>
-                        <PersonOutlineOutlinedIcon  />
+                        <PersonOutlineOutlinedIcon style={{ fontSize: 30 }} />
                         <span>Profile</span>
                     </div>
 
                     <div className='item'>
-                        <PeopleIcon/>
+                        <PeopleIcon style={{ fontSize: 30 }}/>
                         <span>Friends</span>
                     </div>
 
                     <div className='item'>
-                        <PersonAddIcon/>
+                        <PersonAddIcon style={{ fontSize: 30 }}/>
                         <span>Add Friends</span>
                     </div>
 
                     <div className='item'>
-                        <DensitySmallIcon/>
+                        <DensitySmallIcon style={{ fontSize: 30 }}/>
                         <span>More</span>
                     </div>
                 </div>
-
-                <Button>Tweet</Button>
+                <div className='button-container'>
+                    <Button>Tweet</Button>
+                </div>
+                
 
                 <div className='user'>
                     <img src='https://images.pexels.com/photos/2055500/pexels-photo-2055500.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' alt=''/>
-                    <span>Jony Doe</span>
+                    <div className='user-info'>
+                        <span className='user-name'>Jony Doe</span>
+                        <span className='user-email'>@jony_doe2003</span>
+                    </div>
+                    
                     <MoreHorizIcon/>
                 </div>
             </div>
