@@ -5,7 +5,7 @@ const Login = () => {
         <div className='login'>
             <div className='card'>
                 <div className='left'>
-                    <h1>Only me</h1>
+                    <h1>OnlyMe</h1>
                     <p>
                     Share unforgettable memories and daily life stories only for your families and friends here.
                     </p>
