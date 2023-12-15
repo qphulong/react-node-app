@@ -1,0 +1,39 @@
+.leftBar{
+    .container{
+        padding: 20px;
+        .menu{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            .item{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+                span{
+
+                }
+            }
+        }
+
+        button{
+            background-color: black;
+            border-radius: 20px;
+            width: 150px;
+            height: 30px;
+            margin-top: 150px;
+        }
+
+        .user{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            img{
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+        }
+    }
+}
