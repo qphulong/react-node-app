@@ -6,11 +6,9 @@ const Register = () => {
         <div className='register'>
             <div className='card'>
                 <div className='left'>
-                    <h1>Lama Social</h1>
+                    <h1>OnlyMe</h1>
                     <p>
-                        Hello Worlds Hello Worlds Hello Worlds Hello Worlds Hello Worlds
-                        Hello Worlds Hello Worlds Hello Worlds Hello Worlds Hello Worlds
-                        Hello Worlds Hello Worlds Hello Worlds Hello Worlds Hello Worlds
+                    Share unforgettable memories and daily life stories only for your families and friends here.
                     </p>
                     <span>Do you have an account?</span>
                     <Link to='/login'>

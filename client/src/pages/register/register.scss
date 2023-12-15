@@ -1,6 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital@0;1&family=Lily+Script+One&display=swap');
+
+.register {
+    font-family: 'Josefin Sans', sans-serif;
+    margin: 0;
+}
+
+
 .register{
     height: 100vh;
-    background-color: rgb(193,190,255);
+    background-color: #B26457;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -24,27 +32,30 @@
                 color: white;
     
                 h1{
-                    font-size: 80px;
+                    font-size: 60px;
                     line-height: 100px;
+                    font-family: 'Lily Script One', sans-serif;
+                    font-weight: 400;
                 }
     
                 p{
-    
+                    font-size: 16px;
                 }
     
                 span{
-                    font-size: 14px;
+                    font-size: 16px;
                 }
     
                 button{
                     width: 50%;
                     padding: 10px;
+                    margin-top: 60px;
                     border: none;
                     background-color: white;
-                    color: rebeccapurple;
+                    color: #B26457;
                     font-weight: bold;
                     cursor: pointer;
-                }
+                    border-radius: 30px;}
             }
     
             .right{
@@ -52,29 +63,33 @@
                 padding: 50px;
                 display: flex;
                 flex-direction: column;
-                gap: 50px;
+                gap: 20px;
                 justify-content: center;
                 h1{
-                    color: #555;
+                    color: #B26457;
+                    font-size: 40px;
                 }
                 form{
                     display: flex;
                     flex-direction: column;
-                    gap: 30px;
+                    gap: 10px;
                     input{
                         border: none;
                         border-bottom: 1px solid lightgrey;
                         padding: 20px 10px;
+                        font-family: 'Josefin Sans', sans-serif;
                     }
     
                     button{
                         width: 50%;
                         padding: 10px;
+                        margin-top: 30px;
                         border: none;
-                        background-color: aquamarine;
-                        color: wheat;
+                        background-color: #B26457;
+                        color: white;
                         font-weight: bold;
                         cursor: pointer;
+                        border-radius: 30px;
                     }
                 }
             }
