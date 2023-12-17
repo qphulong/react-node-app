@@ -90,3 +90,11 @@ exports.reportPost = (req, res) => {
 
   postFunctions.reportPost(postId); //report post
 };
+
+exports.getImages = async (req, res) => {
+  const postId = req.body.postId;
+
+  const post = await Post.findOne({ postId: postId });
+
+  res.json({ images: post.retrieveImages() });
+};

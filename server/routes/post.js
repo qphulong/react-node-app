@@ -23,4 +23,6 @@ router.post("/comments", postController.addComment); //add comment
 
 router.put("/report", postController.reportPost); //report post
 
+router.get("/images", postController.getImages); //get image links of a post
+
 module.exports = router;

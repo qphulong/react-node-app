@@ -73,6 +73,25 @@ postSchema.methods.addComment = async function (comment) {
   await this.save();
 };
 
+postSchema.methods.retrieveImages = function () {
+  // retrieve all images belong to this post
+  // for all files in the uploads / {postId} folder
+  const fs = require("fs");
+  const path = require("path");
+  const files = fs.readdirSync("uploads/" + this.postId);
+
+  files.forEach((file) => {
+    const filePath = path.join(directoryPath, file);
+    if (fs.statSync(filePath).isDirectory()) {
+      getAllFiles(filePath, filesList);
+    } else {
+      filesList.push(filePath);
+    }
+  });
+
+  return filesList;
+};
+
 postSchema.methods.deletePost = async function () {
   try {
     // Delete the post from the database
