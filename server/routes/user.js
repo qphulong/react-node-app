@@ -71,4 +71,6 @@ router.put("/add-friends", userController.friendLink);
 
 router.post("/add-friends", userController.acceptFriendLink);
 
+router.put("/social-media", userController.addSocialMedia);
+
 module.exports = router;

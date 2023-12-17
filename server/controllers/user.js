@@ -73,3 +73,17 @@ exports.acceptFriendLink = async (req, res) => {
 
   await userFunctions.linkAddFriend(userId, linkPassword, friendId, linkId);
 };
+
+exports.addSocialMedia = async (req, res) => {
+  const userId = req.body.userId;
+  const link = req.body.link;
+
+  const user = await User.findOne({ userId: userId });
+
+  if (!user) {
+    console.log("User not found");
+    return;
+  }
+
+  user.addSocialMedia(link);
+};

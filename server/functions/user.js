@@ -10,7 +10,6 @@ async function signIn(currentUser, userId, inputPassword) {
   if (isPasswordValid) {
     //check if the existing password is the same as the input password
     console.log("Login successfully!");
-
     currentUser.set(user.userId, user.isContentModerator); //set currentUser to this id
   } else {
     console.log("Password doesn't match");
@@ -144,7 +143,6 @@ async function linkAddFriend(userId, linkPassword, friendId, linkId) {
   // Check if the authentication password is correct
   console.log(linkPassword, user.friendshipLink.password);
   const isPasswordValid = linkPassword === user.friendshipLink.password;
-  //above could be user.friendshipLink.password or friend.friendshipLink.password
 
   if (isPasswordValid) {
     // Add friend if the authentication password is correct
