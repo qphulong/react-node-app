@@ -43,16 +43,6 @@ const postSchema = new mongoose.Schema({
     ref: "User", //reference to another schema
     required: true,
   },
-
-  images: {
-    type: [Buffer],
-    validate: {
-      validator: function (array) {
-        return array.length <= 5;
-      },
-      message: "Too many images. Maximum allowed is 5.",
-    },
-  },
 });
 
 postSchema.pre("save", function (next) {
@@ -79,12 +69,6 @@ postSchema.methods.editPost = async function (newContent) {
 
 postSchema.methods.addComment = async function (comment) {
   this.comments.push(comment);
-
-  await this.save();
-};
-
-postSchema.methods.addImages = async function (images) {
-  this.images.push(images);
 
   await this.save();
 };

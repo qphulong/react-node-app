@@ -20,19 +20,12 @@ async function addLike(postId) {
   }
 }
 
-exports.checkPostLimit = (postContent = null, images = null) => {
+exports.checkPostLimit = (postContent = null) => {
   try {
     // Check letter limit
     if (postContent != null && postContent.length > MAX_LETTERS_LIMIT) {
       throw new Error(
         `Post content exceeds the maximum limit of ${MAX_LETTERS_LIMIT} characters.`
-      );
-    }
-
-    // Check images limit
-    if (images != null && images.length > MAX_IMAGES_LIMIT) {
-      throw new Error(
-        `Exceeded the maximum limit of ${MAX_IMAGES_LIMIT} images per post.`
       );
     }
 
@@ -100,41 +93,50 @@ async function reportPost(postId) {
   }
 }
 
-async function addImages(postId) {
-  const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, "uploads/");
-    },
-    filename: function (req, file, cb) {
-      cb(
-        null,
-        file.fieldname + "-" + Date.now() + path.extname(file.originalname)
-      );
-    },
+async function addImages(postId, uploadedFiles) {
+  const upload = multer({
+    dest: "uploads/",
+    array: "images" + postId, //array
   });
 
-  const upload = multer({ storage: storage });
+  upload.array("images" + postId, 5);
 
-  Post.findOne({ postId: postId }, (err, post) => {
-    if (err) {
-      console.error(err);
-    } else {
-      if (req.files.length > MAX_IMAGES_PER_POST) {
-        throw new Error(
-          "You can only upload a maximum of " +
-            MAX_IMAGES_PER_POST +
-            " images per post."
-        );
+  if (!uploadedFiles || uploadedFiles.length === 0) {
+    return res.status(400).send("No files were uploaded.");
+  }
+
+  uploadedFiles.forEach((file) => {
+    console.log("Uploaded file:", file.filename);
+
+    // get the old path of the uploaded file
+    const oldPath = path.join(__dirname, "..", file.path);
+
+    // get the new path with the correct extension
+    const newFileNameWithExt = `${file.filename}${path.extname(
+      file.originalname
+    )}`;
+    const newPath = path.join(
+      __dirname,
+      "..",
+      "uploads",
+      postId,
+      newFileNameWithExt
+    );
+
+    // rename the file with the correct extension
+    fs.rename(oldPath, newPath, (err) => {
+      if (err) {
+        console.error("Error renaming file:", err);
       }
-      post.addImages(req.files.map((file) => file.path)); //add image to a buffer
+    });
+  });
 
-      post.save((err, updatedPost) => {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log("New post added:", updatedPost);
-        }
-      });
+  res.send("Files uploaded successfully!");
+
+  // delete the one with wrong extension
+  fs.unlink(oldPath, (err) => {
+    if (err) {
+      console.error("Error deleting file:", err);
     }
   });
 }

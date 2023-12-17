@@ -86,6 +86,7 @@ userSchema.pre("save", async function (next) {
   }
 });
 
+// dùng với frontend
 userSchema.methods.classifySocialNetwork = function (link) {
   // regex to match the social network
   const facebookRegex = /facebook/;

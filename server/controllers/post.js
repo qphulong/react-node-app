@@ -15,11 +15,10 @@ exports.createPost = async (req, res) => {
     deleteAfter,
     likes: 0,
     comments: [],
-    images: [],
     user: user,
   }); //create new post
 
-  postFunctions.checkPostLimit(content, images); //check post limit
+  postFunctions.checkPostLimit(content); //check post limit
 
   post
     .save()
@@ -58,7 +57,7 @@ exports.getPosts = (req, res) => {
 
       // find using document _id value
       Post.find({ user: { $in: friends } })
-        .select("content postId time images") // Specify the fields you want to retrieve from Post
+        .select("content postId time") // Specify the fields you want to retrieve from Post
         .then((posts) => {
           res.render("post", { posts: posts });
         })

@@ -7,10 +7,11 @@ const router = express.Router();
 
 const upload = multer({
   dest: "uploads/",
-  array: "images", //array
+  array: "images", //array of images
 });
 
-router.post("/upload", upload.array("files", 5), (req, res) => {
+router.post("/upload", upload.array("images", 5), (req, res) => {
+  //route này để upload tối đa 5 file
   const uploadedFiles = req.files;
 
   if (!uploadedFiles || uploadedFiles.length === 0) {
