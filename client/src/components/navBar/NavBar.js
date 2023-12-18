@@ -5,7 +5,13 @@ import Brightness6Icon from '@mui/icons-material/Brightness6';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import { DarkModeContext } from '../../context/darkModeContext';
+import { useContext } from 'react';
 const NavBar = () => {
+
+    const {darkMode,toggle} = useContext(DarkModeContext);
+
     return (
         <div className='navBar'>
             <div className='left'>
@@ -15,7 +21,8 @@ const NavBar = () => {
                     </div>
                 </Link>
                 <HomeOutlinedIcon style={{ fontSize: 30 }}/>
-                <Brightness6Icon style={{ fontSize: 30 }}/>
+                {darkMode ? <Brightness6Icon style={{ fontSize: 30 }} onClick={toggle}/>  
+                          : <WbSunnyIcon style={{ fontSize: 30 }} onClick={toggle}/>}
             </div>
             <div className='dateTime'>
                     14th December 2023

@@ -13,17 +13,23 @@ import LeftBar from "./components/leftBar/LeftBar"
 import Home from "./pages/home/Home"
 import Profile from "./pages/profile/Profile"
 import { Navigate } from "react-router-dom";
+import { DarkModeContext } from "./context/darkModeContext";
+import { useContext } from "react";
 function App() {
 
   //Protected Route
   const currentUser = true
+
+  //get Context
+  const {darkMode} = useContext(DarkModeContext);
+  console.log(darkMode);
 
   //Layout for main page
   //Outlet duoc su dung trong viec quan ly cac route long nhau
   //Layout contains outlet. Cac route con nhu Home, Add friends, Profile se duoc hien thi trong outlet
   const Layout = () => {
     return(
-      <div className="theme-dark">
+      <div className={`theme-${darkMode ? 'dark' : 'light'}`}>
         <NavBar/>
         <div style={{display: "flex"}}>
             <LeftBar/>
