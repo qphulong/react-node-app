@@ -5,13 +5,14 @@ const fs = require("fs");
 
 const router = express.Router();
 
+// upload images for the post
 const upload = multer({
-  dest: "uploads/",
-  array: "images", //array of images
+  array: "images", // field array of images when passing through the API
 });
 
-router.post("/upload", upload.array("images", 5), (req, res) => {
-  //route này để upload tối đa 5 file
+router.post("/upload/:postId", upload.array("images", 5), (req, res) => {
+  const postId = req.params.postId; // Assuming postId is passed in the URL
+
   const uploadedFiles = req.files;
 
   if (!uploadedFiles || uploadedFiles.length === 0) {
@@ -21,16 +22,22 @@ router.post("/upload", upload.array("images", 5), (req, res) => {
   uploadedFiles.forEach((file) => {
     console.log("Uploaded file:", file.filename);
 
-    // get the old path of the uploaded file
+    // Construct the new path with postId in the folder name
+    const folderPath = path.join(__dirname, "..", "uploads", `${postId}`);
+    if (!fs.existsSync(folderPath)) {
+      fs.mkdirSync(folderPath, { recursive: true });
+    }
+
+    // Get the old path of the uploaded file
     const oldPath = path.join(__dirname, "..", file.path);
 
-    // get the new path with the correct extension
+    // Get the new path with the correct extension and postId
     const newFileNameWithExt = `${file.filename}${path.extname(
       file.originalname
     )}`;
-    const newPath = path.join(__dirname, "..", "uploads", newFileNameWithExt);
+    const newPath = path.join(folderPath, newFileNameWithExt);
 
-    // rname the file with the correct extension
+    // Rename the file with the correct extension and postId
     fs.rename(oldPath, newPath, (err) => {
       if (err) {
         console.error("Error renaming file:", err);
@@ -39,12 +46,6 @@ router.post("/upload", upload.array("images", 5), (req, res) => {
   });
 
   res.send("Files uploaded successfully!");
-
-  fs.unlink(oldPath, (err) => {
-    if (err) {
-      console.error("Error deleting file:", err);
-    }
-  });
 });
 
 router.use("/upload", express.static("uploads"));
