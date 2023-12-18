@@ -27,19 +27,38 @@
                 }
 
                 input{
-                    width: 100%;
+                    height: 50px;
+                    width: 80%;
                     padding: 10px;
-                    margin: 10px;
+                    margin-left: 15px;
+                    margin-right: 15px;
+                    margin-bottom: 10px;
                     border: 0;
+                    border-radius: 25px;
+                    background-color: themed('bg');
                 }
 
                 button{
-
+                    background-color: themed('bg');
+                    border-radius: 25px;
+                    width: 80px;
+                    height: 30px;
                 }
             }
 
             .bottom{
+                display: flex;  
+                align-items: center;
+                input{
+                    
+                }
 
+                .item{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                
             }
         }
     }
