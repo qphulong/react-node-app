@@ -1,6 +1,7 @@
 import React from "react";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
+import './style.scss'
 import {
   createBrowserRouter,
   Outlet,
@@ -22,7 +23,7 @@ function App() {
   //Layout contains outlet. Cac route con nhu Home, Add friends, Profile se duoc hien thi trong outlet
   const Layout = () => {
     return(
-      <div>
+      <div className="theme-dark">
         <NavBar/>
         <div style={{display: "flex"}}>
             <LeftBar/>
