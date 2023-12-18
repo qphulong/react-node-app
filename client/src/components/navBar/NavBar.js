@@ -8,9 +8,11 @@ import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNone
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { DarkModeContext } from '../../context/darkModeContext';
 import { useContext } from 'react';
+import { AuthContext } from '../../context/authContext';
 const NavBar = () => {
 
     const {darkMode,toggle} = useContext(DarkModeContext);
+    const {currentUser} = useContext(AuthContext)
 
     return (
         <div className='navBar'>
@@ -33,8 +35,8 @@ const NavBar = () => {
                 <NotificationsNoneOutlinedIcon style={{ fontSize: 30 }}/>
 
                 <div className='user'>
-                    <img src='https://images.pexels.com/photos/2055500/pexels-photo-2055500.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' alt=''/>
-                    <span>Jony Doe</span>
+                    <img src={currentUser.profilePic} alt=''/>
+                    <span>{currentUser.name}</span>
                 </div>
             </div>
         </div>

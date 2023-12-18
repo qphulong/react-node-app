@@ -7,7 +7,11 @@ import PeopleIcon from '@mui/icons-material/People';
 import DensitySmallIcon from '@mui/icons-material/DensitySmall';
 import { Button } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/authContext';
 const LeftBar = () => {
+    const {currentUser} = useContext(AuthContext)
+
     return (
         <div className='leftBar'>
             <div className='container'>
@@ -48,9 +52,9 @@ const LeftBar = () => {
                 
 
                 <div className='user'>
-                    <img src='https://images.pexels.com/photos/2055500/pexels-photo-2055500.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' alt=''/>
+                    <img src={currentUser.profilePic} alt=''/>
                     <div className='user-info'>
-                        <span className='user-name'>Jony Doe</span>
+                        <span className='user-name'>{currentUser.name}</span>
                         <span className='user-email'>@jony_doe2003</span>
                     </div>
                     

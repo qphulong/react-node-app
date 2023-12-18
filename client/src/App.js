@@ -15,10 +15,11 @@ import Profile from "./pages/profile/Profile"
 import { Navigate } from "react-router-dom";
 import { DarkModeContext } from "./context/darkModeContext";
 import { useContext } from "react";
+import { AuthContext } from "./context/authContext";
 function App() {
 
   //Protected Route
-  const currentUser = true
+  const {currentUser} = useContext(AuthContext)
 
   //get Context
   const {darkMode} = useContext(DarkModeContext);
