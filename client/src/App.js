@@ -18,6 +18,7 @@ import { useContext } from "react";
 import { AuthContext } from "./context/authContext";
 import Friends from "./pages/friends/Friends";
 import Notification from "./pages/notifications/Notifications";
+import Invitations from "./pages/invitations/Invitations"
 function App() {
 
   //Protected Route
@@ -89,6 +90,10 @@ function App() {
     {
       path: "/register",
       element: <Register/>,
+    },
+    {
+      path: "/invitations",
+      element: <Invitations/>
     },
   ]);
 
