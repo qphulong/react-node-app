@@ -1,0 +1,46 @@
+@import "../../style.scss";
+
+.share{
+    @include themify($themes){
+        .container{
+            display: flex;
+            flex-direction: column;
+        
+            .top{
+                display: flex;  
+                align-items: center;
+                justify-content: space-between;
+                p{
+                    color: themed("textColor");
+                }
+            }
+
+            .middle{
+                display: flex;  
+                align-items: center;
+                justify-content: space-between;
+                img{
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+
+                input{
+                    width: 100%;
+                    padding: 10px;
+                    margin: 10px;
+                    border: 0;
+                }
+
+                button{
+
+                }
+            }
+
+            .bottom{
+
+            }
+        }
+    }
+}

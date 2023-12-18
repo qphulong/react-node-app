@@ -16,6 +16,8 @@ import { Navigate } from "react-router-dom";
 import { DarkModeContext } from "./context/darkModeContext";
 import { useContext } from "react";
 import { AuthContext } from "./context/authContext";
+import Friends from "./pages/friends/Friends";
+import Notification from "./pages/notifications/Notifications";
 function App() {
 
   //Protected Route
@@ -69,6 +71,14 @@ function App() {
         {
           path: "/profile/:id",
           element: <Profile/>
+        },
+        {
+          path: "/friends",
+          element: <Friends/>
+        },
+        {
+          path: "/notifications",
+          element: <Notification/>
         }
       ]
     },
