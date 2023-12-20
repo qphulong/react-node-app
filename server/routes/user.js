@@ -36,7 +36,8 @@ router.delete(
 router.put(
   "/password",
   query("userId").notEmpty(), //call this validation middleware first to validate
-  query("password").notEmpty(),
+  query("newPassword").notEmpty(),
+  query("oldPassword").notEmpty(),
   userController.changePassword
 );
 
@@ -67,9 +68,9 @@ router.put("/admin/assign", adminController.assignModerator);
 //unassign moderator
 router.put("/admin/unassign", adminController.unassignModerator);
 
-router.put("/add-friends", userController.friendLink);
+router.post("/add-friends", userController.friendLink);
 
-router.post("/add-friends", userController.acceptFriendLink);
+router.put("/add-friends", userController.acceptFriendLink);
 
 router.put("/social-media", userController.addSocialMedia);
 
