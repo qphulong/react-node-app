@@ -83,7 +83,7 @@ router.get("/:userId", (req, res) => {
   const userId = req.params.userId;
 
   // check friends, if not friend then not show
-  if (currentUser.friends.includes(userId)) {
+  if (currentUser.userId == userId || currentUser.friends.includes(userId)) {
     User.findOne({ userId: userId })
       .then((user) => {
         if (!user) {
