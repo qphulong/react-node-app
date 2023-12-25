@@ -2,6 +2,10 @@ const express = require("express");
 const userController = require("../controllers/user");
 const moderatorController = require("../controllers/moderator");
 const adminController = require("../controllers/admin");
+
+const Post = require("../models/post");
+const User = require("../models/user");
+
 const { query } = require("express-validator");
 
 const router = express.Router();
@@ -73,5 +77,26 @@ router.post("/add-friends", userController.friendLink);
 router.put("/add-friends", userController.acceptFriendLink);
 
 router.put("/social-media", userController.addSocialMedia);
+
+router.get("/:userId", (req, res) => {
+  const userId = req.params.userId;
+
+  // find the user with matching userId
+  User.findOne({ userId: userId })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      // find all posts of the user with matching userId
+      Post.find({ user: user })
+        .select("user.userId content postId time") // Only select the userId field
+        .then((posts) => {
+          res.json({ user: user.userId, posts: posts });
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+});
 
 module.exports = router;
