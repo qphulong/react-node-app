@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital@0;1&family=Lily+Script+One&display=swap');
+@import "../../style.scss";
+
+.friends{
+    font-family: 'Josefin Sans', sans-serif;
+    margin: 0;
+}
+
+.friends{
+    @include themify($themes){
+        height: 100%;
+        padding: 10px 50px 20px 50px;
+        background-color: themed("bgSoft");
+        .title{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            p{
+                color: themed("textColor");
+                font-size: 26px;
+                font-weight: 700;
+            }
+        }
+
+        .content-container{
+            .item{
+                background-color: themed("bg");
+                display: flex;
+                flex-direction: column;
+                border-radius: 20px;
+                padding: 10px;
+                margin-top: 80px;
+                .friends-top{
+                    display: flex;
+                    flex-direction: column;
+                    text-align: center;
+                    align-items: center;
+                    img{
+                        height: 130px;
+                        width: 130px;
+                        border-radius: 50%;
+                        border: 3px solid themed('bg');
+                        margin-top: -80px;
+                    }
+                    .friends-name{
+                        color: themed("textColor");
+                        margin-top: 10px;
+                        font-size: 25px;
+                        font-weight: 600;
+                    }
+                }
+
+                .friends-mid{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-top: 10px;
+                    .friends-left{
+                        display: flex;
+                        flex-direction: row;
+                        gap: 2px;
+                        color: themed("logo");
+                    }
+                    .friends-center{
+                        display: flex;
+                        flex-direction: row;
+                        gap: 10px;
+                        .friends-position{
+                            background-color: themed("bgSoft");
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            padding: 5px;
+                            border-radius: 20px;
+                            .logo{
+                                color: themed("logo");
+                            }
+                            span{
+                                color: themed("textColor");
+                            }
+
+                        }
+                        .friends-phone{
+                            background-color: themed("bgSoft");
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            padding: 5px;
+                            border-radius: 20px;
+                            .logo{
+                                color: themed("logo");
+                            }
+                            span{
+                                color: themed("textColor");
+                            }
+                        }
+                    }
+                    .friends-right{
+                        color: themed("logo");
+                    }
+                }
+
+                .friends-bottom{
+                    display: flex;
+                    justify-content: center;
+                    margin-top: 10px;
+                    button{
+                        border: 1px solid themed("logo");
+                        border-radius: 20px;
+                        background-color: themed("logo");
+                        padding: 10px 25px;
+                        color: themed("bg");
+                        font-size: 15px;
+                    }
+                }
+            }
+        }
+    }
+}

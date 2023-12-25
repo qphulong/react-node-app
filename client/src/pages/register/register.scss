@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital@0;1&family=Lily+Script+One&display=swap');
+
+.register {
+    font-family: 'Josefin Sans', sans-serif;
+    margin: 0;
+}
+
+
+.register{
+    height: 100vh;
+    background-color: #B26457;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+        .card{
+            width: 50%;
+            display: flex;
+            flex-direction: row-reverse;
+            background-color: white;
+            border-radius: 10px;
+            min-height: 600px;
+            overflow: hidden;
+            .left{
+                flex: 1;
+                background-image: linear-gradient(rgba(136, 25, 25,0.5),rgba(132, 20, 20,0.5)),url(https://images.pexels.com/photos/2055500/pexels-photo-2055500.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+                background-position: center;
+                background-size: cover;
+                padding: 50px;
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
+                color: white;
+    
+                h1{
+                    font-size: 60px;
+                    line-height: 100px;
+                    font-family: 'Lily Script One', sans-serif;
+                    font-weight: 400;
+                }
+    
+                p{
+                    font-size: 16px;
+                }
+    
+                span{
+                    font-size: 16px;
+                }
+    
+                button{
+                    width: 50%;
+                    padding: 10px;
+                    margin-top: 60px;
+                    border: none;
+                    background-color: white;
+                    color: #B26457;
+                    font-weight: bold;
+                    cursor: pointer;
+                    border-radius: 30px;}
+            }
+    
+            .right{
+                flex: 1;
+                padding: 50px;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                justify-content: center;
+                h1{
+                    color: #B26457;
+                    font-size: 40px;
+                }
+                form{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    input{
+                        border: none;
+                        border-bottom: 1px solid lightgrey;
+                        padding: 20px 10px;
+                        font-family: 'Josefin Sans', sans-serif;
+                    }
+    
+                    button{
+                        width: 50%;
+                        padding: 10px;
+                        margin-top: 30px;
+                        border: none;
+                        background-color: #B26457;
+                        color: white;
+                        font-weight: bold;
+                        cursor: pointer;
+                        border-radius: 30px;
+                    }
+                }
+            }
+        }
+    }
