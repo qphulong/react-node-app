@@ -9,8 +9,7 @@ router.get("/", postController.getPosts);
 router.post(
   "/",
   query("content").notEmpty(), //call this validation middleware first to validate
-  query("user").notEmpty(),
-  query("postId").notEmpty(),
+  query("userId").notEmpty(),
   postController.createPost //then call this to upload post to database
 );
 //call to create posts

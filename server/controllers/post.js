@@ -2,8 +2,10 @@ const Post = require("../models/post");
 const User = require("../models/user");
 const postFunctions = require("../functions/post");
 
+const crypto = require("crypto");
+
 exports.createPost = async (req, res) => {
-  const { content, postId, deleteAfter, userId } = req.body; //get from json
+  const { content, deleteAfter, userId } = req.body; //get from json
 
   const user = await User.findOne({ userId: userId }); //find user
   if (!user) {
@@ -12,21 +14,22 @@ exports.createPost = async (req, res) => {
 
   const post = new Post({
     content,
-    postId,
+    postId: crypto.randomBytes(16).toString("hex"),
     deleteAfter,
     likes: 0,
     comments: [],
     user: user,
   }); //create new post
 
-  postFunctions.checkPostLimit(content); //check post limit
+  // postFunctions.checkPostLimit(content); //check post limit
 
   post
     .save()
     .then((savedPost) => {
       // Successfully saved to the database, send the saved post as JSON response
       res.json({
-        post: savedPost,
+        // only show content and postid
+        post: savedPost.content,
       });
     })
     .catch((error) => {

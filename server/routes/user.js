@@ -83,25 +83,21 @@ router.get("/:userId", (req, res) => {
   const userId = req.params.userId;
 
   // check friends, if not friend then not show
-  if (currentUser.userId == userId || currentUser.friends.includes(userId)) {
-    User.findOne({ userId: userId })
-      .then((user) => {
-        if (!user) {
-          return res.status(404).json({ error: "User not found" });
-        }
+  User.findOne({ userId: userId })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
 
-        // find all posts of the user with matching userId
-        Post.find({ user: user })
-          .select("user.userId content postId time") // Only select the userId field
-          .then((posts) => {
-            res.json({ user: user.userId, posts: posts });
-          })
-          .catch((err) => console.log(err));
-      })
-      .catch((err) => console.log(err));
-  } else {
-    res.status(403).send("You are not friends with this user");
-  }
+      // find all posts of the user with matching userId
+      Post.find({ user: user })
+        .select("user.userId content postId time") // Only select the userId field
+        .then((posts) => {
+          res.json({ user: user.userId, posts: posts });
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
 });
 
 module.exports = router;
