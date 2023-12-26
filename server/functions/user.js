@@ -19,7 +19,11 @@ async function signIn(currentUser, userId, inputPassword) {
 async function changePassword(userId, newPassword, confirmPassword) {
   const user = await User.findOne({ userId: userId }); //find user
 
+  console.log("user" + user.password);
+
   const isPasswordValid = await bcrypt.compare(confirmPassword, user.password); //check password
+
+  console.log("isPasswordValid" + isPasswordValid);
 
   if (isPasswordValid) {
     //check if the existing password is the same as the confirm password

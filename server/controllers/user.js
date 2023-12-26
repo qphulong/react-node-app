@@ -3,6 +3,8 @@ const User = require("../models/user");
 
 const app = require("../app");
 
+const { CurrentUser } = require("../appController");
+
 exports.signUp = (req, res) => {
   const userId = req.body.userId;
   const password = req.body.password;
@@ -11,6 +13,8 @@ exports.signUp = (req, res) => {
     userId: userId,
     password: password,
   });
+
+  global.currentUser.set(userId, false);
 
   newUser
     .save()
@@ -28,7 +32,7 @@ exports.signIn = (req, res) => {
   const userId = req.body.userId;
   const password = req.body.password;
 
-  userFunctions.signIn(currentUser, userId, password);
+  userFunctions.signIn(global.currentUser, userId, password);
 };
 
 exports.changePassword = (req, res) => {

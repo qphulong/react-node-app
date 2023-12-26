@@ -14,6 +14,8 @@ const storageRoute = require("./routes/storage");
 
 const { CurrentUser } = require("./appController");
 
+global.currentUser = new CurrentUser(); //current user
+
 app.use(cors());
 
 dotenv.config();
@@ -50,4 +52,4 @@ app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
 
-exports.currentUser = new CurrentUser(); //current user
+module.exports = { currentUser };
