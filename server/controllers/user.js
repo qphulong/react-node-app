@@ -71,7 +71,7 @@ exports.friendLink = async (req, res) => {
 
 exports.acceptFriendLink = async (req, res) => {
   var linkId = req.params.linkId;
-  const parts = linkId.split("-"); // Split the URL by '/'
+  const parts = linkId.split("/"); // Split the URL by '/'
   const userId = parts[0]; // Get the user ID, assuming it's always at index 2
   console.log(userId);
 

@@ -124,7 +124,7 @@ async function generateAddFriendLink(userId, linkPassword) {
     await user.save();
 
     // Return the generated link
-    return `add-friends/${userId}-${linkId}`;
+    return `add-friends/${userId}/${linkId}`;
   } catch (error) {
     console.error("Error generating addFriend link:", error);
     return null;
