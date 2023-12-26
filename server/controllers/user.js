@@ -60,7 +60,7 @@ exports.removeFriend = (req, res) => {
 
 exports.friendLink = async (req, res) => {
   const userId = req.body.userId;
-  const password = req.body.password;
+  const password = req.body.linkPassword;
 
   const link = await userFunctions.generateAddFriendLink(userId, password);
 
@@ -70,10 +70,19 @@ exports.friendLink = async (req, res) => {
 };
 
 exports.acceptFriendLink = async (req, res) => {
-  const userId = req.body.userId;
+  var linkId = req.params.linkId;
+  const parts = linkId.split("-"); // Split the URL by '/'
+  const userId = parts[0]; // Get the user ID, assuming it's always at index 2
+  console.log(userId);
+
   const friendId = req.body.friendId;
-  const linkId = req.body.linkId;
   const linkPassword = req.body.linkPassword;
+
+  // remove first element of parts
+  // link id is now parts join
+  parts.shift();
+  linkId = parts.join("-");
+  console.log(linkId);
 
   await userFunctions.linkAddFriend(userId, linkPassword, friendId, linkId);
 };

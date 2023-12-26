@@ -75,7 +75,7 @@ router.put("/admin/unassign", adminController.unassignModerator);
 
 router.post("/add-friends", userController.friendLink);
 
-router.put("/add-friends", userController.acceptFriendLink);
+router.put("/add-friends/:linkId", userController.acceptFriendLink);
 
 router.put("/social-media", userController.addSocialMedia);
 
