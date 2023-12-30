@@ -7,7 +7,10 @@ const Post = require("../models/post");
 const User = require("../models/user");
 
 const { query } = require("express-validator");
-const { currentUser } = require("../app");
+
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
 
 const router = express.Router();
 
@@ -98,6 +101,34 @@ router.get("/:userId", (req, res) => {
         .catch((err) => console.log(err));
     })
     .catch((err) => console.log(err));
+});
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const userId = req.params.userId;
+    const folderPath = path.join(`../profile_pics/${userId}`);
+
+    // Create folder if it doesn't exist
+    if (!fs.existsSync(folderPath)) {
+      fs.mkdirSync(folderPath, { recursive: true });
+    }
+    cb(null, folderPath);
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); // Keeping the original file name
+  },
+});
+
+const upload = multer({ storage: storage });
+
+router.post("/profile-pic/:userId", upload.single("image"), (req, res) => {
+  const uploadedFile = req.file;
+
+  if (!uploadedFile) {
+    return res.status(400).send("No files were uploaded.");
+  }
+
+  res.send("File uploaded successfully!");
 });
 
 module.exports = router;
