@@ -9,12 +9,6 @@ export const AuthContextProvider = ({children}) => {
     const login = (inputs) => {
         const res = axios.post("http://localhost:3001/user/sign-in",inputs)
 
-        if(res.status === 200){
-            console.log('====================================');
-            console.log("oke");
-            console.log('====================================');
-        }
-
         setCurrentUser(inputs)
     }
 
