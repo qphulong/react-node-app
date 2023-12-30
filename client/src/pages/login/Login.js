@@ -18,7 +18,10 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault()
         try{
-            await login(inputs)
+            await login({
+                userId: inputs.username,
+                password: inputs.password
+            })
         }
         catch(err){
             console.log('====================================');

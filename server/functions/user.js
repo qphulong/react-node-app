@@ -5,7 +5,11 @@ const uuid = require("uuid");
 async function signIn(currentUser, userId, inputPassword) {
   const user = await User.findOne({ userId: userId });
 
-  console.log(user.pasword);
+  if (!user) {
+    console.log("User not found");
+    return; // exit the function if user is null
+  }
+  console.log(user.password);
 
   const isPasswordValid = await bcrypt.compare(inputPassword, user.password); //check password
 
