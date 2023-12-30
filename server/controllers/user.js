@@ -13,7 +13,7 @@ exports.signUp = async (req, res) => {
   const user = await User.find({ userId: userId });
   console.log(user.length);
   if (user.length > 0) {
-    console.log("User already exists");
+    res.status(400).send("User already exists");
     return;
   }
 
