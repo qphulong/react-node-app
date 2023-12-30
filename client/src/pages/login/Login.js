@@ -2,12 +2,29 @@ import { useContext } from 'react'
 import './login.scss'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../context/authContext'
+import { useState } from 'react'
 const Login = () => {
 
     const {currentUser,login} = useContext(AuthContext)
+    const [inputs, setInputs] = useState({
+        username: "",
+        name: ""
+    })
 
-    const handleLogin = () => {
-        login()
+    const handleChange = (e) => {
+        setInputs((preV) => ({...preV, [e.target.name]: e.target.value}))
+    }
+
+    const handleLogin = async (e) => {
+        e.preventDefault()
+        try{
+            await login(inputs)
+        }
+        catch(err){
+            console.log('====================================');
+            console.log(err);
+            console.log('====================================');
+        }
     }
 
     return (
@@ -26,8 +43,8 @@ const Login = () => {
                 <div className='right'>
                     <h1>Login</h1>
                     <form>
-                        <input type='text' placeholder='Username'/>
-                        <input type='password' placeholder='Password'/>
+                        <input type='text' placeholder='Username' name='username' onChange={handleChange}/>
+                        <input type='password' placeholder='Password' name='password' onChange={handleChange}/>
                         <button onClick={handleLogin}>Login</button>
                     </form>
                 </div>
