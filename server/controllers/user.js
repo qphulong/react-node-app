@@ -36,11 +36,11 @@ exports.signUp = async (req, res) => {
     });
 };
 
-exports.signIn = (req, res) => {
+exports.signIn = async (req, res) => {
   const userId = req.body.userId;
   const password = req.body.password;
 
-  userFunctions.signIn(global.currentUser, userId, password);
+  await userFunctions.signIn(global.currentUser, userId, password);
 };
 
 exports.changePassword = (req, res) => {
