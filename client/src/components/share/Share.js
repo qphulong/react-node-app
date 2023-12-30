@@ -3,9 +3,13 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import './share.scss'
 import { useContext } from 'react';
 import { AuthContext } from '../../context/authContext';
+import { useState } from 'react';
 const Share = () => {
 
     const {currentUser} = useContext(AuthContext)
+    const [file, setFile] = useState(null);
+
+
     return (
         <div className="share">
             <div className="container">
@@ -26,7 +30,9 @@ const Share = () => {
                     <input 
                         type='file'
                         style={{display: 'none'}}
-                        id='file'/>
+                        id='file'
+                        accept='.png,.jpeg,.jpg'
+                        onChange={(e) => setFile(e.target.files[0])}/>
                     <label htmlFor='file'>
                         <div className='item'>
                             <AddPhotoAlternateIcon style={{ fontSize: 25 }}/>
