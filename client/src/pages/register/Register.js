@@ -33,16 +33,12 @@ const Register = () => {
                 setCheckToast(true)
                 toast.success('Registration successful!'); // Display success toast
                 // Handle successful sign-up, e.g., redirect to a different page or display a success message.
-              } else {
-                console.error("Sign-up failed:", response.statusText);
-                setCheckToast(true)
-                toast.error(`Registration failed: ${response.statusText}`); // Display error toast
-                // Handle the error, e.g., display an error message to the user.
-              }
+              } 
          }
          catch(err){
             console.log('====================================');
             console.log(err);
+            toast.error(`Registration failed:}`); // Display error toast
             console.log('====================================');
          }
     }
@@ -71,7 +67,7 @@ const Register = () => {
                     </form>
                 </div>
             </div>
-            {checkToast && <ToastContainer />}
+            {<ToastContainer />}
         </div>
     )
 }
