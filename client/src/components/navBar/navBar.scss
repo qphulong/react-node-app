@@ -10,7 +10,6 @@
 
 .navBar{
     @include themify($themes){
-        z-index: 99;
         display: flex;
         align-items: center;
         justify-content: space-between;
