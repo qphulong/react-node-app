@@ -40,7 +40,7 @@ exports.signIn = async (req, res) => {
   const userId = req.body.userId;
   const password = req.body.password;
 
-  await userFunctions.signIn(global.currentUser, userId, password);
+  await userFunctions.signIn(global.currentUser, userId, password, res);
 };
 
 exports.changePassword = (req, res) => {
@@ -49,21 +49,21 @@ exports.changePassword = (req, res) => {
 
   const confirmPassword = req.body.confirmPassword;
 
-  userFunctions.changePassword(userId, newPassword, confirmPassword);
+  userFunctions.changePassword(userId, newPassword, confirmPassword, res);
 };
 
 exports.addFriend = (req, res) => {
   const userId = req.body.userId;
   const friendId = req.body.friendId;
 
-  userFunctions.addFriend(userId, friendId);
+  userFunctions.addFriend(userId, friendId, res);
 };
 
 exports.removeFriend = (req, res) => {
   const userId = req.body.userId;
   const friendId = req.body.friendId;
 
-  userFunctions.removeFriend(userId, friendId);
+  userFunctions.removeFriend(userId, friendId, res);
 };
 
 exports.friendLink = async (req, res) => {
