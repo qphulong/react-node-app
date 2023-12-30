@@ -14,18 +14,45 @@
                 height: 100%;
                 object-fit: cover;
             }
-
-            .profilePic{
-                width: 200px;
-                height: 200px;
-                border-radius: 50%;
-                object-fit: cover;
-                position: absolute;
-                left: 0;
-                right: 0;
-                margin: auto;
-                top: 200px;
+            .profile-image-container{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .profile-picture-before, .profile-picture-after{
+                    width: 200px;
+                    height: 200px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    margin: auto;
+                    top: 200px;
+                    //opacity: 0;
+                }
+                .upload-image-btn{
+                    width: 180px;
+                    display: none;
+                }
+                .upload-image-icon{
+                    margin-top: -20px;
+                    opacity: 0;
+                    z-index: 1;
+                }
             }
+            .profile-image-container:hover{
+                .profilePic{
+                    opacity: 0.9;
+                }
+                .upload-image-icon{
+                    color: white;
+                    opacity: 1;
+                    
+
+                }
+
+            }
+            
         }
         .profileContainer{
             padding: 20px 30px;
