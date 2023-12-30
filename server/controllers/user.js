@@ -9,6 +9,13 @@ exports.signUp = (req, res) => {
   const userId = req.body.userId;
   const password = req.body.password;
 
+  // check if user already exists
+  const user = User.findOne({ userId: userId });
+  if (user) {
+    console.log("User already exists");
+    return;
+  }
+
   const newUser = new User({
     userId: userId,
     password: password,
