@@ -5,13 +5,14 @@ const app = require("../app");
 
 const { CurrentUser } = require("../appController");
 
-exports.signUp = (req, res) => {
+exports.signUp = async (req, res) => {
   const userId = req.body.userId;
   const password = req.body.password;
 
   // check if user already exists
-  const user = User.findOne({ userId: userId });
-  if (user) {
+  const user = await User.find({ userId: userId });
+  console.log(user.length);
+  if (user.length > 0) {
     console.log("User already exists");
     return;
   }
