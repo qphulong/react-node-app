@@ -2,9 +2,9 @@
 *.png
 *.jpeg
 *.jpg
-/node_modules
-/server/node_modules
-/client/node_modules
+node_modules/
+server/node_modules/
+client/node_modules/
 node_modules/mongodb/etc/prepare.js
 node_modules/.bin/color-support
 node_modules/.bin/color-support.cmd
