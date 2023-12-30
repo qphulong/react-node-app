@@ -19,6 +19,7 @@ import { AuthContext } from "./context/authContext";
 import Friends from "./pages/friends/Friends";
 import Notification from "./pages/notifications/Notifications";
 import Invitations from "./pages/invitations/Invitations"
+import ForModerator from "./pages/moderatorpage/ForModerator" 
 function App() {
 
   //Protected Route
@@ -94,6 +95,10 @@ function App() {
     {
       path: "/invitations",
       element: <Invitations/>
+    },
+    {
+      path: "/moderators",
+      element: <ForModerator/>
     },
   ]);
 
