@@ -2,23 +2,21 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const uuid = require("uuid");
 
-async function signIn(currentUser, userId, inputPassword) {
+async function signIn(currentUser, userId, inputPassword, res) {
   const user = await User.findOne({ userId: userId });
-  
-  console.log(user.pasword);
 
   const isPasswordValid = await bcrypt.compare(inputPassword, user.password); //check password
 
   if (isPasswordValid) {
     //check if the existing password is the same as the input password
-    console.log("Login successfully!");
     currentUser.set(user.userId, user.isContentModerator); //set currentUser to this id
+    res.send("Sign in successfully");
   } else {
-    console.log("Password doesn't match");
+    res.status(400).send("Password is incorrect");
   }
 }
 
-async function changePassword(userId, newPassword, confirmPassword) {
+async function changePassword(userId, newPassword, confirmPassword, res) {
   const user = await User.findOne({ userId: userId }); //find user
 
   console.log("user" + user.password);
@@ -33,13 +31,13 @@ async function changePassword(userId, newPassword, confirmPassword) {
     const hashedPassword = await bcrypt.hash(newPassword, salt); //hash password next
 
     await User.updateOne({ userId: userId }, { password: hashedPassword });
-    console.log("Password updated successfully!");
+    res.send("Password updated successfully!");
   } else {
-    console.log("Password doesn't match");
+    res.status(400).send("Password doesn't match");
   }
 }
 
-async function removeFriend(userId, friendId) {
+async function removeFriend(userId, friendId, res) {
   if (userId === friendId) {
     console.log("Cannot add the same friend");
     return;
@@ -59,21 +57,21 @@ async function removeFriend(userId, friendId) {
         friend
           .save()
           .then((user) => {
-            console.log("Friend removed successfully");
+            res.send("Friend removed successfully");
           })
           .catch((error) => {
-            console.error("Error saving user:", error);
+            res.status(400).send("Error saving user:", error);
           });
       })
       .catch((error) => {
-        console.error("Error saving user:", error);
+        res.status(400).send("Error saving user:", error);
       });
   } else {
-    console.log("Friend does not exists");
+    res.status(400).send("Friend does not exists");
   }
 }
 
-async function addFriend(userId, friendId) {
+async function addFriend(userId, friendId, res) {
   if (userId === friendId) {
     console.log("Cannot add the same friend");
     return;
