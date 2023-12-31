@@ -4,6 +4,17 @@ const postFunctions = require("../functions/post");
 
 const crypto = require("crypto");
 
+exports.getPost = (req, res) => {
+  const postId = req.params.postId;
+
+  const post = Post.findOne({ postId: postId })
+    .select("user content postId time")
+    .then((post) => {
+      res.json({ post: post });
+    })
+    .catch((err) => res.status(404).json({ message: "Post not found" }));
+};
+
 exports.createPost = async (req, res) => {
   const { content, deleteAfter, userId } = req.body; //get from json
 
@@ -29,7 +40,7 @@ exports.createPost = async (req, res) => {
       // Successfully saved to the database, send the saved post as JSON response
       res.json({
         // only show content and postid
-        post: savedPost.content,
+        post: savedPost.postId,
       });
     })
     .catch((error) => {
@@ -63,7 +74,8 @@ exports.getPosts = (req, res) => {
       Post.find({ user: { $in: friends } })
         // add user field (reference to the User schema) and select userId field (of the referenced schema)
         .populate("user", "userId")
-        .select("user content postId time") // Specify the fields you want to retrieve from Post
+        .select("user content postId createdAt") // Specify the fields you want to retrieve from Post //sort by time
+        .sort({ createdAt: -1 })
         .then((posts) => {
           res.json({ posts: posts });
         })
