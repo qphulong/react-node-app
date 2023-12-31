@@ -25,6 +25,14 @@ exports.createPost = async (req, res) => {
 
   var id = "";
   if (postId) {
+    // check if postId exists
+    const post = Post.findOne({ postId: postId });
+    if (post) {
+      res.status(500).json({
+        error: "Post id already exists",
+      });
+    }
+
     id = postId;
   } else {
     id = crypto.randomBytes(16).toString("hex");
