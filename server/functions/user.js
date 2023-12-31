@@ -103,7 +103,7 @@ async function addFriend(userId, friendId, res) {
   user.friends.push(friend._id);
   friend.friends.push(user._id); //add in two directions
 
-  user
+  await user
     .save()
     .then((user) => {
       friend

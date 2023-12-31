@@ -23,10 +23,10 @@ const Post = ({post}) => {
             <div className="container">
                 <div className="user">
                     <div className="userInfo">
-                        <img src={post.profilePic} atl = ""/>
+                        <img src="https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" atl = ""/>
                         <div className="details">
                             <Link to={`/profile/${post.userId}`} style={{textDecoration: "none", color: "inherit"}}>
-                                <span>{post.name}</span>
+                                <span>{post.user.userId}</span>
                             </Link>
                             <span className="date">1 min ago</span>
                         </div>
@@ -35,7 +35,7 @@ const Post = ({post}) => {
                 </div>
 
                 <div className="content">
-                    <p>{post.desc}</p>
+                    <p>{post.content}</p>
                     <img src={post.img} alt=""/>
                 </div>
 

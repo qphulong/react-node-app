@@ -4,7 +4,7 @@ const { query } = require("express-validator");
 
 const router = express.Router();
 
-router.get("/", postController.getPosts);
+router.get("/:userId", postController.getPosts);
 
 router.post(
   "/",
@@ -22,6 +22,6 @@ router.post("/comments", postController.addComment); //add comment
 
 router.post("/report", postController.reportPost); //report post
 
-router.get("/images", postController.getImages); //get image links of a post
+router.get("/images/:postId", postController.getImages); //get image links of a post
 
 module.exports = router;
