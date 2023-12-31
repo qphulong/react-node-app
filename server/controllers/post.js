@@ -68,9 +68,9 @@ exports.getPosts = (req, res) => {
 
       // get id values of Friends (populated above) of the current user
       const friends = user.friends.map((friend) => friend._id);
-      console.log(friends);
+      // add current user's id to the list of friends
+      friends.push(user._id);
 
-      // find using document _id value
       Post.find({ user: { $in: friends } })
         // add user field (reference to the User schema) and select userId field (of the referenced schema)
         .populate("user", "userId")
