@@ -8,7 +8,7 @@ exports.getPost = (req, res) => {
   const postId = req.params.postId;
 
   const post = Post.findOne({ postId: postId })
-    .select("user content postId time")
+    .select("user content postId createdAt") // Specify the fields you want to retrieve from Post
     .then((post) => {
       res.json({ post: post });
     })
