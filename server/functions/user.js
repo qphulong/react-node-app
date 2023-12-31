@@ -85,8 +85,7 @@ async function addFriend(userId, friendId, res) {
   var isFriendExist = false;
 
   await user.friends.some((current) => {
-    if (current._id === friend._id) {
-      console.log(current._id + " " + friend._id);
+    if (current.equals(friend._id)) {
       isFriendExist = true;
     }
   });
