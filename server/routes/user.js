@@ -125,4 +125,17 @@ router.post("/profile-pic/:userId", upload.single("image"), (req, res) => {
   res.send("File uploaded successfully!");
 });
 
+router.get("/profile-pic/:userId", (req, res) => {
+  const userId = req.params.userId;
+  const folderPath = path.join(`../profile_pics/${userId}`);
+
+  fs.readdir(folderPath, (err, files) => {
+    if (err) {
+      return res.status(404).send("No files found.");
+    }
+
+    res.send(files);
+  });
+});
+
 module.exports = router;
