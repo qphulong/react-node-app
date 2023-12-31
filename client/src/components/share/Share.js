@@ -11,9 +11,23 @@ const Share = () => {
     const {currentUser} = useContext(AuthContext)
     const [file, setFile] = useState(null);
     const [desc, setDesc] = useState("")
+    const [newPost, setNewPost] = useState(null);
     console.log('====================================');
-    console.log(desc);
+    console.log(newPost);
     console.log('====================================');
+    //upload
+    const upload = async () => {
+        try{
+            const formData = new FormData()
+            formData.append("file",file)
+            const response = await axios.post(`http://localhost:3001/storage/upload/${newPost.post}`)
+            return response.data
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+
     const queryClient = useQueryClient()
 
     // Mutations
@@ -24,15 +38,22 @@ const Share = () => {
             userId: currentUser.userId
         })
     },
-    onSuccess: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ['posts'] })
+    onSuccess: (response) => {
+        // Access the newly created post object here
+        setNewPost(response.data);
+        // const newPostObject = response.data;
+        // console.log("Newly added post:", newPostObject);
+         // Invalidate and refetch
+        queryClient.invalidateQueries({ queryKey: ['posts'] })
     },
   })
 
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
         e.preventDefault()
+        
         mutation.mutate({desc})
+        // print
+        // console.log(newPostId);
     }
 
     return (
