@@ -56,7 +56,7 @@ const Posts = () => {
 
     return (
         <div className="posts">
-            {postsArray.map((post) => {
+            {isLoading ? "Loading..." : postsArray.map((post) => {
               return <Post post={post} key={post.postId}/>
             })}
         </div>
