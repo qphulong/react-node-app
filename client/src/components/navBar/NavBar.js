@@ -15,6 +15,7 @@ import { AuthContext } from '../../context/authContext';
 import { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
+import Datetime from '../datetime/Datetime';
 
 
 const NavBar = () => {
@@ -75,7 +76,7 @@ const NavBar = () => {
                           : <WbSunnyIcon style={{ fontSize: 30 }} onClick={toggle}/>}
             </div>
             <div className='dateTime'>
-                    14th December 2023
+                <Datetime/> 
             </div>
             <div className='right'>
                 <PersonOutlineOutlinedIcon style={{ fontSize: 30 }}/>

@@ -6,7 +6,6 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import PeopleIcon from '@mui/icons-material/People';
 import DensitySmallIcon from '@mui/icons-material/DensitySmall';
 import { Button } from '@mui/material';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/authContext';
 const LeftBar = () => {
@@ -57,8 +56,7 @@ const LeftBar = () => {
                         <span className='user-name'>{currentUser.name}</span>
                         <span className='user-email'>@jony_doe2003</span>
                     </div>
-                    
-                    <MoreHorizIcon/>
+                
                 </div>
             </div>
         </div>
