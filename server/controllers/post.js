@@ -16,16 +16,23 @@ exports.getPost = (req, res) => {
 };
 
 exports.createPost = async (req, res) => {
-  const { content, deleteAfter, userId } = req.body; //get from json
+  const { content, deleteAfter, userId, postId } = req.body; //get from json
 
   const user = await User.findOne({ userId: userId }); //find user
   if (!user) {
     return res.status(400).json({ message: "User not found" });
   }
 
+  var id = "";
+  if (postId) {
+    id = postId;
+  } else {
+    id = crypto.randomBytes(16).toString("hex");
+  }
+
   const post = new Post({
     content,
-    postId: crypto.randomBytes(16).toString("hex"),
+    postId: id,
     deleteAfter,
     likes: 0,
     comments: [],
