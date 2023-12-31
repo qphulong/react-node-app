@@ -11,7 +11,9 @@ const Share = () => {
     const {currentUser} = useContext(AuthContext)
     const [file, setFile] = useState(null);
     const [desc, setDesc] = useState("")
-
+    console.log('====================================');
+    console.log(desc);
+    console.log('====================================');
     const queryClient = useQueryClient()
 
     // Mutations
@@ -44,7 +46,7 @@ const Share = () => {
                     <input 
                     type="text" 
                     placeholder={`What's on your mind ${currentUser.name}?`}
-                    onchange = {(e) => setDesc(e.target.value)}
+                    onChange = {(e) => setDesc(e.target.value)}
                     />
                 </div>
 
@@ -54,7 +56,7 @@ const Share = () => {
                         <input 
                             type='file' 
                             id='file' 
-                            onchange = {(e) => setFile(e.target.files[0])}
+                            onChange = {(e) => setFile(e.target.files[0])}
                             style={{display: "none"}}/>
                         <label htmlFor="file">
                         <div className="item">
