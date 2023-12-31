@@ -33,7 +33,7 @@ const Posts = () => {
         queryKey: ['posts'],
         queryFn: () => {
           try {
-            return axios.get(`http://localhost:3001/user/${currentUser.userId}`).then((response) => {
+            return axios.get(`http://localhost:3001/posts/${currentUser.userId}`).then((response) => {
               console.log(response.data);
               return response.data;
             });
