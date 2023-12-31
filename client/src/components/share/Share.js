@@ -11,34 +11,27 @@ const Share = () => {
 
 
     return (
-        <div className="share">
-            <div className="container">
-                <div className="top">
-                    <p>Home</p>
-                    <AutoAwesomeIcon style={{ fontSize: 20 }}/>
+        <div className='share'>
+            <div className='container'>
+                <div className='top'>
+                    <img 
+                        src='https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+                        alt=''
+                    />
+                    <input type="text" placeholder={`What's on your mind ${currentUser.name}?`} />
                 </div>
 
-                <div className="middle">
-                    <img src={currentUser.profilePic} alt=''/>
-                    <input 
-                        type='text' 
-                        placeholder='What is happening'/>
-                    <button>Tweet</button>
-                </div>
-
-                <div className="bottom">
-                    <input 
-                        type='file'
-                        style={{display: 'none'}}
-                        id='file'
-                        accept='.png,.jpeg,.jpg'
-                        onChange={(e) => setFile(e.target.files[0])}/>
-                    <label htmlFor='file'>
-                        <div className='item'>
+                <hr/>
+                <div className='bottom'>
+                    <div className='left'>
+                        <input type='file' id='file' style={{display: "none"}}/>
+                        <label htmlFor="file">
+                        <div className="item">
                             <AddPhotoAlternateIcon style={{ fontSize: 25 }}/>
-                            <span>Add image</span>
+                            <span>Add Image</span>
                         </div>
-                    </label>
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
