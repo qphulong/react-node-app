@@ -79,9 +79,9 @@ exports.friendLink = async (req, res) => {
 
 exports.acceptFriendLink = async (req, res) => {
   var linkId = req.params.linkId;
-  const parts = linkId.split("/"); // Split the URL by '/'
+  const parts = linkId.split("-"); // Split the URL by '/'
   const userId = parts[0]; // Get the user ID, assuming it's always at index 2
-  console.log(userId);
+  console.log("UserId" + userId);
 
   const friendId = req.body.friendId;
   const linkPassword = req.body.linkPassword;
@@ -92,7 +92,13 @@ exports.acceptFriendLink = async (req, res) => {
   linkId = parts.join("-");
   console.log(linkId);
 
-  await userFunctions.linkAddFriend(userId, linkPassword, friendId, linkId);
+  await userFunctions.linkAddFriend(
+    userId,
+    linkPassword,
+    friendId,
+    linkId,
+    res
+  );
 };
 
 exports.addSocialMedia = async (req, res) => {

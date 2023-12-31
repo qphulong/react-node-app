@@ -84,20 +84,46 @@ async function addFriend(userId, friendId, res) {
   user.friends.push(friend._id);
   friend.friends.push(user._id); //add in two directions
 
+  // check if friend already exists in the frien list
+  const isFriendExist = user.friends.some((friend) => {
+    return friend.equals(friend._id);
+  });
+
+  if (isFriendExist) {
+    if (res) {
+      res.status(400).send("Friend already exists");
+    } else {
+      return "Friend already exists";
+    }
+    return;
+  }
+
   user
     .save()
     .then((user) => {
       friend
         .save()
         .then((user) => {
-          res.send("Friend added successfully");
+          if (res) {
+            res.send("Friend added successfully");
+          } else {
+            return "Friend added successfully";
+          }
         })
         .catch((error) => {
-          res.status(400).send("Error saving user:", error);
+          if (res) {
+            res.status(400).send("Error saving user:", error);
+          } else {
+            return "Error saving user:", error;
+          }
         });
     })
     .catch((error) => {
-      res.status(400).send("Error saving user:", error);
+      if (res) {
+        res.status(400).send("Error saving user:", error);
+      } else {
+        return "Error saving user:", error;
+      }
     });
 }
 
@@ -124,7 +150,7 @@ async function generateAddFriendLink(userId, linkPassword) {
     await user.save();
 
     // Return the generated link
-    return `add-friends/${userId}/${linkId}`;
+    return `add-friends/${userId}-${linkId}`;
   } catch (error) {
     res.status(400).send("Error generating addFriend link:", error);
     return null;
@@ -132,7 +158,7 @@ async function generateAddFriendLink(userId, linkPassword) {
 }
 
 // Function to accept the link and add a friend (person ưhwo is adding) if the authentication password is correct
-async function linkAddFriend(userId, linkPassword, friendId, linkId) {
+async function linkAddFriend(userId, linkPassword, friendId, linkId, res) {
   const user = await User.findOne({ userId: userId });
 
   if (!user) {
@@ -150,8 +176,8 @@ async function linkAddFriend(userId, linkPassword, friendId, linkId) {
 
   if (isPasswordValid) {
     // Add friend if the authentication password is correct
-    await addFriend(userId, friendId);
-    res.send("Friend added successfully");
+    var message = await addFriend(userId, friendId);
+    res.send(message);
   } else {
     res.status(403).send("Incorrect authentication password");
   }

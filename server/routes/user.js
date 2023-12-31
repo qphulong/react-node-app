@@ -28,12 +28,6 @@ router.post(
   userController.signIn
 );
 
-router.put(
-  "/friends",
-  query("userId").notEmpty(), //call this validation middleware first to validate
-  query("friendId").notEmpty(),
-  userController.addFriend
-);
 router.delete(
   "/friends",
   query("userId").notEmpty(), //call this validation middleware first to validate
