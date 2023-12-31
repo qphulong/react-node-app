@@ -19,6 +19,12 @@ import { AuthContext } from "./context/authContext";
 import Friends from "./pages/friends/Friends";
 import Notification from "./pages/notifications/Notifications";
 import Invitations from "./pages/invitations/Invitations"
+import ForModerator from "./pages/moderatorpage/ForModerator" 
+import ChangePassword from "./pages/changePassword/ChangePassword"
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 function App() {
 
   //Protected Route
@@ -28,11 +34,15 @@ function App() {
   const {darkMode} = useContext(DarkModeContext);
   console.log(darkMode);
 
+  //QueryClient
+  const queryClient = new QueryClient()
+
   //Layout for main page
   //Outlet duoc su dung trong viec quan ly cac route long nhau
   //Layout contains outlet. Cac route con nhu Home, Add friends, Profile se duoc hien thi trong outlet
   const Layout = () => {
     return(
+    <QueryClientProvider client={queryClient}>
       <div className={`theme-${darkMode ? 'dark' : 'light'}`}>
         <NavBar/>
         <div style={{display: "flex"}}>
@@ -43,6 +53,7 @@ function App() {
             <RightBar/>
         </div>
       </div>
+    </QueryClientProvider>
     )
   }
   
@@ -94,6 +105,14 @@ function App() {
     {
       path: "/invitations",
       element: <Invitations/>
+    },
+    {
+      path: "/moderators",
+      element: <ForModerator/>
+    },
+    {
+      path: "/changepassword",
+      element: <ChangePassword/>
     },
   ]);
 

@@ -8,7 +8,7 @@ const Login = () => {
     const {currentUser,login} = useContext(AuthContext)
     const [inputs, setInputs] = useState({
         username: "",
-        name: ""
+        password: ""
     })
 
     const handleChange = (e) => {
@@ -18,7 +18,7 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault()
         try{
-            await login({
+            const res = await login({
                 userId: inputs.username,
                 password: inputs.password
             })
