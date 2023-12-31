@@ -20,6 +20,14 @@ import Friends from "./pages/friends/Friends";
 import Notification from "./pages/notifications/Notifications";
 import Invitations from "./pages/invitations/Invitations"
 import ForModerator from "./pages/moderatorpage/ForModerator" 
+import ChangePassword from "./pages/changePassword/ChangePassword"
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 function App() {
 
   //Protected Route
@@ -99,6 +107,10 @@ function App() {
     {
       path: "/moderators",
       element: <ForModerator/>
+    },
+    {
+      path: "/changepassword",
+      element: <ChangePassword/>
     },
   ]);
 
