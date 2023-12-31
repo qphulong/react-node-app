@@ -138,4 +138,32 @@ router.get("/profile-pic/:userId", (req, res) => {
   });
 });
 
+router.get("/friends/:userId", (req, res) => {
+  const userId = req.params.userId;
+
+  User.findOne({ userId: userId })
+    .populate("friends", "userId") // join friends field (reference to the User schema) and select userId field (of the referenced schema)
+    .exec()
+    .then((user) => {
+      //current user with passed userId
+      if (!user) {
+        // user not found
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // get id values of Friends (populated above) of the current user
+      const friends = user.friends.map((friend) => friend._id);
+
+      User.find({ _id: { $in: friends } })
+        .select("userId")
+        .then((users) => {
+          res.json({ friends: users });
+        })
+        .catch((err) => res.status(500).json({ error: err }));
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err });
+    });
+});
+
 module.exports = router;
