@@ -81,13 +81,17 @@ async function addFriend(userId, friendId, res) {
 
   const friend = await User.findOne({ userId: friendId }); //find friend
 
-  user.friends.push(friend._id);
-  friend.friends.push(user._id); //add in two directions
-
   // check if friend already exists in the frien list
-  const isFriendExist = user.friends.some((friend) => {
-    return friend.equals(friend._id);
+  var isFriendExist = false;
+
+  await user.friends.some((current) => {
+    if (current._id === friend._id) {
+      console.log(current._id + " " + friend._id);
+      isFriendExist = true;
+    }
   });
+
+  console.log(isFriendExist);
 
   if (isFriendExist) {
     if (res) {
@@ -95,8 +99,10 @@ async function addFriend(userId, friendId, res) {
     } else {
       return "Friend already exists";
     }
-    return;
   }
+
+  user.friends.push(friend._id);
+  friend.friends.push(user._id); //add in two directions
 
   user
     .save()
