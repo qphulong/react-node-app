@@ -86,12 +86,25 @@
                 flex-direction: column;
                 align-items: center;
                 gap: 10px;
-
-                span{
-                    font-size: 30px;
-                    font-weight: 500;
+                .name{
+                    display: flex;
+                    gap: 10px;
+                    span{
+                        font-size: 30px;
+                        font-weight: 500;
+                    }
+                    .icon:hover{
+                        cursor: pointer;
+                    }
+                    input{
+                        font-family: 'Josefin Sans', sans-serif;;
+                        font-size: 30px;
+                        font-weight: 500;
+                        border: none;
+                    }
+    
                 }
-
+                
                 .info{
                     width: 100%;
                     display: flex;
@@ -105,6 +118,12 @@
                         color: themed("textColorSoft");
                         span{
                             font-size: 12px;
+                        }
+                        input{
+                            font-family: 'Josefin Sans', sans-serif;;
+                            font-size: 12px;
+                            border: none;
+                            padding: 0;
                         }
 
 
