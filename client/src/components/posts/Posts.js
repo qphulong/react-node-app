@@ -33,8 +33,8 @@ const Posts = () => {
         queryKey: ['posts'],
         queryFn: () => {
           try {
-            return axios.get(`http://localhost:3001/user/${currentUser.userId}`).then((response) => {
-              console.log(response.data);
+            return axios.get(`http://localhost:3001/posts/${currentUser.userId}`).then((response) => {
+              // console.log(response.data);
               return response.data;
             });
           } catch (error) {
@@ -52,11 +52,13 @@ const Posts = () => {
         return <h3>Error: {error.message}</h3>;
     }
 
+    const postsArray = Object.values(posts)[0];
+
     return (
         <div className="posts">
-            {/* {posts.map((post) => {
-                return <Post post={post} key={post.id}/>
-            })} */}
+            {isLoading ? "Loading..." : postsArray.map((post) => {
+              return <Post post={post} key={post.postId}/>
+            })}
         </div>
     )
 }
