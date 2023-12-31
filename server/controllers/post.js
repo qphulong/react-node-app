@@ -43,7 +43,7 @@ exports.createPost = async (req, res) => {
 
 //retrieve all posts from my user and my friends
 exports.getPosts = (req, res) => {
-  const userId = req.body.userId;
+  const userId = req.params.userId;
 
   User.findOne({ userId: userId })
     .populate("friends", "userId") // join friends field (reference to the User schema) and select userId field (of the referenced schema)
@@ -98,7 +98,7 @@ exports.reportPost = (req, res) => {
 };
 
 exports.getImages = async (req, res) => {
-  const postId = req.body.postId;
+  const postId = req.params.postId;
 
   const post = await Post.findOne({ postId: postId });
 
