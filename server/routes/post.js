@@ -22,6 +22,8 @@ router.put("/", postController.editPost); //edit post with PUT request
 
 router.post("/comments", postController.addComment); //add comment
 
+router.get("/comments/:postId", postController.getComments); //get comments
+
 router.post("/report", postController.reportPost); //report post
 
 router.get("/images/:postId", postController.getImages); //get image links of a post
