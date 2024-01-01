@@ -12,9 +12,9 @@ const Share = () => {
     const [file, setFile] = useState(null);
     const [desc, setDesc] = useState("")
     // const [newPost, setNewPost] = useState(null);
-    console.log('====================================');
-    console.log(file);
-    console.log('====================================');
+    // console.log('====================================');
+    // console.log(file);
+    // console.log('====================================');
     const queryClient = useQueryClient()
 
     // Mutations
@@ -52,19 +52,19 @@ const Share = () => {
             for (const f of file) {
                 formData.append("images", f);
             }
-            console.log('====================================');
-            console.log(newPostUpdate);
-            console.log('====================================');
-            console.log('====================================');
-            console.log(newPostUpdate.post);
-            console.log('====================================');
+            // console.log('====================================');
+            // console.log(newPostUpdate);
+            // console.log('====================================');
+            // console.log('====================================');
+            // console.log(newPostUpdate.post);
+            // console.log('====================================');
             const response = await axios.post(
                 `http://localhost:3001/storage/upload/${newPostUpdate.post}`,
                 formData,
             );
     
             if (response.status === 200) {
-                console.log("oke 200");
+                // console.log("oke 200");
                 return response.data;
             } else {
                 console.error("Upload failed:", response.statusText);
@@ -76,6 +76,7 @@ const Share = () => {
         }
     };
 
+    //remove image
     const removeImage = (indexToRemove) => {
         setFile((prevFile) => {
           const updatedFile = Array.from(prevFile);
