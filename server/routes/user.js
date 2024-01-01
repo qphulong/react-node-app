@@ -88,7 +88,7 @@ router.get("/:userId", (req, res) => {
 
       // find all posts of the user with matching userId
       Post.find({ user: user })
-        .select("user.userId content postId time") // Only select the userId field
+        .select("user.userId content postId createdAt") // Only select the userId field
         .then((posts) => {
           res.json({ user: user.userId, posts: posts });
         })
@@ -100,7 +100,7 @@ router.get("/:userId", (req, res) => {
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const userId = req.params.userId;
-    const folderPath = path.join(`../public/profile_pics/${userId}`);
+    const folderPath = path.join(`./public/profile_pics/${userId}`);
 
     // Create folder if it doesn't exist
     if (!fs.existsSync(folderPath)) {
@@ -115,14 +115,49 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post("/profile-pic/:userId", upload.single("image"), (req, res) => {
-  const uploadedFile = req.file;
+router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
+  const uploadedFile = req.files;
 
-  if (!uploadedFile) {
+  if (!uploadedFile || uploadedFile.length === 0) {
     return res.status(400).send("No files were uploaded.");
   }
 
-  res.send("File uploaded successfully!");
+  const userId = req.params.userId;
+  const folderPath = path.join(`./public/profile_pics/${userId}`);
+
+  // Check if the folder already contains a profile pic
+  fs.readdir(folderPath, (err, files) => {
+    if (err) {
+      return res.status(500).send("Error reading folder.");
+    }
+
+    // Remove existing profile pic if found
+    if (files.length > 1) {
+      const existingProfilePic = path.join(folderPath, files[0]);
+      fs.unlink(existingProfilePic, (err) => {
+        if (err) {
+          return res.status(500).send("Error deleting existing profile pic.");
+        }
+      });
+    }
+
+    // Remove the leading ".." from the beginning of the path
+    const savedPath = `public/profile_pics/${userId}/${uploadedFile[0].filename}`;
+
+    // Save the new profile pic
+    const user = User.findOne({ userId: userId })
+      .then((user) => {
+        if (!user) {
+          return res.status(400).send("User not found.");
+        }
+
+        user.profilePic = `http://localhost:3001/${savedPath}`;
+        user.save();
+      })
+      .catch((err) => console.log(err));
+
+    res.send("Image uploaded successfully!");
+  });
 });
 
 router.get("/profile-pic/:userId", (req, res) => {

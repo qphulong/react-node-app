@@ -39,8 +39,6 @@ router.post("/upload/:postId", upload.array("images", 5), (req, res) => {
     return res.status(400).send("Maximum 5 files allowed.");
   }
 
-  console.log(req.files);
-
   res.send("Files uploaded successfully!");
 });
 
