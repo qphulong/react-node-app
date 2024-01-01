@@ -85,6 +85,7 @@ postSchema.methods.retrieveImages = function (postId) {
   files.forEach((file) => {
     const filePath = path.join(`./uploads/${this.postId}`, file);
     if (fs.statSync(filePath).isDirectory()) {
+      // sub folder
       getAllFiles(filePath, filesList);
     } else {
       filesList.push(filePath);

@@ -31,6 +31,14 @@ router.post("/upload/:postId", upload.array("images", 5), (req, res) => {
     return res.status(400).send("No files were uploaded.");
   }
 
+  // check if folder has more than 5 files
+  const postId = req.params.postId;
+  const folderPath = path.join(`./uploads/${postId}`);
+  const files = fs.readdirSync(folderPath);
+  if (files.length > 5) {
+    return res.status(400).send("Maximum 5 files allowed.");
+  }
+
   console.log(req.files);
 
   res.send("Files uploaded successfully!");
