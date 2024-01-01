@@ -20,10 +20,10 @@ const LeftBar = () => {
             <span>Home</span>
           </div>
 
-          <div className="item">
+          {/* <div className="item">
             <NotificationsNoneOutlinedIcon style={{ fontSize: 30 }} />
             <span>Notifications</span>
-          </div>
+          </div> */}
 
           <div className="item">
             <PersonOutlineOutlinedIcon style={{ fontSize: 30 }} />
