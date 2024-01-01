@@ -16,6 +16,7 @@ import EditOffIcon from '@mui/icons-material/EditOff';
 
 import { useRef, useState } from 'react';
 import EditOff from '@mui/icons-material/EditOff';
+import PostsProfile from '../../components/postsProfile/PostsProfile';
 
 const Profile = () => {
     const inputRef = useRef(null);
@@ -151,7 +152,7 @@ const Profile = () => {
                 </div>
             </div>
             <div className='container-post'>
-                <Posts/>
+                <PostsProfile/>
             </div>
         </div>
     )
