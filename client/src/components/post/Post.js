@@ -9,6 +9,8 @@ import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import Comments from "../comments/Comments.js";
 import { useEffect, useState } from "react";
+import ImageSlider from "./ImageSlider.js";
+import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
 
 const Post = ({ post }) => {
   //comment state
@@ -39,6 +41,21 @@ const Post = ({ post }) => {
   //console.log(post.postId);
   //console.log(images);
   //console.log('====================================');
+  const [current, setCurrent] = useState(0);
+  const slides = images
+  const length = slides.length;
+
+  const nextSlide = () => {
+    setCurrent(current === length - 1 ? 0 : current + 1);
+  };
+
+  const prevSlide = () => {
+    setCurrent(current === 0 ? length - 1 : current - 1);
+  };
+
+  if (!Array.isArray(slides) || slides.length <= 0) {
+    return null;
+  }
   //temp
   const liked = false;
 
@@ -66,14 +83,31 @@ const Post = ({ post }) => {
 
         <div className="content">
           <p>{post.content}</p>
-          {images.map((image, index) => (
+          <section className='slider'>
+            <FaArrowAltCircleLeft className='left-arrow' onClick={prevSlide} />
+            <FaArrowAltCircleRight className='right-arrow' onClick={nextSlide} />
+            {slides.map((slide, index) => {
+                return (
+                <div
+                    className={index === current ? 'slide active' : 'slide'}
+                    key={index}
+                >
+                    {index === current && (
+                    <img src={slide} alt='travel image' className='image' />
+                    )}
+                </div>
+                );
+            })}
+            </section>
+
+          {/* {images.map((image, index) => (
             <img
               src={image}
               alt=""
               key={index}
               style={{ marginRight: "10px" }}
             />
-          ))}
+          ))} */}
         </div>
 
         <div className="info">

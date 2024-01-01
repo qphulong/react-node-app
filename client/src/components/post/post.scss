@@ -46,12 +46,53 @@
             .content{
                 margin: 20px 0px;
 
-                img{
-                    width: 100%;
-                    max-height: 500px;
-                    object-fit: cover;
-                    margin-top: 5px;
+                .slider{
+                    position: relative;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    
+                    .left-arrow{
+                        position: absolute;
+                        top: 50%;
+                        left: 32px;
+                        font-size: 3rem;
+                        color: #000;
+                        z-index: 10;
+                        cursor: pointer;
+                        user-select: none;
+                    }
+
+                    .right-arrow{
+                        position: absolute;
+                        top: 50%;
+                        right: 32px;
+                        font-size: 3rem;
+                        color: #000;
+                        z-index: 10;
+                        cursor: pointer;
+                        user-select: none;
+                    }
+
+                    img{
+                        width: 100%;
+                        max-height: 500px;
+                        object-fit: cover;
+                        margin-top: 5px;
+                    }
+                    .slide {
+                        opacity: 0;
+                        transition-duration: 1s ease;
+                    }
+                      
+                    .slide.active {
+                        opacity: 1;
+                        transition-duration: 1s;
+                        transform: scale(1);
+                    }
+                    
                 }
+                
             }
 
             .info{
