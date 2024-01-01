@@ -22,7 +22,7 @@ const Post = ({ post }) => {
       `http://localhost:3001/posts/images/${postId}`
     );
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     setImages(data.images);
 
     for (let i = 0; i < data.images.length; i++) {
@@ -35,10 +35,10 @@ const Post = ({ post }) => {
     getImages(post.postId);
   }, []);
 
-  console.log('====================================');
-  console.log(post.postId);
-  console.log(images);
-  console.log('====================================');
+  //console.log('====================================');
+  //console.log(post.postId);
+  //console.log(images);
+  //console.log('====================================');
   //temp
   const liked = false;
 
