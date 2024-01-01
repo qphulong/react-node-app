@@ -7,16 +7,34 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import Comments from "../comments/Comments.js";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
 import PostsProfile from "../postsProfile/PostsProfile.js";
 import { AuthContext } from "../../context/authContext.js";
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const PostProfile = ({ post }) => {
+  const items = [{
+    id: 1,
+    value: "Edit content",
+    icon: <EditNoteIcon style={{fontSize: 25}}/>,
+  },
+  {
+    id: 2,
+    value: "Delete post",
+    icon: <DeleteIcon style={{fontSize: 25}}/>,
+  }]
 
   const { currentUser, login, logout } = useContext(AuthContext);
   //comment state
   const [commentOpen, setCommentOpen] = useState(false);
+
+  //Dropdown state
+  const [openDropdown, setOpenDropdown] = useState(false);
+  const toggleDropdown = () => setOpenDropdown(!openDropdown);
+  const dropdownRef = useRef(null);
+  const postRef = useRef(null);
 
   //images
   const [images, setImages] = useState([]); //images = [image1, image2, ...
@@ -38,6 +56,33 @@ const PostProfile = ({ post }) => {
   useEffect(() => {
     getImages(post.postId);
   }, []);
+
+  //Check mouse out
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClick);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  });
+
+  //Handle the dropdown
+  function handleOnClick(item) {
+    if (item.id == 1) {
+      console.log("1");
+    } else if (item.id == 2) {
+      console.log("2");
+    } 
+  }
+
+  const handleClick = (e) => {
+    if (postRef.current && !postRef.current.contains(e.target)) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpenDropdown(false);
+      } else if (openDropdown && postRef.current.contains(e.target)) {
+        setOpenDropdown(!openDropdown);
+      }
+    }
+  };
 
   //console.log('====================================');
   //console.log(post.postId);
@@ -74,7 +119,26 @@ const PostProfile = ({ post }) => {
               <span className="date">1 min ago</span>
             </div>
           </div>
-          <MoreHorizIcon />
+          <div className="extra-functions">
+            <MoreHorizIcon onClick = {()=>toggleDropdown(!openDropdown)} ref={postRef} className="icon"/>
+            {/* 1. Change post
+            2. Delete post */}
+            <div className="dropdown" ref={dropdownRef}>
+              {openDropdown && (
+                <ul className="post-profile-dropdown">
+                  {items.map((item) => (
+                    <li className="list-item" key={item.id}>
+                      <button onClick={() => handleOnClick(item)}>
+                        <span>{item.value}</span>
+                        {item.icon}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+          
         </div>
 
         <div className="content">
