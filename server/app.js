@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const app = express();
+
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const multer = require("multer");
@@ -13,6 +13,9 @@ const userRoute = require("./routes/user");
 const storageRoute = require("./routes/storage");
 
 const { CurrentUser } = require("./appController");
+
+var app = express();
+app.use("/public", express.static("public")); //static folder for public
 
 global.currentUser = new CurrentUser(); //current user
 

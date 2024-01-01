@@ -78,12 +78,18 @@ postSchema.methods.retrieveImages = function (postId) {
   // for all files in the uploads / {postId} folder
   const fs = require("fs");
   const path = require("path");
-  const files = fs.readdirSync("uploads/" + this.postId);
+
+  // check path exists
+  if (!fs.existsSync("public/uploads/" + this.postId)) {
+    return [];
+  }
+
+  const files = fs.readdirSync("public/uploads/" + this.postId);
 
   const filesList = [];
 
   files.forEach((file) => {
-    const filePath = path.join(`./uploads/${this.postId}`, file);
+    const filePath = path.join(`./public/uploads/${this.postId}`, file);
     if (fs.statSync(filePath).isDirectory()) {
       // sub folder
       getAllFiles(filePath, filesList);

@@ -8,7 +8,7 @@ const router = express.Router();
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const postId = req.params.postId;
-    const folderPath = path.join(`./uploads/${postId}`);
+    const folderPath = path.join(`./public/uploads/${postId}`);
 
     // Create folder if it doesn't exist
     if (!fs.existsSync(folderPath)) {
@@ -33,7 +33,7 @@ router.post("/upload/:postId", upload.array("images", 5), (req, res) => {
 
   // check if folder has more than 5 files
   const postId = req.params.postId;
-  const folderPath = path.join(`./uploads/${postId}`);
+  const folderPath = path.join(`./public/uploads/${postId}`);
   const files = fs.readdirSync(folderPath);
   if (files.length > 5) {
     return res.status(400).send("Maximum 5 files allowed.");
