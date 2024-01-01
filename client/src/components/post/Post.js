@@ -42,8 +42,7 @@ const Post = ({ post }) => {
   //console.log(images);
   //console.log('====================================');
   const [current, setCurrent] = useState(0);
-  const slides = images
-  const length = slides.length;
+  const length = images.length;
 
   const nextSlide = () => {
     setCurrent(current === length - 1 ? 0 : current + 1);
@@ -53,9 +52,9 @@ const Post = ({ post }) => {
     setCurrent(current === 0 ? length - 1 : current - 1);
   };
 
-  if (!Array.isArray(slides) || slides.length <= 0) {
-    return null;
-  }
+//   if (!Array.isArray(images) || images.length <= 0) {
+//     return null;
+//   }
   //temp
   const liked = false;
 
@@ -83,22 +82,23 @@ const Post = ({ post }) => {
 
         <div className="content">
           <p>{post.content}</p>
-          <section className='slider'>
-            <FaArrowAltCircleLeft className='left-arrow' onClick={prevSlide} />
-            <FaArrowAltCircleRight className='right-arrow' onClick={nextSlide} />
-            {slides.map((slide, index) => {
+          {images && 
+            <section className='slider'>
+                {images.map((image, index) => {
                 return (
                 <div
                     className={index === current ? 'slide active' : 'slide'}
                     key={index}
                 >
+                    <FaArrowAltCircleLeft className='left-arrow' onClick={prevSlide} />
+                    <FaArrowAltCircleRight className='right-arrow' onClick={nextSlide} />
                     {index === current && (
-                    <img src={slide} alt='travel image' className='image' />
+                    <img src={image} alt='travel image' className='image' />
                     )}
                 </div>
                 );
             })}
-            </section>
+            </section>}
 
           {/* {images.map((image, index) => (
             <img
