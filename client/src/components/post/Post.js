@@ -8,13 +8,24 @@ import { Link } from "react-router-dom";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import Comments from "../comments/Comments.js";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ImageSlider from "./ImageSlider.js";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
-
+import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 const Post = ({ post }) => {
+  const items = [{
+    id: 1,
+    value: "Report",
+    icon: <ReportGmailerrorredIcon style = {{fontSize: 25}}/>
+  }]
   //comment state
   const [commentOpen, setCommentOpen] = useState(false);
+
+  //Dropdown state
+  const [openDropdown, setOpenDropdown] = useState(false);
+  const toggleDropdown = () => setOpenDropdown(!openDropdown);
+  const dropdownRef = useRef(null);
+  const postRef = useRef(null);
 
   //images
   const [images, setImages] = useState([]); //images = [image1, image2, ...
@@ -30,6 +41,31 @@ const Post = ({ post }) => {
     for (let i = 0; i < data.images.length; i++) {
       const image = data.images[i];
       data.images[i] = `http://localhost:3001/${image}`;
+    }
+  };
+
+  //Check mouse out
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClick);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  });
+
+  //Handle the dropdown
+  function handleOnClick(item) {
+    if (item.id == 1) {
+      console.log("100");
+    } 
+  }
+
+  const handleClick = (e) => {
+    if (postRef.current && !postRef.current.contains(e.target)) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpenDropdown(false);
+      } else if (openDropdown && postRef.current.contains(e.target)) {
+        setOpenDropdown(!openDropdown);
+      }
     }
   };
 
@@ -77,7 +113,24 @@ const Post = ({ post }) => {
               <span className="date">1 min ago</span>
             </div>
           </div>
-          <MoreHorizIcon />
+          <div className="extra-functions">
+            <MoreHorizIcon onClick = {()=>toggleDropdown(!openDropdown)} ref={postRef} className="icon"/>
+            
+            <div className="dropdown" ref={dropdownRef}>
+              {openDropdown && (
+                <ul className="post-dropdown">
+                  {items.map((item) => (
+                    <li className="list-item" key={item.id}>
+                      <button onClick={() => handleOnClick(item)}>
+                        <span>{item.value}</span>
+                        {item.icon}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
         </div>
 
         <div className="content">
