@@ -76,6 +76,14 @@ const Share = () => {
         }
     };
 
+    const removeImage = (indexToRemove) => {
+        setFile((prevFile) => {
+          const updatedFile = Array.from(prevFile);
+          updatedFile.splice(indexToRemove, 1);
+          return updatedFile;
+        });
+      };
+
     return (
         <div className='share'>
             <div className='container'>
@@ -110,6 +118,16 @@ const Share = () => {
                     <div className='right'>
                         <button onClick={handleClick}>Tweet</button>
                     </div>
+                </div>
+
+                <div className='imageContainerPreview'>
+                {file &&
+                    Array.from(file).map((f, index) => (
+                    <div key={index} className="imagePreview">
+                        <img src={URL.createObjectURL(f)} alt={`Preview ${index}`} />
+                        <button onClick={() => removeImage(index)}>Remove</button>
+                    </div>
+                    ))}
                 </div>
             </div>
         </div>
