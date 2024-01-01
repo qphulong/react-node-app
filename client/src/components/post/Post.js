@@ -22,6 +22,7 @@ const Post = ({ post }) => {
       `http://localhost:3001/posts/images/${postId}`
     );
     const data = await response.json();
+    console.log(data);
     setImages(data.images);
 
     for (let i = 0; i < data.images.length; i++) {
@@ -34,6 +35,10 @@ const Post = ({ post }) => {
     getImages(post.postId);
   }, []);
 
+  console.log('====================================');
+  console.log(post.postId);
+  console.log(images);
+  console.log('====================================');
   //temp
   const liked = false;
 
@@ -61,7 +66,14 @@ const Post = ({ post }) => {
 
         <div className="content">
           <p>{post.content}</p>
-          <img src={post.img} alt="" />
+          {images.map((image, index) => (
+            <img
+              src={image}
+              alt=""
+              key={index}
+              style={{ marginRight: "10px" }}
+            />
+          ))}
         </div>
 
         <div className="info">
@@ -80,7 +92,7 @@ const Post = ({ post }) => {
           </div>
         </div>
 
-        <div
+        {/* <div
           className="images"
           style={{ display: "flex", overflowX: "auto", color: "white" }}
         >
@@ -92,7 +104,7 @@ const Post = ({ post }) => {
               style={{ marginRight: "10px" }}
             />
           ))}
-        </div>
+        </div> */}
         {commentOpen && <Comments />}
       </div>
     </div>
