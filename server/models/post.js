@@ -73,15 +73,17 @@ postSchema.methods.addComment = async function (comment) {
   await this.save();
 };
 
-postSchema.methods.retrieveImages = function () {
+postSchema.methods.retrieveImages = function (postId) {
   // retrieve all images belong to this post
   // for all files in the uploads / {postId} folder
   const fs = require("fs");
   const path = require("path");
   const files = fs.readdirSync("uploads/" + this.postId);
 
+  const filesList = [];
+
   files.forEach((file) => {
-    const filePath = path.join(directoryPath, file);
+    const filePath = path.join(`./uploads/${this.postId}`, file);
     if (fs.statSync(filePath).isDirectory()) {
       getAllFiles(filePath, filesList);
     } else {
