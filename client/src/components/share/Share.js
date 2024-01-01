@@ -12,9 +12,9 @@ const Share = () => {
     const [file, setFile] = useState(null);
     const [desc, setDesc] = useState("")
     // const [newPost, setNewPost] = useState(null);
-    // console.log('====================================');
-    // console.log(newPost);
-    // console.log('====================================');
+    console.log('====================================');
+    console.log(file);
+    console.log('====================================');
     const queryClient = useQueryClient()
 
     // Mutations
@@ -49,7 +49,9 @@ const Share = () => {
     const upload = async (newPostUpdate) => {
         try {
             const formData = new FormData();
-            formData.append("images", file);
+            for (const f of file) {
+                formData.append("images", f);
+            }
             console.log('====================================');
             console.log(newPostUpdate);
             console.log('====================================');
@@ -95,7 +97,8 @@ const Share = () => {
                         <input 
                             type='file' 
                             id='file' 
-                            onChange = {(e) => setFile(e.target.files[0])}
+                            multiple
+                            onChange = {(e) => setFile(e.target.files)}
                             style={{display: "none"}}/>
                         <label htmlFor="file">
                         <div className="item">
