@@ -11,23 +11,10 @@ const Share = () => {
     const {currentUser} = useContext(AuthContext)
     const [file, setFile] = useState(null);
     const [desc, setDesc] = useState("")
-    const [newPost, setNewPost] = useState(null);
-    console.log('====================================');
-    console.log(newPost);
-    console.log('====================================');
-    //upload
-    const upload = async () => {
-        try{
-            const formData = new FormData()
-            formData.append("file",file)
-            const response = await axios.post(`http://localhost:3001/storage/upload/${newPost.post}`)
-            return response.data
-        }
-        catch(err){
-            console.log(err);
-        }
-    }
-
+    // const [newPost, setNewPost] = useState(null);
+    // console.log('====================================');
+    // console.log(newPost);
+    // console.log('====================================');
     const queryClient = useQueryClient()
 
     // Mutations
@@ -40,9 +27,12 @@ const Share = () => {
     },
     onSuccess: (response) => {
         // Access the newly created post object here
-        setNewPost(response.data);
+        // setNewPost(response.data);  
+        
         // const newPostObject = response.data;
-        // console.log("Newly added post:", newPostObject);
+        // console.log("Newly added post:", typeof(newPostObject));
+        if(file) upload(response.data)
+
          // Invalidate and refetch
         queryClient.invalidateQueries({ queryKey: ['posts'] })
     },
@@ -50,11 +40,39 @@ const Share = () => {
 
     const handleClick = async (e) => {
         e.preventDefault()
-        
         mutation.mutate({desc})
         // print
         // console.log(newPostId);
     }
+
+    //upload
+    const upload = async (newPostUpdate) => {
+        try {
+            const formData = new FormData();
+            formData.append("file", file);
+            console.log('====================================');
+            console.log(newPostUpdate);
+            console.log('====================================');
+            console.log('====================================');
+            console.log(newPostUpdate.post);
+            console.log('====================================');
+            const response = await axios.post(
+                `http://localhost:3001/storage/upload/${newPostUpdate.post}`,
+                formData,
+            );
+    
+            if (response.status === 200) {
+                console.log("oke 200");
+                return response.data;
+            } else {
+                console.error("Upload failed:", response.statusText);
+                throw new Error("File upload failed"); // Re-throw for better handling
+            }
+        } catch (err) {
+            console.error("Error during upload:", err.message, err.stack);
+            throw err; // Re-throw to allow for further handling
+        }
+    };
 
     return (
         <div className='share'>
