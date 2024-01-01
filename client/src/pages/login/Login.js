@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
-  const { currentUser, login } = useContext(AuthContext);
+  const { currentUser, login, logout } = useContext(AuthContext);
   const [inputs, setInputs] = useState({
     username: "",
     password: "",
