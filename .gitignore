@@ -7,3 +7,11 @@ server/node_modules/
 client/node_modules/
 .DS_Store
 
+.DS_Store
+node_modules/.bin/color-support
+node_modules/.bin/node-pre-gyp
+node_modules/.bin/nopt
+node_modules/.bin/rimraf
+node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node
+node_modules/make-dir/node_modules/.bin/semver
+node_modules/tar/node_modules/.bin/mkdirp

@@ -127,7 +127,7 @@ router.post("/profile-pic/:userId", upload.single("image"), (req, res) => {
 
 router.get("/profile-pic/:userId", (req, res) => {
   const userId = req.params.userId;
-  const folderPath = path.join(`../profile_pics/${userId}`);
+  const folderPath = path.join(`./profile_pics/${userId}`);
 
   fs.readdir(folderPath, (err, files) => {
     if (err) {

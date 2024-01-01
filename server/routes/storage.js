@@ -8,7 +8,7 @@ const router = express.Router();
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const postId = req.params.postId;
-    const folderPath = path.join(`../uploads/${postId}`);
+    const folderPath = path.join(`./uploads/${postId}`);
 
     // Create folder if it doesn't exist
     if (!fs.existsSync(folderPath)) {
