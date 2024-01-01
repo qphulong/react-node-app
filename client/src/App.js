@@ -88,10 +88,10 @@ function App() {
           path: "/friends",
           element: <Friends/>
         },
-        {
-          path: "/notifications",
-          element: <Notification/>
-        }
+        // {
+        //   path: "/notifications",
+        //   element: <Notification/>
+        // }
       ]
     },
     {
