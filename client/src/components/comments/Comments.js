@@ -11,7 +11,14 @@ const Comments = ({ postId }) => {
     //user
     const {currentUser} = useContext(AuthContext)
     const [content, setContent] = useState("");
+
+    // =================================================================================================
+    // =================================================================================================
+    // check limit word
     
+    // =================================================================================================
+    // =================================================================================================
+
     //post comment - up comment
     const queryClient = useQueryClient();
 
@@ -39,7 +46,7 @@ const Comments = ({ postId }) => {
     //     console.log(111111);
     //   }, [mutation.isSuccess, queryClient]);
     
-    const handleClick = async (e) => {
+    const handleClick = (e) => {
         e.preventDefault();
         mutation.mutate({ content });
         // print
@@ -90,7 +97,7 @@ const Comments = ({ postId }) => {
                 <input type='text' placeholder='Write a comment' onChange={(e) => setContent(e.target.value)}/>
                 <button onClick={handleClick}>Send</button>
             </div>
-            {Comments.comments.map((comment) => {
+            {Comments.comments?.map((comment) => {
                 return <div className='comment' key={uuidv4()}>
                     <img src="https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt=""/>
                     <div className='info'>

@@ -13,8 +13,21 @@ import PostsProfile from "../postsProfile/PostsProfile.js";
 import { AuthContext } from "../../context/authContext.js";
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
+import axios from "axios";
 
 const PostProfile = ({ post }) => {
+  const { currentUser, login, logout } = useContext(AuthContext);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedContent, setEditedContent] = useState(post.content);
+  //comment state
+  const [commentOpen, setCommentOpen] = useState(false);
+
+  //Dropdown state
+  const [openDropdown, setOpenDropdown] = useState(false);
+  const toggleDropdown = () => setOpenDropdown(!openDropdown);
+  const dropdownRef = useRef(null);
+  const postRef = useRef(null);
+
   const items = [{
     id: 1,
     value: "Edit content",
@@ -25,16 +38,6 @@ const PostProfile = ({ post }) => {
     value: "Delete post",
     icon: <DeleteIcon style={{fontSize: 25}}/>,
   }]
-
-  const { currentUser, login, logout } = useContext(AuthContext);
-  //comment state
-  const [commentOpen, setCommentOpen] = useState(false);
-
-  //Dropdown state
-  const [openDropdown, setOpenDropdown] = useState(false);
-  const toggleDropdown = () => setOpenDropdown(!openDropdown);
-  const dropdownRef = useRef(null);
-  const postRef = useRef(null);
 
   //images
   const [images, setImages] = useState([]); //images = [image1, image2, ...
@@ -69,6 +72,8 @@ const PostProfile = ({ post }) => {
   function handleOnClick(item) {
     if (item.id == 1) {
       console.log("1");
+      // "Edit content" clicked
+      setIsEditing(true);
     } else if (item.id == 2) {
       console.log("2");
     } 
@@ -83,6 +88,40 @@ const PostProfile = ({ post }) => {
       }
     }
   };
+
+  //=========================================================================================================
+  //=========================================================================================================
+  // EDIT POST
+  const handleEditConfirm = async () => {
+    try {
+      const response = await axios.put(`http://localhost:3001/posts`, {
+        postId: post.postId,
+        newContent: editedContent,
+      });
+
+      // Check if the update was successful
+      if (response.status === 200) {
+        console.log("Content updated successfully:", response.data);
+        setIsEditing(false);
+      } else {
+        console.error("Error updating content:", response.statusText);
+        // Handle error as needed
+      }
+    } catch (error) {
+      console.error("Error updating content:", error.message);
+      // Handle error as needed
+    }
+  };
+
+  const handleEditCancel = () => {
+    // Cancel editing mode
+    setIsEditing(false);
+    // Reset edited content to the original content
+    setEditedContent(post.content);
+  };
+
+  //=========================================================================================================
+  //=========================================================================================================
 
   //console.log('====================================');
   //console.log(post.postId);
@@ -142,7 +181,18 @@ const PostProfile = ({ post }) => {
         </div>
 
         <div className="content">
-          <p>{post.content}</p>
+          {isEditing ? (
+            <div>
+              <textarea
+                value={editedContent}
+                onChange={(e) => setEditedContent(e.target.value)}
+              />
+              <button onClick={handleEditConfirm}>Save</button>
+              <button onClick={handleEditCancel}>Cancel</button>
+            </div>
+          ) : (
+            <p>{post.content}</p>
+          )}
           {images && 
             <section className='slider'>
                 {images.map((image, index) => {
