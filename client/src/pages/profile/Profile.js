@@ -116,6 +116,7 @@ const Profile = () => {
                                         value={name}
                                         onChange={handleNameChange}
                                         readonly="readonly"
+                                        style={{outline:'none'}}
                                     />
                                 </div>}
 
@@ -139,6 +140,7 @@ const Profile = () => {
                                             value={position}
                                             onChange={handlePositionChange}
                                             readonly="readonly"
+                                            style={{outline:'none'}}
                                         />
 
                                     </div>}
@@ -161,6 +163,7 @@ const Profile = () => {
                                             value={phoneNumber}
                                             onChange={handlePhoneNumberChange}
                                             readonly="readonly"
+                                            style={{outline:'none'}}
                                         />
 
                                     </div>}
