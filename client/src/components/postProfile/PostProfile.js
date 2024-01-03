@@ -76,6 +76,7 @@ const PostProfile = ({ post }) => {
       setIsEditing(true);
     } else if (item.id == 2) {
       console.log("2");
+      handleDeletePost();
     } 
   }
 
@@ -118,6 +119,29 @@ const PostProfile = ({ post }) => {
     setIsEditing(false);
     // Reset edited content to the original content
     setEditedContent(post.content);
+  };
+  //=========================================================================================================
+  //=========================================================================================================
+  // Delete post
+  const handleDeletePost = async () => {
+    console.log(post.postId);
+    try {
+      const response = await axios.delete(`http://localhost:3001/posts`,{
+        postId: post.postId
+      });
+      console.log(response.data);
+      // Check if the deletion was successful
+      if (response.status === 200) {
+        console.log("Post deleted successfully:", response.data);
+        // Handle the deletion as needed, such as updating the UI or redirecting the user
+      } else {
+        console.error("Error deleting post:", response.statusText);
+        // Handle error as needed
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error.message);
+      // Handle error as needed
+    }
   };
 
   //=========================================================================================================
