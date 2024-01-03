@@ -18,6 +18,7 @@ import { useContext } from "react";
 import { AuthContext } from "./context/authContext";
 import Friends from "./pages/friends/Friends";
 import Notification from "./pages/notifications/Notifications";
+import AddFriend from "./pages/addfriend/AddFriend"
 import Invitations from "./pages/invitations/Invitations"
 import ForModerator from "./pages/moderatorpage/ForModerator" 
 import ChangePassword from "./pages/changePassword/ChangePassword"
@@ -87,6 +88,10 @@ function App() {
         {
           path: "/friends",
           element: <Friends/>
+        },
+        {
+          path: "/addfriends",
+          element: <AddFriend/>
         },
         // {
         //   path: "/notifications",
