@@ -37,9 +37,11 @@ exports.checkPostLimit = (postContent = null) => {
   }
 };
 
-async function editPost(postId, newContent) {
+async function editPost(postId, newContent, res) {
   // checkPostLimit(newContent);
   await Post.updateOne({ postId: postId }, { content: newContent });
+
+  res.json({ postId: postId, newContent: newContent });
 }
 
 async function deletePost(postId) {
