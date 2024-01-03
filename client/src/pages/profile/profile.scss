@@ -1,24 +1,27 @@
 @import "../../style.scss";
 
-.profile{
-    @include themify($themes){
+.profile {
+    @include themify($themes) {
         background-color: themed("bgSoft");
 
-        .images{
+        .images {
             width: 100%;
             height: 300px;
             position: relative;
 
-            .cover{
+            .cover {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
             }
-            .profile-image-container{
+
+            .profile-image-container {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                .profile-picture-before, .profile-picture-after{
+
+                .profile-picture-before,
+                .profile-picture-after {
                     width: 200px;
                     height: 200px;
                     border-radius: 50%;
@@ -30,37 +33,43 @@
                     top: 200px;
                     //opacity: 0;
                 }
-                .upload-image-btn{
+
+                .upload-image-btn {
                     width: 180px;
                     display: none;
                 }
-                .upload-image-icon{
+
+                .upload-image-icon {
                     margin-top: -20px;
                     opacity: 0;
                     z-index: 1;
                 }
             }
-            .profile-image-container:hover{
-                .profilePic{
+
+            .profile-image-container:hover {
+                .profilePic {
                     opacity: 0.9;
                 }
-                .upload-image-icon{
+
+                .upload-image-icon {
                     color: white;
                     opacity: 1;
-                    
+
 
                 }
 
             }
-            
+
         }
-        .profileContainer{
+
+        .profileContainer {
             padding: 20px 30px;
-            .userInfo{
+
+            .userInfo {
                 height: 180px;
-                -webkit-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.39);
-                -moz-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.39);
-                box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.39);
+                -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
+                -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
+                box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
                 border-radius: 20px;
                 background-color: themed("bg");
                 color: themed("textColor");
@@ -70,57 +79,58 @@
                 justify-content: space-around;
             }
 
-            .left{
+            .left {
                 flex: 1;
                 display: flex;
                 gap: 10px;
 
-                a{
-                    color: #B26457;
+                a {
+                    color: themed('logo');;
                 }
             }
 
-            .center{
+            .center {
                 flex: 1;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 gap: 10px;
-                .name{
+
+                .name {
                     display: flex;
                     gap: 10px;
-                    span{
+
+                    span {
                         font-size: 30px;
                         font-weight: 500;
                     }
-                    .icon:hover{
-                        cursor: pointer;
-                    }
-                    input{
-                        font-family: 'Josefin Sans', sans-serif;;
+
+                    input {
+                        font-family: 'Josefin Sans', sans-serif;
+                        ;
                         font-size: 30px;
                         font-weight: 500;
+                        width: 200px;
                         border: none;
                     }
-    
+
                 }
-                
-                .info{
+
+                .info {
                     width: 100%;
                     display: flex;
                     align-items: center;
                     justify-content: space-around;
 
-                    .item{
+                    .item {
                         display: flex;
                         align-items: center;
                         gap: 5px;
                         color: themed("textColorSoft");
-                        span{
-                            font-size: 12px;
-                        }
-                        input{
-                            font-family: 'Josefin Sans', sans-serif;;
+
+                        input {
+                            font-family: 'Josefin Sans', sans-serif;
+                            ;
                             font-size: 12px;
                             border: none;
                             padding: 0;
@@ -131,17 +141,17 @@
 
                 }
 
-                button{
+                button {
                     border: 1px solid themed("logo");
-                        border-radius: 20px;
-                        background-color: themed("logo");
-                        padding: 10px 25px;
-                        color: themed("bg");
-                        font-size: 15px;
+                    border-radius: 20px;
+                    background-color: themed("logo");
+                    padding: 10px 25px;
+                    color: themed("bg");
+                    font-size: 15px;
                 }
             }
 
-            .right{
+            .right {
                 flex: 1;
                 display: flex;
                 align-items: center;
@@ -150,7 +160,7 @@
             }
         }
 
-        .container-post{
+        .container-post {
             padding: 20px 30px;
         }
     }
