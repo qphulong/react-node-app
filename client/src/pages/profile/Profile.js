@@ -27,7 +27,7 @@ const Profile = () => {
     const [phoneNumber, setPhoneNumber] = useState('+84918155199');
 
 
-    const handleImageClick = () =>{
+    const handleImageClick = () => {
         inputRef.current.click();
     }
 
@@ -58,32 +58,45 @@ const Profile = () => {
         };
     };
 
+    var inputs = document.querySelectorAll('input'); // get the input element
+    inputs.forEach(function(input) {
+        // Bind the "resizeInput" callback on "input" event for each input element
+        input.addEventListener('input', resizeInput);
+        
+        // Call the function immediately to set initial width for each input element
+        resizeInput.call(input);
+    });
+
+    function resizeInput() {
+        this.style.width = this.value.length + "ch";
+    }
+
     return (
         <div className='profile'>
             <div className='images'>
-                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-                    alt="" className='cover'/>
-                <div className='profile-image-container' onClick={handleImageClick}> 
-                    {image ? <img src={URL.createObjectURL(image)} alt='' className='profile-picture-after'/> : <img src='https://images.pexels.com/photos/2055500/pexels-photo-2055500.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' className='profile-picture-before'/>}
-                    <FileUploadIcon style={{fontSize: 50}} className='upload-image-icon'/>
-                    <input type = "file" ref = {inputRef} onChange={handleImageChange} className='upload-image-btn'/>
+                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    alt="" className='cover' />
+                <div className='profile-image-container' onClick={handleImageClick}>
+                    {image ? <img src={URL.createObjectURL(image)} alt='' className='profile-picture-after' /> : <img src='https://images.pexels.com/photos/2055500/pexels-photo-2055500.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' className='profile-picture-before' />}
+                    <FileUploadIcon style={{ fontSize: 50 }} className='upload-image-icon' />
+                    <input type="file" ref={inputRef} onChange={handleImageChange} className='upload-image-btn' />
                 </div>
-                
+
             </div>
 
             <div className='profileContainer'>
                 <div className='userInfo'>
                     <div className='left'>
                         <a href='https://facebook.com'>
-                            <FacebookIcon style={{fontSize: 25}} className='logo'/>
+                            <FacebookIcon style={{ fontSize: 25 }} className='logo' />
                         </a>
 
                         <a href='https://instagram.com'>
-                            <InstagramIcon style={{fontSize: 25}} className='logo'/>
+                            <InstagramIcon style={{ fontSize: 25 }} className='logo' />
                         </a>
 
                         <a href='https://www.linkedin.com/'>
-                            <LinkedInIcon style={{fontSize: 25}} className='logo'/>
+                            <LinkedInIcon style={{ fontSize: 25 }} className='logo' />
                         </a>
                     </div>
                     <div className='center'>
@@ -91,68 +104,81 @@ const Profile = () => {
                             {isEditable ? (
                                 <div>
                                     <input
-                                        type = "text"
-                                        value = {name}
+                                        type="text"
+                                        value={name}
                                         onChange={handleNameChange}
-                                        style={inputStyle(name, 16)}
                                     />
-                                    <EditOffIcon style={{fontSize: 25}} onClick={handleToggleEdit} className='icon'/>
                                 </div>
-                            ): 
-                            <div>
-                                <span contentEditable={isEditable}> {name}</span>
-                                <ModeEditIcon style={{fontSize: 25}} onClick={handleToggleEdit} className='icon'/>
-                            </div>}
-                            
+                            ) :
+                                <div>
+                                    <input
+                                        type="text"
+                                        value={name}
+                                        onChange={handleNameChange}
+                                        readonly="readonly"
+                                    />
+                                </div>}
+
                         </div>
                         <div className='info'>
                             <div className='item'>
-                                <PlaceIcon/>
+                                <PlaceIcon />
                                 {isEditable ? (
-                                <div>
-                                    <input
-                                        type = "text"
-                                        value = {position}
-                                        onChange={handlePositionChange}
-                                        style={inputStyle(position, 10)}
-                                    />
-                                </div>
-                                ): 
-                                <div>
-                                    <span contentEditable={isEditable}> {position}</span>
-                                    
-                                </div>}
+                                    <div>
+                                        <input
+                                            type="text"
+                                            value={position}
+                                            onChange={handlePositionChange}
+                                        
+                                        />
+                                    </div>
+                                ) :
+                                    <div>
+                                        <input
+                                            type="text"
+                                            value={position}
+                                            onChange={handlePositionChange}
+                                            readonly="readonly"
+                                        />
+
+                                    </div>}
                             </div>
 
                             <div className='item'>
-                                <PhoneIcon/>
+                                <PhoneIcon />
                                 {isEditable ? (
-                                <div>
-                                    <input
-                                        type = "text"
-                                        value = {phoneNumber}
-                                        onChange={handlePhoneNumberChange}
-                                        style={inputStyle(phoneNumber, 10)}
-                                    />
-                                </div>
-                                ): 
-                                <div>
-                                    <span contentEditable={isEditable}> {phoneNumber}</span>
-                                    
-                                </div>}
+                                    <div>
+                                        <input
+                                            type="text"
+                                            value={phoneNumber}
+                                            onChange={handlePhoneNumberChange}
+                                        />
+                                    </div>
+                                ) :
+                                    <div>
+                                        <input
+                                            type="text"
+                                            value={phoneNumber}
+                                            onChange={handlePhoneNumberChange}
+                                            readonly="readonly"
+                                        />
+
+                                    </div>}
                             </div>
                         </div>
-
-                        <button>Visit</button>
+                        {isEditable ? (
+                            <button onClick={handleToggleEdit}>Disable edit</button>
+                        ): <button onClick={handleToggleEdit}>Enable edit</button>}
+                        
                     </div>
                     <div className='right'>
-                        <EmailOutlined/>
-                        <MoreVertIcon/>
+                        <EmailOutlined />
+                        <MoreVertIcon />
                     </div>
                 </div>
             </div>
             <div className='container-post'>
-                <PostsProfile/>
+                <PostsProfile />
             </div>
         </div>
     )
