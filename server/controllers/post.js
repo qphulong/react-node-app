@@ -137,5 +137,19 @@ exports.getComments = async (req, res) => {
 
   const post = await Post.findOne({ postId: postId });
 
-  res.json({ comments: post.comments });
+  var comments = [];
+
+  for (let i = 0; i < post.comments.length; i++) {
+    const comment = post.comments[i];
+    const user = await User.findOne({ _id: comment.user });
+    const id = user.userId;
+    comments.push({
+      content: comment.content,
+      user: id,
+      likes: comment.likes,
+      createdAt: comment.createdAt,
+    });
+  }
+
+  res.json({ comments: comments });
 };
