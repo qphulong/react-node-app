@@ -75,15 +75,15 @@ const Profile = () => {
                 <div className='userInfo'>
                     <div className='left'>
                         <a href='https://facebook.com'>
-                            <FacebookIcon style={{fontSize: 25}}/>
+                            <FacebookIcon style={{fontSize: 25}} className='logo'/>
                         </a>
 
                         <a href='https://instagram.com'>
-                            <InstagramIcon style={{fontSize: 25}}/>
+                            <InstagramIcon style={{fontSize: 25}} className='logo'/>
                         </a>
 
                         <a href='https://www.linkedin.com/'>
-                            <LinkedInIcon style={{fontSize: 25}}/>
+                            <LinkedInIcon style={{fontSize: 25}} className='logo'/>
                         </a>
                     </div>
                     <div className='center'>
