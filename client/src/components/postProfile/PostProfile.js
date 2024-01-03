@@ -200,7 +200,7 @@ const PostProfile = ({ post }) => {
             />
           ))}
         </div> */}
-        {commentOpen && <Comments />}
+        {commentOpen && <Comments postId={post.postId}/>}
       </div>
     </div>
   );

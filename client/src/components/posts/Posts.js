@@ -24,7 +24,7 @@ const Posts = () => {
             return response.data;
           });
       } catch (error) {
-        console.error(error);
+        // console.error(error);
         throw error; // Re-throw to allow useQuery to handle error
       }
     },
@@ -39,7 +39,7 @@ const Posts = () => {
   }
 
   const postsArray = Object.values(posts)[0];
-  console.log(postsArray[0].postId);
+  // console.log(postsArray[0].postId);
   return (
     <div className="posts">
       {isLoading

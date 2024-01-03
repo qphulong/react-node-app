@@ -1,13 +1,44 @@
 import { AuthContext } from '../../context/authContext'
 import './comments.scss'
 import { useContext } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
 
-const Comments = () => {
+const Comments = ({ postId }) => {
 
     //user
     const {currentUser} = useContext(AuthContext)
+    // console.log(postId);
+    // Queries
+    // const {
+    //     isLoading,
+    //     error,
+    //     data: comments,
+    // } = useQuery({
+    //     queryKey: ["posts"],
+    //     queryFn: () => {
+    //     try {
+    //         return axios
+    //         .get(`http://localhost:3001/posts/comments/${postId}`)
+    //         .then((response) => {
+    //             // console.log(response.data);
+    //             return response.data;
+    //         });
+    //     } catch (error) {
+    //         // console.error(error);
+    //         throw error; // Re-throw to allow useQuery to handle error
+    //     }
+    //     },
+    // });
 
-    //temp
+    // if (isLoading) {
+    //     return <h3>Loading...</h3>;
+    // }
+
+    // if (error) {
+    //     return <h3>Error: {error.message}</h3>;
+    // }
+    
     const comments = [
         {
             id: 1,
@@ -25,7 +56,6 @@ const Comments = () => {
         },
 
     ]
-
     return (
         <div className='comments'>
             <div className='write'>
@@ -34,7 +64,7 @@ const Comments = () => {
                 <button>Send</button>
             </div>
             {comments.map((comment) => {
-                return <div className='comment'>
+                return <div className='comment' key={comment.id}>
                     <img src={comment.profilePic} alt=""/>
                     <div className='info'>
                         <span>{comment.name}</span>
