@@ -121,3 +121,9 @@ exports.addSocialMedia = async (req, res) => {
     classify: user.classifySocialNetwork(link),
   }); //send to the frontend to show on the interface
 };
+
+exports.getSocialMedia = async (req, res) => {
+  res.json({
+    socialMedia: await userFunctions.getSocialMedia(req.params.userId),
+  });
+};

@@ -76,6 +76,8 @@ router.put("/add-friends/:linkId", userController.acceptFriendLink);
 
 router.put("/social-media", userController.addSocialMedia);
 
+router.get("/social-media/:userId", userController.getSocialMedia);
+
 router.get("/:userId", (req, res) => {
   const userId = req.params.userId;
 
