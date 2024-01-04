@@ -167,9 +167,11 @@ exports.modifyLikes = async (req, res) => {
 
   if (post.likes.includes(userId)) {
     post.likes.pull(userId);
-    return res.json({ likes: post.likes });
   } else {
     post.likes.push(userId);
-    return res.json({ likes: post.likes });
   }
+
+  await post.save();
+
+  return res.json({ likes: post.likes });
 };
