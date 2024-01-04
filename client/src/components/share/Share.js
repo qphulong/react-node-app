@@ -14,14 +14,32 @@ const Share = () => {
   const { currentUser } = useContext(AuthContext);
   const [file, setFile] = useState(null);
   const [desc, setDesc] = useState("");
-
+  
   // =================================================================================================
   // =================================================================================================
   // check limit images + limit word
+  const MAX_WORD = 150;
+  const MAX_IMAGE = 5;
 
+  const [descWord, setDescWord] = useState(0)
+  const handleContentChange = (e) => {
+    const content = e.target.value.split(" ")
+    setDescWord(content.length)
+
+    if (content.length <= MAX_WORD) { 
+      setDesc(e.target.value)
+
+      if (e.target.value == ''){
+        setDescWord(0)
+      } 
+    }
+    else {
+      console.log("Hello world")
+    }
+  }
   // =================================================================================================
   // =================================================================================================
-  
+
   // const [newPost, setNewPost] = useState(null);
   // console.log('====================================');
   // console.log(file);
@@ -107,7 +125,8 @@ const Share = () => {
           <input
             type="text"
             placeholder={`What's on your mind ${currentUser.name}?`}
-            onChange={(e) => setDesc(e.target.value)}
+            onChange={(e) => handleContentChange(e)
+            }
           />
         </div>
 
