@@ -30,28 +30,18 @@ const Comments = ({ postId }) => {
             comment: content,
         })},
         onSuccess: (response) => {
-        // Access the newly created post object here
-        console.log("Newly added comment:", response.data);
+            console.log("Newly added comment:", response.data);
 
-        // Invalidate and refetch the query with the correct query key
-        queryClient.invalidateQueries({ queryKey: ["comments", postId] });
+            queryClient.invalidateQueries({ queryKey: ["comments", postId] });
         },
     });
-    
-    // useEffect(() => {
-    //     // Refetch comments when mutation completes successfully
-    //     if (mutation.isSuccess) {
-    //       queryClient.refetchQueries({ queryKey: ["comments", postId] });
-    //     }
-    //     console.log(111111);
-    //   }, [mutation.isSuccess, queryClient]);
+
     
     const handleClick = (e) => {
         e.preventDefault();
         mutation.mutate({ content });
-        // print
-        // console.log(newPostId);
       };
+
     // Queries
     const {
         isLoading,
@@ -64,12 +54,10 @@ const Comments = ({ postId }) => {
             return axios
             .get(`http://localhost:3001/posts/comments/${postId}`)
             .then((response) => {
-                // console.log(response.data);
                 return response.data;
             });
         } catch (error) {
-            // console.error(error);
-            throw error; // Re-throw to allow useQuery to handle error
+            throw error; 
         }
         },
     });
@@ -101,7 +89,7 @@ const Comments = ({ postId }) => {
                 return <div className='comment' key={uuidv4()}>
                     <img src="https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt=""/>
                     <div className='info'>
-                        <span>TMK</span>
+                        <span>{comment.user}</span>
                         <p>{comment.content}</p>
                     </div>
                     <span className='date'>1 hour ago</span>
