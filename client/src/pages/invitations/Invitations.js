@@ -1,8 +1,22 @@
 import './invitations.scss'
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import Button from '@mui/material/Button';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Invitations = () => {
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        // Simulate fetching userId and friendLink from an API or some data source
+        const userId = "tmk3010";
+        const friendLink = "abc";
+    
+        // Navigate to the invitations route with the obtained parameters
+        navigate(`/invitations/${userId}/${friendLink}`);
+      }, [navigate]);
+
     return (
         <div className='invitations'>
             <div className='title'>
