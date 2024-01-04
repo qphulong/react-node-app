@@ -22,6 +22,7 @@ const PostProfile = ({ post }) => {
   const [editedContent, setEditedContent] = useState(post.content);
   //comment state
   const [commentOpen, setCommentOpen] = useState(false);
+  const [like,setLike] = useState(false)
 
   //Dropdown state
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -171,12 +172,10 @@ const PostProfile = ({ post }) => {
     },
 });
 
-// console.log('====================================');
-// console.log(cmtsProfile?.comments.length);
-// console.log('====================================');
+  // console.log('====================================');
+  // console.log(cmtsProfile?.comments.length);
+  // console.log('====================================');
 
-  //temp
-  const liked = false;
 
   return (
     <div className="post">
@@ -256,8 +255,8 @@ const PostProfile = ({ post }) => {
         </div>
 
         <div className="info">
-          <div className="item">
-            {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          <div className="item" onClick={() => setLike(!like)}>
+            {like ? <FavoriteIcon /> : <FavoriteBorderIcon />}
             12
           </div>
 

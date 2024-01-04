@@ -22,6 +22,7 @@ const Post = ({ post }) => {
   }]
   //comment state
   const [commentOpen, setCommentOpen] = useState(false);
+  const [like,setLike] = useState(false)
 
   //Dropdown state
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -110,9 +111,6 @@ const Post = ({ post }) => {
   // console.log(cmts?.comments.length);
   // console.log('====================================');
 
-  //temp
-  const liked = false;
-
   return (
     <div className="post">
       <div className="container">
@@ -183,8 +181,8 @@ const Post = ({ post }) => {
         </div>
 
         <div className="info">
-          <div className="item">
-            {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          <div className="item" onClick={() => setLike(!like)}>
+            {like ? <FavoriteIcon /> : <FavoriteBorderIcon />}
             12
           </div>
 
