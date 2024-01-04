@@ -44,7 +44,7 @@ const Friends = () => {
                 {FriendsInfo.friends.map((friend) => (
                     <div className='item'>
                         <div className='friends-top'>
-                            <img src='https://images.pexels.com/photos/2055500/pexels-photo-2055500.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' alt=''/>
+                            <img src='https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' alt=''/>
                             <span className='friends-name'>
                                 {friend.userId}
                             </span>
