@@ -108,7 +108,7 @@ function App() {
       element: <Register/>,
     },
     {
-      path: "/invitations",
+      path: "/invitations/:userId/:friendLink",
       element: <Invitations/>
     },
     {

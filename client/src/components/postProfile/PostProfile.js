@@ -14,7 +14,7 @@ import { AuthContext } from "../../context/authContext.js";
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const PostProfile = ({ post }) => {
   const { currentUser, login, logout } = useContext(AuthContext);
@@ -22,6 +22,7 @@ const PostProfile = ({ post }) => {
   const [editedContent, setEditedContent] = useState(post.content);
   //comment state
   const [commentOpen, setCommentOpen] = useState(false);
+  const [like,setLike] = useState(false)
 
   //Dropdown state
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -154,9 +155,27 @@ const PostProfile = ({ post }) => {
   const prevSlide = () => {
     setCurrent(current === 0 ? length - 1 : current - 1);
   };
+  //get comment quantity
+  // Queries
+  const {isLoading, error, data: cmtsProfile} = useQuery({
+    queryKey: ["cmtsProfile",post.postId],
+    queryFn: async () => {
+    try {
+        return await axios
+        .get(`http://localhost:3001/posts/comments/${post.postId}`)
+        .then((response) => {
+            return response.data;
+        });
+    } catch (error) {
+        throw error; 
+    }
+    },
+});
 
-  //temp
-  const liked = false;
+  // console.log('====================================');
+  // console.log(cmtsProfile?.comments.length);
+  // console.log('====================================');
+
 
   return (
     <div className="post">
@@ -236,14 +255,14 @@ const PostProfile = ({ post }) => {
         </div>
 
         <div className="info">
-          <div className="item">
-            {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          <div className="item" onClick={() => setLike(!like)}>
+            {like ? <FavoriteIcon /> : <FavoriteBorderIcon />}
             12
           </div>
 
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <CommentOutlinedIcon />
-            12
+            {cmtsProfile?.comments.length}
           </div>
 
           <div className="item">

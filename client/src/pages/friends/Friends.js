@@ -41,7 +41,7 @@ const Friends = () => {
                 <AutoAwesomeIcon style={{ fontSize: 20 }}/>
             </div>
             <div className="content-container">
-                {FriendsInfo.friends.map((friend) => (
+                {FriendsInfo && FriendsInfo.friends.map((friend) => (
                     <div className='item'>
                         <div className='friends-top'>
                             <img src='https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' alt=''/>

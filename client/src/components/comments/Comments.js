@@ -34,6 +34,9 @@ const Comments = ({ postId }) => {
             console.log("Newly added comment:", response.data);
 
             queryClient.invalidateQueries({queryKey: ["Comments",postId]});
+            queryClient.invalidateQueries({queryKey: ["cmts",postId]});
+            queryClient.invalidateQueries({queryKey: ["cmtsProfile",postId]});
+
         },
         onError: (error, variables, context) => {
             console.log('====================================');
@@ -79,9 +82,6 @@ const Comments = ({ postId }) => {
             return await axios
             .get(`http://localhost:3001/posts/comments/${postId}`)
             .then((response) => {
-                console.log('====================================');
-                console.log(response.data);
-                console.log('====================================');
                 return response.data;
             });
         } catch (error) {
