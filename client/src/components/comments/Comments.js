@@ -27,6 +27,7 @@ const Comments = ({ postId }) => {
         mutationFn: () => {
         return axios.post("http://localhost:3001/posts/comments", {
             postId: postId,
+            userId: currentUser.userId,
             comment: content,
         })},
         onSuccess: (response) => {
@@ -78,6 +79,9 @@ const Comments = ({ postId }) => {
             return await axios
             .get(`http://localhost:3001/posts/comments/${postId}`)
             .then((response) => {
+                console.log('====================================');
+                console.log(response.data);
+                console.log('====================================');
                 return response.data;
             });
         } catch (error) {
