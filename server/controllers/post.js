@@ -157,7 +157,6 @@ exports.getComments = async (req, res) => {
 };
 
 exports.modifyLikes = async (req, res) => {
-  const add = req.body.add; // boolean
   const postId = req.body.postId;
   const userId = req.body.userId;
 
@@ -166,9 +165,11 @@ exports.modifyLikes = async (req, res) => {
     return res.status(404).json({ message: "Post not found" });
   }
 
-  if (add) {
-    post.addLike(userId);
+  if (post.likes.includes(userId)) {
+    post.likes.pull(userId);
+    return res.json({ likes: post.likes });
   } else {
-    post.removeLike(userId);
+    post.likes.push(userId);
+    return res.json({ likes: post.likes });
   }
 };
