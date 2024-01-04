@@ -14,7 +14,7 @@ import { AuthContext } from "../../context/authContext.js";
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const PostProfile = ({ post }) => {
   const { currentUser, login, logout } = useContext(AuthContext);
@@ -154,6 +154,26 @@ const PostProfile = ({ post }) => {
   const prevSlide = () => {
     setCurrent(current === 0 ? length - 1 : current - 1);
   };
+  //get comment quantity
+  // Queries
+  const {isLoading, error, data: cmtsProfile} = useQuery({
+    queryKey: ["cmtsProfile",post.postId],
+    queryFn: async () => {
+    try {
+        return await axios
+        .get(`http://localhost:3001/posts/comments/${post.postId}`)
+        .then((response) => {
+            return response.data;
+        });
+    } catch (error) {
+        throw error; 
+    }
+    },
+});
+
+// console.log('====================================');
+// console.log(cmtsProfile?.comments.length);
+// console.log('====================================');
 
   //temp
   const liked = false;
@@ -243,7 +263,7 @@ const PostProfile = ({ post }) => {
 
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <CommentOutlinedIcon />
-            12
+            {cmtsProfile?.comments.length}
           </div>
 
           <div className="item">

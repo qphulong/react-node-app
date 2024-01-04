@@ -12,6 +12,8 @@ import { useEffect, useState, useRef } from "react";
 import ImageSlider from "./ImageSlider.js";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 const Post = ({ post }) => {
   const items = [{
     id: 1,
@@ -87,10 +89,27 @@ const Post = ({ post }) => {
   const prevSlide = () => {
     setCurrent(current === 0 ? length - 1 : current - 1);
   };
+  //get comment quantity
+  // Queries
+  const {isLoading, error, data: cmts} = useQuery({
+      queryKey: ["cmts",post.postId],
+      queryFn: async () => {
+      try {
+          return await axios
+          .get(`http://localhost:3001/posts/comments/${post.postId}`)
+          .then((response) => {
+              return response.data;
+          });
+      } catch (error) {
+          throw error; 
+      }
+      },
+  });
 
-//   if (!Array.isArray(images) || images.length <= 0) {
-//     return null;
-//   }
+  // console.log('====================================');
+  // console.log(cmts?.comments.length);
+  // console.log('====================================');
+
   //temp
   const liked = false;
 
@@ -171,7 +190,7 @@ const Post = ({ post }) => {
 
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <CommentOutlinedIcon />
-            12
+            {cmts?.comments.length}
           </div>
 
           <div className="item">
