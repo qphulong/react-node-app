@@ -7,9 +7,36 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EmailOutlined from '@mui/icons-material/EmailOutlined';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../context/authContext';
+import axios from 'axios';
 
 
 const AddFriend = () => {
+    const { currentUser } = useContext(AuthContext);
+    const [passWord, setPassWord] = useState("")
+    const [randomLink,setRandomLink] = useState(null);
+
+    const handleRandomLink = () => {
+        try{
+            return axios.post("http://localhost:3001/user/add-friends",{
+                userId: currentUser.userId,
+                linkPassword: passWord
+            }).then((res)=>{
+                setRandomLink(res.data.friendLink)
+                console.log('====================================');
+                console.log(passWord);
+                console.log(res.data.friendLink);
+                console.log('====================================');
+            })
+        }
+        catch(err){
+            console.log('====================================');
+            console.log(err);
+            console.log('====================================');
+        }
+    }
+
     return (
         <div className='add-friend-page'>
             <div className='image'>
@@ -56,13 +83,19 @@ const AddFriend = () => {
             <div className='invitation'>
                 <div className='get-link'>
                     <p>Give this link to someone you want to add</p>
-                    <button className='get-link-button'>Random link</button>
+                    {randomLink && <span>{randomLink}</span>}
+                    <button className='get-link-button' onClick={handleRandomLink}>Random link</button>
                 </div>
                 <div className='get-password'>
                     <p>Password to add</p>
                     <div className='password-container'>
                         <div className='password'>
-                            <span>this is password</span>
+                            <input
+                                type='text'
+                                id='password'
+                                placeholder='Your password'
+                                onChange={(e) => setPassWord(e.target.value)}
+                            />
                         </div>
                         <PersonAddAltIcon style={{ fontSize: 25 }} className='logo'/>
                     </div>
