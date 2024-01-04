@@ -21,9 +21,9 @@ function RightBar(){
         },
     });
 
-    console.log('====================================');
-    console.log(Friends);
-    console.log('====================================');
+    // console.log('====================================');
+    // console.log(Friends);
+    // console.log('====================================');
 
     return (
         <div className = "rightBar">
