@@ -24,27 +24,55 @@ const Comments = ({ postId }) => {
 
     // Mutations
     const mutation = useMutation({
-        mutationFn: async () => {
-        return await axios.post("http://localhost:3001/posts/comments", {
+        mutationFn: () => {
+        return axios.post("http://localhost:3001/posts/comments", {
             postId: postId,
             comment: content,
         })},
         onSuccess: (response) => {
             console.log("Newly added comment:", response.data);
 
-            queryClient.invalidateQueries({queryKey: ["Comments",currentUser.userId]});
+            queryClient.invalidateQueries({queryKey: ["Comments",postId]});
         },
+        onError: (error, variables, context) => {
+            console.log('====================================');
+                console.log("error");
+                console.log('====================================');
+          },
+          onSettled: (data, error, variables, context) => {
+            console.log('====================================');
+                console.log("settle");
+                console.log('====================================');
+          },
     });
 
     
     const handleClick = async (e) => {
         e.preventDefault();
-        await mutation.mutate({ content });
+        mutation.mutate({ content,userId: currentUser.userId }, {
+            onSuccess: (data, variables, context) => {
+                console.log('====================================');
+                console.log("success");
+                console.log('====================================');
+              },
+              onError: (error, variables, context) => {
+                // I will fire second!
+                console.log('====================================');
+                console.log(error);
+                console.log('====================================');
+              },
+              onSettled: (data, error, variables, context) => {
+                // I will fire second!
+                console.log('====================================');
+                console.log("settle");
+                console.log('====================================');
+              },
+        });
       };
 
     // Queries
     const {isLoading, error, data: Comments} = useQuery({
-        queryKey: ["Comments",currentUser.userId],
+        queryKey: ["Comments",postId],
         queryFn: async () => {
         try {
             return await axios
