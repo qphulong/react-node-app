@@ -83,7 +83,7 @@ async function addComment(postId, userId, comment, res) {
   }
 }
 
-async function reportPost(postId) {
+async function reportPost(postId, res) {
   try {
     const post = await Post.findOne({ postId });
     if (post) {
@@ -94,11 +94,14 @@ async function reportPost(postId) {
         post: post,
       });
       //add to the report schema
+      await newPostForConsideration.save();
+
+      res.json({ postId: id });
     } else {
-      console.log(`Post with ID ${postId} not found.`);
+      res.status(404).send("Post not found");
     }
   } catch (error) {
-    console.error("Error adding like:", error);
+    res.status(500).send(error.message);
   }
 }
 

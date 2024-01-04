@@ -94,10 +94,10 @@ exports.getPosts = (req, res) => {
         .then((posts) => {
           res.json({ posts: posts });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => res.status(404).json({ message: "Posts not found" }));
     })
     .catch((err) => {
-      console.error(err);
+      res.status(500).json({ message: err.message });
     });
 };
 
@@ -123,7 +123,7 @@ exports.addComment = (req, res) => {
 exports.reportPost = (req, res) => {
   const postId = req.body.postId;
 
-  postFunctions.reportPost(postId); //report post
+  postFunctions.reportPost(postId, res); //report post
 };
 
 exports.getImages = async (req, res) => {

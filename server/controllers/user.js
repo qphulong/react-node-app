@@ -32,7 +32,7 @@ exports.signUp = async (req, res) => {
       });
     })
     .catch((error) => {
-      console.error("Error saving user:", error);
+      res.status(500).error(error.message);
     });
 };
 
