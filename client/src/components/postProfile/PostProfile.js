@@ -14,7 +14,7 @@ import { AuthContext } from "../../context/authContext.js";
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const PostProfile = ({ post }) => {
   const { currentUser, login, logout } = useContext(AuthContext);
@@ -92,23 +92,47 @@ const PostProfile = ({ post }) => {
   //=========================================================================================================
   //=========================================================================================================
   // EDIT POST
-  const handleEditConfirm = async () => {
-    try {
-      const response = await axios.put(`http://localhost:3001/posts`, {
+  const queryClient = useQueryClient();
+
+  // Mutations
+  const mutation = useMutation({
+    mutationFn: () => {
+      return axios.put(`http://localhost:3001/posts`, {
         postId: post.postId,
         newContent: editedContent,
       });
+    },
+    onSuccess: () => {
+      // Invalidate and refetch
+      setIsEditing(false);
+      queryClient.invalidateQueries({ queryKey: ["postsProfile",currentUser.userId] });
+    },
+  });
 
-      if (response.status === 200) {
-        console.log("Content updated successfully:", response.data);
-        setIsEditing(false);
-      } else {
-        console.error("Error updating content:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error updating content:", error.message);
-    }
+  const handleEditConfirm = async (e) => {
+    e.preventDefault();
+    mutation.mutate({ editedContent });
+    // print
+    // console.log(newPostId);
   };
+
+  // const handleEditConfirm = async () => {
+  //   try {
+  //     const response = await axios.put(`http://localhost:3001/posts`, {
+  //       postId: post.postId,
+  //       newContent: editedContent,
+  //     });
+
+  //     if (response.status === 200) {
+  //       console.log("Content updated successfully:", response.data);
+  //       setIsEditing(false);
+  //     } else {
+  //       console.error("Error updating content:", response.statusText);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error updating content:", error.message);
+  //   }
+  // };
 
   const handleEditCancel = () => {
     setIsEditing(false);
