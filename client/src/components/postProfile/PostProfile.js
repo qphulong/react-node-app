@@ -75,6 +75,7 @@ const PostProfile = ({ post }) => {
       console.log("1");
       setIsEditing(true);
     } else if (item.id == 2) {
+      console.log("2");
       handleDeletePost();
     } 
   }
@@ -120,20 +121,23 @@ const PostProfile = ({ post }) => {
   };
   //=========================================================================================================
   //=========================================================================================================
-  // Delete post
+  // DELETE POST FUNCTION
 
   // Mutations
   const mutationDelete = useMutation({
-    mutationFn: async () => {
-      return await axios.delete(`http://localhost:3001/posts/${post.postId}`);
+    mutationFn: () => {
+      return axios.delete(`http://localhost:3001/posts/${post.postId}`);
     },
     onSuccess: () => {
-      console.log("oke");
-      queryClient.invalidateQueries({ queryKey: ["postsProfile",currentUser.userId] });
+      console.log("Delete post success!");
+      queryClient.invalidateQueries({ queryKey: ["postsProfile", currentUser.userId] });
+    },
+    onError: (error) => {
+      console.error("Delete post error:", error);
     },
   });
 
-  const handleDeletePost = async (e) => {
+  const handleDeletePost = (e) => {
     // e.preventDefault();
      mutationDelete.mutate();
   };
