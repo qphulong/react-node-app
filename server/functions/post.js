@@ -64,6 +64,7 @@ async function addComment(postId, comment) {
       content: comment,
       user: post.user,
       likes: 0,
+      createdAt: Date.now(),
     });
 
     await newComment.save(); // Save comment to database
