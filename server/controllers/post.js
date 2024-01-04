@@ -104,6 +104,7 @@ exports.getPosts = (req, res) => {
 exports.deletePost = (req, res) => {
   const postId = req.params.postId;
   postFunctions.deletePost(postId); //delete post with postId in API
+  res.send("Post deleted");
 };
 
 exports.editPost = (req, res) => {
@@ -115,7 +116,7 @@ exports.editPost = (req, res) => {
 exports.addComment = (req, res) => {
   const postId = req.body.postId;
   const comment = req.body.comment;
-  postFunctions.addComment(postId, comment); //add comment with postId in API
+  postFunctions.addComment(postId, comment, res); //add comment with postId in API
 };
 
 exports.reportPost = (req, res) => {

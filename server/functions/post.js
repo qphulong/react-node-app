@@ -52,7 +52,7 @@ async function run() {
   Post.watch().on("change", (data) => console.log("New data changed: ", data));
 }
 
-async function addComment(postId, comment) {
+async function addComment(postId, comment, res) {
   try {
     const post = await Post.findOne({ postId: postId });
 
@@ -72,8 +72,11 @@ async function addComment(postId, comment) {
     post.addComment(newComment); // Add comment to the post
 
     await post.save();
+
+    res.json({ commentId: newComment._id, comment: newComment });
   } catch (err) {
     console.error(err);
+    res.status(500).send(err.message);
   }
 }
 
