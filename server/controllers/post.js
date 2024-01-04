@@ -8,7 +8,7 @@ exports.getPost = (req, res) => {
   const postId = req.params.postId;
 
   const post = Post.findOne({ postId: postId })
-    .select("user content postId createdAt") // Specify the fields you want to retrieve from Post
+    .select("user content postId createdAt likes") // Specify the fields you want to retrieve from Post
     .then((post) => {
       res.json({ post: post });
     })
@@ -89,7 +89,7 @@ exports.getPosts = (req, res) => {
       Post.find({ user: { $in: friends } })
         // add user field (reference to the User schema) and select userId field (of the referenced schema)
         .populate("user", "userId")
-        .select("user content postId createdAt") // Specify the fields you want to retrieve from Post //sort by time
+        .select("user content postId createdAt likes") // Specify the fields you want to retrieve from Post //sort by time
         .sort({ createdAt: -1 })
         .then((posts) => {
           res.json({ posts: posts });
