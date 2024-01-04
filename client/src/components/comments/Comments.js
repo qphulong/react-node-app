@@ -32,7 +32,7 @@ const Comments = ({ postId }) => {
         onSuccess: (response) => {
             console.log("Newly added comment:", response.data);
 
-            queryClient.invalidateQueries({queryKey: ["comments",currentUser.userId]});
+            queryClient.invalidateQueries({queryKey: ["Comments",currentUser.userId]});
         },
     });
 
@@ -44,7 +44,7 @@ const Comments = ({ postId }) => {
 
     // Queries
     const {isLoading, error, data: Comments} = useQuery({
-        queryKey: ["comments",currentUser.userId],
+        queryKey: ["Comments",currentUser.userId],
         queryFn: async () => {
         try {
             return await axios
