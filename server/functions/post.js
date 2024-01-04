@@ -1,5 +1,6 @@
 const Post = require("../models/post");
 const Comment = require("../models/comment");
+const User = require("../models/user");
 
 const MAX_LETTERS_LIMIT = 900;
 const MAX_IMAGES_PER_POST = 5;
@@ -37,9 +38,11 @@ exports.checkPostLimit = (postContent = null) => {
   }
 };
 
-async function editPost(postId, newContent) {
+async function editPost(postId, newContent, res) {
   // checkPostLimit(newContent);
   await Post.updateOne({ postId: postId }, { content: newContent });
+
+  res.json({ postId: postId, newContent: newContent });
 }
 
 async function deletePost(postId) {
@@ -50,7 +53,7 @@ async function run() {
   Post.watch().on("change", (data) => console.log("New data changed: ", data));
 }
 
-async function addComment(postId, comment) {
+async function addComment(postId, userId, comment, res) {
   try {
     const post = await Post.findOne({ postId: postId });
 
@@ -58,23 +61,29 @@ async function addComment(postId, comment) {
       throw new Error("Post not found");
     }
 
+    const user = await User.findOne({ userId: userId });
+
     const newComment = new Comment({
       content: comment,
-      user: post.user,
+      user: user,
       likes: 0,
+      createdAt: Date.now(),
     });
 
     await newComment.save(); // Save comment to database
 
-    post.addComment(newComment); // Add comment to the post
+    await post.addComment(newComment); // Add comment to the post
 
     await post.save();
+
+    res.json({ commentId: newComment._id, comment: newComment });
   } catch (err) {
     console.error(err);
+    res.status(500).send(err.message);
   }
 }
 
-async function reportPost(postId) {
+async function reportPost(postId, res) {
   try {
     const post = await Post.findOne({ postId });
     if (post) {
@@ -85,11 +94,14 @@ async function reportPost(postId) {
         post: post,
       });
       //add to the report schema
+      await newPostForConsideration.save();
+
+      res.json({ postId: id });
     } else {
-      console.log(`Post with ID ${postId} not found.`);
+      res.status(404).send("Post not found");
     }
   } catch (error) {
-    console.error("Error adding like:", error);
+    res.status(500).send(error.message);
   }
 }
 

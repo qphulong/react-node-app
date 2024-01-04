@@ -12,6 +12,8 @@ import { useEffect, useState, useRef } from "react";
 import ImageSlider from "./ImageSlider.js";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 const Post = ({ post }) => {
   const items = [{
     id: 1,
@@ -20,6 +22,7 @@ const Post = ({ post }) => {
   }]
   //comment state
   const [commentOpen, setCommentOpen] = useState(false);
+  const [like,setLike] = useState(false)
 
   //Dropdown state
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -87,12 +90,26 @@ const Post = ({ post }) => {
   const prevSlide = () => {
     setCurrent(current === 0 ? length - 1 : current - 1);
   };
+  //get comment quantity
+  // Queries
+  const {isLoading, error, data: cmts} = useQuery({
+      queryKey: ["cmts",post.postId],
+      queryFn: async () => {
+      try {
+          return await axios
+          .get(`http://localhost:3001/posts/comments/${post.postId}`)
+          .then((response) => {
+              return response.data;
+          });
+      } catch (error) {
+          throw error; 
+      }
+      },
+  });
 
-//   if (!Array.isArray(images) || images.length <= 0) {
-//     return null;
-//   }
-  //temp
-  const liked = false;
+  // console.log('====================================');
+  // console.log(cmts?.comments.length);
+  // console.log('====================================');
 
   return (
     <div className="post">
@@ -164,14 +181,14 @@ const Post = ({ post }) => {
         </div>
 
         <div className="info">
-          <div className="item">
-            {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          <div className="item" onClick={() => setLike(!like)}>
+            {like ? <FavoriteIcon /> : <FavoriteBorderIcon />}
             12
           </div>
 
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <CommentOutlinedIcon />
-            12
+            {cmts?.comments.length}
           </div>
 
           <div className="item">

@@ -14,6 +14,7 @@ import { AuthContext } from "../../context/authContext.js";
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const PostProfile = ({ post }) => {
   const { currentUser, login, logout } = useContext(AuthContext);
@@ -21,6 +22,7 @@ const PostProfile = ({ post }) => {
   const [editedContent, setEditedContent] = useState(post.content);
   //comment state
   const [commentOpen, setCommentOpen] = useState(false);
+  const [like,setLike] = useState(false)
 
   //Dropdown state
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -72,10 +74,10 @@ const PostProfile = ({ post }) => {
   function handleOnClick(item) {
     if (item.id == 1) {
       console.log("1");
-      // "Edit content" clicked
       setIsEditing(true);
     } else if (item.id == 2) {
       console.log("2");
+      handleDeletePost();
     } 
   }
 
@@ -92,41 +94,57 @@ const PostProfile = ({ post }) => {
   //=========================================================================================================
   //=========================================================================================================
   // EDIT POST
-  const handleEditConfirm = async () => {
-    try {
-      const response = await axios.put(`http://localhost:3001/posts`, {
+  const queryClient = useQueryClient();
+
+  // Mutations
+  const mutation = useMutation({
+    mutationFn: () => {
+      return axios.put(`http://localhost:3001/posts`, {
         postId: post.postId,
         newContent: editedContent,
       });
+    },
+    onSuccess: () => {
+      // Invalidate and refetch
+      setIsEditing(false);
+      queryClient.invalidateQueries({ queryKey: ["postsProfile",currentUser.userId] });
+    },
+  });
 
-      // Check if the update was successful
-      if (response.status === 200) {
-        console.log("Content updated successfully:", response.data);
-        setIsEditing(false);
-      } else {
-        console.error("Error updating content:", response.statusText);
-        // Handle error as needed
-      }
-    } catch (error) {
-      console.error("Error updating content:", error.message);
-      // Handle error as needed
-    }
+  const handleEditConfirm = async (e) => {
+    e.preventDefault();
+    mutation.mutate({ editedContent });
   };
 
   const handleEditCancel = () => {
-    // Cancel editing mode
     setIsEditing(false);
-    // Reset edited content to the original content
     setEditedContent(post.content);
   };
+  //=========================================================================================================
+  //=========================================================================================================
+  // DELETE POST FUNCTION
 
+  // Mutations
+  const mutationDelete = useMutation({
+    mutationFn: () => {
+      return axios.delete(`http://localhost:3001/posts/${post.postId}`);
+    },
+    onSuccess: () => {
+      console.log("Delete post success!");
+      queryClient.invalidateQueries({ queryKey: ["postsProfile", currentUser.userId] });
+    },
+    onError: (error) => {
+      console.error("Delete post error:", error);
+    },
+  });
+
+  const handleDeletePost = (e) => {
+    // e.preventDefault();
+     mutationDelete.mutate();
+  };
   //=========================================================================================================
   //=========================================================================================================
 
-  //console.log('====================================');
-  //console.log(post.postId);
-  //console.log(images);
-  //console.log('====================================');
   const [current, setCurrent] = useState(0);
   const length = images.length;
 
@@ -137,12 +155,27 @@ const PostProfile = ({ post }) => {
   const prevSlide = () => {
     setCurrent(current === 0 ? length - 1 : current - 1);
   };
+  //get comment quantity
+  // Queries
+  const {isLoading, error, data: cmtsProfile} = useQuery({
+    queryKey: ["cmtsProfile",post.postId],
+    queryFn: async () => {
+    try {
+        return await axios
+        .get(`http://localhost:3001/posts/comments/${post.postId}`)
+        .then((response) => {
+            return response.data;
+        });
+    } catch (error) {
+        throw error; 
+    }
+    },
+});
 
-//   if (!Array.isArray(images) || images.length <= 0) {
-//     return null;
-//   }
-  //temp
-  const liked = false;
+  // console.log('====================================');
+  // console.log(cmtsProfile?.comments.length);
+  // console.log('====================================');
+
 
   return (
     <div className="post">
@@ -222,14 +255,14 @@ const PostProfile = ({ post }) => {
         </div>
 
         <div className="info">
-          <div className="item">
-            {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          <div className="item" onClick={() => setLike(!like)}>
+            {like ? <FavoriteIcon /> : <FavoriteBorderIcon />}
             12
           </div>
 
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <CommentOutlinedIcon />
-            12
+            {cmtsProfile?.comments.length}
           </div>
 
           <div className="item">

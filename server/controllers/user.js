@@ -32,7 +32,7 @@ exports.signUp = async (req, res) => {
       });
     })
     .catch((error) => {
-      console.error("Error saving user:", error);
+      res.status(500).error(error.message);
     });
 };
 
@@ -120,4 +120,10 @@ exports.addSocialMedia = async (req, res) => {
     link: link,
     classify: user.classifySocialNetwork(link),
   }); //send to the frontend to show on the interface
+};
+
+exports.getSocialMedia = async (req, res) => {
+  res.json({
+    socialMedia: await userFunctions.getSocialMedia(req.params.userId),
+  });
 };

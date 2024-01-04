@@ -16,7 +16,7 @@ const PostsProfile = () => {
         error,
         data: postsProfile,
     } = useQuery({
-        queryKey: ["postsProfile"],
+        queryKey: ["postsProfile",currentUser.userId],
         queryFn: () => {
         try {
             return axios
@@ -40,14 +40,11 @@ const PostsProfile = () => {
         return <h3>Error: {error.message}</h3>;
     }
 
-    const postsArray = postsProfile.posts;
-    console.log(postsArray[0]);
-
     return (
         <div className="posts">
         {isLoading
             ? "Loading..."
-            : postsArray.map((post) => {
+            : postsProfile.posts.map((post) => {
                 return <PostProfile post={post} key={post.postId} />;
             })}
         </div>

@@ -40,10 +40,6 @@ const Share = () => {
   // =================================================================================================
   // =================================================================================================
 
-  // const [newPost, setNewPost] = useState(null);
-  // console.log('====================================');
-  // console.log(file);
-  // console.log('====================================');
   const queryClient = useQueryClient();
 
   // Mutations
@@ -63,7 +59,7 @@ const Share = () => {
       if (file) upload(response.data);
 
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      queryClient.invalidateQueries({ queryKey: ["posts",currentUser.userId] });
     },
   });
 

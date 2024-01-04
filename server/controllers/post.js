@@ -8,7 +8,7 @@ exports.getPost = (req, res) => {
   const postId = req.params.postId;
 
   const post = Post.findOne({ postId: postId })
-    .select("user content postId createdAt") // Specify the fields you want to retrieve from Post
+    .select("user content postId createdAt likes") // Specify the fields you want to retrieve from Post
     .then((post) => {
       res.json({ post: post });
     })
@@ -42,7 +42,7 @@ exports.createPost = async (req, res) => {
     content,
     postId: id,
     deleteAfter,
-    likes: 0,
+    likes: [],
     comments: [],
     user: user,
   }); //create new post
@@ -89,39 +89,41 @@ exports.getPosts = (req, res) => {
       Post.find({ user: { $in: friends } })
         // add user field (reference to the User schema) and select userId field (of the referenced schema)
         .populate("user", "userId")
-        .select("user content postId createdAt") // Specify the fields you want to retrieve from Post //sort by time
+        .select("user content postId createdAt likes") // Specify the fields you want to retrieve from Post //sort by time
         .sort({ createdAt: -1 })
         .then((posts) => {
           res.json({ posts: posts });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => res.status(404).json({ message: "Posts not found" }));
     })
     .catch((err) => {
-      console.error(err);
+      res.status(500).json({ message: err.message });
     });
 };
 
 exports.deletePost = (req, res) => {
-  const postId = req.body.postId;
+  const postId = req.params.postId;
   postFunctions.deletePost(postId); //delete post with postId in API
+  res.send("Post deleted");
 };
 
 exports.editPost = (req, res) => {
   const postId = req.body.postId;
   const newContent = req.body.newContent;
-  postFunctions.editPost(postId, newContent); //edit content with postId in API
+  postFunctions.editPost(postId, newContent, res); //edit content with postId in API
 };
 
 exports.addComment = (req, res) => {
   const postId = req.body.postId;
+  const userId = req.body.userId;
   const comment = req.body.comment;
-  postFunctions.addComment(postId, comment); //add comment with postId in API
+  postFunctions.addComment(postId, userId, comment, res); //add comment with postId in API
 };
 
 exports.reportPost = (req, res) => {
   const postId = req.body.postId;
 
-  postFunctions.reportPost(postId); //report post
+  postFunctions.reportPost(postId, res); //report post
 };
 
 exports.getImages = async (req, res) => {
@@ -137,5 +139,39 @@ exports.getComments = async (req, res) => {
 
   const post = await Post.findOne({ postId: postId });
 
-  res.json({ comments: post.comments });
+  var comments = [];
+
+  for (let i = 0; i < post.comments.length; i++) {
+    const comment = post.comments[i];
+    const user = await User.findOne({ _id: comment.user });
+    const id = user.userId;
+    comments.push({
+      content: comment.content,
+      user: id,
+      likes: comment.likes,
+      createdAt: comment.createdAt,
+    });
+  }
+
+  res.json({ comments: comments });
+};
+
+exports.modifyLikes = async (req, res) => {
+  const postId = req.body.postId;
+  const userId = req.body.userId;
+
+  const post = await Post.findOne({ postId: postId });
+  if (!post) {
+    return res.status(404).json({ message: "Post not found" });
+  }
+
+  if (post.likes.includes(userId)) {
+    post.likes.pull(userId);
+  } else {
+    post.likes.push(userId);
+  }
+
+  await post.save();
+
+  return res.json({ likes: post.likes });
 };

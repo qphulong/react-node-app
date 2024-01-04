@@ -14,7 +14,7 @@ const Posts = () => {
     error,
     data: posts,
   } = useQuery({
-    queryKey: ["posts"],
+    queryKey: ["posts",currentUser.userId],
     queryFn: () => {
       try {
         return axios

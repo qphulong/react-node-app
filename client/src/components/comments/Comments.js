@@ -24,52 +24,68 @@ const Comments = ({ postId }) => {
 
     // Mutations
     const mutation = useMutation({
-        mutationFn: (newComment) => {
+        mutationFn: () => {
         return axios.post("http://localhost:3001/posts/comments", {
             postId: postId,
+            userId: currentUser.userId,
             comment: content,
         })},
         onSuccess: (response) => {
-        // Access the newly created post object here
-        console.log("Newly added comment:", response.data);
+            console.log("Newly added comment:", response.data);
 
-        // Invalidate and refetch the query with the correct query key
-        queryClient.invalidateQueries({ queryKey: ["comments", postId] });
+            queryClient.invalidateQueries({queryKey: ["Comments",postId]});
+            queryClient.invalidateQueries({queryKey: ["cmts",postId]});
+            queryClient.invalidateQueries({queryKey: ["cmtsProfile",postId]});
+
         },
+        onError: (error, variables, context) => {
+            console.log('====================================');
+                console.log("error");
+                console.log('====================================');
+          },
+          onSettled: (data, error, variables, context) => {
+            console.log('====================================');
+                console.log("settle");
+                console.log('====================================');
+          },
     });
+
     
-    // useEffect(() => {
-    //     // Refetch comments when mutation completes successfully
-    //     if (mutation.isSuccess) {
-    //       queryClient.refetchQueries({ queryKey: ["comments", postId] });
-    //     }
-    //     console.log(111111);
-    //   }, [mutation.isSuccess, queryClient]);
-    
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
         e.preventDefault();
-        mutation.mutate({ content });
-        // print
-        // console.log(newPostId);
+        mutation.mutate({ content,userId: currentUser.userId }, {
+            onSuccess: (data, variables, context) => {
+                console.log('====================================');
+                console.log("success");
+                console.log('====================================');
+              },
+              onError: (error, variables, context) => {
+                // I will fire second!
+                console.log('====================================');
+                console.log(error);
+                console.log('====================================');
+              },
+              onSettled: (data, error, variables, context) => {
+                // I will fire second!
+                console.log('====================================');
+                console.log("settle");
+                console.log('====================================');
+              },
+        });
       };
+
     // Queries
-    const {
-        isLoading,
-        error,
-        data: Comments,
-    } = useQuery({
-        queryKey: ["comments", postId],
-        queryFn: () => {
+    const {isLoading, error, data: Comments} = useQuery({
+        queryKey: ["Comments",postId],
+        queryFn: async () => {
         try {
-            return axios
+            return await axios
             .get(`http://localhost:3001/posts/comments/${postId}`)
             .then((response) => {
-                // console.log(response.data);
                 return response.data;
             });
         } catch (error) {
-            // console.error(error);
-            throw error; // Re-throw to allow useQuery to handle error
+            throw error; 
         }
         },
     });
@@ -101,7 +117,7 @@ const Comments = ({ postId }) => {
                 return <div className='comment' key={uuidv4()}>
                     <img src="https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt=""/>
                     <div className='info'>
-                        <span>TMK</span>
+                        <span>{comment.user}</span>
                         <p>{comment.content}</p>
                     </div>
                     <span className='date'>1 hour ago</span>
