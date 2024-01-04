@@ -144,10 +144,6 @@ const PostProfile = ({ post }) => {
   //=========================================================================================================
   //=========================================================================================================
 
-  //console.log('====================================');
-  //console.log(post.postId);
-  //console.log(images);
-  //console.log('====================================');
   const [current, setCurrent] = useState(0);
   const length = images.length;
 
@@ -159,9 +155,6 @@ const PostProfile = ({ post }) => {
     setCurrent(current === 0 ? length - 1 : current - 1);
   };
 
-//   if (!Array.isArray(images) || images.length <= 0) {
-//     return null;
-//   }
   //temp
   const liked = false;
 
