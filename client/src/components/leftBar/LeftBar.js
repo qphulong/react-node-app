@@ -6,10 +6,35 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import PeopleIcon from "@mui/icons-material/People";
 import DensitySmallIcon from "@mui/icons-material/DensitySmall";
 import { Button } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/authContext";
+import axios from "axios";
 const LeftBar = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, } = useContext(AuthContext);
+  //===================================================================================================================
+  //profile image
+  const [profileImage,setProfileImage] = useState("https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
+  const fetchProfileImage = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3001/user/profile-pic/${currentUser.userId}`);
+  
+      if (response.status === 200 && response.data.length > 0) {
+        const imageFilename = response.data[0];
+        const imageProfile = `http://localhost:3001/user/profile-pic/${currentUser.userId}/${imageFilename}`;
+        console.log('====================================');
+        console.log(imageProfile);
+        console.log('====================================');
+        setProfileImage(imageProfile);
+      } else {
+        console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+      }
+    } catch (error) {
+      console.error('Error fetching profile image:', error.message);
+    }
+  };
+  
+  fetchProfileImage();
+  //===================================================================================================================
 
   return (
     <div className="leftBar">
@@ -50,7 +75,7 @@ const LeftBar = () => {
         </div>
 
         <div className="user">
-          <img src={currentUser.profilePic} alt="" />
+          <img src={profileImage} alt="" />
           <div className="user-info">
             <span className="user-name">{currentUser.userId}</span>
           </div>
