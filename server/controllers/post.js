@@ -115,8 +115,9 @@ exports.editPost = (req, res) => {
 
 exports.addComment = (req, res) => {
   const postId = req.body.postId;
+  const userId = req.body.userId;
   const comment = req.body.comment;
-  postFunctions.addComment(postId, comment, res); //add comment with postId in API
+  postFunctions.addComment(postId, userId, comment, res); //add comment with postId in API
 };
 
 exports.reportPost = (req, res) => {

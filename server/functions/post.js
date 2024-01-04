@@ -1,5 +1,6 @@
 const Post = require("../models/post");
 const Comment = require("../models/comment");
+const User = require("../models/user");
 
 const MAX_LETTERS_LIMIT = 900;
 const MAX_IMAGES_PER_POST = 5;
@@ -52,7 +53,7 @@ async function run() {
   Post.watch().on("change", (data) => console.log("New data changed: ", data));
 }
 
-async function addComment(postId, comment, res) {
+async function addComment(postId, userId, comment, res) {
   try {
     const post = await Post.findOne({ postId: postId });
 
@@ -60,16 +61,18 @@ async function addComment(postId, comment, res) {
       throw new Error("Post not found");
     }
 
+    const user = await User.findOne({ userId: userId });
+
     const newComment = new Comment({
       content: comment,
-      user: post.user,
+      user: user,
       likes: 0,
       createdAt: Date.now(),
     });
 
     await newComment.save(); // Save comment to database
 
-    post.addComment(newComment); // Add comment to the post
+    await post.addComment(newComment); // Add comment to the post
 
     await post.save();
 
