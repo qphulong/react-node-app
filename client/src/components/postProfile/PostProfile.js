@@ -14,6 +14,7 @@ import { AuthContext } from "../../context/authContext.js";
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
+import { useQueryClient } from "@tanstack/react-query";
 
 const PostProfile = ({ post }) => {
   const { currentUser, login, logout } = useContext(AuthContext);

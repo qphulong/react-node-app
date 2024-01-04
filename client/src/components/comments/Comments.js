@@ -24,34 +24,30 @@ const Comments = ({ postId }) => {
 
     // Mutations
     const mutation = useMutation({
-        mutationFn: (newComment) => {
-        return axios.post("http://localhost:3001/posts/comments", {
+        mutationFn: async () => {
+        return await axios.post("http://localhost:3001/posts/comments", {
             postId: postId,
             comment: content,
         })},
         onSuccess: (response) => {
             console.log("Newly added comment:", response.data);
 
-            queryClient.invalidateQueries({ queryKey: ["comments", postId] });
+            queryClient.invalidateQueries({queryKey: ["comments",currentUser.userId]});
         },
     });
 
     
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
         e.preventDefault();
-        mutation.mutate({ content });
+        await mutation.mutate({ content });
       };
 
     // Queries
-    const {
-        isLoading,
-        error,
-        data: Comments,
-    } = useQuery({
-        queryKey: ["comments", postId],
-        queryFn: () => {
+    const {isLoading, error, data: Comments} = useQuery({
+        queryKey: ["comments",currentUser.userId],
+        queryFn: async () => {
         try {
-            return axios
+            return await axios
             .get(`http://localhost:3001/posts/comments/${postId}`)
             .then((response) => {
                 return response.data;
