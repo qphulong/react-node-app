@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Comment = require("./comment");
+const { post } = require("../routes/post");
 
 const postSchema = new mongoose.Schema({
   content: {
@@ -31,11 +32,8 @@ const postSchema = new mongoose.Schema({
     type: Number,
   },
 
-  likes: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
+  //list of userids who liked this post
+  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 
   comments: [Comment.schema],
 
@@ -57,9 +55,24 @@ postSchema.pre("save", function (next) {
 postSchema.index({ createdAt: 1 }, { expireAfterSeconds: "_ttl" }); //index and conduct expire after seconds
 
 postSchema.methods.addLike = async function () {
-  this.likes++;
+  if (this.likes.includes(userId)) {
+    return;
+  }
+
+  this.likes.push(userId);
 
   await this.save(); //save to database
+};
+
+postSchema.methods.removeLike = async function () {
+  if (!this.likes.includes(userId)) {
+    return;
+  }
+
+  const index = this.likes.indexOf(userId);
+  this.likes.splice(index, 1);
+
+  await this.save();
 };
 
 postSchema.methods.editPost = async function (newContent) {

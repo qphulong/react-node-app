@@ -78,6 +78,8 @@ router.put("/social-media", userController.addSocialMedia);
 
 router.get("/social-media/:userId", userController.getSocialMedia);
 
+router.put("/likes", userController.modifyLikes);
+
 router.get("/:userId", (req, res) => {
   const userId = req.params.userId;
 

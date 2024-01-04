@@ -42,7 +42,7 @@ exports.createPost = async (req, res) => {
     content,
     postId: id,
     deleteAfter,
-    likes: 0,
+    likes: [],
     comments: [],
     user: user,
   }); //create new post
@@ -154,4 +154,21 @@ exports.getComments = async (req, res) => {
   }
 
   res.json({ comments: comments });
+};
+
+exports.modifyLikes = async (req, res) => {
+  const add = req.body.add; // boolean
+  const postId = req.body.postId;
+  const userId = req.body.userId;
+
+  const post = await Post.findOne({ postId: postId });
+  if (!post) {
+    return res.status(404).json({ message: "Post not found" });
+  }
+
+  if (add) {
+    post.addLike(userId);
+  } else {
+    post.removeLike(userId);
+  }
 };
