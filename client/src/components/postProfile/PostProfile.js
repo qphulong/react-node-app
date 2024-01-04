@@ -112,27 +112,7 @@ const PostProfile = ({ post }) => {
   const handleEditConfirm = async (e) => {
     e.preventDefault();
     mutation.mutate({ editedContent });
-    // print
-    // console.log(newPostId);
   };
-
-  // const handleEditConfirm = async () => {
-  //   try {
-  //     const response = await axios.put(`http://localhost:3001/posts`, {
-  //       postId: post.postId,
-  //       newContent: editedContent,
-  //     });
-
-  //     if (response.status === 200) {
-  //       console.log("Content updated successfully:", response.data);
-  //       setIsEditing(false);
-  //     } else {
-  //       console.error("Error updating content:", response.statusText);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error updating content:", error.message);
-  //   }
-  // };
 
   const handleEditCancel = () => {
     setIsEditing(false);
@@ -141,21 +121,22 @@ const PostProfile = ({ post }) => {
   //=========================================================================================================
   //=========================================================================================================
   // Delete post
-  const handleDeletePost = async () => {
-    console.log(post.postId);
-    try {
-      const response = await axios.delete(`http://localhost:3001/posts/${post.postId}`);
-      console.log(response.data);
-      if (response.status === 200) {
-        console.log("Post deleted successfully:", response.data);
-      } else {
-        console.error("Error deleting post:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error deleting post:", error.message);
-    }
-  };
 
+  // Mutations
+  const mutationDelete = useMutation({
+    mutationFn: async () => {
+      return await axios.delete(`http://localhost:3001/posts/${post.postId}`);
+    },
+    onSuccess: () => {
+      console.log("oke");
+      queryClient.invalidateQueries({ queryKey: ["postsProfile",currentUser.userId] });
+    },
+  });
+
+  const handleDeletePost = async (e) => {
+    // e.preventDefault();
+     mutationDelete.mutate();
+  };
   //=========================================================================================================
   //=========================================================================================================
 
