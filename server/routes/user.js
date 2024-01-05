@@ -81,7 +81,6 @@ router.get("/social-media/:userId", userController.getSocialMedia);
 router.get("/:userId", (req, res) => {
   const userId = req.params.userId;
 
-  // check friends, if not friend then not show
   User.findOne({ userId: userId })
     .then((user) => {
       if (!user) {
@@ -210,6 +209,42 @@ router.get("/friends/:userId", (req, res) => {
         .select("userId")
         .then((users) => {
           res.json({ friends: users });
+        })
+        .catch((err) => res.status(500).json({ error: err }));
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err });
+    });
+});
+
+router.get("/friends/check/:userId/:friendId", (req, res) => {
+  const userId = req.params.userId;
+  const friendId = req.params.friendId;
+
+  User.findOne({ userId: userId })
+    .populate("friends", "userId") // join friends field (reference to the User schema) and select userId field (of the referenced schema)
+    .exec()
+    .then((user) => {
+      //current user with passed userId
+      if (!user) {
+        // user not found
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // get id values of Friends (populated above) of the current user
+      const friends = user.friends.map((friend) => friend._id);
+
+      User.find({ _id: { $in: friends } })
+        .select("userId")
+        .then((users) => {
+          var isFriend = false;
+          for (let i = 0; i < users.length; i++) {
+            if (users[i].userId == friendId) {
+              isFriend = true;
+              break;
+            }
+          }
+          res.json({ isFriend: isFriend });
         })
         .catch((err) => res.status(500).json({ error: err }));
     })
