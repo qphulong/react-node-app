@@ -1,6 +1,8 @@
 const express = require("express");
 const postController = require("../controllers/post");
 const { query } = require("express-validator");
+const Post = require("../models/post");
+const User = require("../models/user");
 
 const router = express.Router();
 
@@ -37,11 +39,13 @@ router.put("/likes", async (req, res) => {
     res.status(404).error("Post not found");
   }
 
-  if (post.likePeople.includes(userId)) {
-    post.likePeople.pull(userId);
+  const user = await User.findOne({ userId: userId });
+
+  if (post.likePeople.includes(user)) {
+    post.likePeople.pull(user);
     post.likes -= 1;
   } else {
-    post.likePeople.push(userId);
+    post.likePeople.push(user);
     post.likes += 1;
   }
 
