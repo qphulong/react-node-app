@@ -4,7 +4,6 @@ const { ModeratedPostRepository } = require("../repositories/moderator");
 
 let moderatorRepo = new ModeratedPostRepository(); //use this repository
 
-//delete a violating post
 exports.deletePost = (req, res) => {
   const postId = req.body.postId;
   moderatorFunctions.removePost(postId);
