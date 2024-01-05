@@ -167,8 +167,11 @@ router.get("/profile-pic/:userId", (req, res) => {
   const folderPath = path.join(`./public/profile_pics/${userId}`);
 
   fs.readdir(folderPath, (err, files) => {
+    if (!files || files.length === 0) {
+      return res.status(404).send("No profile pic found.");
+    }
     if (err) {
-      res.status(404).send("No files found.");
+      res.status(500).send(err);
     }
 
     res.json({ profilePic: `http://localhost:3001/${folderPath}/${files[0]}` });
