@@ -4,6 +4,7 @@ import "./share.scss";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 import { useState } from "react";
+import {toast, ToastContainer} from "react-toastify"
 import {
   useMutation,
   QueryClient,
@@ -14,29 +15,48 @@ const Share = () => {
   const { currentUser } = useContext(AuthContext);
   const [file, setFile] = useState(null);
   const [desc, setDesc] = useState("");
-  
+
   // =================================================================================================
   // =================================================================================================
   // check limit images + limit word
   const MAX_WORD = 150;
   const MAX_IMAGE = 5;
-
-  const [descWord, setDescWord] = useState(0)
+  const [descWord, setDescWord] = useState(0);
+  const [imageLength, setImageLength] = useState(0);
+ 
+ 
   const handleContentChange = (e) => {
     const content = e.target.value.split(" ")
     setDescWord(content.length)
-
+ 
     if (content.length <= MAX_WORD) { 
       setDesc(e.target.value)
-
+ 
       if (e.target.value == ''){
         setDescWord(0)
       } 
     }
-    else {
-      console.log("Hello world")
+    else{
+      setDesc(e.target.value.slice(0, desc.length))
+      toast.warning("Your content is out of limit", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
   }
+
+  // const handleImageChange = (e) => {
+  //   setImageLength(e.target.value.length)
+  //   if (imageLength <= MAX_IMAGE){
+  //     setFile(e.target.value)
+  //   }
+  //   else{
+  //     setFile(e.target.value.slice(0, MAX_IMAGE))
+  //     setImageLength(e.target.value.length)
+  //     toast.warning("Your image is out of limit", {
+  //       position: toast.POSITION.TOP_RIGHT,
+  //     });
+  //   }
+  // }
   // =================================================================================================
   // =================================================================================================
 
@@ -115,7 +135,7 @@ const Share = () => {
       <div className="container">
         <div className="top">
           <img
-            src="https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            src="https://i...content-available-to-author-only...s.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             alt=""
           />
           <input
@@ -123,6 +143,7 @@ const Share = () => {
             placeholder={`What's on your mind ${currentUser.name}?`}
             onChange={(e) => handleContentChange(e)
             }
+            value={desc}
           />
         </div>
 
@@ -158,6 +179,7 @@ const Share = () => {
             ))}
         </div>
       </div>
+      {<ToastContainer />}
     </div>
   );
 };
