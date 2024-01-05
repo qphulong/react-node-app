@@ -86,8 +86,6 @@ exports.acceptFriendLink = async (req, res) => {
   const friendId = req.body.friendId;
   const linkPassword = req.body.linkPassword;
 
-  // remove first element of parts
-  // link id is now parts join
   parts.shift();
   linkId = parts.join("-");
   console.log(linkId);

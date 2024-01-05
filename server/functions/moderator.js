@@ -14,16 +14,14 @@ async function removePost(currentUser, postId) {
     if (post) {
       await post.deletePost();
     } else {
-      console.error(`Post with ID ${postId} not found`);
+      console.error(`Post with ID ${postId} not found!`);
     }
 
-    console.log(`Post with ID ${postId} removed successfully.`);
+    console.log(`Post with ID ${postId} removed successfully!`);
   } catch (error) {
     console.error("Error removing post:", error.message);
   }
 }
-
-function consider() {}
 
 module.exports = {
   removePost,
