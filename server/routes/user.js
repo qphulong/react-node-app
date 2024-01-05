@@ -94,9 +94,9 @@ router.get("/:userId", (req, res) => {
         .then((posts) => {
           res.json({ user: user.userId, posts: posts });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => res.status(404).json({ error: err }));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => res.status(500).json({ error: err }));
 });
 
 const storage = multer.diskStorage({
