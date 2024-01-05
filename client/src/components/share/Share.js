@@ -22,7 +22,8 @@ const Share = () => {
   const MAX_WORD = 150;
   const MAX_IMAGE = 5;
   const [descWord, setDescWord] = useState(0);
-  const [imageLength, setImageLength] = useState(0);
+
+  console.log(file)
  
  
   const handleContentChange = (e) => {
@@ -44,19 +45,18 @@ const Share = () => {
     }
   }
 
-  // const handleImageChange = (e) => {
-  //   setImageLength(e.target.value.length)
-  //   if (imageLength <= MAX_IMAGE){
-  //     setFile(e.target.value)
-  //   }
-  //   else{
-  //     setFile(e.target.value.slice(0, MAX_IMAGE))
-  //     setImageLength(e.target.value.length)
-  //     toast.warning("Your image is out of limit", {
-  //       position: toast.POSITION.TOP_RIGHT,
-  //     });
-  //   }
-  // }
+  const handleImageLimit = (e) =>{
+
+    setFile(e.target.files)
+    const imageLength = e.target.files.length
+    if (imageLength > MAX_IMAGE){
+      toast.warning("Your image is out of limit", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setFile(null)
+    }
+  }
+
   // =================================================================================================
   // =================================================================================================
 
@@ -154,7 +154,7 @@ const Share = () => {
               type="file"
               id="file"
               multiple
-              onChange={(e) => setFile(e.target.files)}
+              onChange={(e) => handleImageLimit(e)}
               style={{ display: "none" }}
             />
             <label htmlFor="file">
