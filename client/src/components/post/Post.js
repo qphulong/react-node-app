@@ -114,52 +114,52 @@ const Post = ({ post }) => {
   //========================================================================
   //========================================================================
   // Like function
-  // const {data: likes} = useQuery({
-  //     queryKey: ["likes",post.postId],
-  //     queryFn: async () => {
-  //     try {
-  //         return await axios
-  //         .put(`http://localhost:3001/posts/likes`,{user: currentUser.userId, postId: post.postId})
-  //         .then((response) => {
-  //             return response.data;
-  //         });
-  //     } catch (error) {
-  //         throw error; 
-  //     }
-  //     },
-  // });
+  const {data: likes} = useQuery({
+      queryKey: ["likes",post.postId],
+      queryFn: async () => {
+      try {
+          return await axios
+          .get(`http://localhost:3001/posts/${post.postId}/likes`)
+          .then((response) => {
+              return response.data;
+          });
+      } catch (error) {
+          throw error; 
+      }
+      },
+  });
 
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-  //   // Mutations
-  // const mutationLike = useMutation({
-  //       mutationFn: () => {
-  //       return axios.put("http://localhost:3001/posts/likes", {
-  //         user: currentUser.userId, 
-  //         postId: post.postId
-  //       })},
-  //       onSuccess: (response) => {
-  //           console.log("Newly added like:", response.data);
+    // Mutations
+  const mutationLike = useMutation({
+        mutationFn: () => {
+        return axios.put("http://localhost:3001/posts/likes", {
+          user: currentUser.userId, 
+          postId: post.postId
+        })},
+        onSuccess: (response) => {
+            console.log("Newly added like:", response.data);
 
-  //           queryClient.invalidateQueries({queryKey: ["likes",post.postId]});
-  //       },
-  //       onError: (error, variables, context) => {
-  //           console.log('====================================');
-  //               console.log("error");
-  //               console.log('====================================');
-  //         },
-  //         onSettled: (data, error, variables, context) => {
-  //           console.log('====================================');
-  //               console.log("settle");
-  //               console.log('====================================');
-  //         },
-  // });
+            queryClient.invalidateQueries({queryKey: ["likes",post.postId]});
+        },
+        onError: (error, variables, context) => {
+            console.log('====================================');
+                console.log("error");
+                console.log('====================================');
+          },
+          onSettled: (data, error, variables, context) => {
+            console.log('====================================');
+                console.log("settle");
+                console.log('====================================');
+          },
+  });
 
-  // const handleClickLike = (e) => {
-  //   e.preventDefault();
-  //   setLike(!like)
-  //   mutationLike.mutate({user: currentUser.userId, postId: post.postId})
-  // }
+  const handleClickLike = (e) => {
+    e.preventDefault();
+    setLike(!like)
+    mutationLike.mutate({user: currentUser.userId, postId: post.postId})
+  }
   // console.log('====================================');
   // console.log(likes?.likes);
   // console.log('====================================');
@@ -237,9 +237,9 @@ const Post = ({ post }) => {
         </div>
 
         <div className="info">
-          <div className="item" onClick={() => setLike(!like)}>
+          <div className="item" onClick={handleClickLike}>
             {like ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-            {12}
+            {likes?.likes || 0}
           </div>
 
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
