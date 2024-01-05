@@ -23,8 +23,6 @@ async function removePost(currentUser, postId) {
   }
 }
 
-function consider() {}
-
 module.exports = {
   removePost,
 };
