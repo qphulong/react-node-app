@@ -162,7 +162,7 @@ async function generateAddFriendLink(userId, linkPassword) {
   }
 }
 
-// Function to accept the link and add a friend (person ưhwo is adding) if the authentication password is correct
+//  Function to accept the link and add a friend (person ưhwo is adding) if the authentication password is correct
 async function linkAddFriend(userId, linkPassword, friendId, linkId, res) {
   const user = await User.findOne({ userId: userId });
 
