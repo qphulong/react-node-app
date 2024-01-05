@@ -155,23 +155,3 @@ exports.getComments = async (req, res) => {
 
   res.json({ comments: comments });
 };
-
-exports.modifyLikes = async (req, res) => {
-  const postId = req.body.postId;
-  const userId = req.body.userId;
-
-  const post = await Post.findOne({ postId: postId });
-  if (!post) {
-    return res.status(404).json({ message: "Post not found" });
-  }
-
-  if (post.likes.includes(userId)) {
-    post.likes.pull(userId);
-  } else {
-    post.likes.push(userId);
-  }
-
-  await post.save();
-
-  return res.json({ likes: post.likes });
-};
