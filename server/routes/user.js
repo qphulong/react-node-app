@@ -11,6 +11,7 @@ const { query } = require("express-validator");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const { currentUser } = require("../app");
 
 const router = express.Router();
 
@@ -95,7 +96,7 @@ router.get("/:userId", (req, res) => {
         .then((users) => {
           var isFriend = false;
           for (let i = 0; i < users.length; i++) {
-            if (users[i].userId == userId) {
+            if (users[i].userId == currentUser.userId) {
               isFriend = true;
               break;
             }
