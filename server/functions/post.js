@@ -14,7 +14,7 @@ async function addLike(postId) {
       await post.addLike();
       console.log(`Like added to post with ID: ${postId}`);
     } else {
-      console.log(`Post with ID ${postId} not found.`);
+      console.log(`Post with ID ${postId} not found!`);
     }
   } catch (error) {
     console.error("Error adding like:", error);
@@ -26,7 +26,7 @@ exports.checkPostLimit = (postContent = null) => {
     // Check letter limit
     if (postContent != null && postContent.length > MAX_LETTERS_LIMIT) {
       throw new Error(
-        `Post content exceeds the maximum limit of ${MAX_LETTERS_LIMIT} characters.`
+        `Post content exceeds the maximum limit of ${MAX_LETTERS_LIMIT} characters!`
       );
     }
 
@@ -58,7 +58,7 @@ async function addComment(postId, userId, comment, res) {
     const post = await Post.findOne({ postId: postId });
 
     if (!post) {
-      throw new Error("Post not found");
+      throw new Error("Post not found!");
     }
 
     const user = await User.findOne({ userId: userId });
