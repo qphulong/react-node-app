@@ -14,9 +14,10 @@ import Post from '../../components/post/Post';
 import Posts from '../../components/posts/Posts';
 import EditOffIcon from '@mui/icons-material/EditOff';
 
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import EditOff from '@mui/icons-material/EditOff';
 import PostsProfile from '../../components/postsProfile/PostsProfile';
+import { AuthContext } from '../../context/authContext';
 
 const Profile = () => {
     const inputRef = useRef(null);
@@ -25,6 +26,7 @@ const Profile = () => {
     const [name, setName] = useState('Jane Doe');
     const [position, setPosition] = useState('Singapore');
     const [phoneNumber, setPhoneNumber] = useState('+84918155199');
+    const { currentUser,profileImage,setProfileImage } = useContext(AuthContext);
 
 
     const handleImageClick = () => {
@@ -74,10 +76,10 @@ const Profile = () => {
     return (
         <div className='profile'>
             <div className='images'>
-                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                <img src={profileImage}
                     alt="" className='cover' />
                 <div className='profile-image-container' onClick={handleImageClick}>
-                    {image ? <img src={URL.createObjectURL(image)} alt='' className='profile-picture-after' /> : <img src='https://images.pexels.com/photos/2055500/pexels-photo-2055500.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' className='profile-picture-before' />}
+                    {image ? <img src={URL.createObjectURL(image)} alt='' className='profile-picture-after' /> : <img src={profileImage} className='profile-picture-before' />}
                     <FileUploadIcon style={{ fontSize: 50 }} className='upload-image-icon' />
                     <input type="file" ref={inputRef} onChange={handleImageChange} className='upload-image-btn' />
                 </div>
