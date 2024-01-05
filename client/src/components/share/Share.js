@@ -4,6 +4,7 @@ import "./share.scss";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 import { useState } from "react";
+import {toast, ToastContainer} from "react-toastify"
 import {
   useMutation,
   QueryClient,
@@ -18,6 +19,43 @@ const Share = () => {
   // =================================================================================================
   // =================================================================================================
   // check limit images + limit word
+  const MAX_WORD = 150;
+  const MAX_IMAGE = 5;
+  const [descWord, setDescWord] = useState(0);
+
+  console.log(file)
+ 
+ 
+  const handleContentChange = (e) => {
+    const content = e.target.value.split(" ")
+    setDescWord(content.length)
+ 
+    if (content.length <= MAX_WORD) { 
+      setDesc(e.target.value)
+ 
+      if (e.target.value == ''){
+        setDescWord(0)
+      } 
+    }
+    else{
+      setDesc(e.target.value.slice(0, desc.length))
+      toast.warning("Your content is out of limit", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  }
+
+  const handleImageLimit = (e) =>{
+
+    setFile(e.target.files)
+    const imageLength = e.target.files.length
+    if (imageLength > MAX_IMAGE){
+      toast.warning("Your image is out of limit", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setFile(null)
+    }
+  }
 
   // =================================================================================================
   // =================================================================================================
@@ -97,13 +135,15 @@ const Share = () => {
       <div className="container">
         <div className="top">
           <img
-            src="https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            src="https://i...content-available-to-author-only...s.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             alt=""
           />
           <input
             type="text"
             placeholder={`What's on your mind ${currentUser.name}?`}
-            onChange={(e) => setDesc(e.target.value)}
+            onChange={(e) => handleContentChange(e)
+            }
+            value={desc}
           />
         </div>
 
@@ -114,7 +154,7 @@ const Share = () => {
               type="file"
               id="file"
               multiple
-              onChange={(e) => setFile(e.target.files)}
+              onChange={(e) => handleImageLimit(e)}
               style={{ display: "none" }}
             />
             <label htmlFor="file">
@@ -139,6 +179,7 @@ const Share = () => {
             ))}
         </div>
       </div>
+      {<ToastContainer />}
     </div>
   );
 };

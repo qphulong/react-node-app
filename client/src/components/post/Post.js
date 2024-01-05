@@ -8,12 +8,13 @@ import { Link } from "react-router-dom";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import Comments from "../comments/Comments.js";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import ImageSlider from "./ImageSlider.js";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { AuthContext } from "../../context/authContext.js";
 const Post = ({ post }) => {
   const items = [{
     id: 1,
@@ -23,6 +24,7 @@ const Post = ({ post }) => {
   //comment state
   const [commentOpen, setCommentOpen] = useState(false);
   const [like,setLike] = useState(false)
+  const {currentUser,profileImage} = useContext(AuthContext)
 
   //Dropdown state
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -90,6 +92,8 @@ const Post = ({ post }) => {
   const prevSlide = () => {
     setCurrent(current === 0 ? length - 1 : current - 1);
   };
+  //========================================================================
+  //========================================================================
   //get comment quantity
   // Queries
   const {isLoading, error, data: cmts} = useQuery({
@@ -107,6 +111,58 @@ const Post = ({ post }) => {
       },
   });
 
+  //========================================================================
+  //========================================================================
+  // Like function
+  // const {data: likes} = useQuery({
+  //     queryKey: ["likes",post.postId],
+  //     queryFn: async () => {
+  //     try {
+  //         return await axios
+  //         .put(`http://localhost:3001/posts/likes`,{user: currentUser.userId, postId: post.postId})
+  //         .then((response) => {
+  //             return response.data;
+  //         });
+  //     } catch (error) {
+  //         throw error; 
+  //     }
+  //     },
+  // });
+
+  // const queryClient = useQueryClient();
+
+  //   // Mutations
+  // const mutationLike = useMutation({
+  //       mutationFn: () => {
+  //       return axios.put("http://localhost:3001/posts/likes", {
+  //         user: currentUser.userId, 
+  //         postId: post.postId
+  //       })},
+  //       onSuccess: (response) => {
+  //           console.log("Newly added like:", response.data);
+
+  //           queryClient.invalidateQueries({queryKey: ["likes",post.postId]});
+  //       },
+  //       onError: (error, variables, context) => {
+  //           console.log('====================================');
+  //               console.log("error");
+  //               console.log('====================================');
+  //         },
+  //         onSettled: (data, error, variables, context) => {
+  //           console.log('====================================');
+  //               console.log("settle");
+  //               console.log('====================================');
+  //         },
+  // });
+
+  // const handleClickLike = (e) => {
+  //   e.preventDefault();
+  //   setLike(!like)
+  //   mutationLike.mutate({user: currentUser.userId, postId: post.postId})
+  // }
+  // console.log('====================================');
+  // console.log(likes?.likes);
+  // console.log('====================================');
   // console.log('====================================');
   // console.log(cmts?.comments.length);
   // console.log('====================================');
@@ -181,9 +237,9 @@ const Post = ({ post }) => {
         </div>
 
         <div className="info">
-          <div className="item" onClick={() => setLike(!like)}>
+          <div className="item" onClick={handleClickLike}>
             {like ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-            12
+            {12}
           </div>
 
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>

@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 const Comments = ({ postId }) => {
 
     //user
-    const {currentUser} = useContext(AuthContext)
+    const {currentUser,profileImage} = useContext(AuthContext)
     const [content, setContent] = useState("");
 
     // =================================================================================================
@@ -90,6 +90,43 @@ const Comments = ({ postId }) => {
         },
     });
 
+    //fetch image profile
+    const fetchProfileImage = async (userId) => {
+        try {
+          const response = await axios.get(`http://localhost:3001/user/profile-pic/${userId}`);
+    
+          if (response.status === 200) {
+            const imageFilename = response.data;
+            return imageFilename.profilePic;
+          } else {
+            // console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+            return "https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
+          }
+        } catch (error) {
+        //   console.error('Error fetching profile image:', error.message);
+          return "https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
+        }
+      };
+
+    const [images, setImages] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (Comments && Comments.comments) {
+                const promises = Comments.comments.map(async (comment) => {
+                    const profileImage = await fetchProfileImage(comment.user);
+                    return profileImage;
+                });
+    
+                const newImages = await Promise.all(promises);
+    
+                setImages(newImages);
+            }
+        };
+    
+        fetchData();
+    }, [Comments]);
+
     if (isLoading) {
         return <h3>Loading...</h3>;
     }
@@ -109,13 +146,13 @@ const Comments = ({ postId }) => {
     return (
         <div className='comments'>
             <div className='write'>
-                <img src={currentUser.profilePic} alt=''/>
+                <img src={profileImage} alt=''/>
                 <input type='text' placeholder='Write a comment' onChange={(e) => setContent(e.target.value)}/>
                 <button onClick={handleClick}>Send</button>
             </div>
-            {Comments.comments?.map((comment) => {
+            {Comments.comments?.map((comment,index) => {
                 return <div className='comment' key={uuidv4()}>
-                    <img src="https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt=""/>
+                    <img src={images[index]} alt=""/>
                     <div className='info'>
                         <span>{comment.user}</span>
                         <p>{comment.content}</p>
