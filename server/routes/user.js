@@ -121,7 +121,7 @@ router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
   const uploadedFile = req.files;
 
   if (!uploadedFile || uploadedFile.length === 0) {
-    return res.status(400).send("No files were uploaded.");
+    res.status(400).send("No files were uploaded.");
   }
 
   // only allow pictures
@@ -139,13 +139,20 @@ router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
     }
 
     // Remove existing profile pic if found
+    console.log(files.length);
     if (files.length > 1) {
-      const existingProfilePic = path.join(folderPath, files[0]);
-      fs.unlink(existingProfilePic, (err) => {
-        if (err) {
-          res.status(500).send("Error deleting existing profile pic.");
-        }
-      });
+      // file different from the one just uploaded
+      const existingFile = files.filter(
+        (file) => file !== uploadedFile[0].filename
+      );
+
+      for (const file of existingFile) {
+        fs.unlink(path.join(folderPath, file), (err) => {
+          if (err) {
+            res.status(500).send("Error deleting existing profile pic.");
+          }
+        });
+      }
     }
 
     // Remove the leading ".." from the beginning of the path
