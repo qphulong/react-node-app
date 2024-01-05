@@ -62,4 +62,25 @@ router.get("/:postId/likes", async (req, res) => {
   res.json({ likes: post.likes });
 });
 
+router.get("/:userId/:postId/liked", async (req, res) => {
+  const userId = req.params.userId;
+  const postId = req.params.postId;
+
+  const post = await Post.findOne({ postId: postId });
+
+  const likePeople = post.likePeople;
+
+  var liked = false;
+
+  for (let i = 0; i < likePeople.length; i++) {
+    const user = likePeople[i];
+    if (user.userId == userId) {
+      liked = true;
+      break;
+    }
+  }
+
+  res.json({ liked: liked });
+});
+
 module.exports = router;
