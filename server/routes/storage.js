@@ -31,6 +31,13 @@ router.post("/upload/:postId", upload.array("images", 5), (req, res) => {
     return res.status(400).send("No files were uploaded.");
   }
 
+  // only allow pictures
+  for (let i = 0; i < uploadedFiles.length; i++) {
+    if (!uploadedFiles[i].mimetype.startsWith("image")) {
+      res.status(400).send("Only image files are allowed.");
+    }
+  }
+
   // check if folder has more than 5 files
   const postId = req.params.postId;
   const folderPath = path.join(`./public/uploads/${postId}`);

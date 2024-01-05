@@ -124,6 +124,11 @@ router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
     return res.status(400).send("No files were uploaded.");
   }
 
+  // only allow pictures
+  if (!uploadedFile[0].mimetype.startsWith("image")) {
+    res.status(400).send("Only image files are allowed.");
+  }
+
   const userId = req.params.userId;
   const folderPath = path.join(`./public/profile_pics/${userId}`);
 
