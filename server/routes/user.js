@@ -130,7 +130,7 @@ router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
   // Check if the folder already contains a profile pic
   fs.readdir(folderPath, (err, files) => {
     if (err) {
-      return res.status(500).send("Error reading folder.");
+      res.status(500).send("Error reading folder.");
     }
 
     // Remove existing profile pic if found
@@ -138,7 +138,7 @@ router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
       const existingProfilePic = path.join(folderPath, files[0]);
       fs.unlink(existingProfilePic, (err) => {
         if (err) {
-          return res.status(500).send("Error deleting existing profile pic.");
+          res.status(500).send("Error deleting existing profile pic.");
         }
       });
     }
@@ -155,10 +155,10 @@ router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
 
         user.profilePic = `http://localhost:3001/${savedPath}`;
         user.save();
+
+        res.send(user.profilePic);
       })
       .catch((err) => console.log(err));
-
-    res.send(user.profilePic);
   });
 });
 
