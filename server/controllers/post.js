@@ -42,7 +42,8 @@ exports.createPost = async (req, res) => {
     content,
     postId: id,
     deleteAfter,
-    likes: [],
+    likes: 0,
+    likePeople: [],
     comments: [],
     user: user,
   }); //create new post

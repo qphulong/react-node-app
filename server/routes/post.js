@@ -28,4 +28,26 @@ router.post("/report", postController.reportPost); //report post
 
 router.get("/images/:postId", postController.getImages); //get image links of a post
 
+router.put("/likes", async (req, res) => {
+  const postId = req.body.postId;
+  const userId = req.body.userId;
+
+  const post = await Post.findOne({ postId: postId });
+  if (!post) {
+    res.status(404).error("Post not found");
+  }
+
+  if (post.likePeople.includes(userId)) {
+    post.likePeople.pull(userId);
+    post.likes -= 1;
+  } else {
+    post.likePeople.push(userId);
+    post.likes += 1;
+  }
+
+  await post.save();
+
+  res.json({ likes: post.likes });
+});
+
 module.exports = router;

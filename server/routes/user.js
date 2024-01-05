@@ -78,26 +78,6 @@ router.put("/social-media", userController.addSocialMedia);
 
 router.get("/social-media/:userId", userController.getSocialMedia);
 
-router.put("/likes", async (req, res) => {
-  const postId = req.body.postId;
-  const userId = req.body.userId;
-
-  const post = await Post.findOne({ postId: postId });
-  if (!post) {
-    res.status(404).error("Post not found");
-  }
-
-  if (post.likes.includes(userId)) {
-    post.likes.pull(userId);
-  } else {
-    post.likes.push(userId);
-  }
-
-  await post.save();
-
-  res.json({ likes: post.likes });
-});
-
 router.get("/:userId", (req, res) => {
   const userId = req.params.userId;
 
@@ -188,7 +168,7 @@ router.get("/profile-pic/:userId", (req, res) => {
 
   fs.readdir(folderPath, (err, files) => {
     if (err) {
-      return res.status(404).send("No files found.");
+      res.status(404).send("No files found.");
     }
 
     res.json({ profilePic: `http://localhost:3001/${folderPath}/${files[0]}` });
