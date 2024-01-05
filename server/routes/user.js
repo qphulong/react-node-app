@@ -158,7 +158,7 @@ router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
       })
       .catch((err) => console.log(err));
 
-    res.send("Image uploaded successfully!");
+    res.send(user.profilePic);
   });
 });
 
