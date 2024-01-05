@@ -18,6 +18,7 @@ import { useContext, useRef, useState } from 'react';
 import EditOff from '@mui/icons-material/EditOff';
 import PostsProfile from '../../components/postsProfile/PostsProfile';
 import { AuthContext } from '../../context/authContext';
+import axios from 'axios';
 
 const Profile = () => {
     const inputRef = useRef(null);
@@ -33,10 +34,34 @@ const Profile = () => {
         inputRef.current.click();
     }
 
+    //upload
+  const upload = async (newFile) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", newFile);
+      const response = await axios.post(
+        `http://localhost:3001/user/profile-pic/${currentUser.userId}`,
+        formData
+      );
+
+      if (response.status === 200) {
+        console.log("oke 200");
+        return response.data;
+      } else {
+        console.error("Upload failed:", response.statusText);
+        throw new Error("File upload failed"); // Re-throw for better handling
+      }
+    } catch (err) {
+      console.error("Error during upload:", err.message, err.stack);
+      throw err; // Re-throw to allow for further handling
+    }
+  };
+
     const handleImageChange = (event) => {
         const file = event.target.files[0];
-        console.log(file);
+        if(file) upload(file)
         setImage(file);
+        window.location.reload();
     }
 
     const handleToggleEdit = () => {
