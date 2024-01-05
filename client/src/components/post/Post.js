@@ -237,7 +237,7 @@ const Post = ({ post }) => {
         </div>
 
         <div className="info">
-          <div className="item" onClick={handleClickLike}>
+          <div className="item" onClick={() => setLike(!like)}>
             {like ? <FavoriteIcon /> : <FavoriteBorderIcon />}
             {12}
           </div>
