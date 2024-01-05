@@ -32,8 +32,14 @@ const postSchema = new mongoose.Schema({
     type: Number,
   },
 
+  likes: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+
   //list of userids who liked this post
-  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  likePeople: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 
   comments: [Comment.schema],
 

@@ -78,8 +78,6 @@ router.put("/social-media", userController.addSocialMedia);
 
 router.get("/social-media/:userId", userController.getSocialMedia);
 
-router.put("/likes", userController.modifyLikes);
-
 router.get("/:userId", (req, res) => {
   const userId = req.params.userId;
 
@@ -160,7 +158,7 @@ router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
       })
       .catch((err) => console.log(err));
 
-    res.send("Image uploaded successfully!");
+    res.send(user.profilePic);
   });
 });
 
@@ -170,10 +168,10 @@ router.get("/profile-pic/:userId", (req, res) => {
 
   fs.readdir(folderPath, (err, files) => {
     if (err) {
-      return res.status(404).send("No files found.");
+      res.status(404).send("No files found.");
     }
 
-    res.send(files);
+    res.json({ profilePic: `http://localhost:3001/${folderPath}/${files[0]}` });
   });
 });
 
