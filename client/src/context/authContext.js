@@ -36,40 +36,30 @@ export const AuthContextProvider = ({ children }) => {
   //===================================================================================================================
   //profile image
   const [profileImage,setProfileImage] = useState("https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
-  // const getProfileImage = async (userId) => {
-  //   const response = await fetch(
-  //     `http://localhost:3001/user/profile-pic/${userId}`
-  //   );
-  //   const data = await response.json();
-  //   return data[0]
-  // };
-
-  // useEffect(() => {
-  //   setProfileImage(getProfileImage(currentUser.userId))
-  // },[currentUser])
-
   const fetchProfileImage = async () => {
     try {
       const response = await axios.get(`http://localhost:3001/user/profile-pic/${currentUser.userId}`);
   
       if (response.status === 200) {
-        // console.log("Profile image retrieved successfully");
-        // console.log(response.data[0]); // Assuming you want to log the image data
-        const imageProfile = `http://localhost:3001/${response.data[0]}`
-        setProfileImage(imageProfile)
+        const imageFilename = response.data
+        console.log('====================================');
+        console.log(imageFilename.profilePic);
+        console.log('====================================');
+        setProfileImage(imageFilename.profilePic)
       } else {
-        // console.log(`Unexpected status code: ${response.status}`);
+        console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
       }
     } catch (error) {
-      // console.error('Error fetching profile image:', error.message);
+      console.error('Error fetching profile image:', error.message);
     }
   };
-
-  fetchProfileImage();
+  useEffect(() => {
+    fetchProfileImage();
+  },[])
   //===================================================================================================================
 
   return (
-    <AuthContext.Provider value={{ currentUser, login, logout }}>
+    <AuthContext.Provider value={{ currentUser, login, logout,profileImage,setProfileImage}}>
       {children}
     </AuthContext.Provider>
   );
