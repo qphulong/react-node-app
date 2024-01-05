@@ -93,6 +93,10 @@ function App() {
           path: "/addfriends",
           element: <AddFriend/>
         },
+        {
+          path: "/changepassword",
+          element: <ChangePassword/>
+        },
         // {
         //   path: "/notifications",
         //   element: <Notification/>
@@ -114,10 +118,6 @@ function App() {
     {
       path: "/moderators",
       element: <ForModerator/>
-    },
-    {
-      path: "/changepassword",
-      element: <ChangePassword/>
     },
   ]);
 
