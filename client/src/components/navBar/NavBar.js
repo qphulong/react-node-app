@@ -37,7 +37,7 @@ const NavBar = () => {
   ];
 
   const { darkMode, toggle } = useContext(DarkModeContext);
-  const { currentUser, login, logout } = useContext(AuthContext);
+  const { currentUser, login, logout,profileImage } = useContext(AuthContext);
   const [openDropdown, setOpenDropdown] = useState(false);
   const [selection, setSelection] = useState([]);
   const toggleDropdown = () => setOpenDropdown(!openDropdown);
@@ -102,7 +102,7 @@ const NavBar = () => {
           ref={profileRef}
         >
           <div className="user-info">
-            <img src={currentUser.profilePic} alt="" />
+            <img src={profileImage} alt="" />
             <span>{currentUser.name}</span>
           </div>
         </div>

@@ -42,9 +42,9 @@ export const AuthContextProvider = ({ children }) => {
   
       if (response.status === 200) {
         const imageFilename = response.data
-        console.log('====================================');
-        console.log(imageFilename.profilePic);
-        console.log('====================================');
+        // console.log('====================================');
+        // console.log(imageFilename.profilePic);
+        // console.log('====================================');
         setProfileImage(imageFilename.profilePic)
       } else {
         console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
