@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 const Comments = ({ postId }) => {
 
     //user
-    const {currentUser} = useContext(AuthContext)
+    const {currentUser,profileImage} = useContext(AuthContext)
     const [content, setContent] = useState("");
 
     // =================================================================================================
@@ -109,7 +109,7 @@ const Comments = ({ postId }) => {
     return (
         <div className='comments'>
             <div className='write'>
-                <img src={currentUser.profilePic} alt=''/>
+                <img src={profileImage} alt=''/>
                 <input type='text' placeholder='Write a comment' onChange={(e) => setContent(e.target.value)}/>
                 <button onClick={handleClick}>Send</button>
             </div>
