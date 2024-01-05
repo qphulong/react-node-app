@@ -54,4 +54,12 @@ router.put("/likes", async (req, res) => {
   res.json({ likes: post.likes });
 });
 
+router.get("/:postId/likes", async (req, res) => {
+  const postId = req.params.postId;
+
+  const post = await Post.findOne({ postId: postId });
+
+  res.json({ likes: post.likes });
+});
+
 module.exports = router;
