@@ -57,7 +57,7 @@ async function removeFriend(userId, friendId, res) {
         friend
           .save()
           .then((user) => {
-            res.send("Friend removed successfully");
+            res.send("Friend removed successfully!");
           })
           .catch((error) => {
             res.status(400).send("Error saving user:", error);
