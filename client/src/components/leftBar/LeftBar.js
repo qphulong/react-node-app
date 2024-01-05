@@ -8,6 +8,7 @@ import DensitySmallIcon from "@mui/icons-material/DensitySmall";
 import { Button } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/authContext";
+import EnhancedEncryptionOutlinedIcon from '@mui/icons-material/EnhancedEncryptionOutlined';
 import axios from "axios";
 const LeftBar = () => {
   const { currentUser,profileImage } = useContext(AuthContext);
@@ -64,6 +65,11 @@ const LeftBar = () => {
           <div className="item">
             <PersonAddIcon style={{ fontSize: 30 }} />
             <span>Add Friends</span>
+          </div>
+
+          <div className="item">
+            <EnhancedEncryptionOutlinedIcon style={{ fontSize: 30 }} />
+            <span>Change Password</span>
           </div>
 
           <div className="item">
