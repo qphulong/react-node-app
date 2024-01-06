@@ -173,6 +173,7 @@ const Post = ({ post }) => {
   async function fetchLikeData() {
     try {
       const response = await axios.get(`http://localhost:3001/posts/${currentUser.userId}/${post.postId}/liked`);
+      // console.log(dem);
       // console.log(response.data.liked);
       if(dem == 0) setLike(response.data.liked)
       else setLike(!response.data.liked)

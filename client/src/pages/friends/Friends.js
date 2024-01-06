@@ -12,12 +12,14 @@ import { useContext, useState, useRef, useEffect } from 'react';
 import { AuthContext } from '../../context/authContext';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Friends = () => {
     const [openDropdown, setOpenDropdown] = useState(false);
     const dropdownRefs = useRef({});
     const extraFunctionRef = useRef(null);
     const { currentUser } = useContext(AuthContext);
+    const [friend, setFriend] = useState(null);
     const { data: FriendsInfo } = useQuery({
         queryKey: ["FriendsInfo"],
         queryFn: async () => {
@@ -25,6 +27,9 @@ const Friends = () => {
                 return await axios
                     .get(`http://localhost:3001/user/friends/${currentUser.userId}`)
                     .then((response) => {
+                        console.log('====================================');
+                        console.log(response.data);
+                        console.log('====================================');
                         return response.data;
                     });
             } catch (error) {
@@ -33,6 +38,26 @@ const Friends = () => {
         },
     });
 
+    const responseData = async (friendIdPro) => {
+        try {
+            const res = await axios.delete("http://localhost:3001/user/friends", {
+                data: { userId: currentUser.userId, friendId: friendIdPro }
+            });
+    
+            console.log('====================================');
+            console.log(res);
+            console.log('====================================');
+            window.location.reload();
+        } catch (error) {
+            console.error('====================================');
+            console.error(error);
+            console.error('====================================');
+        }
+    }
+    
+    useEffect(() => {
+        responseData(friend);
+    }, [friend]);
     //=========================================================================================================
     //=========================================================================================================
     // DELETE FRIEND FUNCTION
@@ -54,9 +79,15 @@ const Friends = () => {
     //     },
     // });
 
-    // const handleDeletePost = (e,friendId) => {
-    //     e.preventDefault();
-    //     mutationDelete.mutate({friendId});
+    // const handleDeletePost = (friendId) => {
+    //     mutationDelete.mutate({ friendId }, {
+    //         onSuccess: () => {
+    //             console.log("DELETE request sent successfully");
+    //         },
+    //         onError: (error) => {
+    //             console.log("DELETE request error:", error);
+    //         }
+    //     });
     // };
     //=========================================================================================================
     //=========================================================================================================
@@ -91,6 +122,7 @@ const Friends = () => {
     function handleOnClick(friendId, item) {
         if (item.id == 1) {
             console.log("1");
+            setFriend(friendId)
             // handleDeletePost(friendId)
         }
     }
@@ -109,6 +141,38 @@ const Friends = () => {
         //     }));
         // }
     }
+
+    //===================================================================================================================
+    //profile image
+    const [profileImages, setProfileImages] = useState({});    
+    const fetchProfileImage = async (id) => {
+        try {
+        const response = await axios.get(`http://localhost:3001/user/profile-pic/${id}`);
+    
+        if (response.status === 200) {
+            const imageFilename = response.data
+            // console.log('====================================');
+            // console.log(imageFilename.profilePic);
+            // console.log('====================================');
+            setProfileImages((prevProfileImages) => ({
+                ...prevProfileImages,
+                [id]: imageFilename.profilePic,
+            }));
+        } else {
+            console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+        }
+        } catch (error) {
+        console.error('Error fetching profile image:', error.message);
+        }
+    };
+    useEffect(() => {
+        if (FriendsInfo && FriendsInfo.friends) {
+            FriendsInfo.friends.forEach((friend) => {
+                fetchProfileImage(friend.userId);
+            });
+        }
+    }, [FriendsInfo]);
+    //===================================================================================================================
     return (
         <div className='friends'>
             <div className="title">
@@ -119,7 +183,7 @@ const Friends = () => {
                 {FriendsInfo && FriendsInfo.friends.map((friend) => (
                     <div className='item' key={friend.userId}>
                         <div className='friends-top'>
-                            <img src='https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' alt='' />
+                            <img src={profileImages[friend.userId] || 'https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'} alt='' />
                             <span className='friends-name'>
                                 {friend.userId}
                             </span>
@@ -157,9 +221,11 @@ const Friends = () => {
                             </div>
                         </div>
                         <div className='friends-bottom'>
-                            <button>
-                                Visit
-                            </button>
+                            <Link to={`/profile/${friend.userId}`}>
+                                <button>
+                                   Visit
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 ))}
