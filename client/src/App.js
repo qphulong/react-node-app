@@ -112,7 +112,7 @@ function App() {
       element: <Register/>,
     },
     {
-      path: "/invitations/add-friends/:friendLink",
+      path: "/invitations/:friendLink",
       element: <Invitations/>
     },
     {

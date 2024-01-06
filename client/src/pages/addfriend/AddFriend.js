@@ -4,17 +4,27 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
-import { useContext, useState, useRef } from 'react';
+import { useContext, useState, useRef, useEffect } from 'react';
 import { AuthContext } from '../../context/authContext';
 import axios from 'axios';
 
 
 const AddFriend = () => {
-    const { currentUser,profileImage } = useContext(AuthContext);
-    const [passWord, setPassWord] = useState("")
+    const { currentUser,profileImage,passWordLink,setPassWordLink,randomLinkInvitation,setRandomLinkInvitation } = useContext(AuthContext);
     const [randomLink, setRandomLink] = useState(null);
+    const [passWord, setPassWord] = useState("")
     const [isEditablePassword, setIsEditablePassword] = useState(true);
     const passwordInputRef = useRef(null);
+
+    // useEffect(() => {
+    //     console.log("Current Link:", randomLinkInvitation);
+    //  }, [randomLinkInvitation]);
+
+    // const data = "add-friends/tmk3010-e5eaee39-819d-45b8-991f-de9a997fb4b4"
+    // const extractedValue = data.split('/')[1].split('-')[0]; // "tmk3010"
+    // console.log('====================================');
+    // console.log(extractedValue);
+    // console.log('====================================');
 
     //Constant
     const MAX_PASSWORD_CHAR = 16
@@ -38,10 +48,12 @@ const AddFriend = () => {
                 linkPassword: passWord
             }).then((res) => {
                 setRandomLink(res.data.friendLink)
-                console.log('====================================');
-                console.log(passWord);
-                console.log(res.data.friendLink);
-                console.log('====================================');
+                setRandomLinkInvitation(res.data.friendLink)
+                setPassWordLink(passWord)
+                // console.log('====================================');
+                // console.log(passWord);
+                // console.log(res.data.friendLink);
+                // console.log('====================================');
             })
         }
         catch (err) {
