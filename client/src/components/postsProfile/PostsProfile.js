@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 import PostProfile from "../postProfile/PostProfile";
 
-const PostsProfile = () => {
+const PostsProfile = ({userId}) => {
     //useContext
     const { currentUser, login } = useContext(AuthContext);
 
@@ -45,7 +45,7 @@ const PostsProfile = () => {
         {isLoading
             ? "Loading..."
             : postsProfile?.posts.map((post) => {
-                return <PostProfile post={post} key={post.postId} />;
+                return <PostProfile userId = {userId} post={post} key={post.postId} />;
             })}
         </div>
     );
