@@ -36,13 +36,13 @@ router.put("/likes", async (req, res) => {
 
   const post = await Post.findOne({ postId: postId });
   if (!post) {
-    res.status(404).send("Post not found");
+    return res.status(404).send("Post not found");
   }
 
   const user = await User.findOne({ userId: userId });
 
   if (!user) {
-    res.status(404).send("User not found");
+    return res.status(404).send("User not found");
   }
 
   for (let i = 0; i < post.likePeople.length; i++) {
