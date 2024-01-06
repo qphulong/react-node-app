@@ -208,7 +208,7 @@ const PostProfile = ({ imageProfile,userId,post }) => {
   const mutationLike = useMutation({
       mutationFn: () => {
       return axios.put("http://localhost:3001/posts/likes", {
-        userId: userId, 
+        userId: currentUser.userId, 
         postId: post.postId
       })},
       onSuccess: (response) => {
@@ -231,12 +231,12 @@ const PostProfile = ({ imageProfile,userId,post }) => {
   const handleClickLike = (e) => {
     e.preventDefault();
     fetchLikeData();
-    mutationLike.mutate({user: userId, postId: post.postId})
+    mutationLike.mutate({user: currentUser.userId, postId: post.postId})
   }
 
   async function fetchLikeData() {
     try {
-      const response = await axios.get(`http://localhost:3001/posts/${userId}/${post.postId}/liked`);
+      const response = await axios.get(`http://localhost:3001/posts/${currentUser.userId}/${post.postId}/liked`);
       // console.log(response.data.liked);
       if(dem == 0) setLike(response.data.liked)
       else setLike(!response.data.liked)
