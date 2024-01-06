@@ -35,9 +35,9 @@ const PostProfile = ({ imageProfile,userId,post }) => {
   useEffect(() => {
     const formattedTimestamp = moment(timestamp).fromNow(); // Use moment.js to format
     setTimestamp(formattedTimestamp);
-    console.log('====================================');
-    console.log(timestamp);
-    console.log('====================================');
+    // console.log('====================================');
+    // console.log(timestamp);
+    // console.log('====================================');
   }, [post.createdAt]);
 
   const items = [{
