@@ -44,7 +44,7 @@ const PostsProfile = () => {
         <div className="posts">
         {isLoading
             ? "Loading..."
-            : postsProfile.posts.map((post) => {
+            : postsProfile?.posts.map((post) => {
                 return <PostProfile post={post} key={post.postId} />;
             })}
         </div>
