@@ -89,8 +89,11 @@
                 margin-bottom: 20px;
                 align-items: center;
                 flex-direction: row;
+                padding: 5px 80px 5px 10px;
+                border-radius: 20px;
                 gap: 10px;
                 font-weight: 700;
+                cursor: pointer;
 
                 img {
                     width: 50px;
@@ -100,9 +103,9 @@
                 }
 
                 .user-info {
-
                     display: flex;
                     flex-direction: column;
+                    text-align: center;
                     gap: 5px;
 
                     .user-name {
@@ -115,6 +118,9 @@
                         font-weight: 500;
                     }
                 }
+            }
+            .user:hover{                    
+                background-color: themed("hovercomment");
             }
         }
     }
