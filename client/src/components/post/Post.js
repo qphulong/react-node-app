@@ -171,12 +171,37 @@ const Post = ({ post }) => {
       console.log(err);
     }
   }
+  //==============================================================================================================
+  //===================================================================================================================
+    //profile image
+    const [profileImageNewsFeed,setProfileImageNewsFeed] = useState("https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
+    const fetchProfileImage = async (userId) => {
+        try {
+        const response = await axios.get(`http://localhost:3001/user/profile-pic/${userId}`);
+    
+        if (response.status === 200) {
+            const imageFilename = response.data
+            // console.log('====================================');
+            // console.log(imageFilename.profilePic);
+            // console.log('====================================');
+            setProfileImageNewsFeed(imageFilename.profilePic)
+        } else {
+            console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+        }
+        } catch (error) {
+        console.error('Error fetching profile image:', error.message);
+        }
+    };
+    //===================================================================================================================
   const [dem,setDem] = useState(0)
   // Call the async function
   useEffect(() => {
     fetchLikeData();
+    fetchProfileImage(post.user.userId)
     setDem(dem+1)
   },[])
+
+  
   
   // console.log('====================================');
   // console.log(likes?.likes);
@@ -191,7 +216,7 @@ const Post = ({ post }) => {
         <div className="user">
           <div className="userInfo">
             <img
-              src="https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              src={profileImageNewsFeed}
               atl=""
             />
             <div className="details">
