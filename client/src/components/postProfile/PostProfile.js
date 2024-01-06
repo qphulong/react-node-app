@@ -16,7 +16,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-const PostProfile = ({ userId,post }) => {
+const PostProfile = ({ imageProfile,userId,post }) => {
   const { currentUser, login, logout } = useContext(AuthContext);
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(post.content);
@@ -188,7 +188,7 @@ const PostProfile = ({ userId,post }) => {
         <div className="user">
           <div className="userInfo">
             <img
-              src="https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              src={imageProfile}
               atl=""
             />
             <div className="details">

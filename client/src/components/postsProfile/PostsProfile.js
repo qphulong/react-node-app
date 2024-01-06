@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 import PostProfile from "../postProfile/PostProfile";
 
-const PostsProfile = ({userId}) => {
+const PostsProfile = ({userId,imageProfile}) => {
     //useContext
     const { currentUser, login } = useContext(AuthContext);
 
@@ -22,7 +22,7 @@ const PostsProfile = ({userId}) => {
             return axios
             .get(`http://localhost:3001/user/${userId}`)
             .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
                 return response.data;
             });
         } catch (error) {
@@ -45,7 +45,7 @@ const PostsProfile = ({userId}) => {
         {isLoading
             ? "Loading..."
             : postsProfile?.posts.map((post) => {
-                return <PostProfile userId = {userId} post={post} key={post.postId} />;
+                return <PostProfile imageProfile={imageProfile} userId = {userId} post={post} key={post.postId} />;
             })}
         </div>
     );
