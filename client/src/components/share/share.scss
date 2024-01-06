@@ -92,22 +92,48 @@
             object-fit: cover;
             border-radius: 5px;
           }
-      
-          button {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            border: none;
-            background-color: themed("logo"); /* Customize the color as needed */
-            color: themed("bg");
-            padding: 5px 9px;
-            cursor: pointer;
-            border-radius: 50%;
-          }
+          .remove-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            button {
+              position: absolute;
+              top: 5px;
+              right: 5px;
+              border: none;
+              background-color: themed("logo"); /* Customize the color as needed */
+              color: themed("bg");
+              padding: 5px 9px;
+              cursor: pointer;
+              border-radius: 50%;
+            }
 
-          button:hover{
-            filter:brightness(90%)
+            .tool-tip{
+              // visibility: hidden;
+              position: absolute;
+              z-index: 1;
+              top: 30%;
+              margin-left: 50px;
+              font-size: 8px;
+              padding: 6px 4px;
+              background-color: themed("textColorSoft");
+              color: themed("bg");
+              border-radius: 4px;
+              opacity: 0;
+              transition: opacity 0.15s;
+            }
+
+            button:hover + .tool-tip{
+              opacity: 1;
+              
+            }
+            
+            button:hover{
+              filter:brightness(90%)
+            }
           }
+          
         }
       }      
     }
