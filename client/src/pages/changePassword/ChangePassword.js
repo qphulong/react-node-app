@@ -41,19 +41,19 @@ const ChangePassword = () => {
     const handleFacebookLinkChange = (event) => {
         // Do something with the Facebook link
         const facebookLink = event.target.value;
-        console.log("Facebook Link:", facebookLink);
+        // console.log("Facebook Link:", facebookLink);
     };
 
     const handleInstagramLinkChange = (event) => {
         // Do something with the Instagram link
         const instagramLink = event.target.value;
-        console.log("Instagram Link:", instagramLink);
+        // console.log("Instagram Link:", instagramLink);
     };
 
     const handleLinkedInLinkChange = (event) => {
         // Do something with the LinkedIn link
         const linkedInLink = event.target.value;
-        console.log("LinkedIn Link:", linkedInLink);
+        // console.log("LinkedIn Link:", linkedInLink);
     };
 
     const handleChangeSocialLink = () => {
