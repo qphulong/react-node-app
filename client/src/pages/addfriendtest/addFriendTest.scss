@@ -1,0 +1,233 @@
+@import "../../style.scss";
+
+.add-friend-page {
+    @include themify($themes) {
+        .image {
+            width: 100%;
+            height: 300px;
+            position: relative;
+
+            .cover-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .profile-image {
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+                object-fit: cover;
+                position: absolute;
+                left: 0;
+                right: 0;
+                margin: auto;
+                top: 200px;
+            }
+        }
+
+        .profile-container {
+            padding: 20px 30px;
+
+            .user-info {
+
+                -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
+                -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
+                box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
+                border-radius: 20px;
+                background-color: themed("bg");
+                color: themed("textColor");
+                padding: 100px 50px 5px 50px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-around;
+
+                .center {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 10px;
+
+                    .name {
+                        display: flex;
+                        gap: 10px;
+
+                        span {
+                            font-size: 30px;
+                            font-weight: 500;
+                        }
+
+                        .icon:hover {
+                            cursor: pointer;
+                        }
+
+                        input {
+                            font-family: 'Josefin Sans', sans-serif;
+                            ;
+                            font-size: 30px;
+                            font-weight: 500;
+                            border: none;
+                        }
+
+                    }
+
+                    .social-link-friend {
+                        display: flex;
+                        gap: 10px;
+
+                        a {
+                            color: themed('logo');
+                        }
+                    }
+                }
+
+                .invitation {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                    color: themed('textColor');
+
+                    .get-link {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 6px;
+
+                        p {
+                            font-size: 16px;
+                            margin-bottom: 0;
+                        }
+
+                        .random-link-container {
+                            display: flex;
+                            flex-direction: row;
+                            gap: 15px;
+                            padding: 10px;
+                            background-color: themed("bgSoft");
+                            color: themed("textColor");
+                            border: solid;
+                            align-items: center;
+                            font-size: 14px;
+                            border-radius: 10px;
+
+                            .tool-tip {
+                                margin-left: -4px;
+                                position: absolute;
+                                font-size: 10px;
+                                padding: 6px 4px;
+                                background-color: themed("textColorSoft");
+                                color: themed("bg");
+                                border-radius: 4px;
+                                opacity: 0;
+                                transition: opacity 0.15s;
+                            }
+
+                            .logo{
+                                cursor: pointer;
+                            }
+    
+                            .logo:hover + .tool-tip{
+                                opacity: 1;
+                            }
+                        }
+
+                        .get-link-button {
+                            width: 100px;
+                            background-color: themed("logo");
+                            border: none;
+                            border-radius: 12px;
+                            color: themed("bg");
+                            padding: 10px 10px;
+                        }
+
+                    }
+
+                    .get-password {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        margin-top: 20px;
+                        gap: 6px;
+
+                        p {
+                            font-size: 16px;
+                            margin-bottom: 0;
+                        }
+
+                        .password-container {
+                            display: flex;
+                            flex-direction: row;
+                            gap: 15px;
+                            padding: 10px;
+                            background-color: themed("bgSoft");
+                            color: themed("textColor");
+                            border: solid;
+                            align-items: center;
+                            font-size: 14px;
+                            border-radius: 10px;
+
+                            .password {
+                                input {
+                                    outline: none;
+                                    background-color: transparent;
+                                    border: none;
+                                }
+                            }
+
+                            .tool-tip {
+                                margin-left: -16px;
+                                position: absolute;
+                                font-size: 10px;
+                                padding: 6px 4px;
+                                background-color: themed("textColorSoft");
+                                color: themed("bg");
+                                border-radius: 4px;
+                                opacity: 0;
+                                transition: opacity 0.15s;
+                            }
+
+                            .logo{
+                                cursor: pointer;
+                            }
+    
+                            .logo:hover + .tool-tip{
+                                opacity: 1;
+                            }
+
+                        }
+
+                        .change-password-button {
+                            width: 100px;
+                            background-color: themed("logo");
+                            border: none;
+                            border-radius: 12px;
+                            color: themed("bg");
+                            padding: 10px 10px;
+                            cursor: pointer;
+                        }
+
+                        .change-password-button:hover{
+                            filter: brightness(90%);
+                        }
+
+                        .password-warning{
+                            color: red;
+                        }
+
+                        
+
+                    }
+                }
+            }
+
+
+
+
+
+        }
+
+
+    }
+}
