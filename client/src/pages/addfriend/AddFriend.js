@@ -10,7 +10,7 @@ import axios from 'axios';
 
 
 const AddFriend = () => {
-    const { currentUser,profileImage,passWordLink,setPassWordLink,randomLinkInvitation,setRandomLinkInvitation } = useContext(AuthContext);
+    const { currentUser,profileImage} = useContext(AuthContext);
     const [randomLink, setRandomLink] = useState(null);
     const [passWord, setPassWord] = useState("")
     const [isEditablePassword, setIsEditablePassword] = useState(true);
@@ -48,12 +48,6 @@ const AddFriend = () => {
                 linkPassword: passWord
             }).then((res) => {
                 setRandomLink(res.data.friendLink)
-                setRandomLinkInvitation(res.data.friendLink)
-                setPassWordLink(passWord)
-                // console.log('====================================');
-                // console.log(passWord);
-                // console.log(res.data.friendLink);
-                // console.log('====================================');
             })
         }
         catch (err) {

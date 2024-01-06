@@ -57,14 +57,11 @@ export const AuthContextProvider = ({ children }) => {
     fetchProfileImage();
   },[])
   //===================================================================================================================
-  //passWordLink + randomLinkInvitation for invitations
-  const [passWordLink,setPassWordLink] = useState("")
-  const [randomLinkInvitation, setRandomLinkInvitation] = useState(null);
-  //===================================================================================================================
+  
   //===================================================================================================================
   
   return (
-    <AuthContext.Provider value={{ currentUser, login, logout,profileImage,setProfileImage,passWordLink,setPassWordLink,randomLinkInvitation,setRandomLinkInvitation}}>
+    <AuthContext.Provider value={{ currentUser, login, logout,profileImage,setProfileImage}}>
       {children}
     </AuthContext.Provider>
   );
