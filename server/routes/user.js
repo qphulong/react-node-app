@@ -143,12 +143,12 @@ router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
   const uploadedFile = req.files;
 
   if (!uploadedFile || uploadedFile.length === 0) {
-    res.status(400).send("No files were uploaded.");
+    return res.status(400).send("No files were uploaded.");
   }
 
   // only allow pictures
   if (!uploadedFile[0].mimetype.startsWith("image")) {
-    res.status(400).send("Only image files are allowed.");
+    return res.status(400).send("Only image files are allowed.");
   }
 
   const userId = req.params.userId;
@@ -157,7 +157,7 @@ router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
   // Check if the folder already contains a profile pic
   fs.readdir(folderPath, (err, files) => {
     if (err) {
-      res.status(500).send("Error reading folder.");
+      return res.status(500).send("Error reading folder.");
     }
 
     // Remove existing profile pic if found
@@ -171,7 +171,7 @@ router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
       for (const file of existingFile) {
         fs.unlink(path.join(folderPath, file), (err) => {
           if (err) {
-            res.status(500).send("Error deleting existing profile pic.");
+            return res.status(500).send("Error deleting existing profile pic.");
           }
         });
       }
@@ -205,7 +205,7 @@ router.get("/profile-pic/:userId", (req, res) => {
       return res.status(404).send("No profile pic found.");
     }
     if (err) {
-      res.status(500).send(err);
+      return res.status(500).send(err);
     }
 
     res.json({ profilePic: `http://localhost:3001/${folderPath}/${files[0]}` });

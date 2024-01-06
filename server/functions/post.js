@@ -58,13 +58,13 @@ async function addComment(postId, userId, comment, res) {
     const post = await Post.findOne({ postId: postId });
 
     if (!post) {
-      res.status(404).error("Post not found");
+      res.status(404).send("Post not found");
     }
 
     const user = await User.findOne({ userId: userId });
 
     if (!user) {
-      res.status(404).error("User not found");
+      res.status(404).send("User not found");
     }
 
     const newComment = new Comment({
