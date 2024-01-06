@@ -63,6 +63,37 @@
                         margin-left: 20px;
                         gap: 5px;
                     }
+
+                    .extra-function-dropdown{
+                        margin-top: 0px;
+                        margin-left: -100px;
+                        padding: 0;
+                        position: absolute;
+                        .list-item{
+                            list-style-type: none;
+                            display: flex;
+                            flex-direction: column;
+                            
+                            button {
+                                display: flex;
+                                justify-content: space-between;
+                                background-color: white;
+                                font-size: 12px;
+                                padding: 10px 15px 10px 15px;
+                                border: 0;
+                                border-bottom: 1px solid #ccc;
+                                width: 100%;
+                                text-align: center;
+                                align-items: center;
+                                border-left: 1px solid #ccc;
+                                border-right: 1px solid #ccc;
+                        
+                                &:hover, &:focus {
+                                  cursor: pointer;
+                                  background-color: #ccc;
+                                }}
+                        }
+                    }
                 }
 
                 .friends-bottom{
