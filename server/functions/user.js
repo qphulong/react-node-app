@@ -17,7 +17,7 @@ async function signIn(currentUser, userId, inputPassword, res) {
     currentUser.set(user.userId, user.isContentModerator); //set currentUser to this id
     res.json(user); //return currentUser
   } else {
-    res.status(400).send("Password is incorrect");
+    res.status(400).send("Password is incorrect!");
   }
 }
 
@@ -25,7 +25,7 @@ async function changePassword(userId, newPassword, confirmPassword, res) {
   const user = await User.findOne({ userId: userId }); //find user
 
   if (!user) {
-    res.status(404).send("User not found");
+    res.status(404).send("User not found!");
     return;
   }
 
@@ -43,7 +43,7 @@ async function changePassword(userId, newPassword, confirmPassword, res) {
     await User.updateOne({ userId: userId }, { password: hashedPassword });
     res.send("Password updated successfully!");
   } else {
-    res.status(400).send("Password doesn't match");
+    res.status(400).send("Password doesn't match!");
   }
 }
 
