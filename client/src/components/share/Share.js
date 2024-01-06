@@ -174,7 +174,7 @@ const Share = () => {
             Array.from(file).map((f, index) => (
               <div key={index} className="imagePreview">
                 <img src={URL.createObjectURL(f)} alt={`Preview ${index}`} />
-                <button onClick={() => removeImage(index)}>Remove</button>
+                <button onClick={() => removeImage(index)}>X</button>
               </div>
             ))}
         </div>
