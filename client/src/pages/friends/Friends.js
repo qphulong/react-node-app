@@ -15,7 +15,7 @@ import axios from 'axios';
 
 const Friends = () => {
     const [openDropdown, setOpenDropdown] = useState(false);
-    const dropdownRef = useRef(null);
+    const dropdownRefs = useRef({});
     const extraFunctionRef = useRef(null);
     const { currentUser } = useContext(AuthContext);
     const { data: FriendsInfo } = useQuery({
@@ -95,13 +95,12 @@ const Friends = () => {
         }
     }
 
-    const handleClick = (e) => {
-        if (extraFunctionRef.current && !extraFunctionRef.current.contains(e.target)) {
-            if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-                setOpenDropdown(false);
-            } else if (openDropdown && extraFunctionRef.current.contains(e.target)) {
-                setOpenDropdown(!openDropdown);
-            }
+    const handleClick = (friendId, e) => {
+        if (dropdownRefs.current[friendId] && !dropdownRefs.current[friendId].contains(e.target)) {
+            setOpenDropdown((prevState) => ({
+                ...prevState,
+                [friendId]: false,
+            }));
         }
     };
 
@@ -113,7 +112,7 @@ const Friends = () => {
             </div>
             <div className="content-container">
                 {FriendsInfo && FriendsInfo.friends.map((friend) => (
-                    <div className='item'>
+                    <div className='item' key={friend.userId}>
                         <div className='friends-top'>
                             <img src='https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' alt='' />
                             <span className='friends-name'>
@@ -132,12 +131,16 @@ const Friends = () => {
                             <div className='friends-right'>
                                 <MoreVertIcon style={{ fontSize: 30 }} onClick={()=>toggleDropdown(friend.userId) }
                                 ref = {extraFunctionRef} className='logo'/>
-                                <div className="dropdown" ref={dropdownRef}>
+                                <div className="dropdown" ref={(ref) => (dropdownRefs.current[friend.userId] = ref)}>
                                     {openDropdown[friend.userId] && (
                                         <ul className="extra-function-dropdown">
                                             {items.map((item) => (
                                                 <li className="list-item" key={item.id}>
-                                                    <button onClick={() => handleOnClick(friend.userId, item)}>
+                                                    <button onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleOnClick(friend.userId, item);
+                                                        }
+                                                    }>
                                                         <span>{item.value}</span>
                                                         {item.icon}
                                                     </button>
