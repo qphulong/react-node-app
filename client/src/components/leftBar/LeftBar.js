@@ -1,11 +1,9 @@
 import "./leftBar.scss";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import PeopleIcon from "@mui/icons-material/People";
-import DensitySmallIcon from "@mui/icons-material/DensitySmall";
-import { Button } from "@mui/material";
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import EnhancedEncryptionOutlinedIcon from '@mui/icons-material/EnhancedEncryptionOutlined';
@@ -46,8 +44,8 @@ const LeftBar = () => {
       <div className="container">
         <div className="menu">
           <Link to={"/"} className="item">
-            <HomeOutlinedIcon style={{ fontSize: 30 }} />
-            <span>Home</span>
+            <HomeOutlinedIcon style={{ fontSize: 30 }} className="logo"/>
+            <span >Home</span>
           </Link>
 
           {/* <div className="item">
@@ -56,32 +54,32 @@ const LeftBar = () => {
           </div> */}
 
           <Link to={`/profile/${currentUser.userId}`} className="item">
-            <PersonOutlineOutlinedIcon style={{ fontSize: 30 }} />
+            <PersonOutlineOutlinedIcon style={{ fontSize: 30 }} className="logo"/>
             <span>Profile</span>
           </Link>
 
           <Link to={"/friends"} className="item">
-            <PeopleIcon style={{ fontSize: 30 }} />
+            <PeopleOutlineIcon style={{ fontSize: 30 }} className="logo" />
             <span>Friends</span>
           </Link>
 
           <Link to={"/addfriends"} className="item">
-            <PersonAddIcon style={{ fontSize: 30 }} />
+            <PersonAddAltIcon style={{ fontSize: 30 }} className="logo"/>
             <span>Add Friends</span>
           </Link>
 
           <Link to={"/addfriendtest"} className="item">
-            <PersonAddIcon style={{ fontSize: 30 }} />
+            <PersonAddAltIcon style={{ fontSize: 30 }} className="logo"/>
             <span>Add Friends Test</span>
           </Link>
 
           <Link to={"/change"} className="item">
-            <EnhancedEncryptionOutlinedIcon style={{ fontSize: 30 }} />
+            <EnhancedEncryptionOutlinedIcon style={{ fontSize: 30 }} className="logo"/>
             <span>Change</span>
           </Link>
 
           <Link to={"/moderators"} className="item">
-            <AddModeratorOutlinedIcon style={{ fontSize: 30 }} />
+            <AddModeratorOutlinedIcon style={{ fontSize: 30 }} className="logo"/>
             <span>Moderators</span>
           </Link>
         </div>
