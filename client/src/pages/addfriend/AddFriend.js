@@ -20,6 +20,12 @@ const AddFriend = () => {
     //     console.log("Current Link:", randomLinkInvitation);
     //  }, [randomLinkInvitation]);
 
+    // const data = "add-friends/tmk3010-e5eaee39-819d-45b8-991f-de9a997fb4b4"
+    // const extractedValue = data.split('/')[1].split('-')[0]; // "tmk3010"
+    // console.log('====================================');
+    // console.log(extractedValue);
+    // console.log('====================================');
+
     //Constant
     const MAX_PASSWORD_CHAR = 16
     const MIN_PASSWORD_CHAR = 8
@@ -44,10 +50,10 @@ const AddFriend = () => {
                 setRandomLink(res.data.friendLink)
                 setRandomLinkInvitation(res.data.friendLink)
                 setPassWordLink(passWord)
-                console.log('====================================');
-                console.log(passWord);
-                console.log(res.data.friendLink);
-                console.log('====================================');
+                // console.log('====================================');
+                // console.log(passWord);
+                // console.log(res.data.friendLink);
+                // console.log('====================================');
             })
         }
         catch (err) {
