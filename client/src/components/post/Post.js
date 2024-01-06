@@ -15,6 +15,7 @@ import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { AuthContext } from "../../context/authContext.js";
+import moment from 'moment';
 const Post = ({ post }) => {
   const items = [{
     id: 1,
@@ -31,6 +32,14 @@ const Post = ({ post }) => {
   const toggleDropdown = () => setOpenDropdown(!openDropdown);
   const dropdownRef = useRef(null);
   const postRef = useRef(null);
+  const [timestamp, setTimestamp] = useState(post.createdAt); // Replace with your actual API data
+  useEffect(() => {
+    const formattedTimestamp = moment(timestamp).fromNow(); // Use moment.js to format
+    setTimestamp(formattedTimestamp);
+    console.log('====================================');
+    console.log(timestamp);
+    console.log('====================================');
+  }, [post.createdAt]);
 
   //images
   const [images, setImages] = useState([]); //images = [image1, image2, ...
@@ -201,6 +210,9 @@ const Post = ({ post }) => {
     setDem(dem+1)
   },[])
 
+  ///=====================================================================================================================
+  
+
   
   
   // console.log('====================================');
@@ -226,7 +238,7 @@ const Post = ({ post }) => {
               >
                 <span>{post.user.userId}</span>
               </Link>
-              <span className="date">1 min ago</span>
+              <span className="date">{timestamp}</span>
             </div>
           </div>
           <div className="extra-functions">
