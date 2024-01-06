@@ -78,6 +78,10 @@ router.get("/:userId/:postId/liked", async (req, res) => {
     // query to the User model to get user with the same id
     const findUser = await User.findOne({ _id: user });
 
+    if (!findUser) {
+      continue;
+    }
+
     if (findUser.userId == userId) {
       liked = true;
       break;
