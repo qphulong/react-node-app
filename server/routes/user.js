@@ -240,9 +240,15 @@ router.get("/friends/:userId", (req, res) => {
     });
 });
 
-router.get("/friends/check/:userId/:friendId", (req, res) => {
+router.get("/friends/check/:userId/:friendId", async (req, res) => {
   const userId = req.params.userId;
   const friendId = req.params.friendId;
+
+  const friend = await User.findOne({ userId: friendId }); //find friend
+  if (!friend) {
+    res.status(400).send("Friend not found");
+    return;
+  }
 
   User.findOne({ userId: userId })
     .populate("friends", "userId") // join friends field (reference to the User schema) and select userId field (of the referenced schema)
@@ -262,7 +268,7 @@ router.get("/friends/check/:userId/:friendId", (req, res) => {
         .then((users) => {
           var isFriend = false;
           for (let i = 0; i < users.length; i++) {
-            if (users[i].userId == friendId) {
+            if (users[i]._id.toString() == friend._id.toString()) {
               isFriend = true;
               break;
             }
