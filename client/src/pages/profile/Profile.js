@@ -20,16 +20,47 @@ import PostsProfile from '../../components/postsProfile/PostsProfile';
 import { AuthContext } from '../../context/authContext';
 import axios from 'axios';
 import EditNote from '@mui/icons-material/EditNote';
+import { useParams } from 'react-router-dom';
 
 const Profile = () => {
     const inputRef = useRef(null);
     const [image, setImage] = useState("");
-    const [name, setName] = useState('Jane Doe');
     const { currentUser, profileImage, setProfileImage } = useContext(AuthContext);
+    const { userId } = useParams();
+    const isOwnProfile = currentUser.userId === userId
 
-
+    if (currentUser.userId !== userId) {
+        // Fetch API here
+        const responseIsFriend = async () => {
+          try {
+            const response = await axios.get(`http://localhost:3001/user/friends/check/${currentUser.userId}/${userId}`);
+            return response.data; // Assuming you want the data from the response
+          } catch (error) {
+            console.error("Error checking friendship:", error);
+            throw error; // Re-throw the error for further handling
+          }
+        };
+        // Call the async function and handle the result
+        responseIsFriend()
+          .then((res) => {
+            // Handle the result here
+            console.log(res.isFriend);
+          })
+          .catch((error) => {
+            // Handle errors here
+            if (error.response && error.response.status === 400) {
+              console.log("Friend not found");
+            } else {
+              console.error("Error during friend check:", error.message);
+            }
+          });
+        
+        // Note: The return statement outside this block will not prevent the API call from happening.
+        // If you want to prevent further execution, consider using "return" inside the "catch" block or using "return" after the ".then()" block.
+        
+      }
     const handleImageClick = () => {
-        inputRef.current.click();
+        if(isOwnProfile) inputRef.current.click();
     }
 
     //upload
@@ -56,10 +87,12 @@ const Profile = () => {
     };
 
     const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        if (file) upload(file)
-        setImage(file);
-        window.location.reload();
+        if(isOwnProfile){
+            const file = event.target.files[0];
+            if (file) upload(file)
+            setImage(file);
+            window.location.reload();
+        }
     }
 
 
@@ -70,7 +103,9 @@ const Profile = () => {
                     alt="" className='cover' />
                 <div className='profile-image-container' onClick={handleImageClick}>
                     {image ? <img src={URL.createObjectURL(image)} alt='' className='profile-picture-after' /> : <img src={profileImage} className='profile-picture-before' />}
-                    <FileUploadIcon style={{ fontSize: 50 }} className='upload-image-icon' />
+                    {isOwnProfile ? (
+                        <FileUploadIcon style={{ fontSize: 50 }} className='upload-image-icon' />
+                    ) : null}
                     <input type="file" ref={inputRef} onChange={handleImageChange} className='upload-image-btn' />
                 </div>
 
@@ -81,7 +116,7 @@ const Profile = () => {
 
                     <div className='center'>
                         <div className='name'>
-                            <span>{name}</span>
+                            <span>{currentUser.userId}</span>
                         </div>
 
                         <div className='social-link'>
@@ -97,8 +132,6 @@ const Profile = () => {
                                 <LinkedInIcon style={{ fontSize: 30 }} className='logo' />
                             </a>
                         </div>
-
-
 
                     </div>
                 </div>
