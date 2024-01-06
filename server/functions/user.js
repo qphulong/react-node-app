@@ -162,7 +162,6 @@ async function generateAddFriendLink(userId, linkPassword) {
     const linkId = uuid.v4();
 
     try {
-
         const user = await User.findOne({ userId: userId });
 
         if (!user) {
