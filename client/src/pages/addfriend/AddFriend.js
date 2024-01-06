@@ -2,10 +2,7 @@ import './addFriend.scss'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import PlaceIcon from '@mui/icons-material/Place';
-import PhoneIcon from '@mui/icons-material/Phone';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import EmailOutlined from '@mui/icons-material/EmailOutlined';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/authContext';
@@ -15,14 +12,14 @@ import axios from 'axios';
 const AddFriend = () => {
     const { currentUser } = useContext(AuthContext);
     const [passWord, setPassWord] = useState("")
-    const [randomLink,setRandomLink] = useState(null);
+    const [randomLink, setRandomLink] = useState(null);
 
     const handleRandomLink = () => {
-        try{
-            return axios.post("http://localhost:3001/user/add-friends",{
+        try {
+            return axios.post("http://localhost:3001/user/add-friends", {
                 userId: currentUser.userId,
                 linkPassword: passWord
-            }).then((res)=>{
+            }).then((res) => {
                 setRandomLink(res.data.friendLink)
                 console.log('====================================');
                 console.log(passWord);
@@ -30,7 +27,7 @@ const AddFriend = () => {
                 console.log('====================================');
             })
         }
-        catch(err){
+        catch (err) {
             console.log('====================================');
             console.log(err);
             console.log('====================================');
@@ -45,65 +42,70 @@ const AddFriend = () => {
             </div>
             <div className='profile-container'>
                 <div className='user-info'>
-                    <div className='left'>
-                        <a href='https://facebook.com'>
-                            <FacebookIcon style={{ fontSize: 25 }} className='logo'/>
-                        </a>
 
-                        <a href='https://instagram.com'>
-                            <InstagramIcon style={{ fontSize: 25 }} className='logo'/>
-                        </a>
-
-                        <a href='https://www.linkedin.com/'>
-                            <LinkedInIcon style={{ fontSize: 25 }} className='logo'/>
-                        </a>
-                    </div>
                     <div className='center'>
                         <div className='name'>
                             <span>Hello world</span>
                         </div>
-                        <div className='info'>
-                            <div className='item'>
-                                <PlaceIcon />
-                                <span>World</span>
-                            </div>
 
-                            <div className='item'>
-                                <PhoneIcon />
-                                <span>123456</span>
+                        <div className='social-link-friend'>
+                            <a href='https://facebook.com'>
+                                <FacebookIcon style={{ fontSize: 30 }} className='logo' />
+                            </a>
+
+                            <a href='https://instagram.com'>
+                                <InstagramIcon style={{ fontSize: 30 }} className='logo' />
+                            </a>
+
+                            <a href='https://www.linkedin.com/'>
+                                <LinkedInIcon style={{ fontSize: 30 }} className='logo' />
+                            </a>
+                        </div>
+
+                    </div>
+
+                    <div className='invitation'>
+                        <div className='get-link'>
+                            <p>Give this link to someone you want to add</p>
+                            {randomLink ? (
+                                <div className='random-link-container'>
+                                    <span>{randomLink}</span>
+                                    <ContentCopyIcon style={{ fontSize: 30 }} />
+                                </div>) : (
+                                <div className='random-link-container'>
+                                    <span>Here is your link</span>
+                                    <ContentCopyIcon style={{ fontSize: 30 }} />
+                                </div>
+                            )
+                            }
+
+                            <button className='get-link-button' onClick={handleRandomLink}>Generate link</button>
+                        </div>
+                        <div className='get-password'>
+                            <p>Password to add</p>
+                            <div className='password-container'>
+                                <div className='password'>
+                                    <input
+                                        type='text'
+                                        id='password'
+                                        placeholder='Your password'
+                                        onChange={(e) => setPassWord(e.target.value)}
+                                    />
+                                </div>
+                                <ContentCopyIcon style={{ fontSize: 30 }} />
                             </div>
+                            <button className='change-password-button'>
+                                Change
+                            </button>
                         </div>
                     </div>
-                    <div className='right'>
-                        <EmailOutlined />
-                        <MoreVertIcon />
-                    </div>
+
                 </div>
+
+
+
             </div>
-            <div className='invitation'>
-                <div className='get-link'>
-                    <p>Give this link to someone you want to add</p>
-                    {randomLink && <span>{randomLink}</span>}
-                    <button className='get-link-button' onClick={handleRandomLink}>Random link</button>
-                </div>
-                <div className='get-password'>
-                    <p>Password to add</p>
-                    <div className='password-container'>
-                        <div className='password'>
-                            <input
-                                type='text'
-                                id='password'
-                                placeholder='Your password'
-                                onChange={(e) => setPassWord(e.target.value)}
-                            />
-                        </div>
-                        <PersonAddAltIcon style={{ fontSize: 25 }} className='logo'/>
-                    </div>
-                    <button className='change-password-button'>
-                        Change
-                    </button>
-                </div>
-            </div>
+
 
         </div>
     )

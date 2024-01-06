@@ -30,154 +30,144 @@
             padding: 20px 30px;
 
             .user-info {
-                height: 180px;
+                
                 -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
                 -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
                 box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
                 border-radius: 20px;
                 background-color: themed("bg");
                 color: themed("textColor");
-                padding: 50px 50px 5px 50px;
-                display: flex;
-                align-items: center;
-                justify-content: space-around;
-            }
-
-            .left {
-                flex: 1;
-                display: flex;
-                gap: 10px;
-
-                a {
-                    color: themed('logo');
-                }
-            }
-
-            .center {
-                flex: 1;
+                padding: 100px 50px 5px 50px;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 10px;
+                justify-content: space-around;
 
-                .name {
+                .center {
                     display: flex;
+                    flex-direction: column;
+                    align-items: center;
                     gap: 10px;
 
-                    span {
-                        font-size: 30px;
-                        font-weight: 500;
-                    }
-
-                    .icon:hover {
-                        cursor: pointer;
-                    }
-
-                    input {
-                        font-family: 'Josefin Sans', sans-serif;
-                        ;
-                        font-size: 30px;
-                        font-weight: 500;
-                        border: none;
-                    }
-
-                }
-
-                .info {
-                    width: 100%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-around;
-
-                    .item {
+                    .name {
                         display: flex;
-                        align-items: center;
-                        gap: 5px;
-                        color: themed("textColorSoft");
+                        gap: 10px;
 
                         span {
-                            font-size: 12px;
+                            font-size: 30px;
+                            font-weight: 500;
+                        }
+
+                        .icon:hover {
+                            cursor: pointer;
                         }
 
                         input {
                             font-family: 'Josefin Sans', sans-serif;
                             ;
-                            font-size: 12px;
+                            font-size: 30px;
+                            font-weight: 500;
                             border: none;
-                            padding: 0;
                         }
-
 
                     }
 
+                    .social-link-friend {
+                        display: flex;
+                        gap: 10px;
+
+                        a {
+                            color: themed('logo');
+                        }
+                    }
                 }
-            }
 
-            .right {
-                flex: 1;
-                display: flex;
-                align-items: center;
-                justify-content: flex-end;
-                gap: 10px;
-            }
-        }
-
-        .invitation {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            color: themed('textColor');
-            .get-link{
-                -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
-                -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
-                box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
-                border-radius: 20px;
-                background-color: themed("bg");
-                padding: 20px;
-            }
-
-            .get-password {
-                -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
-                -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
-                box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
-                border-radius: 20px;
-                background-color: themed("bg");
-                padding: 20px 200px;
-                margin-top: 20px;
-                .password-container{
+                .invitation {
                     display: flex;
-                    background-color: themed('logo');
-                    border-radius: 15px;
-                    padding: 5px 2px;
-                    .password{
-                        flex: 4;
-                        margin: auto;
-                        span{
-                            color: themed('bg');
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                    color: themed('textColor');
+    
+                    .get-link {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 6px;
+                        p{
+                            font-size: 16px;
+                            margin-bottom: 0;
                         }
+                        .random-link-container{
+                            display: flex;
+                            flex-direction: row;
+                            gap: 15px;
+                            padding: 10px;
+                            background-color: themed("bgSoft") ;
+                            color: themed("textColor");
+                            border: solid;
+                            align-items: center;
+                            font-size: 14px;
+                            border-radius: 10px;
+                        }
+
+                        .get-link-button{
+                            width: 100px;
+                            background-color: themed("logo");
+                            border: none;
+                            border-radius: 12px;
+                            color: themed("bg");
+                            padding: 10px 10px;
+                        }
+                        
                     }
-                    .logo{
-                        flex: 1;
-                        color: themed('bg');
+
+                    .get-password{
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        margin-top: 20px;
+                        gap: 6px;
+                        p{
+                            font-size: 16px;
+                            margin-bottom: 0;
+                        }
+                        .password-container{
+                            display: flex;
+                            flex-direction: row;
+                            gap: 15px;
+                            padding: 10px;
+                            background-color: themed("bgSoft") ;
+                            color: themed("textColor");
+                            border: solid;
+                            align-items: center;
+                            font-size: 14px;
+                            border-radius: 10px;
+                            .password{
+                                input{
+                                    outline: none;
+                                    background-color: transparent;
+                                    border: none;
+                                }
+                            }
+                            
+                        }
+                        .change-password-button{
+                            width: 100px;
+                            background-color: themed("logo");
+                            border: none;
+                            border-radius: 12px;
+                            color: themed("bg");
+                            padding: 10px 10px;
+                        }
                     }
                 }
             }
 
-            p {
-                font-size: 30px;
-                font-weight: bold;
-            }
+            
 
-            button {
-                margin-top: 20px;
-                border: 1px solid themed("logo");
-                border-radius: 20px;
-                background-color: themed("logo");
-                padding: 10px 25px;
-                color: themed("bg");
-                font-size: 15px;
-            }
+
+
         }
 
 
