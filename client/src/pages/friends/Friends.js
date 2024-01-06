@@ -12,6 +12,7 @@ import { useContext, useState, useRef, useEffect } from 'react';
 import { AuthContext } from '../../context/authContext';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Friends = () => {
     const [openDropdown, setOpenDropdown] = useState(false);
@@ -220,9 +221,11 @@ const Friends = () => {
                             </div>
                         </div>
                         <div className='friends-bottom'>
-                            <button>
-                                Visit
-                            </button>
+                            <Link to={`/profile/${friend.userId}`}>
+                                <button>
+                                   Visit
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 ))}
