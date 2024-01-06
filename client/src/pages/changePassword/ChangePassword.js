@@ -2,6 +2,7 @@ import "./changePassword.scss"
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import axios from "axios";
 import { useState } from "react";
 
 const ChangePassword = () => {
@@ -20,6 +21,22 @@ const ChangePassword = () => {
     const handleConfirmPasswordChange = (event) => {
         setConfirmPassword(event.target.value);
     };
+
+    const handleClickChangePassword = () => {
+        const ChangePasswordButton = async () => {
+            try {
+                const response = await axios.put(`http://localhost:3001/user/password`,{});
+        
+            if (response.status === 200) {
+                
+            } else {
+                console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+            }
+            } catch (error) {
+            console.error('Error:', error.message);
+            }
+        };
+    }
 
     const handleFacebookLinkChange = (event) => {
         // Do something with the Facebook link
@@ -60,11 +77,11 @@ const ChangePassword = () => {
                         <input className="input-new-password" type="password" onChange={handleNewPasswordChange}/>
                     </div>
                     <div className="password-container">
-                        <p>Confirm new password</p>
+                        <p>Confirm password</p>
                         <input className="input-confirm-password" type="password" onChange={handleConfirmPasswordChange}/>
                     </div>
                     <div>
-                        <button className="change-button">Change password</button>
+                        <button className="change-button" onClick={handleClickChangePassword}>Change password</button>
                     </div>
                 </div>
             </div>
