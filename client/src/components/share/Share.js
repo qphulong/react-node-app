@@ -12,7 +12,7 @@ import {
 } from "@tanstack/react-query";
 import axios from "axios";
 const Share = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser,profileImage } = useContext(AuthContext);
   const [file, setFile] = useState(null);
   const [desc, setDesc] = useState("");
 
@@ -135,7 +135,7 @@ const Share = () => {
       <div className="container">
         <div className="top">
           <img
-            src="https://i...content-available-to-author-only...s.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            src={profileImage}
             alt=""
           />
           <input

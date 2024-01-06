@@ -3,9 +3,8 @@ const Comment = require("../models/comment");
 const User = require("../models/user");
 
 const MAX_LETTERS_LIMIT = 900;
-const MAX_IMAGES_PER_POST = 5;
 
-//find a specific posst and a like to it
+//find a specific post and a like to it
 async function addLike(postId) {
   try {
     const post = await Post.findOne({ postId });
