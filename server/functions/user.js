@@ -49,14 +49,14 @@ async function changePassword(userId, newPassword, confirmPassword, res) {
 
 async function removeFriend(userId, friendId, res) {
   if (userId === friendId) {
-    console.log("Cannot add the same friend");
+    console.log("Cannot add the same friend!");
     return;
   }
 
   const user = await User.findOne({ userId: userId }); //find user
 
   if (!user) {
-    res.status(400).send("User not found");
+    res.status(400).send("User not found!");
     return;
   }
 
@@ -72,7 +72,7 @@ async function removeFriend(userId, friendId, res) {
         friend
           .save()
           .then((user) => {
-            res.send("Friend removed successfully");
+            res.send("Friend removed successfully!");
           })
           .catch((error) => {
             res.status(400).send("Error saving user:", error);
@@ -82,27 +82,27 @@ async function removeFriend(userId, friendId, res) {
         res.status(400).send("Error saving user:", error);
       });
   } else {
-    res.status(400).send("Friend does not exists");
+    res.status(400).send("Friend does not exists!");
   }
 }
 
 async function addFriend(userId, friendId, res) {
   if (userId === friendId) {
-    console.log("Cannot add the same friend");
+    console.log("Cannot add the same friend!");
     return;
   }
 
   const user = await User.findOne({ userId: userId }); //find user
 
   if (!user) {
-    res.status(400).send("User not found");
+    res.status(400).send("User not found!");
     return;
   }
 
   const friend = await User.findOne({ userId: friendId }); //find friend
 
   if (!friend) {
-    res.status(400).send("Friend not found");
+    res.status(400).send("Friend not found!");
     return;
   }
 
