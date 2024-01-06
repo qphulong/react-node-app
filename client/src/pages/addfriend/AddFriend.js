@@ -52,6 +52,24 @@ const AddFriend = () => {
 
     };
 
+    const handleRandomLink = () => {
+        try {
+            return axios.post("http://localhost:3001/user/add-friends", {
+                userId: currentUser.userId,
+                linkPassword: passWord
+            }).then((res) => {
+                setRandomLink(res.data.friendLink)
+            })
+        }
+        catch (err) {
+            console.log('====================================');
+            console.log(err);
+            console.log('====================================');
+        }
+    }
+
+    //==============================================================================================================
+    //==============================================================================================================
     //Check length of password
     const validatePassword = (password) => {
         if (password.length < MIN_PASSWORD_CHAR || password.length > MAX_PASSWORD_CHAR) {
@@ -110,22 +128,8 @@ const AddFriend = () => {
         }
         
     };
-
-    const handleRandomLink = () => {
-        try {
-            return axios.post("http://localhost:3001/user/add-friends", {
-                userId: currentUser.userId,
-                linkPassword: passWord
-            }).then((res) => {
-                setRandomLink(res.data.friendLink)
-            })
-        }
-        catch (err) {
-            console.log('====================================');
-            console.log(err);
-            console.log('====================================');
-        }
-    }
+    //==============================================================================================================
+    //==============================================================================================================
 
     return (
         <div className='add-friend-page'>
