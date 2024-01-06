@@ -19,15 +19,13 @@ import EditOff from '@mui/icons-material/EditOff';
 import PostsProfile from '../../components/postsProfile/PostsProfile';
 import { AuthContext } from '../../context/authContext';
 import axios from 'axios';
+import EditNote from '@mui/icons-material/EditNote';
 
 const Profile = () => {
     const inputRef = useRef(null);
     const [image, setImage] = useState("");
-    const [isEditable, setIsEditable] = useState(false);
     const [name, setName] = useState('Jane Doe');
-    const [position, setPosition] = useState('Singapore');
-    const [phoneNumber, setPhoneNumber] = useState('+84918155199');
-    const { currentUser,profileImage,setProfileImage } = useContext(AuthContext);
+    const { currentUser, profileImage, setProfileImage } = useContext(AuthContext);
 
 
     const handleImageClick = () => {
@@ -35,68 +33,35 @@ const Profile = () => {
     }
 
     //upload
-  const upload = async (newFile) => {
-    try {
-      const formData = new FormData();
-      formData.append("image", newFile);
-      const response = await axios.post(
-        `http://localhost:3001/user/profile-pic/${currentUser.userId}`,
-        formData
-      );
+    const upload = async (newFile) => {
+        try {
+            const formData = new FormData();
+            formData.append("image", newFile);
+            const response = await axios.post(
+                `http://localhost:3001/user/profile-pic/${currentUser.userId}`,
+                formData
+            );
 
-      if (response.status === 200) {
-        console.log("oke 200");
-        return response.data;
-      } else {
-        console.error("Upload failed:", response.statusText);
-        throw new Error("File upload failed"); // Re-throw for better handling
-      }
-    } catch (err) {
-      console.error("Error during upload:", err.message, err.stack);
-      throw err; // Re-throw to allow for further handling
-    }
-  };
+            if (response.status === 200) {
+                console.log("oke 200");
+                return response.data;
+            } else {
+                console.error("Upload failed:", response.statusText);
+                throw new Error("File upload failed"); // Re-throw for better handling
+            }
+        } catch (err) {
+            console.error("Error during upload:", err.message, err.stack);
+            throw err; // Re-throw to allow for further handling
+        }
+    };
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
-        if(file) upload(file)
+        if (file) upload(file)
         setImage(file);
         window.location.reload();
     }
 
-    const handleToggleEdit = () => {
-        setIsEditable(!isEditable);
-    };
-
-    const handleNameChange = (event) => {
-        setName(event.target.value);
-    };
-
-    const handlePositionChange = (event) => {
-        setPosition(event.target.value);
-    };
-
-    const handlePhoneNumberChange = (event) => {
-        setPhoneNumber(event.target.value);
-    };
-    const inputStyle = (text, fontSize) => {
-        return {
-            width: isEditable ? `${text.length * fontSize}px` : 'auto'
-        };
-    };
-
-    var inputs = document.querySelectorAll('input'); // get the input element
-    inputs.forEach(function(input) {
-        // Bind the "resizeInput" callback on "input" event for each input element
-        input.addEventListener('input', resizeInput);
-        
-        // Call the function immediately to set initial width for each input element
-        resizeInput.call(input);
-    });
-
-    function resizeInput() {
-        this.style.width = this.value.length + "ch";
-    }
 
     return (
         <div className='profile'>
@@ -113,97 +78,28 @@ const Profile = () => {
 
             <div className='profileContainer'>
                 <div className='userInfo'>
-                    <div className='left'>
-                        <a href='https://facebook.com'>
-                            <FacebookIcon style={{ fontSize: 25 }} className='logo' />
-                        </a>
 
-                        <a href='https://instagram.com'>
-                            <InstagramIcon style={{ fontSize: 25 }} className='logo' />
-                        </a>
-
-                        <a href='https://www.linkedin.com/'>
-                            <LinkedInIcon style={{ fontSize: 25 }} className='logo' />
-                        </a>
-                    </div>
                     <div className='center'>
                         <div className='name'>
-                            {isEditable ? (
-                                <div>
-                                    <input
-                                        type="text"
-                                        value={name}
-                                        onChange={handleNameChange}
-                                    />
-                                </div>
-                            ) :
-                                <div>
-                                    <input
-                                        type="text"
-                                        value={name}
-                                        onChange={handleNameChange}
-                                        readonly="readonly"
-                                        style={{outline:'none'}}
-                                    />
-                                </div>}
-
+                            <span>{name}</span>
                         </div>
-                        <div className='info'>
-                            <div className='item'>
-                                <PlaceIcon />
-                                {isEditable ? (
-                                    <div>
-                                        <input
-                                            type="text"
-                                            value={position}
-                                            onChange={handlePositionChange}
-                                        
-                                        />
-                                    </div>
-                                ) :
-                                    <div>
-                                        <input
-                                            type="text"
-                                            value={position}
-                                            onChange={handlePositionChange}
-                                            readonly="readonly"
-                                            style={{outline:'none'}}
-                                        />
 
-                                    </div>}
-                            </div>
+                        <div className='social-link'>
+                            <a href='https://facebook.com'>
+                                <FacebookIcon style={{ fontSize: 30 }} className='logo' />
+                            </a>
 
-                            <div className='item'>
-                                <PhoneIcon />
-                                {isEditable ? (
-                                    <div>
-                                        <input
-                                            type="text"
-                                            value={phoneNumber}
-                                            onChange={handlePhoneNumberChange}
-                                        />
-                                    </div>
-                                ) :
-                                    <div>
-                                        <input
-                                            type="text"
-                                            value={phoneNumber}
-                                            onChange={handlePhoneNumberChange}
-                                            readonly="readonly"
-                                            style={{outline:'none'}}
-                                        />
+                            <a href='https://instagram.com'>
+                                <InstagramIcon style={{ fontSize: 30 }} className='logo' />
+                            </a>
 
-                                    </div>}
-                            </div>
+                            <a href='https://www.linkedin.com/'>
+                                <LinkedInIcon style={{ fontSize: 30 }} className='logo' />
+                            </a>
                         </div>
-                        {isEditable ? (
-                            <button onClick={handleToggleEdit}>Disable edit</button>
-                        ): <button onClick={handleToggleEdit}>Enable edit</button>}
-                        
-                    </div>
-                    <div className='right'>
-                        <EmailOutlined />
-                        <MoreVertIcon />
+
+
+
                     </div>
                 </div>
             </div>

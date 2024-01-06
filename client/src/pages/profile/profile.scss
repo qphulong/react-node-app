@@ -77,86 +77,32 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-around;
-            }
 
-            .left {
-                flex: 1;
-                display: flex;
-                gap: 10px;
-
-                a {
-                    color: themed('logo');;
-                }
-            }
-
-            .center {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
-
-                .name {
+                .center {
                     display: flex;
+                    flex-direction: column;
+                    align-items: center;
                     gap: 10px;
 
-                    span {
-                        font-size: 30px;
-                        font-weight: 500;
-                    }
-
-                    input {
-                        font-family: 'Josefin Sans', sans-serif;
-                        ;
-                        font-size: 30px;
-                        font-weight: 500;
-                        width: 200px;
-                        border: none;
-                    }
-
-                }
-
-                .info {
-                    width: 100%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-around;
-
-                    .item {
+                    .social-link {
                         display: flex;
-                        align-items: center;
-                        gap: 5px;
-                        color: themed("textColorSoft");
+                        gap: 10px;
 
-                        input {
-                            font-family: 'Josefin Sans', sans-serif;
-                            ;
-                            font-size: 12px;
-                            border: none;
-                            padding: 0;
+                        a {
+                            color: themed('logo');
                         }
-
-
                     }
 
-                }
+                    .name {
+                        display: flex;
+                        gap: 10px;
 
-                button {
-                    border: 1px solid themed("logo");
-                    border-radius: 20px;
-                    background-color: themed("logo");
-                    padding: 10px 25px;
-                    color: themed("bg");
-                    font-size: 15px;
+                        span {
+                            font-size: 30px;
+                            font-weight: 500;
+                        }
+                    }
                 }
-            }
-
-            .right {
-                flex: 1;
-                display: flex;
-                align-items: center;
-                justify-content: flex-end;
-                gap: 10px;
             }
         }
 
