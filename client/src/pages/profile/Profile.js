@@ -166,7 +166,7 @@ const Profile = () => {
                 </div>
             </div>
             <div className='container-post'>
-                <PostsProfile userId = {isOwnProfile ? currentUser.userId : userId}/>
+                <PostsProfile userId = {isOwnProfile ? currentUser.userId : userId} imageProfile={isOwnProfile ? profileImage : profileImageFriend}/>
             </div>
         </div>
     )
