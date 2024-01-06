@@ -14,7 +14,7 @@ const Invitations = () => {
         const friendLink = "abc";
     
         // Navigate to the invitations route with the obtained parameters
-        navigate(`/invitations/${userId}/${friendLink}`);
+        navigate(`/invitations/add-friends/${friendLink}`);
       }, [navigate]);
 
     return (
