@@ -192,7 +192,7 @@ const PostProfile = ({ userId,post }) => {
               atl=""
             />
             <div className="details">
-              <span>{currentUser.userId}</span>
+              <span>{userId}</span>
               <span className="date">1 min ago</span>
             </div>
           </div>

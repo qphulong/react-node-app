@@ -16,11 +16,11 @@ const PostsProfile = ({userId}) => {
         error,
         data: postsProfile,
     } = useQuery({
-        queryKey: ["postsProfile",currentUser.userId],
+        queryKey: ["postsProfile",userId],
         queryFn: () => {
         try {
             return axios
-            .get(`http://localhost:3001/user/${currentUser.userId}`)
+            .get(`http://localhost:3001/user/${userId}`)
             .then((response) => {
                 console.log(response.data);
                 return response.data;
