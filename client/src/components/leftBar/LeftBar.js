@@ -75,11 +75,6 @@ const LeftBar = () => {
             <span>Change</span>
           </Link>
 
-          <Link to={"/invitations"} className="item">
-            <AddCircleOutlinedIcon style={{ fontSize: 30 }} />
-            <span>Invitations</span>
-          </Link>
-
           <Link to={"/moderators"} className="item">
             <AddModeratorOutlinedIcon style={{ fontSize: 30 }} />
             <span>Moderators</span>

@@ -98,10 +98,6 @@ function App() {
           element: <ChangePassword/>
         },
         {
-          path: "/invitations",
-          element: <Invitations/>
-        },
-        {
           path: "/moderators",
           element: <ForModerator/>
         },
@@ -118,6 +114,10 @@ function App() {
     {
       path: "/register",
       element: <Register/>,
+    },
+    {
+      path: "/invitations",
+      element: <Invitations/>
     },
   ]);
 
