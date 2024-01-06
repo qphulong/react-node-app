@@ -29,6 +29,7 @@ const PostProfile = ({ userId,post }) => {
   const toggleDropdown = () => setOpenDropdown(!openDropdown);
   const dropdownRef = useRef(null);
   const postRef = useRef(null);
+  const isOwnProfile = currentUser.userId === userId
 
   const items = [{
     id: 1,
@@ -72,21 +73,25 @@ const PostProfile = ({ userId,post }) => {
 
   //Handle the dropdown
   function handleOnClick(item) {
-    if (item.id == 1) {
-      console.log("1");
-      setIsEditing(true);
-    } else if (item.id == 2) {
-      console.log("2");
-      handleDeletePost();
-    } 
+    if(isOwnProfile){
+      if (item.id == 1) {
+        console.log("1");
+        setIsEditing(true);
+      } else if (item.id == 2) {
+        console.log("2");
+        handleDeletePost();
+      } 
+    }
   }
 
   const handleClick = (e) => {
-    if (postRef.current && !postRef.current.contains(e.target)) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setOpenDropdown(false);
-      } else if (openDropdown && postRef.current.contains(e.target)) {
-        setOpenDropdown(!openDropdown);
+    if(isOwnProfile){
+      if (postRef.current && !postRef.current.contains(e.target)) {
+        if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+          setOpenDropdown(false);
+        } else if (openDropdown && postRef.current.contains(e.target)) {
+          setOpenDropdown(!openDropdown);
+        }
       }
     }
   };
@@ -192,7 +197,8 @@ const PostProfile = ({ userId,post }) => {
             </div>
           </div>
           <div className="extra-functions">
-            <MoreHorizIcon onClick = {()=>toggleDropdown(!openDropdown)} ref={postRef} className="icon"/>
+            {isOwnProfile ? <MoreHorizIcon onClick = {()=>toggleDropdown(!openDropdown)} ref={postRef} className="icon"/> :
+            <MoreHorizIcon className="icon"/>}
             {/* 1. Change post
             2. Delete post */}
             <div className="dropdown" ref={dropdownRef}>
