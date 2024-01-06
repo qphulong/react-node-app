@@ -68,11 +68,20 @@
         .right {
           button {
             border: none;
-            padding: 5px;
+            padding: 12px 10px;
             color: white;
             cursor: pointer;
+            
             background-color: #B26457;
-            border-radius: 3px;
+            border-radius: 16px;
+          }
+
+          button:hover{
+            filter:brightness(90%)
+          }
+
+          button:active{
+            filter:brightness(80%)
           }
         }
       }

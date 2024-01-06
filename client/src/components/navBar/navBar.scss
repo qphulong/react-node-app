@@ -45,7 +45,7 @@
                 margin-left: -20px;
                 margin-top: 10px;
                 position: absolute;
-                font-size: 10px;
+                font-size: 12px;
                 padding: 6px 4px;
                 background-color: themed("textColorSoft");
                 color: themed("bg");
@@ -95,9 +95,11 @@
                 }
 
                 .tool-tip {
+                    z-index: 10;
                     margin-top: 45px;
+                    margin-left: -5px;
                     position: absolute;
-                    font-size: 10px;
+                    font-size: 12px;
                     padding: 6px 4px;
                     background-color: themed("textColorSoft");
                     color: themed("bg");
