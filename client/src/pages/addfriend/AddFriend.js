@@ -4,7 +4,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
-import { useContext, useState } from 'react';
+import { useContext, useState, useRef } from 'react';
 import { AuthContext } from '../../context/authContext';
 import axios from 'axios';
 
@@ -14,6 +14,7 @@ const AddFriend = () => {
     const [passWord, setPassWord] = useState("")
     const [randomLink, setRandomLink] = useState(null);
     const [isEditablePassword, setIsEditablePassword] = useState(true);
+    const passwordInputRef = useRef(null);
 
     //Constant
     const MAX_PASSWORD_CHAR = 16
@@ -21,6 +22,9 @@ const AddFriend = () => {
 
     const handleToggleEditPassword = () => {
         setIsEditablePassword(!isEditablePassword);
+        if (passwordInputRef.current) {
+            passwordInputRef.current.focus();
+        }
     };
 
     //Check length of password
@@ -110,6 +114,7 @@ const AddFriend = () => {
                                             type='text'
                                             id='password'
                                             placeholder='Your password'
+                                            ref={passwordInputRef}
                                             onChange={(e) => setPassWord(e.target.value)}
                                         />
                                     </div>
@@ -120,6 +125,7 @@ const AddFriend = () => {
                                             id='password'
                                             placeholder='Your password'
                                             readonly = 'readonly'
+                                            ref={passwordInputRef}
                                             onChange={(e) => setPassWord(e.target.value)}
                                         />
                                     </div>
