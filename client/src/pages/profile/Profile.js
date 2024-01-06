@@ -25,11 +25,37 @@ import { useParams } from 'react-router-dom';
 const Profile = () => {
     const inputRef = useRef(null);
     const [image, setImage] = useState("");
+    const [areFriends, setAreFriends] = useState(null);
     const { currentUser, profileImage, setProfileImage } = useContext(AuthContext);
     const { userId } = useParams();
     const isOwnProfile = currentUser.userId === userId
 
-    const [areFriends, setAreFriends] = useState(null);
+    //===================================================================================================================
+    //profile image
+    const [profileImageFriend,setProfileImageFriend] = useState("https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
+    const fetchProfileImage = async () => {
+        try {
+        const response = await axios.get(`http://localhost:3001/user/profile-pic/${userId}`);
+    
+        if (response.status === 200) {
+            const imageFilename = response.data
+            // console.log('====================================');
+            // console.log(imageFilename.profilePic);
+            // console.log('====================================');
+            setProfileImageFriend(imageFilename.profilePic)
+        } else {
+            console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+        }
+        } catch (error) {
+        console.error('Error fetching profile image:', error.message);
+        }
+    };
+    useEffect(() => {
+        if (areFriends === true) {
+          fetchProfileImage();
+        }
+      }, [areFriends]);
+    //===================================================================================================================
 
     useEffect(() => {
         if (currentUser.userId !== userId) {
@@ -61,6 +87,7 @@ const Profile = () => {
         </div>
         );
     }
+    
     const handleImageClick = () => {
         if(isOwnProfile) inputRef.current.click();
     }
@@ -101,10 +128,10 @@ const Profile = () => {
     return (
         <div className='profile'>
             <div className='images'>
-                <img src={profileImage}
+                <img src={isOwnProfile ? profileImage : profileImageFriend}
                     alt="" className='cover' />
                 <div className='profile-image-container' onClick={handleImageClick}>
-                    {image ? <img src={URL.createObjectURL(image)} alt='' className='profile-picture-after' /> : <img src={profileImage} className='profile-picture-before' />}
+                    {image ? <img src={URL.createObjectURL(image)} alt='' className='profile-picture-after' /> : <img src={profileImageFriend} className='profile-picture-before' />}
                     {isOwnProfile ? (
                         <FileUploadIcon style={{ fontSize: 50 }} className='upload-image-icon' />
                     ) : null}
@@ -118,7 +145,7 @@ const Profile = () => {
 
                     <div className='center'>
                         <div className='name'>
-                            <span>{currentUser.userId}</span>
+                            <span>{isOwnProfile ? currentUser.userId : userId}</span>
                         </div>
 
                         <div className='social-link'>
