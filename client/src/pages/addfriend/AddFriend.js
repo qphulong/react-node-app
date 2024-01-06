@@ -69,13 +69,14 @@ const AddFriend = () => {
             navigator.clipboard.writeText(passWord)
             .then(() => {
                 // Optionally, you can provide feedback to the user that the copy was successful
-                console.log('Password copied to clipboard!');
                 toast.success("Password copied to clipboard!", {
                     position: toast.POSITION.TOP_RIGHT,
                   });
             })
             .catch((err) => {
-                console.error('Could not copy password to clipboard: ', err);
+                toast.error("Could not copy password to clipboard:", {
+                    position: toast.POSITION.TOP_RIGHT,
+                  });
             });
         }
         else{
@@ -86,6 +87,29 @@ const AddFriend = () => {
         
     };
 
+    //Copy the link to Clipboard
+    const copyLinkToClipboard = () => {
+        if (randomLink){
+            navigator.clipboard.writeText(randomLink)
+            .then(() => {
+                // Optionally, you can provide feedback to the user that the copy was successful
+                toast.success("Invitation link copied to clipboard!", {
+                    position: toast.POSITION.TOP_RIGHT,
+                  });
+            })
+            .catch((err) => {
+                toast.error("Could not copy invitation link to clipboard:", {
+                    position: toast.POSITION.TOP_RIGHT,
+                  });
+            });
+        }
+        else{
+            toast.warning("You need to generate the invitation link", {
+                position: toast.POSITION.TOP_RIGHT,
+              });
+        }
+        
+    };
 
     const handleRandomLink = () => {
         try {
@@ -135,25 +159,15 @@ const AddFriend = () => {
 
                     <div className='invitation'>
                         <div className='get-link'>
-                            <p>Give this link to someone you want to add</p>
-                            {randomLink ? (
+                            <p>Give this link to someone you want to add</p>                        
                                 <div className='random-link-container'>
-                                    <span>{randomLink}</span>
+                                    {randomLink ? (<span>{randomLink}</span>):(<span>Here is your link</span>)}
+                                    
                                     <div>
-                                        <ContentCopyIcon style={{ fontSize: 30 }} />
+                                        <ContentCopyIcon style={{ fontSize: 30 }} onClick={copyLinkToClipboard} className='logo'/>
                                         <div className='tool-tip'>Copy link</div>
                                     </div>
-                                </div>) : (
-                                <div className='random-link-container'>
-                                    <span>Here is your link</span>
-                                    <div>
-                                        <ContentCopyIcon style={{ fontSize: 30 }} className='logo' />
-                                        <div className='tool-tip'>Copy link</div>
-                                    </div>
-
                                 </div>
-                            )
-                            }
 
                             <button className='get-link-button' onClick={handleRandomLink}>Generate link</button>
                         </div>
