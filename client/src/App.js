@@ -94,7 +94,7 @@ function App() {
           element: <AddFriend/>
         },
         {
-          path: "/changepassword",
+          path: "/change",
           element: <ChangePassword/>
         },
         // {
