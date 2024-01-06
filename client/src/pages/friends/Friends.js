@@ -102,8 +102,13 @@ const Friends = () => {
                 [friendId]: false,
             }));
         }
-    };
-
+        // else if (openDropdown[friendId] && extraFunctionRef.current[friendId].contains(e.target)){
+        //     setOpenDropdown((prevState) => ({
+        //         ...prevState,
+        //         [friendId]: !prevState[friendId]
+        //     }));
+        // }
+    }
     return (
         <div className='friends'>
             <div className="title">
@@ -124,13 +129,13 @@ const Friends = () => {
 
                             </div>
                             <div className='friends-center'>
-                                <FacebookIcon style={{ fontSize: 30 }} className='logo'/>
-                                <InstagramIcon style={{ fontSize: 30 }} className='logo'/>
-                                <LinkedInIcon style={{ fontSize: 30 }} className='logo'/>
+                                <FacebookIcon style={{ fontSize: 30 }} className='logo' />
+                                <InstagramIcon style={{ fontSize: 30 }} className='logo' />
+                                <LinkedInIcon style={{ fontSize: 30 }} className='logo' />
                             </div>
                             <div className='friends-right'>
-                                <MoreVertIcon style={{ fontSize: 30 }} onClick={()=>toggleDropdown(friend.userId) }
-                                ref = {extraFunctionRef} className='logo'/>
+                                <MoreVertIcon style={{ fontSize: 30 }} onClick={() => toggleDropdown(friend.userId)}
+                                    ref={extraFunctionRef} className='logo' />
                                 <div className="dropdown" ref={(ref) => (dropdownRefs.current[friend.userId] = ref)}>
                                     {openDropdown[friend.userId] && (
                                         <ul className="extra-function-dropdown">
@@ -139,7 +144,7 @@ const Friends = () => {
                                                     <button onClick={(e) => {
                                                         e.stopPropagation();
                                                         handleOnClick(friend.userId, item);
-                                                        }
+                                                    }
                                                     }>
                                                         <span>{item.value}</span>
                                                         {item.icon}
