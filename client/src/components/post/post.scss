@@ -40,10 +40,14 @@
                         }
 
                     }
+                    
                 }
 
                 .extra-functions{
                     display: flex;
+                    .icon{
+                        cursor: pointer;
+                    }
                     .dropdown{
                         .post-dropdown{
                             margin-top: 30px;
