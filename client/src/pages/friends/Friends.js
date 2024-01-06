@@ -96,13 +96,13 @@ const Friends = () => {
 
                             </div>
                             <div className='friends-center'>
-                                <FacebookIcon style={{ fontSize: 30 }} />
-                                <InstagramIcon style={{ fontSize: 30 }} />
-                                <LinkedInIcon style={{ fontSize: 30 }} />
+                                <FacebookIcon style={{ fontSize: 30 }} className='logo'/>
+                                <InstagramIcon style={{ fontSize: 30 }} className='logo'/>
+                                <LinkedInIcon style={{ fontSize: 30 }} className='logo'/>
                             </div>
                             <div className='friends-right'>
-                                <MoreVertIcon style={{ fontSize: 30 }} onClick={()=>toggleDropdown(friend.userId)}
-                                ref = {extraFunctionRef}/>
+                                <MoreVertIcon style={{ fontSize: 30 }} onClick={()=>toggleDropdown(friend.userId) }
+                                ref = {extraFunctionRef} className='logo'/>
                                 <div className="dropdown" ref={dropdownRef}>
                                     {openDropdown[friend.userId] && (
                                         <ul className="extra-function-dropdown">

@@ -63,7 +63,6 @@
                         margin-left: 20px;
                         gap: 5px;
                     }
-
                     .extra-function-dropdown{
                         margin-top: 0px;
                         margin-left: -100px;
@@ -94,6 +93,9 @@
                                 }}
                         }
                     }
+                    .logo{
+                        cursor: pointer;
+                    }
                 }
 
                 .friends-bottom{
@@ -107,6 +109,11 @@
                         padding: 10px 25px;
                         color: themed("bg");
                         font-size: 15px;
+                        cursor: pointer;
+                    }
+
+                    button:hover{
+                        background-color: darken(themed("logo"), 5%);
                     }
                 }
             }
