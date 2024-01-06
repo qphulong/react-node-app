@@ -140,11 +140,18 @@ exports.getComments = async (req, res) => {
 
   const post = await Post.findOne({ postId: postId });
 
+  if (!post) {
+    res.status(404).json({ message: "Post not found" });
+  }
+
   var comments = [];
 
   for (let i = 0; i < post.comments.length; i++) {
     const comment = post.comments[i];
     const user = await User.findOne({ _id: comment.user });
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+    }
     const id = user.userId;
     comments.push({
       content: comment.content,

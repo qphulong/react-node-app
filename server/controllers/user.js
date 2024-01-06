@@ -11,6 +11,7 @@ exports.signUp = async (req, res) => {
 
   // check if user already exists
   const user = await User.find({ userId: userId });
+
   console.log(user.length);
   if (user.length > 0) {
     res.status(400).send("User already exists");
