@@ -43,10 +43,10 @@ const LeftBar = () => {
     <div className="leftBar">
       <div className="container">
         <div className="menu">
-          <div className="item">
+          <Link to={"/"} className="item">
             <HomeOutlinedIcon style={{ fontSize: 30 }} />
             <span>Home</span>
-          </div>
+          </Link>
 
           {/* <div className="item">
             <NotificationsNoneOutlinedIcon style={{ fontSize: 30 }} />
@@ -79,7 +79,9 @@ const LeftBar = () => {
           </div>
         </div>
         <div className="button-container">
-          <button>Tweet</button>
+            <Link to="/">
+              <button>Share</button>
+            </Link>
         </div>
 
         <div className="user">
