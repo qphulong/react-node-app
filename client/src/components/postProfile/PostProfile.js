@@ -15,6 +15,7 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import moment from 'moment';
 
 const PostProfile = ({ imageProfile,userId,post }) => {
   const { currentUser, login, logout } = useContext(AuthContext);
@@ -30,6 +31,14 @@ const PostProfile = ({ imageProfile,userId,post }) => {
   const dropdownRef = useRef(null);
   const postRef = useRef(null);
   const isOwnProfile = currentUser.userId === userId
+  const [timestamp, setTimestamp] = useState(post.createdAt); // Replace with your actual API data
+  useEffect(() => {
+    const formattedTimestamp = moment(timestamp).fromNow(); // Use moment.js to format
+    setTimestamp(formattedTimestamp);
+    console.log('====================================');
+    console.log(timestamp);
+    console.log('====================================');
+  }, [post.createdAt]);
 
   const items = [{
     id: 1,
@@ -259,7 +268,7 @@ const PostProfile = ({ imageProfile,userId,post }) => {
             />
             <div className="details">
               <span>{userId}</span>
-              <span className="date">1 min ago</span>
+              <span className="date">{timestamp}</span>
             </div>
           </div>
           <div className="extra-functions">
