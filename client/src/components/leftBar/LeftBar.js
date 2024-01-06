@@ -9,6 +9,8 @@ import { Button } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import EnhancedEncryptionOutlinedIcon from '@mui/icons-material/EnhancedEncryptionOutlined';
+import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
+import AddModeratorOutlinedIcon from '@mui/icons-material/AddModeratorOutlined';
 import axios from "axios";
 import { Link } from "react-router-dom";
 const LeftBar = () => {
@@ -73,10 +75,15 @@ const LeftBar = () => {
             <span>Change</span>
           </Link>
 
-          <div className="item">
-            <DensitySmallIcon style={{ fontSize: 30 }} />
-            <span>More</span>
-          </div>
+          <Link to={"/invitations"} className="item">
+            <AddCircleOutlinedIcon style={{ fontSize: 30 }} />
+            <span>Invitations</span>
+          </Link>
+
+          <Link to={"/moderators"} className="item">
+            <AddModeratorOutlinedIcon style={{ fontSize: 30 }} />
+            <span>Moderators</span>
+          </Link>
         </div>
         <div className="button-container">
             <Link to="/">

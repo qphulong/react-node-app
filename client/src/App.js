@@ -97,6 +97,14 @@ function App() {
           path: "/change",
           element: <ChangePassword/>
         },
+        {
+          path: "/invitations",
+          element: <Invitations/>
+        },
+        {
+          path: "/moderators",
+          element: <ForModerator/>
+        },
         // {
         //   path: "/notifications",
         //   element: <Notification/>
@@ -110,14 +118,6 @@ function App() {
     {
       path: "/register",
       element: <Register/>,
-    },
-    {
-      path: "/invitations/:friendLink",
-      element: <Invitations/>
-    },
-    {
-      path: "/moderators",
-      element: <ForModerator/>
     },
   ]);
 
