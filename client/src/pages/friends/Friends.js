@@ -51,22 +51,14 @@ const Friends = () => {
                         </div>
                         <div className='friends-mid'>
                             <div className='friends-left'>
+                                
+                            </div>
+                            <div className='friends-center'>
                                 <FacebookIcon style={{fontSize : 30}}/>
                                 <InstagramIcon style={{fontSize: 30}}/>
                                 <LinkedInIcon style={{fontSize: 30}}/>
                             </div>
-                            <div className='friends-center'>
-                                <div className='friends-position'>
-                                    <PlaceIcon style={{fontSize: 25}} className='logo'/>
-                                    <span>England</span>
-                                </div>
-                                <div className='friends-phone'>
-                                    <PhoneIcon style={{fontSize: 25}} className='logo'/>
-                                    <span>+840123456789</span>
-                                </div>
-                            </div>
                             <div className='friends-right'>
-                                <MailOutlineIcon style={{fontSize: 30}}/>
                                 <MoreVertIcon style = {{fontSize: 30}}/>
                             </div>
                         </div>
