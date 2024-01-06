@@ -14,7 +14,7 @@ import Post from '../../components/post/Post';
 import Posts from '../../components/posts/Posts';
 import EditOffIcon from '@mui/icons-material/EditOff';
 
-import { useContext, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import EditOff from '@mui/icons-material/EditOff';
 import PostsProfile from '../../components/postsProfile/PostsProfile';
 import { AuthContext } from '../../context/authContext';
@@ -29,36 +29,38 @@ const Profile = () => {
     const { userId } = useParams();
     const isOwnProfile = currentUser.userId === userId
 
-    if (currentUser.userId !== userId) {
-        // Fetch API here
-        const responseIsFriend = async () => {
-          try {
-            const response = await axios.get(`http://localhost:3001/user/friends/check/${currentUser.userId}/${userId}`);
-            return response.data; // Assuming you want the data from the response
-          } catch (error) {
-            console.error("Error checking friendship:", error);
-            throw error; // Re-throw the error for further handling
-          }
-        };
-        // Call the async function and handle the result
-        responseIsFriend()
-          .then((res) => {
-            // Handle the result here
-            console.log(res.isFriend);
-          })
-          .catch((error) => {
-            // Handle errors here
-            if (error.response && error.response.status === 400) {
-              console.log("Friend not found");
-            } else {
-              console.error("Error during friend check:", error.message);
-            }
-          });
-        
-        // Note: The return statement outside this block will not prevent the API call from happening.
-        // If you want to prevent further execution, consider using "return" inside the "catch" block or using "return" after the ".then()" block.
-        
-      }
+    const [areFriends, setAreFriends] = useState(null);
+
+    useEffect(() => {
+        if (currentUser.userId !== userId) {
+            const fetchIsFriend = async () => {
+                try {
+                const response = await axios.get(`http://localhost:3001/user/friends/check/${currentUser.userId}/${userId}`);
+                setAreFriends(response.data.isFriend);
+                } catch (error) {
+                console.error("Error checking friendship:", error);
+                }
+            };
+
+            fetchIsFriend();
+        }
+    }, [currentUser.userId, userId]);
+
+    if (areFriends === false) {
+        return (
+        <div>
+            You are not friends with currentUser
+        </div>
+        );
+    }
+
+    if (areFriends === null) {
+        return (
+        <div>
+            User not found
+        </div>
+        );
+    }
     const handleImageClick = () => {
         if(isOwnProfile) inputRef.current.click();
     }
