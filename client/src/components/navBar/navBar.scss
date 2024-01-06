@@ -2,14 +2,14 @@
 @import "../../style.scss";
 
 
-.navBar{
+.navBar {
     font-family: 'Josefin Sans', sans-serif;
     margin: 0;
 }
 
 
-.navBar{
-    @include themify($themes){
+.navBar {
+    @include themify($themes) {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -21,61 +21,107 @@
         position: sticky;
         top: 0;
         z-index: 999;
-        .left{
+
+        .left {
             display: flex;
             align-items: center;
+            text-align: center;
             gap: 20px;
-            .logo{
-                span{
+
+            .logo {
+                span {
                     font-family: 'Lily Script One', sans-serif;
                     font-weight: bold;
                     font-size: 30px;
                     color: themed("logo");
-                }  
+                }
             }
-            
+
+            .switch-theme-logo{
+                cursor: pointer;
+            }
+
+            .tool-tip {
+                margin-left: -20px;
+                margin-top: 10px;
+                position: absolute;
+                font-size: 10px;
+                padding: 6px 4px;
+                background-color: themed("textColorSoft");
+                color: themed("bg");
+                border-radius: 4px;
+                opacity: 0;
+                transition: opacity 0.15s;
+            }
+
+            .switch-theme-logo:hover + .tool-tip{
+                opacity: 1;
+            }
+
         }
 
-        .dateTime{
+        .dateTime {
             font-family: 'Lily Script One', sans-serif;
             font-size: 26px;
             font-weight: bold;
         }
 
-        .right{
+        .right {
             display: flex;
             align-items: center;
             gap: 20px;
-            .user{
+
+            .user {
                 display: flex;
-                justify-content:flex-start;
+                justify-content: flex-start;
                 flex-direction: column;
                 margin: 0;
                 font-weight: 700;
                 font-size: 18px;
-                .user-info{
+                cursor: pointer;
+
+                .user-info {
                     display: flex;
                     align-items: center;
                     text-align: center;
                     gap: 10px;
-                    img{
+
+                    img {
                         width: 40px;
                         height: 40px;
                         border-radius: 50%;
                         object-fit: cover;
                     }
                 }
+
+                .tool-tip {
+                    margin-top: 45px;
+                    position: absolute;
+                    font-size: 10px;
+                    padding: 6px 4px;
+                    background-color: themed("textColorSoft");
+                    color: themed("bg");
+                    border-radius: 4px;
+                    opacity: 0;
+                    transition: opacity 0.15s;
+                }
+
+                .user-info:hover + .tool-tip{
+                    opacity: 1;
+                }
             }
-            .profile-dropdown{
+
+            .profile-dropdown {
                 margin-top: 30px;
                 margin-left: -150px;
                 padding: 0;
                 position: absolute;
-                .list-item{
+
+                .list-item {
                     list-style-type: none;
                     display: flex;
                     flex-direction: column;
-                    
+
                     button {
                         display: flex;
                         justify-content: space-between;
@@ -89,11 +135,13 @@
                         align-items: center;
                         border-left: 1px solid #ccc;
                         border-right: 1px solid #ccc;
-                
-                        &:hover, &:focus {
-                          cursor: pointer;
-                          background-color: #ccc;
-                        }}
+
+                        &:hover,
+                        &:focus {
+                            cursor: pointer;
+                            background-color: #ccc;
+                        }
+                    }
                 }
             }
         }

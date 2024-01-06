@@ -37,7 +37,7 @@ const NavBar = () => {
   ];
 
   const { darkMode, toggle } = useContext(DarkModeContext);
-  const { currentUser, login, logout,profileImage } = useContext(AuthContext);
+  const { currentUser, login, logout, profileImage } = useContext(AuthContext);
   const [openDropdown, setOpenDropdown] = useState(false);
   const [selection, setSelection] = useState([]);
   const toggleDropdown = () => setOpenDropdown(!openDropdown);
@@ -81,20 +81,22 @@ const NavBar = () => {
             <span>OnlyMe</span>
           </div>
         </Link>
-        <HomeOutlinedIcon style={{ fontSize: 30 }} />
-        {darkMode ? (
-          <Brightness6Icon style={{ fontSize: 30 }} onClick={toggle} />
-        ) : (
-          <WbSunnyIcon style={{ fontSize: 30 }} onClick={toggle} />
-        )}
+        <div>
+          {darkMode ? (
+            <Brightness6Icon style={{ fontSize: 30 }} onClick={toggle} className="switch-theme-logo" />
+          ) : (
+            <WbSunnyIcon style={{ fontSize: 30 }} onClick={toggle} className="switch-theme-logo" />
+          )}
+          <div className="tool-tip">
+              Switch theme
+          </div>
+        </div>
+
       </div>
       <div className="dateTime">
         <Datetime />
       </div>
       <div className="right">
-        <PersonOutlineOutlinedIcon style={{ fontSize: 30 }} />
-        <EmailOutlinedIcon style={{ fontSize: 30 }} />
-        <NotificationsNoneOutlinedIcon style={{ fontSize: 30 }} />
 
         <div
           className="user"
@@ -103,7 +105,11 @@ const NavBar = () => {
         >
           <div className="user-info">
             <img src={profileImage} alt="" />
-            <span>{currentUser.name}</span>
+            <span>{currentUser.user}</span>
+
+          </div>
+          <div className="tool-tip">
+            Account
           </div>
         </div>
         <div className="dropdown" ref={dropdownRef}>
