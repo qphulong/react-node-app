@@ -47,9 +47,9 @@ router.put("/likes", async (req, res) => {
 
   for (let i = 0; i < post.likePeople.length; i++) {
     const likePerson = post.likePeople[i];
-    console.log("likePerson._id: " + likePerson._id.toString());
-    console.log("user._id: " + user._id.toString());
-    console.log(likePerson._id.toString() == user._id.toString());
+    if (!likePerson) {
+      continue;
+    }
     if (likePerson._id.toString() == user._id.toString()) {
       post.likePeople.pull(user);
       post.likes -= 1;
