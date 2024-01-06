@@ -18,6 +18,7 @@ const Friends = () => {
     const dropdownRefs = useRef({});
     const extraFunctionRef = useRef(null);
     const { currentUser } = useContext(AuthContext);
+    const [friend, setFriend] = useState(null);
     const { data: FriendsInfo } = useQuery({
         queryKey: ["FriendsInfo"],
         queryFn: async () => {
@@ -25,6 +26,9 @@ const Friends = () => {
                 return await axios
                     .get(`http://localhost:3001/user/friends/${currentUser.userId}`)
                     .then((response) => {
+                        console.log('====================================');
+                        console.log(response.data);
+                        console.log('====================================');
                         return response.data;
                     });
             } catch (error) {
@@ -33,6 +37,26 @@ const Friends = () => {
         },
     });
 
+    const responseData = async (friendIdPro) => {
+        try {
+            const res = await axios.delete("http://localhost:3001/user/friends", {
+                data: { userId: currentUser.userId, friendId: friendIdPro }
+            });
+    
+            console.log('====================================');
+            console.log(res);
+            console.log('====================================');
+            window.location.reload();
+        } catch (error) {
+            console.error('====================================');
+            console.error(error);
+            console.error('====================================');
+        }
+    }
+    
+    useEffect(() => {
+        responseData(friend);
+    }, [friend]);
     //=========================================================================================================
     //=========================================================================================================
     // DELETE FRIEND FUNCTION
@@ -54,9 +78,15 @@ const Friends = () => {
     //     },
     // });
 
-    // const handleDeletePost = (e,friendId) => {
-    //     e.preventDefault();
-    //     mutationDelete.mutate({friendId});
+    // const handleDeletePost = (friendId) => {
+    //     mutationDelete.mutate({ friendId }, {
+    //         onSuccess: () => {
+    //             console.log("DELETE request sent successfully");
+    //         },
+    //         onError: (error) => {
+    //             console.log("DELETE request error:", error);
+    //         }
+    //     });
     // };
     //=========================================================================================================
     //=========================================================================================================
@@ -91,6 +121,7 @@ const Friends = () => {
     function handleOnClick(friendId, item) {
         if (item.id == 1) {
             console.log("1");
+            setFriend(friendId)
             // handleDeletePost(friendId)
         }
     }
