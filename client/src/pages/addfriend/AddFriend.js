@@ -8,7 +8,7 @@ import { useContext, useState, useRef, useEffect } from 'react';
 import { AuthContext } from '../../context/authContext';
 import axios from 'axios';
 import e from 'cors';
-
+import { ToastContainer, toast } from "react-toastify";
 
 const AddFriend = () => {
     const { currentUser, profileImage } = useContext(AuthContext);
@@ -61,6 +61,29 @@ const AddFriend = () => {
             setPasswordWarning('');
             return true;
         }
+    };
+
+    //Copy the password to Clipboard
+    const copyPasswordToClipboard = () => {
+        if (!isEditablePassword){
+            navigator.clipboard.writeText(passWord)
+            .then(() => {
+                // Optionally, you can provide feedback to the user that the copy was successful
+                console.log('Password copied to clipboard!');
+                toast.success("Password copied to clipboard!", {
+                    position: toast.POSITION.TOP_RIGHT,
+                  });
+            })
+            .catch((err) => {
+                console.error('Could not copy password to clipboard: ', err);
+            });
+        }
+        else{
+            toast.warning("You need to save your password first", {
+                position: toast.POSITION.TOP_RIGHT,
+              });
+        }
+        
     };
 
 
@@ -163,7 +186,7 @@ const AddFriend = () => {
                                 )}
 
                                 <div className='copy-password-icon'>
-                                    <ContentCopyIcon style={{ fontSize: 30 }} className='logo' />
+                                    <ContentCopyIcon style={{ fontSize: 30 }} className='logo' onClick={copyPasswordToClipboard} />
                                     <div className='tool-tip'>
                                         Copy password
                                     </div>
@@ -184,7 +207,7 @@ const AddFriend = () => {
 
 
             </div>
-
+            <ToastContainer/>
 
         </div>
     )
