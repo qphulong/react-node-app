@@ -45,13 +45,22 @@ router.put("/likes", async (req, res) => {
     res.status(404).send("User not found");
   }
 
-  if (post.likePeople.includes(user)) {
-    post.likePeople.pull(user);
-    post.likes -= 1;
-  } else {
-    post.likePeople.push(user);
-    post.likes += 1;
+  for (let i = 0; i < post.likePeople.length; i++) {
+    const likePerson = post.likePeople[i];
+    console.log("likePerson._id: " + likePerson._id.toString());
+    console.log("user._id: " + user._id.toString());
+    console.log(likePerson._id.toString() == user._id.toString());
+    if (likePerson._id.toString() == user._id.toString()) {
+      post.likePeople.pull(user);
+      post.likes -= 1;
+      await post.save();
+      res.json({ likes: post.likes });
+      return;
+    }
   }
+
+  post.likePeople.push(user);
+  post.likes += 1;
 
   await post.save();
 
