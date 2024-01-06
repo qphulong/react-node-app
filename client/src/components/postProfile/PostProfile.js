@@ -15,6 +15,7 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import moment from 'moment';
 
 const PostProfile = ({ imageProfile,userId,post }) => {
   const { currentUser, login, logout } = useContext(AuthContext);
@@ -30,6 +31,14 @@ const PostProfile = ({ imageProfile,userId,post }) => {
   const dropdownRef = useRef(null);
   const postRef = useRef(null);
   const isOwnProfile = currentUser.userId === userId
+  const [timestamp, setTimestamp] = useState(post.createdAt); // Replace with your actual API data
+  useEffect(() => {
+    const formattedTimestamp = moment(timestamp).fromNow(); // Use moment.js to format
+    setTimestamp(formattedTimestamp);
+    // console.log('====================================');
+    // console.log(timestamp);
+    // console.log('====================================');
+  }, [post.createdAt]);
 
   const items = [{
     id: 1,
@@ -177,6 +186,72 @@ const PostProfile = ({ imageProfile,userId,post }) => {
     },
 });
 
+  //===============================================================================================
+  // Like function
+  // Like function
+  const {data: likesProfile} = useQuery({
+      queryKey: ["likesProfile",post.postId],
+      queryFn: async () => {
+      try {
+          return await axios
+          .get(`http://localhost:3001/posts/${post.postId}/likes`)
+          .then((response) => {
+              return response.data;
+          });
+      } catch (error) {
+          throw error; 
+      }
+    },
+  });
+
+  // Mutations
+  const mutationLike = useMutation({
+      mutationFn: () => {
+      return axios.put("http://localhost:3001/posts/likes", {
+        userId: userId, 
+        postId: post.postId
+      })},
+      onSuccess: (response) => {
+          console.log("Newly added like:", response.data);
+
+          queryClient.invalidateQueries({queryKey: ["likesProfile",post.postId]});
+      },
+      onError: (error, variables, context) => {
+          console.log('====================================');
+              console.log("error");
+              console.log('====================================');
+        },
+        onSettled: (data, error, variables, context) => {
+          console.log('====================================');
+              console.log("settle");
+              console.log('====================================');
+        },
+  });
+
+  const handleClickLike = (e) => {
+    e.preventDefault();
+    fetchLikeData();
+    mutationLike.mutate({user: userId, postId: post.postId})
+  }
+
+  async function fetchLikeData() {
+    try {
+      const response = await axios.get(`http://localhost:3001/posts/${userId}/${post.postId}/liked`);
+      // console.log(response.data.liked);
+      if(dem == 0) setLike(response.data.liked)
+      else setLike(!response.data.liked)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const [dem,setDem] = useState(0)
+  // Call the async function
+  useEffect(() => {
+    fetchLikeData();
+    setDem(dem+1)
+  },[])
+
   // console.log('====================================');
   // console.log(cmtsProfile?.comments.length);
   // console.log('====================================');
@@ -193,7 +268,7 @@ const PostProfile = ({ imageProfile,userId,post }) => {
             />
             <div className="details">
               <span>{userId}</span>
-              <span className="date">1 min ago</span>
+              <span className="date">{timestamp}</span>
             </div>
           </div>
           <div className="extra-functions">
@@ -261,9 +336,9 @@ const PostProfile = ({ imageProfile,userId,post }) => {
         </div>
 
         <div className="info">
-          <div className="item" onClick={() => setLike(!like)}>
+          <div className="item" onClick={handleClickLike}>
             {like ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-            12
+            {likesProfile?.likes}
           </div>
 
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>

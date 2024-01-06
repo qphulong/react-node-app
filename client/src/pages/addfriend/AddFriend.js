@@ -7,13 +7,15 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { useContext, useState, useRef, useEffect } from 'react';
 import { AuthContext } from '../../context/authContext';
 import axios from 'axios';
-
+import e from 'cors';
+import { ToastContainer, toast } from "react-toastify";
 
 const AddFriend = () => {
-    const { currentUser,profileImage} = useContext(AuthContext);
+    const { currentUser, profileImage } = useContext(AuthContext);
     const [randomLink, setRandomLink] = useState(null);
     const [passWord, setPassWord] = useState("")
     const [isEditablePassword, setIsEditablePassword] = useState(true);
+    const [passwordWarning, setPasswordWarning] = useState('');
     const passwordInputRef = useRef(null);
 
     // useEffect(() => {
@@ -31,15 +33,83 @@ const AddFriend = () => {
     const MIN_PASSWORD_CHAR = 8
 
     const handleToggleEditPassword = () => {
-        setIsEditablePassword(!isEditablePassword);
-        if (passwordInputRef.current) {
-            passwordInputRef.current.focus();
+        // Check password length when changing the mode
+        if (isEditablePassword) {
+            const isValidPassword = validatePassword(passWord);
+            if (!isValidPassword) {
+                setIsEditablePassword(isEditablePassword)
+            }
+            else {
+                setIsEditablePassword(!isEditablePassword);
+                if (passwordInputRef.current) {
+                    passwordInputRef.current.focus();
+                }
+            }
         }
+        else{
+            setIsEditablePassword(!isEditablePassword);
+        }
+
     };
 
     //Check length of password
-    const validPassword = passWord.length >= MIN_PASSWORD_CHAR && passWord.length <= MAX_PASSWORD_CHAR
+    const validatePassword = (password) => {
+        if (password.length < MIN_PASSWORD_CHAR || password.length > MAX_PASSWORD_CHAR) {
+            setPasswordWarning(`Password must be between ${MIN_PASSWORD_CHAR} and ${MAX_PASSWORD_CHAR} characters.`);
+            return false;
+        } else {
+            setPasswordWarning('');
+            return true;
+        }
+    };
 
+    //Copy the password to Clipboard
+    const copyPasswordToClipboard = () => {
+        if (!isEditablePassword){
+            navigator.clipboard.writeText(passWord)
+            .then(() => {
+                // Optionally, you can provide feedback to the user that the copy was successful
+                toast.success("Password copied to clipboard!", {
+                    position: toast.POSITION.TOP_RIGHT,
+                  });
+            })
+            .catch((err) => {
+                toast.error("Could not copy password to clipboard:", {
+                    position: toast.POSITION.TOP_RIGHT,
+                  });
+            });
+        }
+        else{
+            toast.warning("You need to save your password first", {
+                position: toast.POSITION.TOP_RIGHT,
+              });
+        }
+        
+    };
+
+    //Copy the link to Clipboard
+    const copyLinkToClipboard = () => {
+        if (randomLink){
+            navigator.clipboard.writeText(randomLink)
+            .then(() => {
+                // Optionally, you can provide feedback to the user that the copy was successful
+                toast.success("Invitation link copied to clipboard!", {
+                    position: toast.POSITION.TOP_RIGHT,
+                  });
+            })
+            .catch((err) => {
+                toast.error("Could not copy invitation link to clipboard:", {
+                    position: toast.POSITION.TOP_RIGHT,
+                  });
+            });
+        }
+        else{
+            toast.warning("You need to generate the invitation link", {
+                position: toast.POSITION.TOP_RIGHT,
+              });
+        }
+        
+    };
 
     const handleRandomLink = () => {
         try {
@@ -89,25 +159,15 @@ const AddFriend = () => {
 
                     <div className='invitation'>
                         <div className='get-link'>
-                            <p>Give this link to someone you want to add</p>
-                            {randomLink ? (
+                            <p>Give this link to someone you want to add</p>                        
                                 <div className='random-link-container'>
-                                    <span>{randomLink}</span>
+                                    {randomLink ? (<span>{randomLink}</span>):(<span>Here is your link</span>)}
+                                    
                                     <div>
-                                        <ContentCopyIcon style={{ fontSize: 30 }} />
-                                        <div className='tooltip'>Copy link</div>
-                                    </div>
-                                </div>) : (
-                                <div className='random-link-container'>
-                                    <span>Here is your link</span>
-                                    <div>
-                                        <ContentCopyIcon style={{ fontSize: 30 }} className='logo' />
+                                        <ContentCopyIcon style={{ fontSize: 30 }} onClick={copyLinkToClipboard} className='logo'/>
                                         <div className='tool-tip'>Copy link</div>
                                     </div>
-
                                 </div>
-                            )
-                            }
 
                             <button className='get-link-button' onClick={handleRandomLink}>Generate link</button>
                         </div>
@@ -122,6 +182,7 @@ const AddFriend = () => {
                                             placeholder='Your password'
                                             ref={passwordInputRef}
                                             onChange={(e) => setPassWord(e.target.value)}
+                                            value={passWord}
                                         />
                                     </div>
                                 ) : (
@@ -130,23 +191,27 @@ const AddFriend = () => {
                                             type='text'
                                             id='password'
                                             placeholder='Your password'
-                                            readonly = 'readonly'
+                                            readonly='readonly'
                                             ref={passwordInputRef}
                                             onChange={(e) => setPassWord(e.target.value)}
+                                            value={passWord}
                                         />
                                     </div>
                                 )}
 
                                 <div className='copy-password-icon'>
-                                    <ContentCopyIcon style={{ fontSize: 30 }} className='logo' />
+                                    <ContentCopyIcon style={{ fontSize: 30 }} className='logo' onClick={copyPasswordToClipboard} />
                                     <div className='tool-tip'>
                                         Copy password
                                     </div>
                                 </div>
 
                             </div>
+                            {passwordWarning && (
+                                <div className='password-warning'>{passwordWarning}</div>
+                            )}
                             <button className='change-password-button' onClick={handleToggleEditPassword}>
-                                Change
+                                {isEditablePassword ? ("Save") : ("Change")}
                             </button>
                         </div>
                     </div>
@@ -156,7 +221,7 @@ const AddFriend = () => {
 
 
             </div>
-
+            <ToastContainer/>
 
         </div>
     )

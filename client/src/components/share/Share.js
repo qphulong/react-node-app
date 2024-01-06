@@ -23,7 +23,7 @@ const Share = () => {
   const MAX_IMAGE = 5;
   const [descWord, setDescWord] = useState(0);
 
-  console.log(file)
+  // console.log(file)
  
  
   const handleContentChange = (e) => {

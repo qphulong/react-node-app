@@ -33,7 +33,7 @@ function App() {
 
   //get Context
   const {darkMode} = useContext(DarkModeContext);
-  console.log(darkMode);
+  // console.log(darkMode);
 
   //QueryClient
   const queryClient = new QueryClient()

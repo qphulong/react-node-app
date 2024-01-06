@@ -15,6 +15,7 @@ import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { AuthContext } from "../../context/authContext.js";
+import moment from 'moment';
 const Post = ({ post }) => {
   const items = [{
     id: 1,
@@ -31,6 +32,14 @@ const Post = ({ post }) => {
   const toggleDropdown = () => setOpenDropdown(!openDropdown);
   const dropdownRef = useRef(null);
   const postRef = useRef(null);
+  const [timestamp, setTimestamp] = useState(post.createdAt); // Replace with your actual API data
+  useEffect(() => {
+    const formattedTimestamp = moment(timestamp).fromNow(); // Use moment.js to format
+    setTimestamp(formattedTimestamp);
+    // console.log('====================================');
+    // console.log(timestamp);
+    // console.log('====================================');
+  }, [post.createdAt]);
 
   //images
   const [images, setImages] = useState([]); //images = [image1, image2, ...
@@ -171,12 +180,40 @@ const Post = ({ post }) => {
       console.log(err);
     }
   }
+  //==============================================================================================================
+  //===================================================================================================================
+    //profile image
+    const [profileImageNewsFeed,setProfileImageNewsFeed] = useState("https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
+    const fetchProfileImage = async (userId) => {
+        try {
+        const response = await axios.get(`http://localhost:3001/user/profile-pic/${userId}`);
+    
+        if (response.status === 200) {
+            const imageFilename = response.data
+            // console.log('====================================');
+            // console.log(imageFilename.profilePic);
+            // console.log('====================================');
+            setProfileImageNewsFeed(imageFilename.profilePic)
+        } else {
+            console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+        }
+        } catch (error) {
+        console.error('Error fetching profile image:', error.message);
+        }
+    };
+    //===================================================================================================================
   const [dem,setDem] = useState(0)
   // Call the async function
   useEffect(() => {
     fetchLikeData();
+    fetchProfileImage(post.user.userId)
     setDem(dem+1)
   },[])
+
+  ///=====================================================================================================================
+  
+
+  
   
   // console.log('====================================');
   // console.log(likes?.likes);
@@ -191,17 +228,17 @@ const Post = ({ post }) => {
         <div className="user">
           <div className="userInfo">
             <img
-              src="https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              src={profileImageNewsFeed}
               atl=""
             />
             <div className="details">
               <Link
-                to={`/profile/${post.userId}`}
+                to={`/profile/${post.user.userId}`}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
                 <span>{post.user.userId}</span>
               </Link>
-              <span className="date">1 min ago</span>
+              <span className="date">{timestamp}</span>
             </div>
           </div>
           <div className="extra-functions">

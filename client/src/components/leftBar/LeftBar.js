@@ -10,6 +10,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import EnhancedEncryptionOutlinedIcon from '@mui/icons-material/EnhancedEncryptionOutlined';
 import axios from "axios";
+import { Link } from "react-router-dom";
 const LeftBar = () => {
   const { currentUser,profileImage } = useContext(AuthContext);
   //===================================================================================================================
@@ -42,35 +43,35 @@ const LeftBar = () => {
     <div className="leftBar">
       <div className="container">
         <div className="menu">
-          <div className="item">
+          <Link to={"/"} className="item">
             <HomeOutlinedIcon style={{ fontSize: 30 }} />
             <span>Home</span>
-          </div>
+          </Link>
 
           {/* <div className="item">
             <NotificationsNoneOutlinedIcon style={{ fontSize: 30 }} />
             <span>Notifications</span>
           </div> */}
 
-          <div className="item">
+          <Link to={`/profile/${currentUser.userId}`} className="item">
             <PersonOutlineOutlinedIcon style={{ fontSize: 30 }} />
             <span>Profile</span>
-          </div>
+          </Link>
 
-          <div className="item">
+          <Link to={"/friends"} className="item">
             <PeopleIcon style={{ fontSize: 30 }} />
             <span>Friends</span>
-          </div>
+          </Link>
 
-          <div className="item">
+          <Link to={"/addfriends"} className="item">
             <PersonAddIcon style={{ fontSize: 30 }} />
             <span>Add Friends</span>
-          </div>
+          </Link>
 
-          <div className="item">
+          <Link to={"/change"} className="item">
             <EnhancedEncryptionOutlinedIcon style={{ fontSize: 30 }} />
             <span>Change</span>
-          </div>
+          </Link>
 
           <div className="item">
             <DensitySmallIcon style={{ fontSize: 30 }} />
@@ -78,7 +79,9 @@ const LeftBar = () => {
           </div>
         </div>
         <div className="button-container">
-          <button>Tweet</button>
+            <Link to="/">
+              <button>Share</button>
+            </Link>
         </div>
 
         <div className="user">
