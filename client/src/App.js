@@ -82,7 +82,7 @@ function App() {
           element: <Home/>
         },
         {
-          path: "/profile/:id",
+          path: "/profile/:userId",
           element: <Profile/>
         },
         {

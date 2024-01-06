@@ -14,22 +14,55 @@ import Post from '../../components/post/Post';
 import Posts from '../../components/posts/Posts';
 import EditOffIcon from '@mui/icons-material/EditOff';
 
-import { useContext, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import EditOff from '@mui/icons-material/EditOff';
 import PostsProfile from '../../components/postsProfile/PostsProfile';
 import { AuthContext } from '../../context/authContext';
 import axios from 'axios';
 import EditNote from '@mui/icons-material/EditNote';
+import { useParams } from 'react-router-dom';
 
 const Profile = () => {
     const inputRef = useRef(null);
     const [image, setImage] = useState("");
-    const [name, setName] = useState('Jane Doe');
     const { currentUser, profileImage, setProfileImage } = useContext(AuthContext);
+    const { userId } = useParams();
+    const isOwnProfile = currentUser.userId === userId
 
+    const [areFriends, setAreFriends] = useState(null);
 
+    useEffect(() => {
+        if (currentUser.userId !== userId) {
+            const fetchIsFriend = async () => {
+                try {
+                const response = await axios.get(`http://localhost:3001/user/friends/check/${currentUser.userId}/${userId}`);
+                setAreFriends(response.data.isFriend);
+                } catch (error) {
+                console.error("Error checking friendship:", error);
+                }
+            };
+
+            fetchIsFriend();
+        }
+    }, [currentUser.userId, userId]);
+
+    if (areFriends === false) {
+        return (
+        <div>
+            You are not friends with currentUser
+        </div>
+        );
+    }
+
+    if (areFriends === null) {
+        return (
+        <div>
+            User not found
+        </div>
+        );
+    }
     const handleImageClick = () => {
-        inputRef.current.click();
+        if(isOwnProfile) inputRef.current.click();
     }
 
     //upload
@@ -56,10 +89,12 @@ const Profile = () => {
     };
 
     const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        if (file) upload(file)
-        setImage(file);
-        window.location.reload();
+        if(isOwnProfile){
+            const file = event.target.files[0];
+            if (file) upload(file)
+            setImage(file);
+            window.location.reload();
+        }
     }
 
 
@@ -70,7 +105,9 @@ const Profile = () => {
                     alt="" className='cover' />
                 <div className='profile-image-container' onClick={handleImageClick}>
                     {image ? <img src={URL.createObjectURL(image)} alt='' className='profile-picture-after' /> : <img src={profileImage} className='profile-picture-before' />}
-                    <FileUploadIcon style={{ fontSize: 50 }} className='upload-image-icon' />
+                    {isOwnProfile ? (
+                        <FileUploadIcon style={{ fontSize: 50 }} className='upload-image-icon' />
+                    ) : null}
                     <input type="file" ref={inputRef} onChange={handleImageChange} className='upload-image-btn' />
                 </div>
 
@@ -81,7 +118,7 @@ const Profile = () => {
 
                     <div className='center'>
                         <div className='name'>
-                            <span>{name}</span>
+                            <span>{currentUser.userId}</span>
                         </div>
 
                         <div className='social-link'>
@@ -97,8 +134,6 @@ const Profile = () => {
                                 <LinkedInIcon style={{ fontSize: 30 }} className='logo' />
                             </a>
                         </div>
-
-
 
                     </div>
                 </div>
