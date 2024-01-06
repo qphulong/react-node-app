@@ -1,6 +1,6 @@
 @import "../../style.scss";
 
-.add-friend-page {
+.add-friend-page-test {
     @include themify($themes) {
         .image {
             width: 100%;
@@ -124,11 +124,11 @@
                                 transition: opacity 0.15s;
                             }
 
-                            .logo{
+                            .logo {
                                 cursor: pointer;
                             }
-    
-                            .logo:hover + .tool-tip{
+
+                            .logo:hover+.tool-tip {
                                 opacity: 1;
                             }
                         }
@@ -188,11 +188,11 @@
                                 transition: opacity 0.15s;
                             }
 
-                            .logo{
+                            .logo {
                                 cursor: pointer;
                             }
-    
-                            .logo:hover + .tool-tip{
+
+                            .logo:hover+.tool-tip {
                                 opacity: 1;
                             }
 
@@ -208,15 +208,15 @@
                             cursor: pointer;
                         }
 
-                        .change-password-button:hover{
+                        .change-password-button:hover {
                             filter: brightness(90%);
                         }
 
-                        .password-warning{
+                        .password-warning {
                             color: red;
                         }
 
-                        
+
 
                     }
                 }
