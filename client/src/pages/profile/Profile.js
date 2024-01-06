@@ -54,7 +54,7 @@ const Profile = () => {
         if (areFriends === true) {
           fetchProfileImage();
         }
-      }, [areFriends]);
+    }, [areFriends]);
     //===================================================================================================================
 
     useEffect(() => {
@@ -80,7 +80,7 @@ const Profile = () => {
         );
     }
 
-    if (areFriends === null) {
+    if (areFriends === null && !isOwnProfile) {
         return (
         <div>
             User not found
@@ -166,7 +166,7 @@ const Profile = () => {
                 </div>
             </div>
             <div className='container-post'>
-                <PostsProfile />
+                <PostsProfile userId = {isOwnProfile ? currentUser.userId : userId}/>
             </div>
         </div>
     )

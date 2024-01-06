@@ -16,7 +16,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-const PostProfile = ({ post }) => {
+const PostProfile = ({ userId,post }) => {
   const { currentUser, login, logout } = useContext(AuthContext);
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(post.content);
