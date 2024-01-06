@@ -177,6 +177,72 @@ const PostProfile = ({ imageProfile,userId,post }) => {
     },
 });
 
+  //===============================================================================================
+  // Like function
+  // Like function
+  const {data: likesProfile} = useQuery({
+      queryKey: ["likesProfile",post.postId],
+      queryFn: async () => {
+      try {
+          return await axios
+          .get(`http://localhost:3001/posts/${post.postId}/likes`)
+          .then((response) => {
+              return response.data;
+          });
+      } catch (error) {
+          throw error; 
+      }
+    },
+  });
+
+  // Mutations
+  const mutationLike = useMutation({
+      mutationFn: () => {
+      return axios.put("http://localhost:3001/posts/likes", {
+        userId: userId, 
+        postId: post.postId
+      })},
+      onSuccess: (response) => {
+          console.log("Newly added like:", response.data);
+
+          queryClient.invalidateQueries({queryKey: ["likesProfile",post.postId]});
+      },
+      onError: (error, variables, context) => {
+          console.log('====================================');
+              console.log("error");
+              console.log('====================================');
+        },
+        onSettled: (data, error, variables, context) => {
+          console.log('====================================');
+              console.log("settle");
+              console.log('====================================');
+        },
+  });
+
+  const handleClickLike = (e) => {
+    e.preventDefault();
+    fetchLikeData();
+    mutationLike.mutate({user: userId, postId: post.postId})
+  }
+
+  async function fetchLikeData() {
+    try {
+      const response = await axios.get(`http://localhost:3001/posts/${userId}/${post.postId}/liked`);
+      // console.log(response.data.liked);
+      if(dem == 0) setLike(response.data.liked)
+      else setLike(!response.data.liked)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const [dem,setDem] = useState(0)
+  // Call the async function
+  useEffect(() => {
+    fetchLikeData();
+    setDem(dem+1)
+  },[])
+
   // console.log('====================================');
   // console.log(cmtsProfile?.comments.length);
   // console.log('====================================');
@@ -261,9 +327,9 @@ const PostProfile = ({ imageProfile,userId,post }) => {
         </div>
 
         <div className="info">
-          <div className="item" onClick={() => setLike(!like)}>
+          <div className="item" onClick={handleClickLike}>
             {like ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-            12
+            {likesProfile?.likes}
           </div>
 
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
