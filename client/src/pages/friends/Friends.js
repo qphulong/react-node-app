@@ -10,7 +10,7 @@ import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import './friends.scss'
 import { useContext, useState, useRef, useEffect } from 'react';
 import { AuthContext } from '../../context/authContext';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
 const Friends = () => {
@@ -32,6 +32,34 @@ const Friends = () => {
             }
         },
     });
+
+    //=========================================================================================================
+    //=========================================================================================================
+    // DELETE FRIEND FUNCTION
+    // const queryClient = useQueryClient()
+    // // Mutations
+    // const mutationDelete = useMutation({
+    //     mutationFn: (friendId) => {
+    //     return axios.delete(`http://localhost:3001/user/friends`,{
+    //         userId: currentUser.userId,
+    //         friendId: friendId
+    //     });
+    //     },
+    //         onSuccess: () => {
+    //         console.log("Delete friend success!");
+    //         queryClient.invalidateQueries({ queryKey: ["FriendsInfo"] });
+    //     },
+    //         onError: (error) => {
+    //         console.error("Delete friend error:", error);
+    //     },
+    // });
+
+    // const handleDeletePost = (e,friendId) => {
+    //     e.preventDefault();
+    //     mutationDelete.mutate({friendId});
+    // };
+    //=========================================================================================================
+    //=========================================================================================================
 
 
     const toggleDropdown = (friendId) => {
@@ -63,6 +91,7 @@ const Friends = () => {
     function handleOnClick(friendId, item) {
         if (item.id == 1) {
             console.log("1");
+            // handleDeletePost(friendId)
         }
     }
 
