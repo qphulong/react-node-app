@@ -4,17 +4,21 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
-import { useContext, useState, useRef } from 'react';
+import { useContext, useState, useRef, useEffect } from 'react';
 import { AuthContext } from '../../context/authContext';
 import axios from 'axios';
 
 
 const AddFriend = () => {
-    const { currentUser,profileImage } = useContext(AuthContext);
-    const [passWord, setPassWord] = useState("")
+    const { currentUser,profileImage,passWordLink,setPassWordLink,randomLinkInvitation,setRandomLinkInvitation } = useContext(AuthContext);
     const [randomLink, setRandomLink] = useState(null);
+    const [passWord, setPassWord] = useState("")
     const [isEditablePassword, setIsEditablePassword] = useState(true);
     const passwordInputRef = useRef(null);
+
+    // useEffect(() => {
+    //     console.log("Current Link:", randomLinkInvitation);
+    //  }, [randomLinkInvitation]);
 
     //Constant
     const MAX_PASSWORD_CHAR = 16
@@ -38,6 +42,8 @@ const AddFriend = () => {
                 linkPassword: passWord
             }).then((res) => {
                 setRandomLink(res.data.friendLink)
+                setRandomLinkInvitation(res.data.friendLink)
+                setPassWordLink(passWord)
                 console.log('====================================');
                 console.log(passWord);
                 console.log(res.data.friendLink);
