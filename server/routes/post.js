@@ -41,6 +41,10 @@ router.put("/likes", async (req, res) => {
 
   const user = await User.findOne({ userId: userId });
 
+  if (!user) {
+    res.status(404).error("User not found");
+  }
+
   if (post.likePeople.includes(user)) {
     post.likePeople.pull(user);
     post.likes -= 1;
