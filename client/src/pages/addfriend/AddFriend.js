@@ -7,13 +7,15 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { useContext, useState, useRef, useEffect } from 'react';
 import { AuthContext } from '../../context/authContext';
 import axios from 'axios';
+import e from 'cors';
 
 
 const AddFriend = () => {
-    const { currentUser,profileImage} = useContext(AuthContext);
+    const { currentUser, profileImage } = useContext(AuthContext);
     const [randomLink, setRandomLink] = useState(null);
     const [passWord, setPassWord] = useState("")
     const [isEditablePassword, setIsEditablePassword] = useState(true);
+    const [passwordWarning, setPasswordWarning] = useState('');
     const passwordInputRef = useRef(null);
 
     // useEffect(() => {
@@ -31,14 +33,35 @@ const AddFriend = () => {
     const MIN_PASSWORD_CHAR = 8
 
     const handleToggleEditPassword = () => {
-        setIsEditablePassword(!isEditablePassword);
-        if (passwordInputRef.current) {
-            passwordInputRef.current.focus();
+        // Check password length when changing the mode
+        if (isEditablePassword) {
+            const isValidPassword = validatePassword(passWord);
+            if (!isValidPassword) {
+                setIsEditablePassword(isEditablePassword)
+            }
+            else {
+                setIsEditablePassword(!isEditablePassword);
+                if (passwordInputRef.current) {
+                    passwordInputRef.current.focus();
+                }
+            }
         }
+        else{
+            setIsEditablePassword(!isEditablePassword);
+        }
+
     };
 
     //Check length of password
-    const validPassword = passWord.length >= MIN_PASSWORD_CHAR && passWord.length <= MAX_PASSWORD_CHAR
+    const validatePassword = (password) => {
+        if (password.length < MIN_PASSWORD_CHAR || password.length > MAX_PASSWORD_CHAR) {
+            setPasswordWarning(`Password must be between ${MIN_PASSWORD_CHAR} and ${MAX_PASSWORD_CHAR} characters.`);
+            return false;
+        } else {
+            setPasswordWarning('');
+            return true;
+        }
+    };
 
 
     const handleRandomLink = () => {
@@ -95,7 +118,7 @@ const AddFriend = () => {
                                     <span>{randomLink}</span>
                                     <div>
                                         <ContentCopyIcon style={{ fontSize: 30 }} />
-                                        <div className='tooltip'>Copy link</div>
+                                        <div className='tool-tip'>Copy link</div>
                                     </div>
                                 </div>) : (
                                 <div className='random-link-container'>
@@ -122,6 +145,7 @@ const AddFriend = () => {
                                             placeholder='Your password'
                                             ref={passwordInputRef}
                                             onChange={(e) => setPassWord(e.target.value)}
+                                            value={passWord}
                                         />
                                     </div>
                                 ) : (
@@ -130,9 +154,10 @@ const AddFriend = () => {
                                             type='text'
                                             id='password'
                                             placeholder='Your password'
-                                            readonly = 'readonly'
+                                            readonly='readonly'
                                             ref={passwordInputRef}
                                             onChange={(e) => setPassWord(e.target.value)}
+                                            value={passWord}
                                         />
                                     </div>
                                 )}
@@ -145,8 +170,11 @@ const AddFriend = () => {
                                 </div>
 
                             </div>
+                            {passwordWarning && (
+                                <div className='password-warning'>{passwordWarning}</div>
+                            )}
                             <button className='change-password-button' onClick={handleToggleEditPassword}>
-                                Change
+                                {isEditablePassword ? ("Save") : ("Change")}
                             </button>
                         </div>
                     </div>
