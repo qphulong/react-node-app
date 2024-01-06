@@ -140,6 +140,38 @@ const Friends = () => {
         //     }));
         // }
     }
+
+    //===================================================================================================================
+    //profile image
+    const [profileImages, setProfileImages] = useState({});    
+    const fetchProfileImage = async (id) => {
+        try {
+        const response = await axios.get(`http://localhost:3001/user/profile-pic/${id}`);
+    
+        if (response.status === 200) {
+            const imageFilename = response.data
+            // console.log('====================================');
+            // console.log(imageFilename.profilePic);
+            // console.log('====================================');
+            setProfileImages((prevProfileImages) => ({
+                ...prevProfileImages,
+                [id]: imageFilename.profilePic,
+            }));
+        } else {
+            console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+        }
+        } catch (error) {
+        console.error('Error fetching profile image:', error.message);
+        }
+    };
+    useEffect(() => {
+        if (FriendsInfo && FriendsInfo.friends) {
+            FriendsInfo.friends.forEach((friend) => {
+                fetchProfileImage(friend.userId);
+            });
+        }
+    }, [FriendsInfo]);
+    //===================================================================================================================
     return (
         <div className='friends'>
             <div className="title">
@@ -150,7 +182,7 @@ const Friends = () => {
                 {FriendsInfo && FriendsInfo.friends.map((friend) => (
                     <div className='item' key={friend.userId}>
                         <div className='friends-top'>
-                            <img src='https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' alt='' />
+                            <img src={profileImages[friend.userId] || 'https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'} alt='' />
                             <span className='friends-name'>
                                 {friend.userId}
                             </span>
