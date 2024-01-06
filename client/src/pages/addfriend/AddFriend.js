@@ -13,6 +13,19 @@ const AddFriend = () => {
     const { currentUser } = useContext(AuthContext);
     const [passWord, setPassWord] = useState("")
     const [randomLink, setRandomLink] = useState(null);
+    const [isEditablePassword, setIsEditablePassword] = useState(true);
+
+    //Constant
+    const MAX_PASSWORD_CHAR = 16
+    const MIN_PASSWORD_CHAR = 8
+
+    const handleToggleEditPassword = () => {
+        setIsEditablePassword(!isEditablePassword);
+    };
+
+    //Check length of password
+    const validPassword = passWord.length >= MIN_PASSWORD_CHAR && passWord.length <= MAX_PASSWORD_CHAR
+
 
     const handleRandomLink = () => {
         try {
@@ -78,7 +91,7 @@ const AddFriend = () => {
                                 <div className='random-link-container'>
                                     <span>Here is your link</span>
                                     <div>
-                                        <ContentCopyIcon style={{ fontSize: 30 }} className='logo'/>
+                                        <ContentCopyIcon style={{ fontSize: 30 }} className='logo' />
                                         <div className='tool-tip'>Copy link</div>
                                     </div>
 
@@ -91,14 +104,27 @@ const AddFriend = () => {
                         <div className='get-password'>
                             <p>Password to add</p>
                             <div className='password-container'>
-                                <div className='password'>
-                                    <input
-                                        type='text'
-                                        id='password'
-                                        placeholder='Your password'
-                                        onChange={(e) => setPassWord(e.target.value)}
-                                    />
-                                </div>
+                                {isEditablePassword ? (
+                                    <div className='password'>
+                                        <input
+                                            type='text'
+                                            id='password'
+                                            placeholder='Your password'
+                                            onChange={(e) => setPassWord(e.target.value)}
+                                        />
+                                    </div>
+                                ) : (
+                                    <div className='password'>
+                                        <input
+                                            type='text'
+                                            id='password'
+                                            placeholder='Your password'
+                                            readonly = 'readonly'
+                                            onChange={(e) => setPassWord(e.target.value)}
+                                        />
+                                    </div>
+                                )}
+
                                 <div className='copy-password-icon'>
                                     <ContentCopyIcon style={{ fontSize: 30 }} className='logo' />
                                     <div className='tool-tip'>
@@ -107,7 +133,7 @@ const AddFriend = () => {
                                 </div>
 
                             </div>
-                            <button className='change-password-button'>
+                            <button className='change-password-button' onClick={handleToggleEditPassword}>
                                 Change
                             </button>
                         </div>
