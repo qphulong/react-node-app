@@ -69,7 +69,7 @@ const LeftBar = () => {
 
           <div className="item">
             <EnhancedEncryptionOutlinedIcon style={{ fontSize: 30 }} />
-            <span>Change Password</span>
+            <span>Change</span>
           </div>
 
           <div className="item">
