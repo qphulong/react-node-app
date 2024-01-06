@@ -30,7 +30,7 @@
             padding: 20px 30px;
 
             .user-info {
-                
+
                 -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
                 -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
                 box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
@@ -88,30 +88,52 @@
                     align-items: center;
                     text-align: center;
                     color: themed('textColor');
-    
+
                     .get-link {
                         display: flex;
                         flex-direction: column;
                         align-items: center;
                         gap: 6px;
-                        p{
+
+                        p {
                             font-size: 16px;
                             margin-bottom: 0;
                         }
-                        .random-link-container{
+
+                        .random-link-container {
                             display: flex;
                             flex-direction: row;
                             gap: 15px;
                             padding: 10px;
-                            background-color: themed("bgSoft") ;
+                            background-color: themed("bgSoft");
                             color: themed("textColor");
                             border: solid;
                             align-items: center;
                             font-size: 14px;
                             border-radius: 10px;
+
+                            .tool-tip {
+                                margin-left: -4px;
+                                position: absolute;
+                                font-size: 10px;
+                                padding: 6px 4px;
+                                background-color: themed("textColorSoft");
+                                color: themed("bg");
+                                border-radius: 4px;
+                                opacity: 0;
+                                transition: opacity 0.15s;
+                            }
+
+                            .logo{
+                                cursor: pointer;
+                            }
+    
+                            .logo:hover + .tool-tip{
+                                opacity: 1;
+                            }
                         }
 
-                        .get-link-button{
+                        .get-link-button {
                             width: 100px;
                             background-color: themed("logo");
                             border: none;
@@ -119,40 +141,64 @@
                             color: themed("bg");
                             padding: 10px 10px;
                         }
-                        
+
                     }
 
-                    .get-password{
+                    .get-password {
                         display: flex;
                         flex-direction: column;
                         align-items: center;
                         margin-top: 20px;
                         gap: 6px;
-                        p{
+
+                        p {
                             font-size: 16px;
                             margin-bottom: 0;
                         }
-                        .password-container{
+
+                        .password-container {
                             display: flex;
                             flex-direction: row;
                             gap: 15px;
                             padding: 10px;
-                            background-color: themed("bgSoft") ;
+                            background-color: themed("bgSoft");
                             color: themed("textColor");
                             border: solid;
                             align-items: center;
                             font-size: 14px;
                             border-radius: 10px;
-                            .password{
-                                input{
+
+                            .password {
+                                input {
                                     outline: none;
                                     background-color: transparent;
                                     border: none;
                                 }
                             }
-                            
+
+                            .tool-tip {
+                                margin-left: -16px;
+                                position: absolute;
+                                font-size: 10px;
+                                padding: 6px 4px;
+                                background-color: themed("textColorSoft");
+                                color: themed("bg");
+                                border-radius: 4px;
+                                opacity: 0;
+                                transition: opacity 0.15s;
+                            }
+
+                            .logo{
+                                cursor: pointer;
+                            }
+    
+                            .logo:hover + .tool-tip{
+                                opacity: 1;
+                            }
+
                         }
-                        .change-password-button{
+
+                        .change-password-button {
                             width: 100px;
                             background-color: themed("logo");
                             border: none;
@@ -160,11 +206,14 @@
                             color: themed("bg");
                             padding: 10px 10px;
                         }
+
+                        
+
                     }
                 }
             }
 
-            
+
 
 
 

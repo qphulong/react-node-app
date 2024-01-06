@@ -70,11 +70,18 @@ const AddFriend = () => {
                             {randomLink ? (
                                 <div className='random-link-container'>
                                     <span>{randomLink}</span>
-                                    <ContentCopyIcon style={{ fontSize: 30 }} />
+                                    <div>
+                                        <ContentCopyIcon style={{ fontSize: 30 }} />
+                                        <div className='tooltip'>Copy link</div>
+                                    </div>
                                 </div>) : (
                                 <div className='random-link-container'>
                                     <span>Here is your link</span>
-                                    <ContentCopyIcon style={{ fontSize: 30 }} />
+                                    <div>
+                                        <ContentCopyIcon style={{ fontSize: 30 }} className='logo'/>
+                                        <div className='tool-tip'>Copy link</div>
+                                    </div>
+
                                 </div>
                             )
                             }
@@ -92,7 +99,13 @@ const AddFriend = () => {
                                         onChange={(e) => setPassWord(e.target.value)}
                                     />
                                 </div>
-                                <ContentCopyIcon style={{ fontSize: 30 }} />
+                                <div className='copy-password-icon'>
+                                    <ContentCopyIcon style={{ fontSize: 30 }} className='logo' />
+                                    <div className='tool-tip'>
+                                        Copy password
+                                    </div>
+                                </div>
+
                             </div>
                             <button className='change-password-button'>
                                 Change
