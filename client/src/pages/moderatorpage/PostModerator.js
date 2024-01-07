@@ -1,6 +1,8 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import './postModerator.scss';
 import { useEffect, useState, useRef, useContext } from "react";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
+import axios from 'axios';
 
 const PostModerator = ({postIdModerator}) => {
     
@@ -26,7 +28,7 @@ const PostModerator = ({postIdModerator}) => {
          `http://localhost:3001/posts/images/${postId}`
         );
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         setImages(data.images);
 
         for (let i = 0; i < data.images.length; i++) {
@@ -41,12 +43,30 @@ const PostModerator = ({postIdModerator}) => {
     //=================================================================================================
     //=================================================================================================
     // Handle Click Keep or Remove
-    const handleKeep = () => {
+    const queryClient = useQueryClient();
 
+    // Mutations
+    const mutationKeep = useMutation({
+        mutationFn: () => {
+        return axios.put(`http://localhost:3001/user/moderator/keep`, {
+            postId: postIdModerator,
+        });
+        },
+        onSuccess: () => {
+        // Invalidate and refetch
+            queryClient.invalidateQueries({ queryKey: ["ModeratorPosts"] });
+            console.log('====================================');
+            console.log("Keep: ",postIdModerator);
+            console.log('====================================');
+        },
+    });
+    const handleKeep = (e) => {
+        e.preventDefault();
+        mutationKeep.mutate({ postIdModerator });
     }
 
     const handleRemove = () => {
-        
+
     }
 
     //=================================================================================================
