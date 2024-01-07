@@ -15,6 +15,30 @@ const { currentUser } = require("../app");
 
 const router = express.Router();
 
+router.get("/", (req, res) => {
+  // get all users
+  User.find()
+    .then((users) => {
+      res.json({ users: users });
+    })
+    .catch((err) => res.status(500).json({ error: err }));
+});
+
+router.get("/:userId/admin", async (req, res) => {
+  const userId = req.params.userId;
+
+  const user = await User.findOne({ userId: userId });
+
+  if (!user) {
+    res.status(404).send("User not found");
+    return;
+  }
+
+  console.log(user);
+
+  return res.json({ isAdmin: user.isAdmin });
+});
+
 router.post(
   "/sign-up",
   query("userId").notEmpty(), //call this validation middleware first to validate

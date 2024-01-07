@@ -27,6 +27,7 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 import AddFriendTest from "./pages/addfriendtest/AddFriendTest";
+import AdminPage from "./pages/adminpage/AdminPage";
 function App() {
 
   //Protected Route
@@ -119,6 +120,10 @@ function App() {
     {
       path: "/invitations/add-friends/:link",
       element: <Invitations/>
+    },
+    {
+      path: "/admin",
+      element: <AdminPage/>,
     },
   ]);
 
