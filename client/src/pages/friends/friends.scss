@@ -1,48 +1,54 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital@0;1&family=Lily+Script+One&display=swap');
 @import "../../style.scss";
 
-.friends{
+.friends {
     font-family: 'Josefin Sans', sans-serif;
     margin: 0;
 }
 
-.friends{
-    @include themify($themes){
+.friends {
+    @include themify($themes) {
         height: 100%;
         padding: 10px 50px 20px 50px;
         background-color: themed("bgSoft");
-        .title{
+
+        .title {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            p{
+
+            p {
                 color: themed("textColor");
                 font-size: 26px;
                 font-weight: 700;
             }
         }
 
-        .content-container{
-            .item{
+        .content-container {
+            .item {
                 background-color: themed("bg");
                 display: flex;
                 flex-direction: column;
                 border-radius: 20px;
                 padding: 10px;
+                padding-bottom: 20px;
                 margin-top: 80px;
-                .friends-top{
+
+                .friends-top {
                     display: flex;
                     flex-direction: column;
                     text-align: center;
                     align-items: center;
-                    img{
+
+                    img {
                         height: 130px;
                         width: 130px;
                         border-radius: 50%;
                         border: 3px solid themed('bg');
                         margin-top: -80px;
                     }
-                    .friends-name{
+
+                    .friends-name {
                         color: themed("textColor");
                         margin-top: 10px;
                         font-size: 25px;
@@ -50,55 +56,17 @@
                     }
                 }
 
-                .friends-mid{
+                .friends-mid {
                     display: flex;
                     flex-direction: row;
-                    justify-content: right;
+                    justify-content: center;
+                    align-items: center;
                     gap: 5px;
                     margin-top: 10px;
                     color: themed("logo");
-                    
-                    .extra-function-dropdown{
-                        margin-top: 0px;
-                        margin-left: -100px;
-                        padding: 0;
-                        position: absolute;
-                        .list-item{
-                            list-style-type: none;
-                            display: flex;
-                            flex-direction: column;
-                            
-                            button {
-                                display: flex;
-                                justify-content: space-between;
-                                border-radius: 16px;
-                                background-color: white;
-                                font-size: 12px;
-                                padding: 10px 15px 10px 15px;
-                                border: 0;
-                                border-bottom: 1px solid #ccc;
-                                width: 100%;
-                                text-align: center;
-                                align-items: center;
-                                border-left: 1px solid #ccc;
-                                border-right: 1px solid #ccc;
-                        
-                                &:hover, &:focus {
-                                  cursor: pointer;
-                                  background-color: #ccc;
-                                }}
-                        }
-                    }
-                    .logo{
-                        cursor: pointer;
-                    }
-                }
+                    position: relative;
 
-                .friends-bottom{
-                    display: flex;
-                    justify-content: center;
-                    margin-top: 10px;
-                    button{
+                    button {
                         border: 1px solid themed("logo");
                         border-radius: 20px;
                         background-color: themed("logo");
@@ -108,9 +76,61 @@
                         cursor: pointer;
                     }
 
-                    button:hover{
+                    button:hover {
                         background-color: darken(themed("logo"), 5%);
                     }
+
+                    .extra-function-dropdown {
+                        margin-top: 20px;
+                        margin-left: 200px;
+                        padding: 0;
+                        position: absolute;
+
+                        background-color: themed("bg");
+                        border-style: solid;
+                        border-color: themed("bgSoft");
+                        border-width: 1px;
+                        border-radius: 10px;
+
+                        .list-item {
+                            list-style-type: none;
+                            display: flex;
+                            flex-direction: column;
+
+                            button {
+                                display: flex;
+                                justify-content: space-between;
+                                background-color: transparent;
+                                font-size: 12px;
+                                padding: 10px 15px 10px 15px;
+                                border: none;
+                                width: 100%;
+                                text-align: left;
+                                align-items: center;
+                                border-radius: 8px;
+                                color: themed("textColor");
+
+                                &:hover,
+                                &:focus {
+                                    cursor: pointer;
+                                    background-color: themed("hovercomment");
+                                }
+                            }
+                        }
+                    }
+
+                    .logo {
+                        position: absolute;
+                        right: 0;
+                        cursor: pointer;
+                    }
+                }
+
+                .friends-bottom {
+                    display: flex;
+                    justify-content: center;
+                    margin-top: 10px;
+
                 }
             }
         }

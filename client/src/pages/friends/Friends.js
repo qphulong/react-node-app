@@ -43,7 +43,7 @@ const Friends = () => {
             const res = await axios.delete("http://localhost:3001/user/friends", {
                 data: { userId: currentUser.userId, friendId: friendIdPro }
             });
-    
+
             console.log('====================================');
             console.log(res);
             console.log('====================================');
@@ -54,7 +54,7 @@ const Friends = () => {
             console.error('====================================');
         }
     }
-    
+
     useEffect(() => {
         responseData(friend);
     }, [friend]);
@@ -132,7 +132,7 @@ const Friends = () => {
                     [friendId]: false,
                 }));
             }
-            
+
         };
 
         document.addEventListener("mousedown", (e) => {
@@ -158,30 +158,27 @@ const Friends = () => {
             // handleDeletePost(friendId)
         }
     }
-
-
-
     //===================================================================================================================
     //profile image
-    const [profileImages, setProfileImages] = useState({});    
+    const [profileImages, setProfileImages] = useState({});
     const fetchProfileImage = async (id) => {
         try {
-        const response = await axios.get(`http://localhost:3001/user/profile-pic/${id}`);
-    
-        if (response.status === 200) {
-            const imageFilename = response.data
-            // console.log('====================================');
-            // console.log(imageFilename.profilePic);
-            // console.log('====================================');
-            setProfileImages((prevProfileImages) => ({
-                ...prevProfileImages,
-                [id]: imageFilename.profilePic,
-            }));
-        } else {
-            console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
-        }
+            const response = await axios.get(`http://localhost:3001/user/profile-pic/${id}`);
+
+            if (response.status === 200) {
+                const imageFilename = response.data
+                // console.log('====================================');
+                // console.log(imageFilename.profilePic);
+                // console.log('====================================');
+                setProfileImages((prevProfileImages) => ({
+                    ...prevProfileImages,
+                    [id]: imageFilename.profilePic,
+                }));
+            } else {
+                console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+            }
         } catch (error) {
-        console.error('Error fetching profile image:', error.message);
+            console.error('Error fetching profile image:', error.message);
         }
     };
     useEffect(() => {
@@ -208,35 +205,32 @@ const Friends = () => {
                             </span>
                         </div>
                         <div className='friends-mid'>
-                            <div className='friends-right'>
-                                <MoreVertIcon style={{ fontSize: 30 }} onClick={() => toggleDropdown(friend.userId)}
-                                    ref={extraFunctionRef} className='logo' />
-                                <div className="dropdown" ref={(ref) => (dropdownRefs.current[friend.userId] = ref)}>
-                                    {openDropdown[friend.userId] && (
-                                        <ul className="extra-function-dropdown">
-                                            {items.map((item) => (
-                                                <li className="list-item" key={item.id}>
-                                                    <button onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        handleOnClick(friend.userId, item);
-                                                    }
-                                                    }>
-                                                        <span>{item.value}</span>
-                                                        {item.icon}
-                                                    </button>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                        <div className='friends-bottom'>
                             <Link to={`/profile/${friend.userId}`}>
                                 <button>
-                                   Visit
+                                    Visit
                                 </button>
                             </Link>
+                            <MoreVertIcon style={{ fontSize: 30 }} onClick={() => toggleDropdown(friend.userId)}
+                                ref={extraFunctionRef} className='logo' />
+                            <div className="dropdown" ref={(ref) => (dropdownRefs.current[friend.userId] = ref)}>
+                                {openDropdown[friend.userId] && (
+                                    <ul className="extra-function-dropdown">
+                                        {items.map((item) => (
+                                            <li className="list-item" key={item.id}>
+                                                <button onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleOnClick(friend.userId, item);
+                                                }
+                                                }>
+                                                    <span>{item.value}</span>
+                                                    {item.icon}
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </div>
+
                         </div>
                     </div>
                 ))}
