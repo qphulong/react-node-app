@@ -326,19 +326,38 @@ const Post = ({ post }) => {
         </div>
 
         <div className="info">
-          <div className="item" onClick={handleClickLike}>
-            {like ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-            {likes?.likes || 0}
+          <div className="item-container">
+            <div className="item" onClick={handleClickLike}>
+              {like ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              {likes?.likes || 0}
+              
+            </div>
+            <div className="tool-tip">
+                Like
+              </div>
           </div>
 
-          <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
-            <CommentOutlinedIcon />
-            {cmts?.comments.length}
+          <div className="item-container">
+            <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
+              <CommentOutlinedIcon />
+              {cmts?.comments.length}
+              
+            </div>
+            <div className="tool-tip">
+                Comment
+              </div>
           </div>
 
-          <div className="item">
-            <ShareOutlinedIcon />
+          <div className="item-container">
+            <div className="item">
+              <ShareOutlinedIcon />
+              
+            </div>
+            <div className="tool-tip">
+                Share
+              </div>
           </div>
+
         </div>
 
         {/* <div
