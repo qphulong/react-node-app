@@ -50,14 +50,15 @@
                     .dropdown {
                         .post-profile-dropdown {
                             margin-top: 30px;
-                            margin-left: -120px;
-                            padding: 10px;
+                            margin-left: -130px;
+                            padding: 5px;
                             position: absolute;
+                            z-index: 90;
 
                             background-color: themed("bg");
                             border-style: solid;
                             border-color: themed("bgSoft");
-                            border-width: 1px;
+                            border-width: 2px;
                             border-radius: 10px;
 
                             .list-item {
@@ -93,6 +94,43 @@
 
             .content {
                 margin: 20px 0px;
+
+                .edit-container {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+
+                    .edit-text {
+                        padding: 10px 15px;
+                        font-family: 'Josefin Sans', sans-serif;
+                        font-size: 16px;
+                    }
+
+                    .edit-button {
+                        text-align: right;
+                        button {
+                            border-radius: 12px;
+                            margin: 4px;
+                            border: none;
+                            padding: 8px 10px;
+                            font-size: 16px;
+                            color: white;
+                            cursor: pointer;
+                            background-color: themed("logo");
+                            color: themed("bg");
+                        }
+                        
+                        button:hover{
+                            filter:brightness(90%)
+                        }
+
+                        button:active{
+                            filter:brightness(80%)
+                        }
+
+                    }
+
+                }
 
                 .slider {
                     position: relative;
