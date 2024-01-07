@@ -77,6 +77,38 @@ router.put("/add-friends/:linkId", userController.acceptFriendLink);
 
 router.put("/social-media", userController.addSocialMedia);
 
+router.delete("/social-media", async (req, res) => {
+  const userId = req.body.userId;
+  const socialMedia = req.body.socialMedia;
+
+  const user = await User.findOne({ userId: userId });
+
+  if (!user) {
+    res.status(404).send("User not found");
+    return;
+  }
+
+  // check if social media exists
+  const socialMediaExists = user.otherSocialMedia.filter(
+    (media) => media.link === socialMedia
+  );
+
+  if (socialMediaExists.length === 0) {
+    return res.status(404).json({ error: "Social media link does not exist" });
+  }
+
+  // remove social media
+  user.otherSocialMedia = user.otherSocialMedia.filter(
+    (media) => media.link !== socialMedia
+  );
+
+  await user.save();
+
+  res.json({
+    socialMedia: await user.otherSocialMedia,
+  });
+});
+
 router.get("/social-media/:userId", userController.getSocialMedia);
 
 router.get("/:userId", (req, res) => {

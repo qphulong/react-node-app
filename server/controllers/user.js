@@ -111,6 +111,10 @@ exports.addSocialMedia = async (req, res) => {
     return;
   }
 
+  if (user.otherSocialMedia.length >= 5) {
+    res.status(400).send("Maximum number of social media (5) reached");
+    return;
+  }
   user.addSocialMedia(link);
 
   return res.json({
