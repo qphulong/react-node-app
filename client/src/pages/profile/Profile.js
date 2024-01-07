@@ -13,6 +13,8 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import Post from '../../components/post/Post';
 import Posts from '../../components/posts/Posts';
 import EditOffIcon from '@mui/icons-material/EditOff';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import { FaLink } from "react-icons/fa";
 
 import { useContext, useEffect, useRef, useState } from 'react';
 import EditOff from '@mui/icons-material/EditOff';
@@ -29,8 +31,8 @@ const Profile = () => {
     const { currentUser, profileImage, setProfileImage } = useContext(AuthContext);
     const { userId } = useParams();
     const isOwnProfile = currentUser.userId === userId
-    const [socialArray,setSocialArray] = useState([])
-    const [showSocialMedia,setShowSocialMedia] = useState(false)
+    const [socialArray, setSocialArray] = useState([])
+    const [showSocialMedia, setShowSocialMedia] = useState(false)
     // useEffect(() => {
     //     console.log('====================================');
     //     console.log(socialArray);
@@ -39,27 +41,27 @@ const Profile = () => {
 
     //===================================================================================================================
     //profile image
-    const [profileImageFriend,setProfileImageFriend] = useState("https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
+    const [profileImageFriend, setProfileImageFriend] = useState("https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
     const fetchProfileImage = async () => {
         try {
-        const response = await axios.get(`http://localhost:3001/user/profile-pic/${userId}`);
-    
-        if (response.status === 200) {
-            const imageFilename = response.data
-            // console.log('====================================');
-            // console.log(imageFilename.profilePic);
-            // console.log('====================================');
-            setProfileImageFriend(imageFilename.profilePic)
-        } else {
-            console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
-        }
+            const response = await axios.get(`http://localhost:3001/user/profile-pic/${userId}`);
+
+            if (response.status === 200) {
+                const imageFilename = response.data
+                // console.log('====================================');
+                // console.log(imageFilename.profilePic);
+                // console.log('====================================');
+                setProfileImageFriend(imageFilename.profilePic)
+            } else {
+                console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+            }
         } catch (error) {
-        console.error('Error fetching profile image:', error.message);
+            console.error('Error fetching profile image:', error.message);
         }
     };
     useEffect(() => {
         if (areFriends === true) {
-          fetchProfileImage();
+            fetchProfileImage();
         }
     }, [areFriends]);
     //===================================================================================================================
@@ -68,10 +70,10 @@ const Profile = () => {
         if (currentUser.userId !== userId) {
             const fetchIsFriend = async () => {
                 try {
-                const response = await axios.get(`http://localhost:3001/user/friends/check/${currentUser.userId}/${userId}`);
-                setAreFriends(response.data.isFriend);
+                    const response = await axios.get(`http://localhost:3001/user/friends/check/${currentUser.userId}/${userId}`);
+                    setAreFriends(response.data.isFriend);
                 } catch (error) {
-                console.error("Error checking friendship:", error);
+                    console.error("Error checking friendship:", error);
                 }
             };
 
@@ -81,22 +83,22 @@ const Profile = () => {
 
     if (areFriends === false) {
         return (
-        <div>
-            You are not friends with currentUser
-        </div>
+            <div>
+                You are not friends with currentUser
+            </div>
         );
     }
 
     if (areFriends === null && !isOwnProfile) {
         return (
-        <div>
-            User not found
-        </div>
+            <div>
+                User not found
+            </div>
         );
     }
-    
+
     const handleImageClick = () => {
-        if(isOwnProfile) inputRef.current.click();
+        if (isOwnProfile) inputRef.current.click();
     }
 
     //upload
@@ -123,7 +125,7 @@ const Profile = () => {
     };
 
     const handleImageChange = (event) => {
-        if(isOwnProfile){
+        if (isOwnProfile) {
             const file = event.target.files[0];
             if (file) upload(file)
             setImage(file);
@@ -135,14 +137,14 @@ const Profile = () => {
     const handleClickDisplaySocialMedia = async () => {
         try {
             const response = await axios.get(`http://localhost:3001/user/social-media/${userId}`);
-        
+
             if (response.status === 200) {
                 console.log('====================================');
                 console.log(response.data.socialMedia);
                 console.log('====================================');
                 setSocialArray(response.data.socialMedia)
                 setShowSocialMedia(!showSocialMedia)
-            } 
+            }
             else {
                 console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
             }
@@ -158,13 +160,13 @@ const Profile = () => {
 
         deleteLink(social)
     };
-    
+
     const deleteLink = async (social) => {
         try {
             const response = await axios.put(`http://localhost:3001/user/social-media/${currentUser.userId}`, {
                 socialMedia: social.link
             });
-    
+
             if (response.status === 200) {
                 console.log('Social media link deleted successfully');
             } else {
@@ -200,19 +202,26 @@ const Profile = () => {
                         </div>
 
                         <div className='social-link'>
-                            <button onClick={handleClickDisplaySocialMedia}>Social Media</button>
+                            <button onClick={handleClickDisplaySocialMedia} className='social-button'>Social Media</button>
                             {showSocialMedia && (
                                 <ul>
                                     {socialArray.map((social, index) => (
-                                        <li key={index}>
-                                            <a href={social.link} target="_blank" rel="noopener noreferrer">
-                                                {social.link}
-                                            </a>
-                                            {isOwnProfile && (
-                                            <button onClick={() => handleRemoveLink(index,social)}>
-                                                Remove
-                                            </button>
-                                        )}
+                                        <li key={index} className='list-item'>
+                                            <div className='link-container'>
+                                                <FaLink style={{fontSize: 20}} className='logo'/>
+                                                <a href={social.link} target="_blank" rel="noopener noreferrer">
+                                                    {social.link}
+                                                </a>
+                                            </div>
+
+                                            {isOwnProfile && (<div className='remove-container'>
+                                                <HighlightOffIcon style={{ fontSize: 30 }} onClick={() => handleRemoveLink(index, social)} className='logo' />
+                                                <div className='tool-tip'>
+                                                    Remove link
+                                                </div>
+                                            </div>
+
+                                            )}
                                         </li>
                                     ))}
                                 </ul>
@@ -223,7 +232,7 @@ const Profile = () => {
                 </div>
             </div>
             <div className='container-post'>
-                <PostsProfile userId = {isOwnProfile ? currentUser.userId : userId} imageProfile={isOwnProfile ? profileImage : profileImageFriend}/>
+                <PostsProfile userId={isOwnProfile ? currentUser.userId : userId} imageProfile={isOwnProfile ? profileImage : profileImageFriend} />
             </div>
         </div>
     )

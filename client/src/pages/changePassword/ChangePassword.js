@@ -1,7 +1,5 @@
 import "./changePassword.scss"
-import FacebookIcon from '@mui/icons-material/Facebook';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { FaLink } from "react-icons/fa";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/authContext";
@@ -108,7 +106,7 @@ const ChangePassword = () => {
                 </div>
                 <div className="change-social-link-container">
                     <div className="link-container">
-                        <FacebookIcon style={{fontSize:40}} className="logo"/>
+                        <FaLink style={{fontSize:30}} className="logo"/>
                         <input className="input-facebook-link" type="text" onChange={handleSocialLinkChange}/>
                     </div>
                     <div>
