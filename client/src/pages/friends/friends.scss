@@ -53,16 +53,11 @@
                 .friends-mid{
                     display: flex;
                     flex-direction: row;
-                    align-items: center;
-                    justify-content: space-between;
+                    justify-content: right;
                     gap: 5px;
                     margin-top: 10px;
                     color: themed("logo");
-                    .friends-center{
-                        display: flex;
-                        margin-left: 20px;
-                        gap: 5px;
-                    }
+                    
                     .extra-function-dropdown{
                         margin-top: 0px;
                         margin-left: -100px;

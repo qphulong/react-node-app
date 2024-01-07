@@ -132,6 +132,7 @@ const Friends = () => {
                     [friendId]: false,
                 }));
             }
+            
         };
 
         document.addEventListener("mousedown", (e) => {
@@ -207,14 +208,6 @@ const Friends = () => {
                             </span>
                         </div>
                         <div className='friends-mid'>
-                            <div className='friends-left'>
-
-                            </div>
-                            <div className='friends-center'>
-                                <FacebookIcon style={{ fontSize: 30 }} className='logo' />
-                                <InstagramIcon style={{ fontSize: 30 }} className='logo' />
-                                <LinkedInIcon style={{ fontSize: 30 }} className='logo' />
-                            </div>
                             <div className='friends-right'>
                                 <MoreVertIcon style={{ fontSize: 30 }} onClick={() => toggleDropdown(friend.userId)}
                                     ref={extraFunctionRef} className='logo' />
