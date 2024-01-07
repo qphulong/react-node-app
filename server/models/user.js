@@ -44,9 +44,10 @@ const userSchema = new mongoose.Schema({
     default: false,
   },
 
+  // array of json with link and social network type
   otherSocialMedia: [
     {
-      type: String, // to store url of other social media
+      type: JSON,
     },
   ],
 });
