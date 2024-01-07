@@ -93,6 +93,8 @@ router.get("/moderator", async (req, res) => {
 router.put("/moderator/keep", async (req, res) => {
   const postId = req.body.postId;
 
+  const post = await Post.findOne({ postId: postId });
+
   const postForModeration = await PostForModeration.findOne({ post: post });
 
   if (!postForModeration) {
@@ -100,7 +102,7 @@ router.put("/moderator/keep", async (req, res) => {
     return;
   }
 
-  await postForModeration.delete();
+  await PostForModeration.deleteOne({ post: post });
 
   res.send("Post kept successfully");
 });
@@ -123,8 +125,10 @@ router.put("/moderator/remove", async (req, res) => {
     return;
   }
 
-  await postForModeration.delete();
-  await post.delete();
+  await PostForModeration.deleteOne({ post: post });
+  await Post.deleteOne({ postId: postId });
+
+  res.send("Post removed successfully");
 });
 
 //assign moderator
