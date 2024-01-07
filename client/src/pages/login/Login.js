@@ -43,7 +43,9 @@ const Login = () => {
             Share unforgettable memories and daily life stories only for your
             families and friends here.
           </p>
-          <span>Don't you have an account?</span>
+          <Link to="/register" style={{textDecoration: "none", color: "black"}}>
+            <span>Don't you have an account?</span>
+          </Link>
           <Link to="/register">
             <button>Register</button>
           </Link>
