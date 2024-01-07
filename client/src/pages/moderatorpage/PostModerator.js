@@ -126,7 +126,7 @@ const PostModerator = ({ postIdModerator }) => {
                 </div>
                 {images &&
                     <div>
-                        {images.length != 0 ? <span>Post images</span>:<span>No image</span>}
+                        {images.length != 0 ? <span>Post images</span>:<span></span>}
                         
                         <section className='slider'>
                             {images.map((image, index) => {
