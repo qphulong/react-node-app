@@ -49,22 +49,9 @@ const ChangePassword = () => {
         }
     };
 
-    const handleFacebookLinkChange = (event) => {
-        // Do something with the Facebook link
+    const handleSocialLinkChange = (event) => {
         const facebookLink = event.target.value;
-        // console.log("Facebook Link:", facebookLink);
-    };
-
-    const handleInstagramLinkChange = (event) => {
-        // Do something with the Instagram link
-        const instagramLink = event.target.value;
-        // console.log("Instagram Link:", instagramLink);
-    };
-
-    const handleLinkedInLinkChange = (event) => {
-        // Do something with the LinkedIn link
-        const linkedInLink = event.target.value;
-        // console.log("LinkedIn Link:", linkedInLink);
+        
     };
 
     const handleChangeSocialLink = () => {
@@ -99,23 +86,15 @@ const ChangePassword = () => {
 
             <div className="change-social-link">
                 <div className="title">
-                    Change social link
+                    Add social link
                 </div>
                 <div className="change-social-link-container">
                     <div className="link-container">
                         <FacebookIcon style={{fontSize:40}} className="logo"/>
-                        <input className="input-facebook-link" type="text" onChange={handleFacebookLinkChange}/>
-                    </div>
-                    <div className="link-container">
-                        <InstagramIcon style={{fontSize:40}} className="logo"/>
-                        <input className="input-instagram-link" type="text" onChange={handleInstagramLinkChange}/>
-                    </div>
-                    <div className="link-container">
-                        <LinkedInIcon style={{fontSize:40}} className="logo"/>
-                        <input className="input-linkedin-link" type="text" onChange={handleLinkedInLinkChange}/>
+                        <input className="input-facebook-link" type="text" onChange={handleSocialLinkChange}/>
                     </div>
                     <div>
-                        <button className="change-button" onClick={handleChangeSocialLink}>Change social link</button>
+                        <button className="change-button" onClick={handleChangeSocialLink}>Add social link</button>
                     </div>
                 </div>
             </div>
