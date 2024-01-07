@@ -11,13 +11,28 @@ const ChangePassword = () => {
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const {currentUser} = useContext(AuthContext)
+    const { currentUser } = useContext(AuthContext)
     const [socialLink, setSocialLink] = useState("")
 
     //==========================================================================================
     //==========================================================================================
     //Check ConfirmPassword === Newpassword
+    const passwordsMatch = () => {
+        return newPassword === confirmPassword;
+    };
+
     //Limit digit here
+    //Constant
+    const MAX_PASSWORD_CHAR = 16
+    const MIN_PASSWORD_CHAR = 8
+
+    const validatePassword = (password) => {
+        if (password.length < MIN_PASSWORD_CHAR || password.length > MAX_PASSWORD_CHAR) {
+            return false;
+        } else {
+            return true;
+        }
+    };
 
 
     //==========================================================================================
@@ -40,19 +55,31 @@ const ChangePassword = () => {
     };
 
     const handleClickChangePassword = async () => {
+        var isError = false;
+        if (!passwordsMatch()) {
+            toast.error('Passwords do not match');
+            isError = true;
+        }
+        if (!validatePassword(newPassword) || !validatePassword(confirmPassword) || !validatePassword(oldPassword)) {
+            toast.error(`Password must be between ${MIN_PASSWORD_CHAR} and ${MAX_PASSWORD_CHAR} characters.`);
+            isError = true;
+        }
+        if (isError){
+            return;
+        }
         try {
-            const response = await axios.put(`http://localhost:3001/user/password`,{
-               userId : currentUser.userId,
-               newPassword: newPassword,
-               confirmPassword: oldPassword
+            const response = await axios.put(`http://localhost:3001/user/password`, {
+                userId: currentUser.userId,
+                newPassword: newPassword,
+                confirmPassword: oldPassword
             });
-        
+
             if (response.status === 200) {
                 console.log('====================================');
                 console.log("update successfully");
                 console.log('====================================');
                 toast.success('Change password successfully'); // Display success toast
-            } 
+            }
             else {
                 console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
             }
@@ -69,17 +96,17 @@ const ChangePassword = () => {
         // Do something with the social links
         // You can access facebookLink, instagramLink, linkedInLink here
         try {
-            const response = await axios.put(`http://localhost:3001/user/social-media`,{
-               userId : currentUser.userId,
-               link: socialLink
+            const response = await axios.put(`http://localhost:3001/user/social-media`, {
+                userId: currentUser.userId,
+                link: socialLink
             });
-        
+
             if (response.status === 200) {
                 console.log('====================================');
                 console.log("update successfully");
                 console.log('====================================');
                 toast.success('Add social link successfully'); // Display success toast
-            } 
+            }
             else {
                 console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
             }
@@ -97,15 +124,15 @@ const ChangePassword = () => {
                 <div className="change-password-container">
                     <div className="password-container">
                         <p>Old password</p>
-                        <input className="input-old-password" type="password" onChange={handleOldPasswordChange}/>
+                        <input className="input-old-password" type="password" onChange={handleOldPasswordChange} />
                     </div>
                     <div className="password-container">
                         <p>New password</p>
-                        <input className="input-new-password" type="password" onChange={handleNewPasswordChange}/>
+                        <input className="input-new-password" type="password" onChange={handleNewPasswordChange} />
                     </div>
                     <div className="password-container">
                         <p>Confirm password</p>
-                        <input className="input-confirm-password" type="password" onChange={handleConfirmPasswordChange}/>
+                        <input className="input-confirm-password" type="password" onChange={handleConfirmPasswordChange} />
                     </div>
                     <div>
                         <button className="change-button" onClick={handleClickChangePassword}>Change password</button>
@@ -119,8 +146,8 @@ const ChangePassword = () => {
                 </div>
                 <div className="change-social-link-container">
                     <div className="link-container">
-                        <FaLink style={{fontSize:30}} className="logo"/>
-                        <input className="input-facebook-link" type="text" onChange={handleSocialLinkChange}/>
+                        <FaLink style={{ fontSize: 30 }} className="logo" />
+                        <input className="input-facebook-link" type="text" onChange={handleSocialLinkChange} />
                     </div>
                     <div>
                         <button className="change-button" onClick={handleChangeSocialLink}>Add social link</button>
