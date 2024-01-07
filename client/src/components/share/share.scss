@@ -69,10 +69,10 @@
           button {
             border: none;
             padding: 12px 10px;
-            color: white;
+            color: themed("bg");
             cursor: pointer;
             
-            background-color: #B26457;
+            background-color: themed("logo");
             border-radius: 16px;
           }
 

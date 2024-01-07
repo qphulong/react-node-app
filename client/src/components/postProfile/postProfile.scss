@@ -1,94 +1,106 @@
 @import "../../style.scss";
 
-.post{
-    @include themify($themes){
-        -webkit-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.09);
-        -moz-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.09);
-        box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.09);
+.post {
+    @include themify($themes) {
+        -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+        -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+        box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
         border-radius: 20px;
         background-color: themed('bg');
         color: themed("textColor");
         margin-top: 20px;
-        .container{
+
+        .container {
             padding: 20px;
 
-            .user{
+            .user {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
 
-                .userInfo{
+                .userInfo {
                     display: flex;
                     gap: 20px;
-                    img{
+
+                    img {
                         width: 40px;
                         height: 40px;
                         border-radius: 50%;
                         object-fit: cover;
                     }
 
-                    .details{
+                    .details {
                         display: flex;
                         flex-direction: column;
 
-                        .name{
+                        .name {
                             font-weight: 500;
                         }
 
-                        .date{
+                        .date {
                             font-size: 12px;
                         }
 
                     }
                 }
 
-                .extra-functions{
+                .extra-functions {
                     display: flex;
-                    .dropdown{
-                        .post-profile-dropdown{
+
+                    .dropdown {
+                        .post-profile-dropdown {
                             margin-top: 30px;
-                            margin-left: -150px;
+                            margin-left: -120px;
+                            padding: 10px;
                             position: absolute;
-                            .list-item{
+
+                            background-color: themed("bg");
+                            border-style: solid;
+                            border-color: themed("bgSoft");
+                            border-width: 1px;
+                            border-radius: 10px;
+
+                            .list-item {
                                 list-style-type: none;
                                 display: flex;
                                 flex-direction: column;
-                                
-                                
+
+
                                 button {
                                     display: flex;
                                     justify-content: space-between;
-                                    background-color: white;
+                                    background-color: transparent;
                                     font-size: 12px;
                                     padding: 10px 15px 10px 15px;
-                                    border: 0;
-                                    border-bottom: 1px solid #ccc;
+                                    border: none;
                                     width: 100%;
-                                    text-align: center;
+                                    text-align: left;
                                     align-items: center;
-                                    border-left: 1px solid #ccc;
-                                    border-right: 1px solid #ccc;
-                            
-                                    &:hover, &:focus {
-                                      cursor: pointer;
-                                      background-color: #ccc;
-                                    }}
+                                    border-radius: 8px;
+                                    color: themed("textColor");
+
+                                    &:hover,
+                                    &:focus {
+                                        cursor: pointer;
+                                        background-color: themed("hovercomment");
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
 
-            .content{
+            .content {
                 margin: 20px 0px;
 
-                .slider{
+                .slider {
                     position: relative;
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    
-                    .left-arrow{
+
+                    .left-arrow {
                         position: absolute;
                         top: 50%;
                         left: 32px;
@@ -99,7 +111,7 @@
                         user-select: none;
                     }
 
-                    .right-arrow{
+                    .right-arrow {
                         position: absolute;
                         top: 50%;
                         right: 32px;
@@ -110,33 +122,34 @@
                         user-select: none;
                     }
 
-                    img{
+                    img {
                         width: 100%;
                         max-height: 500px;
                         object-fit: cover;
                         margin-top: 5px;
                     }
+
                     .slide {
                         opacity: 0;
                         transition-duration: 1s ease;
                     }
-                      
+
                     .slide.active {
                         opacity: 1;
                         transition-duration: 1s;
                         transform: scale(1);
                     }
-                    
+
                 }
-                
+
             }
 
-            .info{
+            .info {
                 display: flex;
                 align-items: center;
                 gap: 20px;
 
-                .item{
+                .item {
                     display: flex;
                     align-items: center;
                     gap: 10px;

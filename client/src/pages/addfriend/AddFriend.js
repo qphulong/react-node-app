@@ -145,7 +145,7 @@ const AddFriend = () => {
                             <span>{currentUser.userId}</span>
                         </div>
 
-                        <div className='social-link-friend'>
+                        {/* <div className='social-link-friend'>
                             <a href='https://facebook.com'>
                                 <FacebookIcon style={{ fontSize: 30 }} className='logo' />
                             </a>
@@ -157,7 +157,7 @@ const AddFriend = () => {
                             <a href='https://www.linkedin.com/'>
                                 <LinkedInIcon style={{ fontSize: 30 }} className='logo' />
                             </a>
-                        </div>
+                        </div> */}
 
                     </div>
 
