@@ -66,27 +66,100 @@
             padding: 20px 30px;
 
             .userInfo {
-                height: 180px;
                 -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
                 -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
                 box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.39);
                 border-radius: 20px;
                 background-color: themed("bg");
                 color: themed("textColor");
-                padding: 50px;
+                padding: 20px 50px;
+                
                 display: flex;
-                align-items: center;
+
                 justify-content: space-around;
 
                 .center {
                     display: flex;
+                    margin-top: 80px;
                     flex-direction: column;
                     align-items: center;
                     gap: 10px;
 
                     .social-link {
                         display: flex;
+                        flex-direction: column;
+                        align-items: center;
                         gap: 10px;
+
+                        .social-button {
+                            width: 130px;
+                            background-color: themed("logo");
+                            color: themed("bg");
+                            border: none;
+                            padding: 16px 10px;
+                            border-radius: 20px;
+                            font-size: 18px;
+                        }
+
+                        .social-button:hover{
+                            filter: brightness(90%);
+                        }
+
+                        .social-button:active{
+                            filter:brightness(80%);
+                        }
+
+                        .list-item {
+                            list-style-type: none;
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: space-between;
+                            align-items: center;
+                            margin-top: 5px;
+                            gap: 10px;
+                            .link-container{
+                                display: flex;
+                                flex-direction: row;
+                                gap: 5px;
+                                padding: 10px;
+                                border-radius: 10px;
+                                background-color: themed("bgSoft");
+                                a{
+                                    font-size: 20px;
+                                    text-decoration: none;
+                                }
+
+                                .logo{
+                                    color: themed("logo");
+                                }
+                            }
+
+                            .remove-container{
+                                display: flex;
+                                flex-direction: row;
+                                .logo{
+                                    color: themed("logo");
+                                    cursor: pointer;
+                                }
+                                .tool-tip {
+                                    margin-left: 28px;
+                                    position: absolute;
+                                    font-size: 12px;
+                                    padding: 6px 4px;
+                                    background-color: themed("textColorSoft");
+                                    color: themed("bg");
+                                    border-radius: 4px;
+                                    opacity: 0;
+                                    transition: opacity 0.15s;
+                                }
+
+                                .logo:hover + .tool-tip{
+                                    opacity: 1;
+                                }
+                            }
+
+                            
+                        }
 
                         a {
                             color: themed('logo');
