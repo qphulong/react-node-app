@@ -3,12 +3,17 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/authContext";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const ChangePassword = () => {
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const {currentUser} = useContext(AuthContext)
 
     const handleOldPasswordChange = (event) => {
         setOldPassword(event.target.value);
@@ -22,21 +27,27 @@ const ChangePassword = () => {
         setConfirmPassword(event.target.value);
     };
 
-    const handleClickChangePassword = () => {
-        const ChangePasswordButton = async () => {
-            try {
-                const response = await axios.put(`http://localhost:3001/user/password`,{});
+    const handleClickChangePassword = async () => {
+        try {
+            const response = await axios.put(`http://localhost:3001/user/password`,{
+               userId : currentUser.userId,
+               newPassword: newPassword,
+               confirmPassword: oldPassword
+            });
         
             if (response.status === 200) {
-                
-            } else {
+                console.log('====================================');
+                console.log("update successfully");
+                console.log('====================================');
+                toast.success('Change password successfully'); // Display success toast
+            } 
+            else {
                 console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
             }
-            } catch (error) {
-            console.error('Error:', error.message);
-            }
-        };
-    }
+        } catch (error) {
+        console.error('Error:', error.message);
+        }
+    };
 
     const handleFacebookLinkChange = (event) => {
         // Do something with the Facebook link
@@ -108,6 +119,7 @@ const ChangePassword = () => {
                     </div>
                 </div>
             </div>
+            {<ToastContainer />}
         </div>
     )
 
