@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get("/:userId", postController.getPosts);
 
-router.get("/:postId", postController.getPost);
+router.get("/retrieve/:postId", postController.getPost);
 
 router.post(
   "/",

@@ -1,6 +1,5 @@
 const express = require("express");
 const userController = require("../controllers/user");
-const moderatorController = require("../controllers/moderator");
 const adminController = require("../controllers/admin");
 
 const Post = require("../models/post");

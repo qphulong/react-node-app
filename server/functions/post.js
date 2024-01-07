@@ -100,7 +100,7 @@ async function reportPost(postId, res) {
       //add to the report schema
       await newPostForConsideration.save();
 
-      res.json({ postId: id });
+      res.json({ reportPost: postId });
     } else {
       res.status(404).send("Post not found");
     }
