@@ -3,8 +3,6 @@ const User = require("../models/user");
 
 const app = require("../app");
 
-const { CurrentUser } = require("../appController");
-
 exports.signUp = async (req, res) => {
   const userId = req.body.userId;
   const password = req.body.password;
