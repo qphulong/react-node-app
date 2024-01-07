@@ -79,9 +79,14 @@ router.get("/moderator", async (req, res) => {
   console.log("working");
   const posts = await PostForModeration.find({});
 
-  console.log(posts);
+  const postIds = [];
 
-  res.json({ posts: posts });
+  for (const post of posts) {
+    const curentPost = await Post.findOne({ _id: post.post });
+    postIds.push(curentPost.postId);
+  }
+
+  res.json({ posts: postIds });
 });
 
 //keep button (keep a post)
