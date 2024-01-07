@@ -5,21 +5,6 @@ import './forModerator.scss'
 const ForModerator = () => {
     return (
         <div className='moderator-page'>
-            <div className='nav-bar'>
-                <div className='left'>
-                    <div className='logo'>
-                        <span>OnlyMe</span>
-                    </div>
-                </div>
-                <div className='middle'>
-                    <div className='datetime'>
-                        14th December 2023
-                    </div>                        
-                </div>
-                <div className='right'>
-                    <LogoutIcon style={{fontSize: 40}} />
-                </div>
-            </div>
             <div className='list-post'>
                 <div className='post'>
                     <div className='top-part'>

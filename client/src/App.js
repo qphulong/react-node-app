@@ -26,6 +26,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+import AddFriendTest from "./pages/addfriendtest/AddFriendTest";
 function App() {
 
   //Protected Route
@@ -94,8 +95,16 @@ function App() {
           element: <AddFriend/>
         },
         {
+          path: "/addfriendtest",
+          element: <AddFriendTest/>
+        },
+        {
           path: "/change",
           element: <ChangePassword/>
+        },
+        {
+          path: "/moderators",
+          element: <ForModerator/>
         },
         // {
         //   path: "/notifications",
@@ -112,12 +121,8 @@ function App() {
       element: <Register/>,
     },
     {
-      path: "/invitations/:friendLink",
+      path: "/invitations",
       element: <Invitations/>
-    },
-    {
-      path: "/moderators",
-      element: <ForModerator/>
     },
   ]);
 

@@ -1,42 +1,66 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital@0;1&family=Lily+Script+One&display=swap');
 @import "../../style.scss";
-.leftBar{
+
+.leftBar {
     font-family: 'Josefin Sans', sans-serif;
     margin: 0;
 }
 
 
-.leftBar{
-    @include themify($themes){
+.leftBar {
+    @include themify($themes) {
         flex: 2;
         position: sticky;
         top: 70px;
         height: calc(100vh - 70px);
         background-color: themed("bg");
         color: themed("textColor");
-        .container{
+
+        .container {
             padding: 20px;
-            .menu{
+
+            .menu {
                 display: flex;
                 flex-direction: column;
-                gap: 30px;
-                
-                .item{
+                gap: 10px;
+
+                a {
+                    text-decoration: none;
+                    color: themed("textColor");
+                }
+
+                .item {
                     display: flex;
                     align-items: center;
-                    gap: 10px;
+                    border-radius: 10px;
+                    padding: 10px;
+                    gap: 8px;
                     font-size: 25px;
-                    span{
+
+                    span {
                         display: inline-block;
                         margin: 0;
                         padding-top: 5px;
-                    }     
+                        color: themed("textColor");
+                    }
+
+                    .logo {
+                        color: themed("textColor");
+                    }
                 }
+
+                .item:hover{
+                    background-color: themed("hovercomment");
+                }
+
+
             }
-            .button-container{
+
+            .button-container {
                 text-align: center;
                 margin-top: 40px;
-                button{
+
+                button {
                     background-color: themed("logo");
                     color: themed("bg");
                     border: none;
@@ -45,12 +69,19 @@
                     border-radius: 30px;
                     width: 150px;
                     padding: 15px 25px;
-                    
+                    cursor: pointer;
+
                 }
-        
+                button:hover{
+                    filter: brightness(90%);
+                }
+                button:active{
+                    filter:brightness(80%);
+                }
+
             }
-            
-            .user{
+
+            .user {
                 margin-top: 20px;
                 display: flex;
                 position: absolute;
@@ -58,29 +89,38 @@
                 margin-bottom: 20px;
                 align-items: center;
                 flex-direction: row;
+                padding: 5px 80px 5px 10px;
+                border-radius: 20px;
                 gap: 10px;
                 font-weight: 700;
-                img{
+                cursor: pointer;
+
+                img {
                     width: 50px;
                     height: 50px;
                     border-radius: 50%;
                     object-fit: cover;
                 }
-                .user-info{
-                    
+
+                .user-info {
                     display: flex;
                     flex-direction: column;
+                    text-align: center;
                     gap: 5px;
-                    .user-name{
+
+                    .user-name {
                         font-size: 18px;
                         font-weight: 600;
                     }
 
-                    .user-email{
+                    .user-email {
                         font-size: 16px;
                         font-weight: 500;
                     }
                 }
+            }
+            .user:hover{                    
+                background-color: themed("hovercomment");
             }
         }
     }

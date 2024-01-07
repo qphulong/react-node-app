@@ -125,8 +125,7 @@ postSchema.methods.deletePost = async function () {
   try {
     // Delete the post from the database
     await this.remove();
-
-    console.log(`Post with ID ${this.postId} deleted successfully.`);
+    console.log(`Post with ID ${this.postId} deleted successfully!`);
   } catch (error) {
     console.error("Error deleting post:", error.message);
   }
