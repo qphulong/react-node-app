@@ -6,7 +6,7 @@ const app = require("../app");
 exports.signUp = async (req, res) => {
   const userId = req.body.userId;
   const password = req.body.password;
-  const isAdmin = req.body.isAdmin;
+  var isAdmin = req.body.isAdmin;
 
   // check if user already exists
   const user = await User.find({ userId: userId });
