@@ -1,6 +1,5 @@
 const express = require("express");
 const userController = require("../controllers/user");
-const postController = require("../controllers/post");
 const adminController = require("../controllers/admin");
 
 const Post = require("../models/post");
@@ -14,8 +13,6 @@ const path = require("path");
 const fs = require("fs");
 
 const router = express.Router();
-
-router.get("/:userId", postController.getPosts);
 
 router.get("/admin", async (req, res) => {
   // get all users

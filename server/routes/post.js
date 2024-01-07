@@ -6,7 +6,7 @@ const User = require("../models/user");
 
 const router = express.Router();
 
-router.get("/:userId", postController.getPosts);
+router.get("/home/:userId", postController.getPosts);
 
 router.get("/:postId", postController.getPost);
 
