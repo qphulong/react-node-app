@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
 const Invitations = () => {
 
@@ -83,6 +84,7 @@ const Invitations = () => {
                 console.log('====================================');
                 console.log("Add successfully: ",response.data.isFriend);
                 console.log('====================================');
+                toast.success('Add friend successfully'); // Display success toast
             } 
             else {
                 console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
@@ -116,7 +118,7 @@ const Invitations = () => {
                     </div>
                 </div>
             </div>
-            
+            {<ToastContainer />}
         </div>
     )
 }
