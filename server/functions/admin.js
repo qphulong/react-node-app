@@ -1,4 +1,5 @@
 const Post = require("../models/post");
+const User = require("../models/user");
 const bcrypt = require("bcrypt");
 
 async function assignModerator(userId, res) {
@@ -11,14 +12,9 @@ async function assignModerator(userId, res) {
 
   user.isModerator = true;
 
-  user
-    .save()
-    .then((user) => {
-      res.send("User assigned as a moderator successfully!");
-    })
-    .catch((error) => {
-      res.status(400).send("Error saving user:", error);
-    });
+  await user.save();
+
+  res.send("User assigned as a moderator successfully!");
 }
 
 async function unassignModerator(userId, res) {
@@ -31,14 +27,9 @@ async function unassignModerator(userId, res) {
 
   user.isModerator = false;
 
-  user
-    .save()
-    .then((user) => {
-      res.send("User unassigned as a moderator successfully!");
-    })
-    .catch((error) => {
-      res.status(400).send("Error saving user:", error);
-    });
+  await user.save();
+
+  res.send("User unassigned as a moderator successfully!");
 }
 
 module.exports = {
