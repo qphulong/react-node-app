@@ -24,15 +24,17 @@ router.get("/", (req, res) => {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
-router.get("/:userId/admin", (req, res) => {
+router.get("/:userId/admin", async (req, res) => {
   const userId = req.params.userId;
 
-  const user = User.findOne({ userId: userId });
+  const user = await User.findOne({ userId: userId });
 
   if (!user) {
     res.status(404).send("User not found");
     return;
   }
+
+  console.log(user);
 
   return res.json({ isAdmin: user.isAdmin });
 });
