@@ -72,6 +72,10 @@ router.get("/:postId/likes", async (req, res) => {
 
   const post = await Post.findOne({ postId: postId });
 
+  if (!post) {
+    return res.status(404).send("Post not found");
+  }
+
   res.json({ likes: post.likes });
 });
 
@@ -80,6 +84,10 @@ router.get("/:userId/:postId/liked", async (req, res) => {
   const postId = req.params.postId;
 
   const post = await Post.findOne({ postId: postId });
+
+  if (!post) {
+    return res.status(404).send("Post not found");
+  }
 
   const likePeople = post.likePeople;
 
