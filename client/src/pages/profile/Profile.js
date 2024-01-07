@@ -151,6 +151,12 @@ const Profile = () => {
         }
     }
 
+    const handleRemoveLink = (index) => {
+        const updatedSocialArray = [...socialArray];
+        updatedSocialArray.splice(index, 1);
+        setSocialArray(updatedSocialArray);
+    };
+
 
     return (
         <div className='profile'>
@@ -184,6 +190,11 @@ const Profile = () => {
                                             <a href={social.link} target="_blank" rel="noopener noreferrer">
                                                 {social.link}
                                             </a>
+                                            {isOwnProfile && (
+                                            <button onClick={() => handleRemoveLink(index)}>
+                                                Remove
+                                            </button>
+                                        )}
                                         </li>
                                     ))}
                                 </ul>
