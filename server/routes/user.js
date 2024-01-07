@@ -45,6 +45,21 @@ router.get("/:userId/admin", async (req, res) => {
   return res.json({ isAdmin: user.isAdmin });
 });
 
+router.get("/:userId/moderator", async (req, res) => {
+  const userId = req.params.userId;
+
+  const user = await User.findOne({ userId: userId });
+
+  if (!user) {
+    res.status(404).send("User not found");
+    return;
+  }
+
+  console.log(user);
+
+  return res.json({ isModerator: user.isContentModerator });
+});
+
 router.post(
   "/sign-up",
   query("userId").notEmpty(), //call this validation middleware first to validate
