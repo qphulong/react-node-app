@@ -29,6 +29,13 @@ const Profile = () => {
     const { currentUser, profileImage, setProfileImage } = useContext(AuthContext);
     const { userId } = useParams();
     const isOwnProfile = currentUser.userId === userId
+    const [socialArray,setSocialArray] = useState([])
+    const [showSocialMedia,setShowSocialMedia] = useState(false)
+    // useEffect(() => {
+    //     console.log('====================================');
+    //     console.log(socialArray);
+    //     console.log('====================================');
+    // },[socialArray])
 
     //===================================================================================================================
     //profile image
@@ -124,6 +131,50 @@ const Profile = () => {
         }
     }
 
+    // display social media
+    const handleClickDisplaySocialMedia = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3001/user/social-media/${userId}`);
+        
+            if (response.status === 200) {
+                console.log('====================================');
+                console.log(response.data.socialMedia);
+                console.log('====================================');
+                setSocialArray(response.data.socialMedia)
+                setShowSocialMedia(!showSocialMedia)
+            } 
+            else {
+                console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    }
+
+    const handleRemoveLink = async (index, social) => {
+        const updatedSocialArray = [...socialArray];
+        updatedSocialArray.splice(index, 1);
+        setSocialArray(updatedSocialArray);
+    
+        // try {
+        //     const response = await axios.delete(`http://localhost:3001/user/social-media`, {
+        //         params: {
+        //             userId: "tmk3010",
+        //             socialMedia: social.link
+        //         }
+        //     });
+    
+        //     if (response.status === 200) {
+        //         console.log('Social media link deleted successfully');
+        //     } else {
+        //         console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+        //     }
+        // } catch (error) {
+        //     console.error('Error:', error.message);
+        // }
+    };
+    
+
 
     return (
         <div className='profile'>
@@ -131,7 +182,7 @@ const Profile = () => {
                 <img src={isOwnProfile ? profileImage : profileImageFriend}
                     alt="" className='cover' />
                 <div className='profile-image-container' onClick={handleImageClick}>
-                    {image ? <img src={URL.createObjectURL(image)} alt='' className='profile-picture-after' /> : <img src={profileImageFriend} className='profile-picture-before' />}
+                    {image ? <img src={URL.createObjectURL(image)} alt='' className='profile-picture-after' /> : <img src={isOwnProfile ? profileImage : profileImageFriend} className='profile-picture-before' />}
                     {isOwnProfile ? (
                         <FileUploadIcon style={{ fontSize: 50 }} className='upload-image-icon' />
                     ) : null}
@@ -149,17 +200,23 @@ const Profile = () => {
                         </div>
 
                         <div className='social-link'>
-                            <a href='https://facebook.com'>
-                                <FacebookIcon style={{ fontSize: 30 }} className='logo' />
-                            </a>
-
-                            <a href='https://instagram.com'>
-                                <InstagramIcon style={{ fontSize: 30 }} className='logo' />
-                            </a>
-
-                            <a href='https://www.linkedin.com/'>
-                                <LinkedInIcon style={{ fontSize: 30 }} className='logo' />
-                            </a>
+                            <button onClick={handleClickDisplaySocialMedia}>Social Media</button>
+                            {showSocialMedia && (
+                                <ul>
+                                    {socialArray.map((social, index) => (
+                                        <li key={index}>
+                                            <a href={social.link} target="_blank" rel="noopener noreferrer">
+                                                {social.link}
+                                            </a>
+                                            {isOwnProfile && (
+                                            <button onClick={() => handleRemoveLink(index,social)}>
+                                                Remove
+                                            </button>
+                                        )}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                         </div>
 
                     </div>
