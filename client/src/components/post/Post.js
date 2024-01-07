@@ -32,6 +32,7 @@ const Post = ({ post }) => {
   const toggleDropdown = () => setOpenDropdown(!openDropdown);
   const dropdownRef = useRef(null);
   const postRef = useRef(null);
+  const [clickReport, setClickReport] = useState(0)
   const [timestamp, setTimestamp] = useState(post.createdAt); // Replace with your actual API data
   useEffect(() => {
     const formattedTimestamp = moment(timestamp).fromNow(); // Use moment.js to format
@@ -70,9 +71,37 @@ const Post = ({ post }) => {
   function handleOnClick(item) {
     if (item.id == 1) {
       console.log("100");
+      setClickReport(clickReport+1)
     } 
   }
+  //================================================================================
+  //================================================================================
+  //Report post
+  const ReportPost = async () => {
+      try {
+          const response = await axios.post(`http://localhost:3001/posts/report`,{
+            postId: post.postId
+          });
+      
+          if (response.status === 200) {
+              console.log('====================================');
+              console.log("Report successfully");
+              console.log('====================================');
+          } 
+          else {
+              console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+          }
+      } catch (error) {
+          console.error('Error:', error.message);
+      }
+  };
 
+  useEffect(() => {
+    // ReportPost()
+    if(clickReport > 0) ReportPost()
+  },[clickReport])
+  //================================================================================
+  //================================================================================
   const handleClick = (e) => {
     if (postRef.current && !postRef.current.contains(e.target)) {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
