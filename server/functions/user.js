@@ -14,7 +14,6 @@ async function signIn(currentUser, userId, inputPassword, res) {
 
   if (isPasswordValid) {
     //check if the existing password is the same as the input password
-    currentUser.set(user.userId, user.isContentModerator); //set currentUser to this id
     res.json(user); //return currentUser
   } else {
     res.status(400).send("Password is incorrect!");
