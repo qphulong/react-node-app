@@ -4,7 +4,9 @@
 .admin-page {
     font-family: 'Josefin Sans', sans-serif;
     margin: 0;
-    height: 1000px;
+    height: 100%;
+    min-height: 1000px;
+    
     background-color: #f6f3f3;
 
     .nav-bar {
@@ -42,7 +44,8 @@
     .list-user {
         display: flex;
         flex-direction: column;
-        padding: 100px 200px;
+        padding: 
+        50px 300px 100px 300px;
         gap: 20px;
 
     }
