@@ -11,6 +11,7 @@ import Comments from "../comments/Comments.js";
 import { useEffect, useState, useRef, useContext } from "react";
 import ImageSlider from "./ImageSlider.js";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
+import { ToastContainer, toast } from "react-toastify";
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
@@ -72,6 +73,8 @@ const Post = ({ post }) => {
     if (item.id == 1) {
       console.log("100");
       setClickReport(clickReport + 1)
+      toast.success("Report successfully!")
+      setOpenDropdown(!openDropdown)
     }
   }
   //================================================================================
