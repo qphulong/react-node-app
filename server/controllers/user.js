@@ -81,12 +81,12 @@ exports.friendLink = async (req, res) => {
 };
 
 exports.acceptFriendLink = async (req, res) => {
-  var linkId = req.params.linkId;
+  var linkId = req.params.linkId; // Get the URL
   const parts = linkId.split("-"); // Split the URL by '/'
   const userId = parts[0]; // Get the user ID, assuming it's always at index 2
   console.log("UserId" + userId);
 
-  const friendId = req.body.friendId;
+  const friendId = req.body.friendId; 
   const linkPassword = req.body.linkPassword;
 
   parts.shift();
@@ -135,6 +135,6 @@ exports.getSocialMedia = async (req, res) => {
   }
 
   res.json({
-    socialMedia: await user.otherSocialMedia,
+    socialMedia: await user.otherSocialMedia, //send to the frontend to show on the interface
   });
 };
