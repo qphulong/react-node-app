@@ -1,62 +1,44 @@
 const Post = require("../models/post");
 const bcrypt = require("bcrypt");
 
-async function assignModerator(currentUser, userId) {
-  try {
-    const user = await User.findById(userId);
+async function assignModerator(userId, res) {
+  const user = await User.findOne({ userId: userId });
 
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    if (!currentUser.isAdmin) {
-      throw new Error("Unauthorized: Only admins can assign moderator roles");
-    }
-
-    user.isModerator = true;
-
-    await user.save();
-
-    return {
-      success: true,
-      message: "User assigned as a moderator successfully",
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      success: false,
-      message: error.message || "Error assigning moderator role",
-    };
+  if (!user) {
+    res.status(400).send("User not found!");
+    return;
   }
+
+  user.isModerator = true;
+
+  user
+    .save()
+    .then((user) => {
+      res.send("User assigned as a moderator successfully!");
+    })
+    .catch((error) => {
+      res.status(400).send("Error saving user:", error);
+    });
 }
 
-async function unassignModerator(currentUser, userId) {
-  try {
-    const user = await User.findById(userId);
+async function unassignModerator(userId, res) {
+  const user = await User.findOne({ userId: userId });
 
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    if (!currentUser.isAdmin) {
-      throw new Error("Unauthorized: Only admins can assign moderator roles");
-    }
-
-    user.isModerator = false;
-
-    await user.save();
-
-    return {
-      success: true,
-      message: "User assigned as a moderator successfully",
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      success: false,
-      message: error.message || "Error assigning moderator role",
-    };
+  if (!user) {
+    res.status(400).send("User not found!");
+    return;
   }
+
+  user.isModerator = false;
+
+  user
+    .save()
+    .then((user) => {
+      res.send("User unassigned as a moderator successfully!");
+    })
+    .catch((error) => {
+      res.status(400).send("Error saving user:", error);
+    });
 }
 
 module.exports = {

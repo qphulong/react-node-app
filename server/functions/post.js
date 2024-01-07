@@ -1,6 +1,7 @@
 const Post = require("../models/post");
 const Comment = require("../models/comment");
 const User = require("../models/user");
+const PostForModeration = require("../models/postForModeration");
 
 const MAX_LETTERS_LIMIT = 900;
 
