@@ -1,15 +1,55 @@
 import LogoutIcon from '@mui/icons-material/Logout';
 import './adminPage.scss'
 import { Link, useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/authContext';
+import axios from 'axios';
 const AdminPage = () => {
     const { currentUser, login, logout, profileImage } = useContext(AuthContext);
     const navigate = useNavigate()
+    const [isAdmin,setIsAdmin] = useState(false)
 
     const handleLogOut = () => {
         logout()
         navigate("/login")
+    }
+
+    //==================================================================================
+    //==================================================================================
+    // Check admin
+    const CheckIsAdmin = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3001/user/${currentUser.userId}/admin`);
+
+            if (response.status === 200) {
+                console.log('====================================');
+                console.log(response.data.isAdmin);
+                console.log('====================================');
+                setIsAdmin(response.data.isAdmin)
+            }
+            else {
+                console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    };
+    useEffect(() => {
+        CheckIsAdmin()
+    },[])
+    //==================================================================================
+    //==================================================================================
+    // get all users
+    
+    //==================================================================================
+    //==================================================================================
+
+    if(isAdmin === false){
+        return (
+            <div>
+                You are not admin
+            </div>
+        )
     }
 
     return (
