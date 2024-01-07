@@ -40,6 +40,11 @@ const PostModerator = ({postIdModerator}) => {
     }, []);
     //=================================================================================================
     //=================================================================================================
+    // Handle Click Keep or Remove
+
+    
+    //=================================================================================================
+    //=================================================================================================
 
     return (
         <div className='post-moderator'>
@@ -74,8 +79,8 @@ const PostModerator = ({postIdModerator}) => {
 
             </div>
             <div className='bottom-part'>
-                <button className='accept-btn'>Accept</button>
-                <button className='reject-btn'>Reject</button>
+                <button className='accept-btn' onClick={handleKeep}>Keep</button>
+                <button className='reject-btn' onClick={handleRemove}>Remove</button>
             </div>
         </div>
     )
