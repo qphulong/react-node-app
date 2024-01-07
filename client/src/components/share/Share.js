@@ -138,7 +138,7 @@ const Share = () => {
             src={profileImage}
             alt=""
           />
-          <input
+          <textarea
             type="text"
             placeholder={`What's on your mind ${currentUser.name}?`}
             onChange={(e) => handleContentChange(e)

@@ -22,15 +22,26 @@
           border-radius: 50%;
           object-fit: cover;
         }
-
-        input {
+        input{
           border: none;
           outline: none;
           padding: 20px 10px;
           background-color: transparent;
-          width: 80%;
+          width: 90%;
+          color: themed("textColor");
+
+        }
+
+        textarea {
+          border: none;
+          outline: none;
+          padding: 20px 10px;
+          background-color: transparent;
+          width: 90%;
           color: themed("textColor");
           overflow-wrap: break-word;
+          overflow: hidden;
+          resize: none;
         }
       }
 
