@@ -151,29 +151,30 @@ const Profile = () => {
         }
     }
 
-    const handleRemoveLink = async (index, social) => {
+    const handleRemoveLink = (index, social) => {
         const updatedSocialArray = [...socialArray];
         updatedSocialArray.splice(index, 1);
         setSocialArray(updatedSocialArray);
-    
-        // try {
-        //     const response = await axios.delete(`http://localhost:3001/user/social-media`, {
-        //         params: {
-        //             userId: "tmk3010",
-        //             socialMedia: social.link
-        //         }
-        //     });
-    
-        //     if (response.status === 200) {
-        //         console.log('Social media link deleted successfully');
-        //     } else {
-        //         console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
-        //     }
-        // } catch (error) {
-        //     console.error('Error:', error.message);
-        // }
+
+        deleteLink()
     };
     
+    const deleteLink = async () => {
+        try {
+            const response = await axios.delete(`http://localhost:3001/user/social-media`, {
+                userId: "tmk3010",
+                socialMedia: "https://mui.com/material-ui/material-icons/?them"
+            });
+    
+            if (response.status === 200) {
+                console.log('Social media link deleted successfully');
+            } else {
+                console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    }
 
 
     return (
