@@ -14,6 +14,7 @@ const ChangePassword = () => {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const {currentUser} = useContext(AuthContext)
+    const [socialLink, setSocialLink] = useState("")
 
     const handleOldPasswordChange = (event) => {
         setOldPassword(event.target.value);
@@ -45,18 +46,35 @@ const ChangePassword = () => {
                 console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
             }
         } catch (error) {
-        console.error('Error:', error.message);
+            console.error('Error:', error.message);
         }
     };
 
     const handleSocialLinkChange = (event) => {
-        const facebookLink = event.target.value;
-        
+        setSocialLink(event.target.value)
     };
 
-    const handleChangeSocialLink = () => {
+    const handleChangeSocialLink = async () => {
         // Do something with the social links
         // You can access facebookLink, instagramLink, linkedInLink here
+        try {
+            const response = await axios.put(`http://localhost:3001/user/social-media`,{
+               userId : currentUser.userId,
+               link: socialLink
+            });
+        
+            if (response.status === 200) {
+                console.log('====================================');
+                console.log("update successfully");
+                console.log('====================================');
+                toast.success('Add social link successfully'); // Display success toast
+            } 
+            else {
+                console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
     };
     return (
         <div className="container">
