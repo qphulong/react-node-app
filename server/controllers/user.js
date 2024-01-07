@@ -107,13 +107,11 @@ exports.addSocialMedia = async (req, res) => {
   const user = await User.findOne({ userId: userId });
 
   if (!user) {
-    console.log("User not found");
+    res.status(404).send("User not found");
     return;
   }
 
   user.addSocialMedia(link);
-
-  await user.save();
 
   return res.json({
     link: link,

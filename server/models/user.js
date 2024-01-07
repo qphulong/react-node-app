@@ -86,6 +86,29 @@ userSchema.pre("save", async function (next) {
   }
 });
 
+userSchema.methods.addSocialMedia = async function (link) {
+  // check if link is empty
+  if (!link) {
+    return;
+  }
+
+  // check if link is already in the list
+  if (this.otherSocialMedia.includes(link)) {
+    return;
+  }
+
+  // classify the social network
+  const socialNetwork = this.classifySocialNetwork(link);
+
+  // add the link to the list
+  this.otherSocialMedia.push({
+    link: link,
+    socialNetwork: socialNetwork,
+  });
+
+  await this.save();
+};
+
 // dùng với frontend
 userSchema.methods.classifySocialNetwork = function (link) {
   // regex to match the social network
