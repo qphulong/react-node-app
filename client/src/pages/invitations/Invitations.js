@@ -12,9 +12,13 @@ const Invitations = () => {
     // const data = "add-friends/tmk3010-e5eaee39-819d-45b8-991f-de9a997fb4b4"
     // const extractedValue = data.split('/')[1].split('-')[0]; // "tmk3010"
 
-    // console.log(extractedValue);
+    const {link} = useParams()
+    const userId = link.split('-')[0];
 
-    const {friendLink} = useParams()
+    console.log('====================================');
+    console.log(link);
+    console.log(userId);
+    console.log('====================================');
 
 
     return (
@@ -24,7 +28,7 @@ const Invitations = () => {
             </div>
             <div className='container'>
                 <div className='content-container'>
-                    <p>You are added by Jony Doe</p>
+                    <p>You are added by {userId}</p>
                     <div className='input-container'>
                         <span>Pass: </span>
                         <input type='text'/>
