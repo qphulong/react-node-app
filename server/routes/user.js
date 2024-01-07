@@ -88,19 +88,11 @@ router.put("/social-media/:userId", async (req, res) => {
     return;
   }
 
-  // check if social media exists
-  const socialMediaExists = user.otherSocialMedia.filter(
-    (media) => media.link === socialMedia
-  );
-
-  if (socialMediaExists.length === 0) {
-    return res.status(403).json({ error: "Social media link does not exist" });
+  for (let i = 0; i < user.otherSocialMedia.length; i++) {
+    if (user.otherSocialMedia[i].link == socialMedia) {
+      user.otherSocialMedia.pop(i);
+    }
   }
-
-  // remove social media
-  user.otherSocialMedia = user.otherSocialMedia.filter(
-    (media) => media.link !== socialMedia
-  );
 
   await user.save();
 
