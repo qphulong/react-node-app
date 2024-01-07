@@ -1,99 +1,89 @@
+import React, { useContext, useEffect, useState } from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
-import './forModerator.scss'
-
+import './forModerator.scss';
+import PostModerator from './PostModerator.js';  // Correct path assuming both files are in the same folder
+import { AuthContext } from '../../context/authContext.js';
+import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
 
 const ForModerator = () => {
+    const [isModerator,setIsModerator] = useState(false)
+    const {currentUser} = useContext(AuthContext)
+
+    //======================================================================================================
+    //Check moderator
+    const CheckIsModerator = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3001/user/${currentUser.userId}/moderator`);
+        
+            if (response.status === 200) {
+                console.log('====================================');
+                console.log("Is moderator");
+                console.log('====================================');
+                setIsModerator(response.data.isModerator)
+            } 
+            else {
+                console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    };
+
+    useEffect(() => {
+        CheckIsModerator()
+    },[])
+
+    //======================================================================================================
+    //Get all reported posts
+    const {isLoading,error,data: ModeratorPosts} = useQuery({
+        queryKey: ["ModeratorPosts"],
+        queryFn: async () => {
+        try {
+            return await axios
+            .get(`http://localhost:3001/user/moderator`)
+            .then((response) => {
+                return response.data;
+            });
+        } catch (error) {
+            throw error;
+        }
+        },
+    })
+
+    if (isLoading) {
+        return <h3>Loading...</h3>;
+    }
+
+    if (error) {
+        return <h3>Error: {error.message}</h3>;
+    }
+
+    // console.log('====================================');
+    // console.log(ModeratorPosts.posts);
+    // console.log('====================================');
+
+    //======================================================================================================
+    //======================================================================================================
+    
+    if(isModerator === false){
+        return (
+            <div>
+                You are not moderator. Please contact with admin
+            </div>
+        )
+    }
+
     return (
         <div className='moderator-page'>
             <div className='list-post'>
-                <div className='post'>
-                    <div className='top-part'>
-                        <img src='https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' alt='' className='profile-picture'/>
-                        <div className='post-info'>
-                            <span className='user-name'>Hong Nhut</span>
-                            <span className='time'>1 min ago</span>
-                        </div>
-                    </div>
-                    <div className='middle-part'>
-                        <div className='content'>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur
-                        </div>
-                        <div className='picture-list'>
-                            <img src='https://pbs.twimg.com/media/GCfJUsAaEAATOon?format=jpg&name=4096x4096' alt='' className='
-                            picture'/>
-                            <img src='https://pbs.twimg.com/media/GCfJLAEaMAAXvmP?format=jpg&name=4096x4096' alt='' className='
-                            picture'/>
-                            <img src='https://pbs.twimg.com/media/GCfJLAEaMAAXvmP?format=jpg&name=4096x4096' alt='' className='
-                            picture'/>  
-                            <img src='https://pbs.twimg.com/media/GCfJUsAaEAATOon?format=jpg&name=4096x4096' alt='' className='
-                            picture'/>    
-                        </div>
-                    </div>
-                    <div className='bottom-part'>
-                        <button className='accept-btn'>Accept</button>
-                        <button className='reject-btn'>Reject</button>
-                    </div>
-                </div>
-                <div className='post'>
-                    <div className='top-part'>
-                        <img src='https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' alt='' className='profile-picture'/>
-                        <div className='post-info'>
-                            <span className='user-name'>Hong Nhut</span>
-                            <span className='time'>1 min ago</span>
-                        </div>
-                    </div>
-                    <div className='middle-part'>
-                        <div className='content'>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur
-                        </div>
-                        <div className='picture-list'>
-                            <img src='https://pbs.twimg.com/media/GCfJUsAaEAATOon?format=jpg&name=4096x4096' alt='' className='
-                            picture'/>
-                            <img src='https://pbs.twimg.com/media/GCfJLAEaMAAXvmP?format=jpg&name=4096x4096' alt='' className='
-                            picture'/>
-                            <img src='https://pbs.twimg.com/media/GCfJLAEaMAAXvmP?format=jpg&name=4096x4096' alt='' className='
-                            picture'/>  
-                            <img src='https://pbs.twimg.com/media/GCfJUsAaEAATOon?format=jpg&name=4096x4096' alt='' className='
-                            picture'/>    
-                        </div>
-                    </div>
-                    <div className='bottom-part'>
-                        <button className='accept-btn'>Accept</button>
-                        <button className='reject-btn'>Reject</button>
-                    </div>
-                </div>
-                <div className='post'>
-                    <div className='top-part'>
-                        <img src='https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' alt='' className='profile-picture'/>
-                        <div className='post-info'>
-                            <span className='user-name'>Hong Nhut</span>
-                            <span className='time'>1 min ago</span>
-                        </div>
-                    </div>
-                    <div className='middle-part'>
-                        <div className='content'>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur
-                        </div>
-                        <div className='picture-list'>
-                            <img src='https://pbs.twimg.com/media/GCfJUsAaEAATOon?format=jpg&name=4096x4096' alt='' className='
-                            picture'/>
-                            <img src='https://pbs.twimg.com/media/GCfJLAEaMAAXvmP?format=jpg&name=4096x4096' alt='' className='
-                            picture'/>
-                            <img src='https://pbs.twimg.com/media/GCfJLAEaMAAXvmP?format=jpg&name=4096x4096' alt='' className='
-                            picture'/>  
-                            <img src='https://pbs.twimg.com/media/GCfJUsAaEAATOon?format=jpg&name=4096x4096' alt='' className='
-                            picture'/>    
-                        </div>
-                    </div>
-                    <div className='bottom-part'>
-                        <button className='accept-btn'>Accept</button>
-                        <button className='reject-btn'>Reject</button>
-                    </div>
-                </div>
+                {isLoading ? "Loading..."
+                : ModeratorPosts?.posts.map((post) => {
+                    return <PostModerator postIdModerator={post} key={post} />;
+                })}
             </div>
         </div>
-        
-    )
+    );
 }
 
-export default ForModerator
+export default ForModerator;

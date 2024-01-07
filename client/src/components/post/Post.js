@@ -20,18 +20,19 @@ const Post = ({ post }) => {
   const items = [{
     id: 1,
     value: "Report",
-    icon: <ReportGmailerrorredIcon style = {{fontSize: 25}}/>
+    icon: <ReportGmailerrorredIcon style={{ fontSize: 25 }} />
   }]
   //comment state
   const [commentOpen, setCommentOpen] = useState(false);
-  const [like,setLike] = useState(false)
-  const {currentUser,profileImage} = useContext(AuthContext)
+  const [like, setLike] = useState(false)
+  const { currentUser, profileImage } = useContext(AuthContext)
 
   //Dropdown state
   const [openDropdown, setOpenDropdown] = useState(false);
   const toggleDropdown = () => setOpenDropdown(!openDropdown);
   const dropdownRef = useRef(null);
   const postRef = useRef(null);
+  const [clickReport, setClickReport] = useState(0)
   const [timestamp, setTimestamp] = useState(post.createdAt); // Replace with your actual API data
   useEffect(() => {
     const formattedTimestamp = moment(timestamp).fromNow(); // Use moment.js to format
@@ -70,9 +71,37 @@ const Post = ({ post }) => {
   function handleOnClick(item) {
     if (item.id == 1) {
       console.log("100");
-    } 
+      setClickReport(clickReport + 1)
+    }
   }
+  //================================================================================
+  //================================================================================
+  //Report post
+  const ReportPost = async () => {
+    try {
+      const response = await axios.post(`http://localhost:3001/posts/report`, {
+        postId: post.postId
+      });
 
+      if (response.status === 200) {
+        console.log('====================================');
+        console.log("Report successfully");
+        console.log('====================================');
+      }
+      else {
+        console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  };
+
+  useEffect(() => {
+    // ReportPost()
+    if (clickReport > 0) ReportPost()
+  }, [clickReport])
+  //================================================================================
+  //================================================================================
   const handleClick = (e) => {
     if (postRef.current && !postRef.current.contains(e.target)) {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -105,69 +134,70 @@ const Post = ({ post }) => {
   //========================================================================
   //get comment quantity
   // Queries
-  const {isLoading, error, data: cmts} = useQuery({
-      queryKey: ["cmts",post.postId],
-      queryFn: async () => {
+  const { isLoading, error, data: cmts } = useQuery({
+    queryKey: ["cmts", post.postId],
+    queryFn: async () => {
       try {
-          return await axios
+        return await axios
           .get(`http://localhost:3001/posts/comments/${post.postId}`)
           .then((response) => {
-              return response.data;
+            return response.data;
           });
       } catch (error) {
-          throw error; 
+        throw error;
       }
-      },
+    },
   });
 
   //========================================================================
   //========================================================================
   // Like function
-  const {data: likes} = useQuery({
-      queryKey: ["likes",post.postId],
-      queryFn: async () => {
+  const { data: likes } = useQuery({
+    queryKey: ["likes", post.postId],
+    queryFn: async () => {
       try {
-          return await axios
+        return await axios
           .get(`http://localhost:3001/posts/${post.postId}/likes`)
           .then((response) => {
-              return response.data;
+            return response.data;
           });
       } catch (error) {
-          throw error; 
+        throw error;
       }
-      },
+    },
   });
 
   const queryClient = useQueryClient();
 
-    // Mutations
+  // Mutations
   const mutationLike = useMutation({
-        mutationFn: () => {
-        return axios.put("http://localhost:3001/posts/likes", {
-          userId: currentUser.userId, 
-          postId: post.postId
-        })},
-        onSuccess: (response) => {
-            console.log("Newly added like:", response.data);
+    mutationFn: () => {
+      return axios.put("http://localhost:3001/posts/likes", {
+        userId: currentUser.userId,
+        postId: post.postId
+      })
+    },
+    onSuccess: (response) => {
+      console.log("Newly added like:", response.data);
 
-            queryClient.invalidateQueries({queryKey: ["likes",post.postId]});
-        },
-        onError: (error, variables, context) => {
-            console.log('====================================');
-                console.log("error");
-                console.log('====================================');
-          },
-          onSettled: (data, error, variables, context) => {
-            console.log('====================================');
-                console.log("settle");
-                console.log('====================================');
-          },
+      queryClient.invalidateQueries({ queryKey: ["likes", post.postId] });
+    },
+    onError: (error, variables, context) => {
+      console.log('====================================');
+      console.log("error");
+      console.log('====================================');
+    },
+    onSettled: (data, error, variables, context) => {
+      console.log('====================================');
+      console.log("settle");
+      console.log('====================================');
+    },
   });
 
   const handleClickLike = (e) => {
     e.preventDefault();
     fetchLikeData();
-    mutationLike.mutate({user: currentUser.userId, postId: post.postId})
+    mutationLike.mutate({ user: currentUser.userId, postId: post.postId })
   }
 
   async function fetchLikeData() {
@@ -175,7 +205,7 @@ const Post = ({ post }) => {
       const response = await axios.get(`http://localhost:3001/posts/${currentUser.userId}/${post.postId}/liked`);
       // console.log(dem);
       // console.log(response.data.liked);
-      if(dem == 0) setLike(response.data.liked)
+      if (dem == 0) setLike(response.data.liked)
       else setLike(!response.data.liked)
     } catch (err) {
       console.log(err);
@@ -183,39 +213,39 @@ const Post = ({ post }) => {
   }
   //==============================================================================================================
   //===================================================================================================================
-    //profile image
-    const [profileImageNewsFeed,setProfileImageNewsFeed] = useState("https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
-    const fetchProfileImage = async (userId) => {
-        try {
-        const response = await axios.get(`http://localhost:3001/user/profile-pic/${userId}`);
-    
-        if (response.status === 200) {
-            const imageFilename = response.data
-            // console.log('====================================');
-            // console.log(imageFilename.profilePic);
-            // console.log('====================================');
-            setProfileImageNewsFeed(imageFilename.profilePic)
-        } else {
-            console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
-        }
-        } catch (error) {
-        console.error('Error fetching profile image:', error.message);
-        }
-    };
-    //===================================================================================================================
-  const [dem,setDem] = useState(0)
+  //profile image
+  const [profileImageNewsFeed, setProfileImageNewsFeed] = useState("https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
+  const fetchProfileImage = async (userId) => {
+    try {
+      const response = await axios.get(`http://localhost:3001/user/profile-pic/${userId}`);
+
+      if (response.status === 200) {
+        const imageFilename = response.data
+        // console.log('====================================');
+        // console.log(imageFilename.profilePic);
+        // console.log('====================================');
+        setProfileImageNewsFeed(imageFilename.profilePic)
+      } else {
+        console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+      }
+    } catch (error) {
+      console.error('Error fetching profile image:', error.message);
+    }
+  };
+  //===================================================================================================================
+  const [dem, setDem] = useState(0)
   // Call the async function
   useEffect(() => {
     fetchLikeData();
     fetchProfileImage(post.user.userId)
-    setDem(dem+1)
-  },[])
+    setDem(dem + 1)
+  }, [])
 
   ///=====================================================================================================================
-  
 
-  
-  
+
+
+
   // console.log('====================================');
   // console.log(likes?.likes);
   // console.log('====================================');
@@ -243,8 +273,8 @@ const Post = ({ post }) => {
             </div>
           </div>
           <div className="extra-functions">
-            <MoreHorizIcon onClick = {()=>toggleDropdown(!openDropdown)} ref={postRef} className="icon"/>
-            
+            <MoreHorizIcon onClick={() => toggleDropdown(!openDropdown)} ref={postRef} className="icon" />
+
             <div className="dropdown" ref={dropdownRef}>
               {openDropdown && (
                 <ul className="post-dropdown">
@@ -264,22 +294,22 @@ const Post = ({ post }) => {
 
         <div className="content">
           <p>{post.content}</p>
-          {images && 
+          {images &&
             <section className='slider'>
-                {images.map((image, index) => {
+              {images.map((image, index) => {
                 return (
-                <div
+                  <div
                     className={index === current ? 'slide active' : 'slide'}
                     key={index}
-                >
+                  >
                     <FaArrowAltCircleLeft className='left-arrow' onClick={prevSlide} />
                     <FaArrowAltCircleRight className='right-arrow' onClick={nextSlide} />
                     {index === current && (
-                    <img src={image} alt='travel image' className='image' />
+                      <img src={image} alt='travel image' className='image' />
                     )}
-                </div>
+                  </div>
                 );
-            })}
+              })}
             </section>}
 
           {/* {images.map((image, index) => (
@@ -321,7 +351,7 @@ const Post = ({ post }) => {
             />
           ))}
         </div> */}
-        {commentOpen && <Comments postId={post.postId}/>}
+        {commentOpen && <Comments postId={post.postId} />}
       </div>
     </div>
   );
