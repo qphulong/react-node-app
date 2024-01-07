@@ -95,10 +95,6 @@ function App() {
           element: <AddFriend/>
         },
         {
-          path: "/addfriendtest",
-          element: <AddFriendTest/>
-        },
-        {
           path: "/change",
           element: <ChangePassword/>
         },

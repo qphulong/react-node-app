@@ -68,11 +68,6 @@ const LeftBar = () => {
             <span>Add Friends</span>
           </Link>
 
-          <Link to={"/addfriendtest"} className="item">
-            <PersonAddAltIcon style={{ fontSize: 30 }} className="logo"/>
-            <span>Add Friends Test</span>
-          </Link>
-
           <Link to={"/change"} className="item">
             <EnhancedEncryptionOutlinedIcon style={{ fontSize: 30 }} className="logo"/>
             <span>Change</span>
