@@ -77,8 +77,8 @@ router.put("/add-friends/:linkId", userController.acceptFriendLink);
 
 router.put("/social-media", userController.addSocialMedia);
 
-router.delete("/social-media", async (req, res) => {
-  const userId = req.body.userId;
+router.put("/social-media/:userId", async (req, res) => {
+  const userId = req.params.userId;
   const socialMedia = req.body.socialMedia;
 
   const user = await User.findOne({ userId: userId });
