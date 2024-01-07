@@ -8,6 +8,7 @@ const { CurrentUser } = require("../appController");
 exports.signUp = async (req, res) => {
   const userId = req.body.userId;
   const password = req.body.password;
+  const isAdmin = req.body.isAdmin;
 
   // check if user already exists
   const user = await User.find({ userId: userId });
@@ -18,12 +19,15 @@ exports.signUp = async (req, res) => {
     return;
   }
 
+  if (!isAdmin) {
+    isAdmin = false;
+  }
+
   const newUser = new User({
     userId: userId,
     password: password,
+    isAdmin: isAdmin,
   });
-
-  global.currentUser.set(userId, false);
 
   newUser
     .save()
