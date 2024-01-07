@@ -90,7 +90,7 @@ router.put("/social-media/:userId", async (req, res) => {
 
   for (let i = 0; i < user.otherSocialMedia.length; i++) {
     if (user.otherSocialMedia[i].link == socialMedia) {
-      user.otherSocialMedia.pop(i);
+      user.otherSocialMedia.remove(user.otherSocialMedia[i]);
     }
   }
 
