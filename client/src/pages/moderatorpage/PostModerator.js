@@ -2,7 +2,7 @@ import './postModerator.scss';
 import { useEffect, useState, useRef, useContext } from "react";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
 
-const PostModerator = () => {
+const PostModerator = ({post}) => {
     
     const [images, setImages] = useState(['https://pbs.twimg.com/media/GCfJUsAaEAATOon?format=jpg&name=4096x4096', 'https://pbs.twimg.com/media/GCfJLAEaMAAXvmP?format=jpg&name=4096x4096', 'https://pbs.twimg.com/media/GCfHyvCaUAAODgW?format=jpg&name=4096x4096']);
 
