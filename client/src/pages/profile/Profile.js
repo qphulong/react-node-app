@@ -151,11 +151,29 @@ const Profile = () => {
         }
     }
 
-    const handleRemoveLink = (index) => {
+    const handleRemoveLink = async (index, social) => {
         const updatedSocialArray = [...socialArray];
         updatedSocialArray.splice(index, 1);
         setSocialArray(updatedSocialArray);
+    
+        // try {
+        //     const response = await axios.delete(`http://localhost:3001/user/social-media`, {
+        //         params: {
+        //             userId: "tmk3010",
+        //             socialMedia: social.link
+        //         }
+        //     });
+    
+        //     if (response.status === 200) {
+        //         console.log('Social media link deleted successfully');
+        //     } else {
+        //         console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+        //     }
+        // } catch (error) {
+        //     console.error('Error:', error.message);
+        // }
     };
+    
 
 
     return (
@@ -164,7 +182,7 @@ const Profile = () => {
                 <img src={isOwnProfile ? profileImage : profileImageFriend}
                     alt="" className='cover' />
                 <div className='profile-image-container' onClick={handleImageClick}>
-                    {image ? <img src={URL.createObjectURL(image)} alt='' className='profile-picture-after' /> : <img src={profileImageFriend} className='profile-picture-before' />}
+                    {image ? <img src={URL.createObjectURL(image)} alt='' className='profile-picture-after' /> : <img src={isOwnProfile ? profileImage : profileImageFriend} className='profile-picture-before' />}
                     {isOwnProfile ? (
                         <FileUploadIcon style={{ fontSize: 50 }} className='upload-image-icon' />
                     ) : null}
@@ -191,7 +209,7 @@ const Profile = () => {
                                                 {social.link}
                                             </a>
                                             {isOwnProfile && (
-                                            <button onClick={() => handleRemoveLink(index)}>
+                                            <button onClick={() => handleRemoveLink(index,social)}>
                                                 Remove
                                             </button>
                                         )}
