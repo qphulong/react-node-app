@@ -94,7 +94,7 @@ router.delete("/social-media", async (req, res) => {
   );
 
   if (socialMediaExists.length === 0) {
-    return res.status(404).json({ error: "Social media link does not exist" });
+    return res.status(403).json({ error: "Social media link does not exist" });
   }
 
   // remove social media
