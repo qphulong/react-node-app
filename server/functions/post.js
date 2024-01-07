@@ -91,9 +91,6 @@ async function reportPost(postId, res) {
   try {
     const post = await Post.findOne({ postId });
     if (post) {
-      //if post is not null
-      const id = post._id;
-
       const newPostForConsideration = new PostForModeration({
         post: post,
       });

@@ -11,6 +11,7 @@ const PostModerator = ({postIdModerator}) => {
     // 'https://pbs.twimg.com/media/GCfHyvCaUAAODgW?format=jpg&name=4096x4096']);
     const [images, setImages] = useState([])
     const [current, setCurrent] = useState(0);
+    const [currentPost,setCurrentPost] = useState(null)
     const length = images.length;
 
     const nextSlide = () => {
@@ -42,7 +43,30 @@ const PostModerator = ({postIdModerator}) => {
     }, []);
     //=================================================================================================
     //=================================================================================================
-    // Handle Click Keep or Remove
+    //Get info of one post
+    const getOnePost = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3001/posts/retrieve/${postIdModerator}`);
+        
+            if (response.status === 200) {
+                console.log('====================================');
+                console.log("get successfully",response.data.post);
+                console.log('====================================');
+                setCurrentPost(response.data.post)
+            } 
+            else {
+                console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    };
+    useEffect(() => {
+        getOnePost()
+    }, []);
+    //=================================================================================================
+    //=================================================================================================
+    // Handle Click Keep
     const queryClient = useQueryClient();
 
     // Mutations
@@ -64,9 +88,27 @@ const PostModerator = ({postIdModerator}) => {
         e.preventDefault();
         mutationKeep.mutate({ postIdModerator });
     }
-
-    const handleRemove = () => {
-
+    //=================================================================================================
+    //=================================================================================================
+    // Handle Click Remove
+    // Mutations
+    const mutationRemove = useMutation({
+        mutationFn: () => {
+        return axios.put(`http://localhost:3001/user/moderator/remove`, {
+            postId: postIdModerator,
+        });
+        },
+        onSuccess: () => {
+        // Invalidate and refetch
+            queryClient.invalidateQueries({ queryKey: ["ModeratorPosts"] });
+            console.log('====================================');
+            console.log("Remove: ",postIdModerator);
+            console.log('====================================');
+        },
+    });
+    const handleRemove = (e) => {
+        e.preventDefault();
+        mutationRemove.mutate({ postIdModerator });
     }
 
     //=================================================================================================
@@ -83,7 +125,7 @@ const PostModerator = ({postIdModerator}) => {
             </div>
             <div className='middle-part'>
                 <div className='content'>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur
+                    {currentPost ? currentPost.content : "Nothing"}
                 </div>
                 {images &&
                     <section className='slider'>
