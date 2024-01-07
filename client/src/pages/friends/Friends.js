@@ -111,12 +111,43 @@ const Friends = () => {
     // console.log('====================================');
 
     //Click out of dropdown
+    // useEffect(() => {
+    //     document.addEventListener("mousedown", handleClick);
+    //     return () => {
+    //         document.removeEventListener("mousedown", handleClick);
+    //     };
+    // });
+
     useEffect(() => {
-        document.addEventListener("mousedown", handleClick);
-        return () => {
-            document.removeEventListener("mousedown", handleClick);
+        const handleClick = (friendId, e) => {
+            if (
+                openDropdown[friendId] &&
+                dropdownRefs.current[friendId] &&
+                !dropdownRefs.current[friendId].contains(e.target) &&
+                extraFunctionRef.current &&
+                !extraFunctionRef.current.contains(e.target)
+            ) {
+                setOpenDropdown((prevState) => ({
+                    ...prevState,
+                    [friendId]: false,
+                }));
+            }
         };
-    });
+
+        document.addEventListener("mousedown", (e) => {
+            Object.keys(openDropdown).forEach((friendId) => {
+                handleClick(friendId, e);
+            });
+        });
+
+        return () => {
+            document.removeEventListener("mousedown", (e) => {
+                Object.keys(openDropdown).forEach((friendId) => {
+                    handleClick(friendId, e);
+                });
+            });
+        };
+    }, [openDropdown]);
 
     //Click dropdown 
     function handleOnClick(friendId, item) {
@@ -127,20 +158,7 @@ const Friends = () => {
         }
     }
 
-    const handleClick = (friendId, e) => {
-        if (dropdownRefs.current[friendId] && !dropdownRefs.current[friendId].contains(e.target)) {
-            setOpenDropdown((prevState) => ({
-                ...prevState,
-                [friendId]: false,
-            }));
-        }
-        // else if (openDropdown[friendId] && extraFunctionRef.current[friendId].contains(e.target)){
-        //     setOpenDropdown((prevState) => ({
-        //         ...prevState,
-        //         [friendId]: !prevState[friendId]
-        //     }));
-        // }
-    }
+
 
     //===================================================================================================================
     //profile image

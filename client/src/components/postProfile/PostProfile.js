@@ -84,7 +84,7 @@ const PostProfile = ({ imageProfile, userId, post }) => {
   function handleOnClick(item) {
     if (isOwnProfile) {
       if (item.id == 1) {
-        console.log("1");
+        setOpenDropdown(!openDropdown)
         setIsEditing(true);
       } else if (item.id == 2) {
         console.log("2");
