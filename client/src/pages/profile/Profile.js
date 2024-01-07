@@ -156,14 +156,13 @@ const Profile = () => {
         updatedSocialArray.splice(index, 1);
         setSocialArray(updatedSocialArray);
 
-        deleteLink()
+        deleteLink(social)
     };
     
-    const deleteLink = async () => {
+    const deleteLink = async (social) => {
         try {
-            const response = await axios.delete(`http://localhost:3001/user/social-media`, {
-                userId: "tmk3010",
-                socialMedia: "https://mui.com/material-ui/material-icons/?them"
+            const response = await axios.put(`http://localhost:3001/user/social-media/${currentUser.userId}`, {
+                socialMedia: social.link
             });
     
             if (response.status === 200) {
