@@ -17,13 +17,13 @@ import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import moment from 'moment';
 
-const PostProfile = ({ imageProfile,userId,post }) => {
+const PostProfile = ({ imageProfile, userId, post }) => {
   const { currentUser, login, logout } = useContext(AuthContext);
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(post.content);
   //comment state
   const [commentOpen, setCommentOpen] = useState(false);
-  const [like,setLike] = useState(false)
+  const [like, setLike] = useState(false)
 
   //Dropdown state
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -43,12 +43,12 @@ const PostProfile = ({ imageProfile,userId,post }) => {
   const items = [{
     id: 1,
     value: "Edit content",
-    icon: <EditNoteIcon style={{fontSize: 25}}/>,
+    icon: <EditNoteIcon style={{ fontSize: 25 }} />,
   },
   {
     id: 2,
     value: "Delete post",
-    icon: <DeleteIcon style={{fontSize: 25}}/>,
+    icon: <DeleteIcon style={{ fontSize: 25 }} />,
   }]
 
   //images
@@ -82,19 +82,19 @@ const PostProfile = ({ imageProfile,userId,post }) => {
 
   //Handle the dropdown
   function handleOnClick(item) {
-    if(isOwnProfile){
+    if (isOwnProfile) {
       if (item.id == 1) {
         console.log("1");
         setIsEditing(true);
       } else if (item.id == 2) {
         console.log("2");
         handleDeletePost();
-      } 
+      }
     }
   }
 
   const handleClick = (e) => {
-    if(isOwnProfile){
+    if (isOwnProfile) {
       if (postRef.current && !postRef.current.contains(e.target)) {
         if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
           setOpenDropdown(false);
@@ -121,7 +121,7 @@ const PostProfile = ({ imageProfile,userId,post }) => {
     onSuccess: () => {
       // Invalidate and refetch
       setIsEditing(false);
-      queryClient.invalidateQueries({ queryKey: ["postsProfile",currentUser.userId] });
+      queryClient.invalidateQueries({ queryKey: ["postsProfile", currentUser.userId] });
     },
   });
 
@@ -154,7 +154,7 @@ const PostProfile = ({ imageProfile,userId,post }) => {
 
   const handleDeletePost = (e) => {
     // e.preventDefault();
-     mutationDelete.mutate();
+    mutationDelete.mutate();
   };
   //=========================================================================================================
   //=========================================================================================================
@@ -171,86 +171,87 @@ const PostProfile = ({ imageProfile,userId,post }) => {
   };
   //get comment quantity
   // Queries
-  const {isLoading, error, data: cmtsProfile} = useQuery({
-    queryKey: ["cmtsProfile",post.postId],
+  const { isLoading, error, data: cmtsProfile } = useQuery({
+    queryKey: ["cmtsProfile", post.postId],
     queryFn: async () => {
-    try {
+      try {
         return await axios
-        .get(`http://localhost:3001/posts/comments/${post.postId}`)
-        .then((response) => {
+          .get(`http://localhost:3001/posts/comments/${post.postId}`)
+          .then((response) => {
             return response.data;
-        });
-    } catch (error) {
-        throw error; 
-    }
+          });
+      } catch (error) {
+        throw error;
+      }
     },
-});
+  });
 
   //===============================================================================================
   // Like function
   // Like function
-  const {data: likesProfile} = useQuery({
-      queryKey: ["likesProfile",post.postId],
-      queryFn: async () => {
+  const { data: likesProfile } = useQuery({
+    queryKey: ["likesProfile", post.postId],
+    queryFn: async () => {
       try {
-          return await axios
+        return await axios
           .get(`http://localhost:3001/posts/${post.postId}/likes`)
           .then((response) => {
-              return response.data;
+            return response.data;
           });
       } catch (error) {
-          throw error; 
+        throw error;
       }
     },
   });
 
   // Mutations
   const mutationLike = useMutation({
-      mutationFn: () => {
+    mutationFn: () => {
       return axios.put("http://localhost:3001/posts/likes", {
-        userId: currentUser.userId, 
+        userId: currentUser.userId,
         postId: post.postId
-      })},
-      onSuccess: (response) => {
-          console.log("Newly added like:", response.data);
+      })
+    },
+    onSuccess: (response) => {
+      console.log("Newly added like:", response.data);
 
-          queryClient.invalidateQueries({queryKey: ["likesProfile",post.postId]});
-      },
-      onError: (error, variables, context) => {
-          console.log('====================================');
-              console.log("error");
-              console.log('====================================');
-        },
-        onSettled: (data, error, variables, context) => {
-          console.log('====================================');
-              console.log("settle");
-              console.log('====================================');
-        },
+      queryClient.invalidateQueries({ queryKey: ["likesProfile", post.postId] });
+    },
+    onError: (error, variables, context) => {
+      console.log('====================================');
+      console.log("error");
+      console.log('====================================');
+    },
+    onSettled: (data, error, variables, context) => {
+      console.log('====================================');
+      console.log("settle");
+      console.log('====================================');
+    },
   });
 
   const handleClickLike = (e) => {
     e.preventDefault();
     fetchLikeData();
-    mutationLike.mutate({user: currentUser.userId, postId: post.postId})
+    mutationLike.mutate({ user: currentUser.userId, postId: post.postId })
   }
 
   async function fetchLikeData() {
     try {
       const response = await axios.get(`http://localhost:3001/posts/${currentUser.userId}/${post.postId}/liked`);
       // console.log(response.data.liked);
-      if(dem == 0) setLike(response.data.liked)
+      if (dem == 0) setLike(response.data.liked)
       else setLike(!response.data.liked)
     } catch (err) {
       console.log(err);
     }
   }
 
-  const [dem,setDem] = useState(0)
+  const [dem, setDem] = useState(0)
   // Call the async function
   useEffect(() => {
     fetchLikeData();
-    setDem(dem+1)
-  },[])
+    setDem(dem + 1)
+  }, [])
 
   // console.log('====================================');
   // console.log(cmtsProfile?.comments.length);
@@ -272,8 +273,8 @@ const PostProfile = ({ imageProfile,userId,post }) => {
             </div>
           </div>
           <div className="extra-functions">
-            {isOwnProfile ? <MoreHorizIcon onClick = {()=>toggleDropdown(!openDropdown)} ref={postRef} className="icon"/> :
-            <MoreHorizIcon className="icon"/>}
+            {isOwnProfile ? <MoreHorizIcon onClick={() => toggleDropdown(!openDropdown)} ref={postRef} className="icon" /> :
+              <MoreHorizIcon className="icon" />}
             {/* 1. Change post
             2. Delete post */}
             <div className="dropdown" ref={dropdownRef}>
@@ -291,38 +292,42 @@ const PostProfile = ({ imageProfile,userId,post }) => {
               )}
             </div>
           </div>
-          
+
         </div>
 
         <div className="content">
           {isEditing ? (
-            <div>
+            <div className="edit-container">
               <textarea
                 value={editedContent}
                 onChange={(e) => setEditedContent(e.target.value)}
+                className="edit-text"
               />
-              <button onClick={handleEditConfirm}>Save</button>
-              <button onClick={handleEditCancel}>Cancel</button>
+              <div className="edit-button">
+                <button onClick={handleEditConfirm} className="save-button">Save</button>
+                <button onClick={handleEditCancel} className="cancel-button">Cancel</button>
+              </div>
+
             </div>
           ) : (
             <p>{post.content}</p>
           )}
-          {images && 
+          {images &&
             <section className='slider'>
-                {images.map((image, index) => {
+              {images.map((image, index) => {
                 return (
-                <div
+                  <div
                     className={index === current ? 'slide active' : 'slide'}
                     key={index}
-                >
+                  >
                     <FaArrowAltCircleLeft className='left-arrow' onClick={prevSlide} />
                     <FaArrowAltCircleRight className='right-arrow' onClick={nextSlide} />
                     {index === current && (
-                    <img src={image} alt='travel image' className='image' />
+                      <img src={image} alt='travel image' className='image' />
                     )}
-                </div>
+                  </div>
                 );
-            })}
+              })}
             </section>}
 
           {/* {images.map((image, index) => (
@@ -364,7 +369,7 @@ const PostProfile = ({ imageProfile,userId,post }) => {
             />
           ))}
         </div> */}
-        {commentOpen && <Comments postId={post.postId}/>}
+        {commentOpen && <Comments postId={post.postId} />}
       </div>
     </div>
   );
