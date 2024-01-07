@@ -2,10 +2,12 @@ import './postModerator.scss';
 import { useEffect, useState, useRef, useContext } from "react";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
 
-const PostModerator = ({post}) => {
+const PostModerator = ({postIdModerator}) => {
     
-    const [images, setImages] = useState(['https://pbs.twimg.com/media/GCfJUsAaEAATOon?format=jpg&name=4096x4096', 'https://pbs.twimg.com/media/GCfJLAEaMAAXvmP?format=jpg&name=4096x4096', 'https://pbs.twimg.com/media/GCfHyvCaUAAODgW?format=jpg&name=4096x4096']);
-
+    // const [images, setImages] = useState(['https://pbs.twimg.com/media/GCfJUsAaEAATOon?format=jpg&name=4096x4096', 
+    // 'https://pbs.twimg.com/media/GCfJLAEaMAAXvmP?format=jpg&name=4096x4096', 
+    // 'https://pbs.twimg.com/media/GCfHyvCaUAAODgW?format=jpg&name=4096x4096']);
+    const [images, setImages] = useState([])
     const [current, setCurrent] = useState(0);
     const length = images.length;
 
@@ -16,6 +18,28 @@ const PostModerator = ({post}) => {
     const prevSlide = () => {
         setCurrent((prevCurrent) => (prevCurrent === 0 ? length - 1 : prevCurrent - 1));
     };
+
+    //=================================================================================================
+    //retrieve images from API
+    const getImages = async (postId) => {
+        const response = await fetch(
+         `http://localhost:3001/posts/images/${postId}`
+        );
+        const data = await response.json();
+        console.log(data);
+        setImages(data.images);
+
+        for (let i = 0; i < data.images.length; i++) {
+        const image = data.images[i];
+        data.images[i] = `http://localhost:3001/${image}`;
+        }
+    };
+
+    useEffect(() => {
+        getImages(postIdModerator);
+    }, []);
+    //=================================================================================================
+    //=================================================================================================
 
     return (
         <div className='post-moderator'>
