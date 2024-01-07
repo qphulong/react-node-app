@@ -122,7 +122,16 @@ exports.addSocialMedia = async (req, res) => {
 };
 
 exports.getSocialMedia = async (req, res) => {
+  const socialMedia = [];
+
+  const user = await User.findOne({ userId: req.params.userId });
+
+  if (!user) {
+    res.status(404).send("User not found");
+    return;
+  }
+
   res.json({
-    socialMedia: await userFunctions.getSocialMedia(req.params.userId),
+    socialMedia: await user.otherSocialMedia,
   });
 };
