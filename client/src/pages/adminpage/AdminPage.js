@@ -8,6 +8,7 @@ const AdminPage = () => {
     const { currentUser, login, logout, profileImage } = useContext(AuthContext);
     const navigate = useNavigate()
     const [isAdmin,setIsAdmin] = useState(false)
+    const [allUsers,setAllUsers] = useState([])
 
     const handleLogOut = () => {
         logout()
@@ -22,9 +23,9 @@ const AdminPage = () => {
             const response = await axios.get(`http://localhost:3001/user/${currentUser.userId}/admin`);
 
             if (response.status === 200) {
-                console.log('====================================');
-                console.log(response.data.isAdmin);
-                console.log('====================================');
+                // console.log('====================================');
+                // console.log(response.data.isAdmin);
+                // console.log('====================================');
                 setIsAdmin(response.data.isAdmin)
             }
             else {
@@ -40,7 +41,26 @@ const AdminPage = () => {
     //==================================================================================
     //==================================================================================
     // get all users
-    
+    const GetAllUsers = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3001/user/admin`);
+
+            if (response.status === 200) {
+                // console.log('====================================');
+                // console.log(response.data.users);
+                // console.log('====================================');
+                setAllUsers(response.data.users)
+            }
+            else {
+                console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    };
+    useEffect(() => {
+        GetAllUsers()
+    },[])
     //==================================================================================
     //==================================================================================
 
