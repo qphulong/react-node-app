@@ -59,9 +59,29 @@ const UserElement = ({userIdElement}) => {
     }
     //========================================================================================
     //========================================================================================
+    // delete moderator 
+    const DeleteModerator = async () => {
+        try {
+            const response = await axios.put(`http://localhost:3001/user/admin/unassign`,{
+                userId : userIdElement
+            });
 
+            if (response.status === 200) {
+                // console.log('====================================');
+                // console.log(response.data);
+                // console.log('====================================');
+                toast.success('Unassign Moderator successfully'); // Display success toast
+                setIsmoderator(false)
+            }
+            else {
+                console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    };
     const handleDeleteModerator = () => {
-
+        DeleteModerator()
     }
 
     return (
