@@ -117,7 +117,7 @@ function App() {
       element: <Register/>,
     },
     {
-      path: "/invitations",
+      path: "/invitations/add-friends/:link",
       element: <Invitations/>
     },
   ]);
