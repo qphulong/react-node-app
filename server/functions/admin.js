@@ -1,62 +1,35 @@
 const Post = require("../models/post");
+const User = require("../models/user");
 const bcrypt = require("bcrypt");
 
-async function assignModerator(currentUser, userId) {
-  try {
-    const user = await User.findById(userId);
+async function assignModerator(userId, res) {
+  const user = await User.findOne({ userId: userId });
 
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    if (!currentUser.isAdmin) {
-      throw new Error("Unauthorized: Only admins can assign moderator roles");
-    }
-
-    user.isModerator = true;
-
-    await user.save();
-
-    return {
-      success: true,
-      message: "User assigned as a moderator successfully",
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      success: false,
-      message: error.message || "Error assigning moderator role",
-    };
+  if (!user) {
+    res.status(400).send("User not found!");
+    return;
   }
+
+  user.isModerator = true;
+
+  await user.save();
+
+  res.send("User assigned as a moderator successfully!");
 }
 
-async function unassignModerator(currentUser, userId) {
-  try {
-    const user = await User.findById(userId);
+async function unassignModerator(userId, res) {
+  const user = await User.findOne({ userId: userId });
 
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    if (!currentUser.isAdmin) {
-      throw new Error("Unauthorized: Only admins can assign moderator roles");
-    }
-
-    user.isModerator = false;
-
-    await user.save();
-
-    return {
-      success: true,
-      message: "User assigned as a moderator successfully",
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      success: false,
-      message: error.message || "Error assigning moderator role",
-    };
+  if (!user) {
+    res.status(400).send("User not found!");
+    return;
   }
+
+  user.isModerator = false;
+
+  await user.save();
+
+  res.send("User unassigned as a moderator successfully!");
 }
 
 module.exports = {

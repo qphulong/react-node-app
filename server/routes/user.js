@@ -5,23 +5,29 @@ const adminController = require("../controllers/admin");
 
 const Post = require("../models/post");
 const User = require("../models/user");
+const PostForModeration = require("../models/postForModeration");
 
 const { query } = require("express-validator");
 
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-const { currentUser } = require("../app");
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
+router.get("/admin", async (req, res) => {
   // get all users
-  User.find()
-    .then((users) => {
-      res.json({ users: users });
-    })
-    .catch((err) => res.status(500).json({ error: err }));
+  const users = await User.find({});
+
+  // retrieve document fields
+
+  const userIds = [];
+
+  for (const user of users) {
+    userIds.push(user.userId);
+  }
+
+  return res.json({ users: userIds });
 });
 
 router.get("/:userId/admin", async (req, res) => {
@@ -68,26 +74,58 @@ router.put(
   userController.changePassword
 );
 
-router.delete(
-  "/moderator",
-  query("postId").notEmpty(),
-  moderatorController.deletePost
-);
+router.get("/moderator", async (req, res) => {
+  // get all posts from the database
+  console.log("working");
+  const posts = await PostForModeration.find({});
 
-router.get("/moderator", (req, res) => {
-  moderatorController.working; //start working
+  const postIds = [];
+
+  for (const post of posts) {
+    const curentPost = await Post.findOne({ _id: post.post });
+    postIds.push(curentPost.postId);
+  }
+
+  res.json({ posts: postIds });
 });
 
 //keep button (keep a post)
-router.put("/moderator/keep", (req, res) => {
-  res.status(200).send("Keep function executed");
+router.put("/moderator/keep", async (req, res) => {
+  const postId = req.body.postId;
+
+  const postForModeration = await PostForModeration.findOne({ post: post });
+
+  if (!postForModeration) {
+    res.status(404).send("Post not found");
+    return;
+  }
+
+  await postForModeration.delete();
+
+  res.send("Post kept successfully");
 });
 
 //remove button (remove a violating post)
-router.put("/moderator/remove", moderatorController.deletePost);
+router.put("/moderator/remove", async (req, res) => {
+  const postId = req.body.postId;
 
-//admin show all users
-router.get("/admin", adminController.showAllUsers);
+  const post = await Post.findOne({ postId: postId });
+
+  if (!post) {
+    res.status(404).send("Post not found");
+    return;
+  }
+
+  const postForModeration = await PostForModeration.findOne({ post: post });
+
+  if (!postForModeration) {
+    res.status(404).send("Post not found");
+    return;
+  }
+
+  await postForModeration.delete();
+  await post.delete();
+});
 
 //assign moderator
 router.put("/admin/assign", adminController.assignModerator);
