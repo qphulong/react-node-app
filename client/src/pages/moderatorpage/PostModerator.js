@@ -4,20 +4,20 @@ import { useEffect, useState, useRef, useContext } from "react";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
 import axios from 'axios';
 
-const PostModerator = ({postIdModerator}) => {
-    
+const PostModerator = ({ postIdModerator }) => {
+
     // const [images, setImages] = useState(['https://pbs.twimg.com/media/GCfJUsAaEAATOon?format=jpg&name=4096x4096', 
     // 'https://pbs.twimg.com/media/GCfJLAEaMAAXvmP?format=jpg&name=4096x4096', 
     // 'https://pbs.twimg.com/media/GCfHyvCaUAAODgW?format=jpg&name=4096x4096']);
     const [images, setImages] = useState([])
     const [current, setCurrent] = useState(0);
-    const [currentPost,setCurrentPost] = useState(null)
+    const [currentPost, setCurrentPost] = useState(null)
     const length = images.length;
 
     const nextSlide = () => {
         setCurrent((prevCurrent) => (prevCurrent === length - 1 ? 0 : prevCurrent + 1));
     };
-    
+
     const prevSlide = () => {
         setCurrent((prevCurrent) => (prevCurrent === 0 ? length - 1 : prevCurrent - 1));
     };
@@ -26,15 +26,15 @@ const PostModerator = ({postIdModerator}) => {
     //retrieve images from API
     const getImages = async (postId) => {
         const response = await fetch(
-         `http://localhost:3001/posts/images/${postId}`
+            `http://localhost:3001/posts/images/${postId}`
         );
         const data = await response.json();
         // console.log(data);
         setImages(data.images);
 
         for (let i = 0; i < data.images.length; i++) {
-        const image = data.images[i];
-        data.images[i] = `http://localhost:3001/${image}`;
+            const image = data.images[i];
+            data.images[i] = `http://localhost:3001/${image}`;
         }
     };
 
@@ -47,13 +47,13 @@ const PostModerator = ({postIdModerator}) => {
     const getOnePost = async () => {
         try {
             const response = await axios.get(`http://localhost:3001/posts/retrieve/${postIdModerator}`);
-        
+
             if (response.status === 200) {
                 console.log('====================================');
-                console.log("get successfully",response.data.post);
+                console.log("get successfully", response.data.post);
                 console.log('====================================');
                 setCurrentPost(response.data.post)
-            } 
+            }
             else {
                 console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
             }
@@ -72,15 +72,15 @@ const PostModerator = ({postIdModerator}) => {
     // Mutations
     const mutationKeep = useMutation({
         mutationFn: () => {
-        return axios.put(`http://localhost:3001/user/moderator/keep`, {
-            postId: postIdModerator,
-        });
+            return axios.put(`http://localhost:3001/user/moderator/keep`, {
+                postId: postIdModerator,
+            });
         },
         onSuccess: () => {
-        // Invalidate and refetch
+            // Invalidate and refetch
             queryClient.invalidateQueries({ queryKey: ["ModeratorPosts"] });
             console.log('====================================');
-            console.log("Keep: ",postIdModerator);
+            console.log("Keep: ", postIdModerator);
             console.log('====================================');
         },
     });
@@ -94,15 +94,15 @@ const PostModerator = ({postIdModerator}) => {
     // Mutations
     const mutationRemove = useMutation({
         mutationFn: () => {
-        return axios.put(`http://localhost:3001/user/moderator/remove`, {
-            postId: postIdModerator,
-        });
+            return axios.put(`http://localhost:3001/user/moderator/remove`, {
+                postId: postIdModerator,
+            });
         },
         onSuccess: () => {
-        // Invalidate and refetch
+            // Invalidate and refetch
             queryClient.invalidateQueries({ queryKey: ["ModeratorPosts"] });
             console.log('====================================');
-            console.log("Remove: ",postIdModerator);
+            console.log("Remove: ", postIdModerator);
             console.log('====================================');
         },
     });
@@ -116,34 +116,36 @@ const PostModerator = ({postIdModerator}) => {
 
     return (
         <div className='post-moderator'>
-            <div className='top-part'>
-                <img src='https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' alt='' className='profile-picture' />
-                <div className='post-info'>
-                    <span className='user-name'>Hong Nhut</span>
-                    <span className='time'>1 min ago</span>
-                </div>
-            </div>
             <div className='middle-part'>
                 <div className='content'>
-                    {currentPost ? currentPost.content : "Nothing"}
+                    <span>Post content</span>
+                    <div className='post-content'>
+                        {currentPost ? currentPost.content : "Nothing"}
+                    </div>
+                    
                 </div>
                 {images &&
-                    <section className='slider'>
-                        {images.map((image, index) => {
-                            return (
-                                <div
-                                    className={index === current ? 'slide active' : 'slide'}
-                                    key={index}
-                                >
-                                    <FaArrowAltCircleLeft className='left-arrow' onClick={prevSlide} />
-                                    <FaArrowAltCircleRight className='right-arrow' onClick={nextSlide} />
-                                    {index === current && (
-                                        <img src={image} alt='travel image' className='image' />
-                                    )}
-                                </div>
-                            );
-                        })}
-                    </section>}
+                    <div>
+                        {images.length != 0 ? <span>Post images</span>:<span>No image</span>}
+                        
+                        <section className='slider'>
+                            {images.map((image, index) => {
+                                return (
+                                    <div
+                                        className={index === current ? 'slide active' : 'slide'}
+                                        key={index}
+                                    >
+                                        <FaArrowAltCircleLeft className='left-arrow' onClick={prevSlide} />
+                                        <FaArrowAltCircleRight className='right-arrow' onClick={nextSlide} />
+                                        {index === current && (
+                                            <img src={image} alt='travel image' className='image' />
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </section>
+                    </div>
+                }
 
             </div>
             <div className='bottom-part'>

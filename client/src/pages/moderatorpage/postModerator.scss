@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital@0;1&family=Lily+Script+One&display=swap');
+
 .post-moderator {
     -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
     -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
@@ -12,30 +14,23 @@
     gap: 0;
     margin: 30px 100px;
 
-    .top-part {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-
-        .profile-picture {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-        }
-
-        .post-info {
-            display: flex;
-            flex-direction: column;
-            margin-left: 10px;
-            gap: 5px;
-        }
-    }
-
     .middle-part {
+        display: flex;
+        flex-direction: column;
         margin-top: 15px;
-
+        font-size: 20px;
+        gap: 20px;
+        span{
+            font-weight: 300;
+            font-family: "Lily Script One", sans-serif;
+        }
         .content {
-            font-size: 20px;
+            .post-content{
+                margin-top: 20px;
+                background-color: #f6f3f3;
+                padding: 30px 30px;
+                border-radius: 12px;
+            }
         }
 
         .slider {
@@ -43,7 +38,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-
+            margin-top: 20px;
             .left-arrow {
                 position: absolute;
                 top: 50%;
@@ -71,6 +66,7 @@
                 max-height: 500px;
                 object-fit: cover;
                 margin-top: 5px;
+                border-radius: 20px;
             }
 
             .slide {
