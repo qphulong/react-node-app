@@ -78,8 +78,8 @@ const ForModerator = () => {
         <div className='moderator-page'>
             <div className='list-post'>
                 {isLoading ? "Loading..."
-                : ModeratorPosts?.posts.map((post) => {
-                    return <PostModerator postIdModerator={post} key={post} />;
+                : ModeratorPosts?.posts.map((post,index) => {
+                    return <PostModerator postIdModerator={post} key={post+index} />;
                 })}
             </div>
         </div>
