@@ -91,8 +91,24 @@ const PostModerator = ({postIdModerator}) => {
     //=================================================================================================
     //=================================================================================================
     // Handle Click Remove
-    const handleRemove = () => {
-
+    // Mutations
+    const mutationRemove = useMutation({
+        mutationFn: () => {
+        return axios.put(`http://localhost:3001/user/moderator/remove`, {
+            postId: postIdModerator,
+        });
+        },
+        onSuccess: () => {
+        // Invalidate and refetch
+            queryClient.invalidateQueries({ queryKey: ["ModeratorPosts"] });
+            console.log('====================================');
+            console.log("Remove: ",postIdModerator);
+            console.log('====================================');
+        },
+    });
+    const handleRemove = (e) => {
+        e.preventDefault();
+        mutationRemove.mutate({ postIdModerator });
     }
 
     //=================================================================================================
