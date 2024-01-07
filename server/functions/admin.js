@@ -10,9 +10,7 @@ async function assignModerator(userId, res) {
     return;
   }
 
-  user.isModerator = true;
-
-  await user.save();
+  await User.updateOne({userId: userId},{$set: {isContentModerator: true}});
 
   res.send("User assigned as a moderator successfully!");
 }
@@ -25,9 +23,7 @@ async function unassignModerator(userId, res) {
     return;
   }
 
-  user.isModerator = false;
-
-  await user.save();
+  await User.updateOne({userId: userId},{$set: {isContentModerator: false}}):
 
   res.send("User unassigned as a moderator successfully!");
 }
