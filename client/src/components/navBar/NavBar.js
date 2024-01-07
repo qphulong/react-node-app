@@ -1,5 +1,5 @@
 import "./navBar.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import Brightness6Icon from "@mui/icons-material/Brightness6";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
@@ -43,6 +43,7 @@ const NavBar = () => {
   const toggleDropdown = () => setOpenDropdown(!openDropdown);
   const profileRef = useRef(null);
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClick);
@@ -54,8 +55,10 @@ const NavBar = () => {
   function handleOnClick(item) {
     if (item.id == 1) {
       console.log("1");
+      navigate(`/profile/${currentUser.userId}`)
     } else if (item.id == 2) {
       console.log("2");
+      navigate(`/change`)
     } else if (item.id == 3) {
       logout();
 
