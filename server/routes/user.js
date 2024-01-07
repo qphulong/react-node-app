@@ -45,6 +45,21 @@ router.get("/:userId/admin", async (req, res) => {
   return res.json({ isAdmin: user.isAdmin });
 });
 
+router.get("/:userId/moderator", async (req, res) => {
+  const userId = req.params.userId;
+
+  const user = await User.findOne({ userId: userId });
+
+  if (!user) {
+    res.status(404).send("User not found");
+    return;
+  }
+
+  console.log(user);
+
+  return res.json({ isModerator: user.isContentModerator });
+});
+
 router.post(
   "/sign-up",
   query("userId").notEmpty(), //call this validation middleware first to validate
@@ -93,6 +108,8 @@ router.get("/moderator", async (req, res) => {
 router.put("/moderator/keep", async (req, res) => {
   const postId = req.body.postId;
 
+  const post = await Post.findOne({ postId: postId });
+
   const postForModeration = await PostForModeration.findOne({ post: post });
 
   if (!postForModeration) {
@@ -100,7 +117,7 @@ router.put("/moderator/keep", async (req, res) => {
     return;
   }
 
-  await postForModeration.delete();
+  await PostForModeration.deleteOne({ post: post });
 
   res.send("Post kept successfully");
 });
@@ -123,8 +140,10 @@ router.put("/moderator/remove", async (req, res) => {
     return;
   }
 
-  await postForModeration.delete();
-  await post.delete();
+  await PostForModeration.deleteOne({ post: post });
+  await Post.deleteOne({ postId: postId });
+
+  res.send("Post removed successfully");
 });
 
 //assign moderator
