@@ -4,7 +4,7 @@ import "./share.scss";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 import { useState } from "react";
-import {toast, ToastContainer} from "react-toastify"
+import { toast, ToastContainer } from "react-toastify"
 import {
   useMutation,
   QueryClient,
@@ -12,7 +12,7 @@ import {
 } from "@tanstack/react-query";
 import axios from "axios";
 const Share = () => {
-  const { currentUser,profileImage } = useContext(AuthContext);
+  const { currentUser, profileImage } = useContext(AuthContext);
   const [file, setFile] = useState(null);
   const [desc, setDesc] = useState("");
 
@@ -24,20 +24,20 @@ const Share = () => {
   const [descWord, setDescWord] = useState(0);
 
   // console.log(file)
- 
- 
+
+
   const handleContentChange = (e) => {
     const content = e.target.value.split(" ")
     setDescWord(content.length)
- 
-    if (content.length <= MAX_WORD) { 
+
+    if (content.length <= MAX_WORD) {
       setDesc(e.target.value)
- 
-      if (e.target.value == ''){
+
+      if (e.target.value == '') {
         setDescWord(0)
-      } 
+      }
     }
-    else{
+    else {
       setDesc(e.target.value.slice(0, desc.length))
       toast.warning("Your content is out of limit", {
         position: toast.POSITION.TOP_RIGHT,
@@ -45,11 +45,11 @@ const Share = () => {
     }
   }
 
-  const handleImageLimit = (e) =>{
+  const handleImageLimit = (e) => {
 
     setFile(e.target.files)
     const imageLength = e.target.files.length
-    if (imageLength > MAX_IMAGE){
+    if (imageLength > MAX_IMAGE) {
       toast.warning("Your image is out of limit", {
         position: toast.POSITION.TOP_RIGHT,
       });
@@ -78,8 +78,12 @@ const Share = () => {
       // console.log("Newly added post:", typeof(newPostObject));
       if (file) upload(response.data);
 
+      // add more
+      setDesc("");
+      setFile(null);
+
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["posts",currentUser.userId] });
+      queryClient.invalidateQueries({ queryKey: ["posts", currentUser.userId] });
     },
   });
 
@@ -88,6 +92,7 @@ const Share = () => {
     mutation.mutate({ desc });
     // print
     // console.log(newPostId);
+
   };
 
   //upload
@@ -178,7 +183,7 @@ const Share = () => {
                   <button onClick={() => removeImage(index)}>X</button>
                   <div className="tool-tip">Remove</div>
                 </div>
-                
+
               </div>
             ))}
         </div>
