@@ -28,6 +28,7 @@
 
         .profile-container {
             padding: 20px 30px;
+            background-color: themed('bgSoft');
 
             .user-info {
 
@@ -140,6 +141,15 @@
                             border-radius: 12px;
                             color: themed("bg");
                             padding: 10px 10px;
+                            cursor: pointer;
+                        }
+
+                        .get-link-button:hover{
+                            filter: brightness(90%)
+                        }
+
+                        .get-link-button:active{
+                            filter:brightness(80%)
                         }
 
                     }
@@ -173,6 +183,8 @@
                                     outline: none;
                                     background-color: transparent;
                                     border: none;
+                                    color: themed("textColor");
+                                    font-family: 'Josefin Sans', sans-serif;
                                 }
                             }
 
