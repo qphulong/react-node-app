@@ -73,7 +73,9 @@ const AdminPage = () => {
                     Please go back to your previous page.
                 </div>
                 <div className='back-container'>
-                    <LogoutIcon style={{fontSize: 60, color: 'white'}}/>
+                    <Link to={"/"}>
+                        <LogoutIcon style={{fontSize: 60, color: 'white'}}/>
+                    </Link>
                 </div>
             </div>
         )
