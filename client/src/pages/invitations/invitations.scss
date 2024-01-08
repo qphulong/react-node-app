@@ -1,20 +1,59 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital@0;1&family=Lily+Script+One&display=swap');
 @import "../../style.scss";
 
-.invitations{
+.current-user-page,
+.already-friend-page {
+    display: flex;
+    flex-direction: column;
+    padding: 60px;
+    text-align: center;
+    align-items: center;
+    gap: 30px;
+
+    .notification {
+        font-size: 36px;
+    }
+
+    .back-container {
+        width: 80px;
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        background-color: themed("logo");
+        color: themed("bg");
+        border: none;
+        border-radius: 20px;
+        padding: 20px 30px;
+        cursor: pointer;
+    }
+
+    .back-container:hover {
+        filter: brightness(90%);
+    }
+
+
+    .back-container:active {
+        filter: brightness(80%);
+    }
+}
+
+.invitations {
     font-family: 'Josefin Sans', sans-serif;
     margin: 0;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    
-    background-image: linear-gradient(rgba(136, 25, 25,0.4),rgba(132, 20, 20,0.4)),url(https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+
+    background-image: linear-gradient(rgba(136, 25, 25, 0.4), rgba(132, 20, 20, 0.4)), url(https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
     background-position: center;
     background-size: cover;
 
-    .title{
+    .title {
         padding: 30px;
-        span{
+
+        span {
             font-family: "Lily Script One", sans-serif;
             color: #B26457;
             font-weight: bold;
@@ -22,13 +61,14 @@
         }
     }
 
-    .container{
+    .container {
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 20px;
         margin-top: 80px;
-        .content-container{
+
+        .content-container {
             border: 5px solid #B26457;
             display: flex;
             flex-direction: column;
@@ -37,21 +77,24 @@
             padding: 20px 20px 30px 20px;
             border-radius: 10px;
             width: 25%;
-            p{
+
+            p {
                 font-weight: bold;
             }
 
-            .input-container{
+            .input-container {
                 display: flex;
                 flex-direction: row;
                 text-align: center;
                 align-items: center;
                 padding: 0px 40px;
-                span{
+
+                span {
                     flex: 1;
                     font-weight: bold;
                 }
-                input{
+
+                input {
                     flex: 5;
                     width: 30;
                     border-radius: 5px;
@@ -61,9 +104,10 @@
                 }
             }
 
-            .confirm-container{
+            .confirm-container {
                 margin-top: 20px;
-                Button{
+
+                Button {
                     color: black;
                     border: none;
                     background-color: white;
@@ -72,6 +116,6 @@
             }
         }
     }
-    
-    
+
+
 }
