@@ -10,6 +10,11 @@ async function signIn(userId, inputPassword, res) {
     return;
   }
 
+  if (!inputPassword || inputPassword.length < 0) {
+    res.status(400).send("Password is empty!");
+    return;
+  }
+
   const isPasswordValid = await bcrypt.compare(inputPassword, user.password); //check password
 
   if (isPasswordValid) {
