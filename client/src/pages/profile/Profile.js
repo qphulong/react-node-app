@@ -23,6 +23,8 @@ import { AuthContext } from '../../context/authContext';
 import axios from 'axios';
 import EditNote from '@mui/icons-material/EditNote';
 import { useParams } from 'react-router-dom';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Profile = () => {
     const inputRef = useRef(null);
@@ -83,16 +85,32 @@ const Profile = () => {
 
     if (areFriends === false) {
         return (
-            <div>
-                You are not friends with currentUser
+            <div className='not-friend-page'>
+                <div className='notification'>
+                    You and this user are not friends. You can send a request to invite this user to be your friend later. <br></br>
+                    Please go back to your previous page.
+                </div>
+                <div className='back-container'>
+                    <Link to={"/"}>
+                        <LogoutIcon style={{fontSize: 60, color: 'white'}}/>
+                    </Link>
+                </div>
             </div>
         );
     }
 
     if (areFriends === null && !isOwnProfile) {
         return (
-            <div>
-                User not found
+            <div className='not-exist-page'>
+                <div className='notification'>
+                    This user is not exist<br></br>
+                    Please go back to your previous page.
+                </div>
+                <div className='back-container'>
+                    <Link to={"/"}>
+                        <LogoutIcon style={{fontSize: 60, color: 'white'}}/>
+                    </Link>
+                </div>
             </div>
         );
     }

@@ -1,5 +1,46 @@
 @import "../../style.scss";
 
+.not-friend-page,
+.not-exist-page {
+    @include themify($themes) {
+        display: flex;
+        flex-direction: column;
+        padding: 60px;
+        text-align: center;
+        align-items: center;
+        gap: 30px;
+
+        .notification {
+            font-size: 36px;
+        }
+
+        .back-container {
+            width: 80px;
+            display: flex;
+            flex-direction: row;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            background-color: themed("logo");
+            color: themed("bg");
+            border: none;
+            border-radius: 20px;
+            padding: 20px 30px;
+            cursor: pointer;
+        }
+
+        .back-container:hover {
+            filter: brightness(90%);
+        }
+
+
+        .back-container:active {
+            filter: brightness(80%);
+        }
+    }
+
+}
+
 .profile {
     @include themify($themes) {
         background-color: themed("bgSoft");
@@ -73,7 +114,7 @@
                 background-color: themed("bg");
                 color: themed("textColor");
                 padding: 20px 50px;
-                
+
                 display: flex;
 
                 justify-content: space-around;
@@ -101,12 +142,12 @@
                             font-size: 18px;
                         }
 
-                        .social-button:hover{
+                        .social-button:hover {
                             filter: brightness(90%);
                         }
 
-                        .social-button:active{
-                            filter:brightness(80%);
+                        .social-button:active {
+                            filter: brightness(80%);
                         }
 
                         .list-item {
@@ -117,30 +158,34 @@
                             align-items: center;
                             margin-top: 5px;
                             gap: 10px;
-                            .link-container{
+
+                            .link-container {
                                 display: flex;
                                 flex-direction: row;
                                 gap: 5px;
                                 padding: 10px;
                                 border-radius: 10px;
                                 background-color: themed("bgSoft");
-                                a{
+
+                                a {
                                     font-size: 20px;
                                     text-decoration: none;
                                 }
 
-                                .logo{
+                                .logo {
                                     color: themed("logo");
                                 }
                             }
 
-                            .remove-container{
+                            .remove-container {
                                 display: flex;
                                 flex-direction: row;
-                                .logo{
+
+                                .logo {
                                     color: themed("logo");
                                     cursor: pointer;
                                 }
+
                                 .tool-tip {
                                     margin-left: 28px;
                                     position: absolute;
@@ -153,12 +198,12 @@
                                     transition: opacity 0.15s;
                                 }
 
-                                .logo:hover + .tool-tip{
+                                .logo:hover+.tool-tip {
                                     opacity: 1;
                                 }
                             }
 
-                            
+
                         }
 
                         a {

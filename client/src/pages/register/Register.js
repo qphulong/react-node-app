@@ -30,6 +30,7 @@ const Register = () => {
                 console.log("Sign-up successful!");
                 setCheckToast(true)
                 toast.success('Registration successful!!!'); // Display success toast
+                window.location.reload()    
                 // Handle successful sign-up, e.g., redirect to a different page or display a success message.
               } 
          }
@@ -49,7 +50,7 @@ const Register = () => {
                     <p>
                     Share unforgettable memories and daily life stories only for your families and friends here.
                     </p>
-                    <Link to={'/login'} style={{textDecoration: "none", color: "black"}}>
+                    <Link to={'/login'} style={{textDecoration: "none", color: "yellow"}}>
                         <span>Do you have an account?</span>
                     </Link>
                     <Link to='/login'>
