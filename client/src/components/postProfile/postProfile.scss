@@ -187,6 +187,31 @@
                 display: flex;
                 align-items: center;
                 gap: 20px;
+                .tool-tip {
+                    z-index: 10;
+                    margin-top: 3px;
+                    margin-left: -5px;
+                    position: absolute;
+                    font-size: 12px;
+                    padding: 6px 4px;
+                    background-color: themed("textColorSoft");
+                    color: themed("bg");
+                    border-radius: 4px;
+                    opacity: 0;
+                    transition: opacity 0.15s;
+                }
+                .item{
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    
+                }
+
+                .item:hover + .tool-tip{
+                    opacity: 1;
+                }
 
                 .item {
                     display: flex;
