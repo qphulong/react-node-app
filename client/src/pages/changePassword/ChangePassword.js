@@ -134,7 +134,7 @@ const ChangePassword = () => {
     }
   };
   return (
-    <div className="container">
+    <div className="container-change">
       <div className="change-password-page">
         <div className="title">Change password</div>
 
