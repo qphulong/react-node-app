@@ -98,7 +98,7 @@ const AdminPage = () => {
                     </div>
                 </div>
                 <div className='right'>
-                    <LogoutIcon style={{ fontSize: 40 }} onClick={handleLogOut}/>
+                    <LogoutIcon style={{ fontSize: 40 ,cursor: "pointer"}} onClick={handleLogOut}/>
                 </div>
             </div>
             <div className='list-user'>

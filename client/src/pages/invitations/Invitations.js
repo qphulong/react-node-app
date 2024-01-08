@@ -2,7 +2,7 @@ import './invitations.scss'
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import Button from '@mui/material/Button';
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
@@ -59,9 +59,9 @@ const Invitations = () => {
                     Please go back to your previous page.
                 </div>
                 <div className='back-container'>
-                    {/* <Link to={"/"}> */}
+                    <Link to={"/"}>
                         <LogoutIcon style={{fontSize: 60, color: 'white'}}/>
-                    {/* </Link> */}
+                    </Link>
                 </div>
             </div>
         )
@@ -82,7 +82,9 @@ const Invitations = () => {
                 </div>
                 <div className='back-container'>
                     <div>
-                        <LogoutIcon style={{fontSize: 60, color: 'white'}}/>
+                        <Link to={"/"}>
+                            <LogoutIcon style={{fontSize: 60, color: 'white'}}/>
+                        </Link>
                     </div>
                 </div>
                 
