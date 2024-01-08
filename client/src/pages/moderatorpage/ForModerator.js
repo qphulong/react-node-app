@@ -58,7 +58,11 @@ const ForModerator = () => {
     });
 
     if (isLoading) {
-        return <h3>Loading...</h3>;
+        return(<div className="loading-screen">
+            <h3>Loading...</h3>;
+        </div>)
+        
+        
     }
 
     if (error) {

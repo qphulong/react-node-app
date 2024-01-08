@@ -8,6 +8,7 @@
 
 .friends {
     @include themify($themes) {
+        min-height: 1000px;
         padding: 10px 50px 20px 50px;
         background-color: themed("bgSoft");
 

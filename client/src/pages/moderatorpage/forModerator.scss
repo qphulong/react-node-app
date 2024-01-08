@@ -1,6 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital@0;1&family=Lily+Script+One&display=swap');
 @import "../../style.scss";
 
+.loading-screen{
+    @include themify($themes){
+        padding: 30px 40px;
+        min-height: 1000px;
+        background-color: themed('bgSoft');
+        color: themed('textColor');
+    }
+    
+}
+
 .not-moderator-page {
     @include themify($themes) {
         display: flex;
