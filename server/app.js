@@ -24,7 +24,7 @@ const uri = process.env.DB_URI; //get uri from env (for secure reasons)
 mongoose.connect(uri).then(() => console.log("Connected to db"));
 
 const isProd = process.env.PROD === "true" || false;
-window.backendURL = isProd ? process.env.PROD_URL : "http://localhost:3001";
+global.backendURL = isProd ? process.env.PROD_URL : "http://localhost:3001";
 
 mongoose.connection.on("error", (err) => {
   console.log(`DB connection error: ${err.messsage}`);
