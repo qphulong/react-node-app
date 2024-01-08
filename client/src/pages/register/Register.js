@@ -37,8 +37,9 @@ const Register = () => {
          catch(err){
             console.log('====================================');
             console.log(err);
-            toast.error(`Registration failed: Please check it again!!!`); // Display error toast
+            toast.error(`Registration failed!!!`); // Display error toast
             console.log('====================================');
+            setInputs("")
          }
     }
 
@@ -60,8 +61,8 @@ const Register = () => {
                 <div className='right'>
                     <h1>Register</h1>
                     <form>
-                        <input type='text' placeholder='Username' name='username' onChange={handleChange}/>
-                        <input type='password' placeholder='Password'name='password' onChange={handleChange} />
+                        <input type='text' placeholder='Username' name='username' onChange={handleChange} value={inputs.username}/>
+                        <input type='password' placeholder='Password'name='password' onChange={handleChange} value={inputs.password}/>
                         <button onClick={handleClick}>Register</button>
                     </form>
                 </div>

@@ -79,6 +79,10 @@
                         padding: 20px 10px;
                         font-family: 'Josefin Sans', sans-serif;
                     }
+
+                    input::placeholder{
+                        display: none;
+                    }
     
                     button{
                         width: 50%;
