@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid';
+import moment from 'moment';
 
 const Comments = ({ postId }) => {
 
@@ -161,7 +162,7 @@ const Comments = ({ postId }) => {
                     <div className='comment-container'>
                         <div className='comment-info'>
                             <span className='user-name'>{comment.user}</span>
-                            <span className='date'>1 hour ago</span>
+                            <span className='date'>{moment(comment.createdAt).fromNow()}</span>
                         </div>
                         <div className='comment-content'>
                             {comment.content}

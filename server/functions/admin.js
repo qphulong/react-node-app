@@ -1,6 +1,6 @@
 const Post = require("../models/post");
 const User = require("../models/user");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 async function assignModerator(userId, res) {
   const user = await User.findOne({ userId: userId });

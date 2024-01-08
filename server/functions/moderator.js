@@ -1,5 +1,5 @@
 const Post = require("../models/post");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 async function removePost(currentUser, postId) {
   if (currentUser.isContentModerator == false) {
