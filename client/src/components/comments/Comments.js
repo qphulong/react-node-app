@@ -59,6 +59,7 @@ const Comments = ({ postId }) => {
                 console.log('====================================');
                 console.log("success");
                 console.log('====================================');
+                setContent('');
             },
             onError: (error, variables, context) => {
                 // I will fire second!
@@ -148,7 +149,7 @@ const Comments = ({ postId }) => {
         <div className='comments'>
             <div className='write'>
                 <img src={profileImage} alt='' />
-                <input type='text' placeholder='Write a comment' onChange={(e) => setContent(e.target.value)} />
+                <input type='text' placeholder='Write a comment' onChange={(e) => setContent(e.target.value)} value={content}/>
                 <button onClick={handleClick}>Send</button>
             </div>
             {Comments.comments?.map((comment, index) => {
