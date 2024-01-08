@@ -23,8 +23,6 @@ import AddFriendTest from "./pages/addfriendtest/AddFriendTest";
 import AdminPage from "./pages/adminpage/AdminPage";
 function App() {
   const isProd = process.env.PROD === "true" || false;
-  console.log(process.env.PROD);
-  console.log("isProd", isProd);
   window.backendURL = isProd ? process.env.PROD_URL : "http://localhost:3001";
 
   //Protected Route
