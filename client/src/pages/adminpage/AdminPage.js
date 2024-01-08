@@ -73,8 +73,10 @@ const AdminPage = () => {
                     You cannot be here. Only Admins have permission to access this page. <br></br>
                     Please go back to your previous page.
                 </div>
-                <div className='back-container'>    
-                    <LogoutIcon style={{fontSize: 60, color: 'white'}}/>
+                <div className='back-container'>
+                    <Link to={"/"}>
+                        <LogoutIcon style={{fontSize: 60, color: 'white'}}/>
+                    </Link>
                 </div>
             </div>
         )

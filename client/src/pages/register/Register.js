@@ -49,7 +49,7 @@ const Register = () => {
                     <p>
                     Share unforgettable memories and daily life stories only for your families and friends here.
                     </p>
-                    <Link to={'/login'} style={{textDecoration: "none", color: "black"}}>
+                    <Link to={'/login'} style={{textDecoration: "none", color: "yellow"}}>
                         <span>Do you have an account?</span>
                     </Link>
                     <Link to='/login'>
