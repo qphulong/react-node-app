@@ -390,7 +390,7 @@ const PostProfile = ({ imageProfile, userId, post }) => {
         </div> */}
         {commentOpen && <Comments postId={post.postId} />}
       </div>
-      {<ToastContainer/>}
+      <ToastContainer/>
     </div>
   );
 };

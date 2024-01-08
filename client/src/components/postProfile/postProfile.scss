@@ -9,10 +9,9 @@
         background-color: themed('bg');
         color: themed("textColor");
         margin-top: 20px;
-
+        gap: 0;
         .container {
             padding: 20px;
-
             .user {
                 display: flex;
                 align-items: center;
@@ -109,6 +108,7 @@
 
                     .edit-button {
                         text-align: right;
+
                         button {
                             border-radius: 12px;
                             margin: 4px;
@@ -120,13 +120,13 @@
                             background-color: themed("logo");
                             color: themed("bg");
                         }
-                        
-                        button:hover{
-                            filter:brightness(90%)
+
+                        button:hover {
+                            filter: brightness(90%)
                         }
 
-                        button:active{
-                            filter:brightness(80%)
+                        button:active {
+                            filter: brightness(80%)
                         }
 
                     }
@@ -187,6 +187,7 @@
                 display: flex;
                 align-items: center;
                 gap: 20px;
+
                 .tool-tip {
                     z-index: 10;
                     margin-top: 3px;
@@ -200,18 +201,6 @@
                     opacity: 0;
                     transition: opacity 0.15s;
                 }
-                .item{
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-                    cursor: pointer;
-                    font-size: 14px;
-                    
-                }
-
-                .item:hover + .tool-tip{
-                    opacity: 1;
-                }
 
                 .item {
                     display: flex;
@@ -219,8 +208,18 @@
                     gap: 10px;
                     cursor: pointer;
                     font-size: 14px;
+
                 }
+
+                .item:hover+.tool-tip {
+                    opacity: 1;
+                }
+
             }
         }
+    }
+    .test{
+        margin: 0;
+        background-color: red;
     }
 }
