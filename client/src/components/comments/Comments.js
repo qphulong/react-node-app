@@ -26,7 +26,7 @@ const Comments = ({ postId }) => {
     // Mutations
     const mutation = useMutation({
         mutationFn: () => {
-            return axios.post("http://localhost:3001/posts/comments", {
+            return axios.post(global.backendURL + "/posts/comments", {
                 postId: postId,
                 userId: currentUser.userId,
                 comment: content,
@@ -83,7 +83,7 @@ const Comments = ({ postId }) => {
         queryFn: async () => {
             try {
                 return await axios
-                    .get(`http://localhost:3001/posts/comments/${postId}`)
+                    .get(global.backendURL + `/posts/comments/${postId}`)
                     .then((response) => {
                         return response.data;
                     });
@@ -96,7 +96,7 @@ const Comments = ({ postId }) => {
     //fetch image profile
     const fetchProfileImage = async (userId) => {
         try {
-            const response = await axios.get(`http://localhost:3001/user/profile-pic/${userId}`);
+            const response = await axios.get(global.backendURL + `/user/profile-pic/${userId}`);
 
             if (response.status === 200) {
                 const imageFilename = response.data;

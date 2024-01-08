@@ -57,7 +57,7 @@ const PostProfile = ({ imageProfile, userId, post }) => {
   //retrieve images from API
   const getImages = async (postId) => {
     const response = await fetch(
-      `http://localhost:3001/posts/images/${postId}`
+      global.backendURL + `/posts/images/${postId}`
     );
     const data = await response.json();
     // console.log(data);
@@ -65,7 +65,7 @@ const PostProfile = ({ imageProfile, userId, post }) => {
 
     for (let i = 0; i < data.images.length; i++) {
       const image = data.images[i];
-      data.images[i] = `http://localhost:3001/${image}`;
+      data.images[i] = global.backendURL + `/${image}`;
     }
   };
 
@@ -114,7 +114,7 @@ const PostProfile = ({ imageProfile, userId, post }) => {
   // Mutations
   const mutation = useMutation({
     mutationFn: () => {
-      return axios.put(`http://localhost:3001/posts`, {
+      return axios.put(global.backendURL + `/posts`, {
         postId: post.postId,
         newContent: editedContent,
       });
@@ -143,7 +143,7 @@ const PostProfile = ({ imageProfile, userId, post }) => {
   // Mutations
   const mutationDelete = useMutation({
     mutationFn: () => {
-      return axios.delete(`http://localhost:3001/posts/${post.postId}`);
+      return axios.delete(global.backendURL + `/posts/${post.postId}`);
     },
     onSuccess: () => {
       console.log("Delete post success!");
@@ -179,7 +179,7 @@ const PostProfile = ({ imageProfile, userId, post }) => {
     queryFn: async () => {
       try {
         return await axios
-          .get(`http://localhost:3001/posts/comments/${post.postId}`)
+          .get(global.backendURL + `/posts/comments/${post.postId}`)
           .then((response) => {
             return response.data;
           });
@@ -197,7 +197,7 @@ const PostProfile = ({ imageProfile, userId, post }) => {
     queryFn: async () => {
       try {
         return await axios
-          .get(`http://localhost:3001/posts/${post.postId}/likes`)
+          .get(global.backendURL + `/posts/${post.postId}/likes`)
           .then((response) => {
             return response.data;
           });
@@ -210,7 +210,7 @@ const PostProfile = ({ imageProfile, userId, post }) => {
   // Mutations
   const mutationLike = useMutation({
     mutationFn: () => {
-      return axios.put("http://localhost:3001/posts/likes", {
+      return axios.put(global.backendURL + "/posts/likes", {
         userId: currentUser.userId,
         postId: post.postId
       })
@@ -240,7 +240,7 @@ const PostProfile = ({ imageProfile, userId, post }) => {
 
   async function fetchLikeData() {
     try {
-      const response = await axios.get(`http://localhost:3001/posts/${currentUser.userId}/${post.postId}/liked`);
+      const response = await axios.get(global.backendURL + `/posts/${currentUser.userId}/${post.postId}/liked`);
       // console.log(response.data.liked);
       if (dem == 0) setLike(response.data.liked)
       else setLike(!response.data.liked)

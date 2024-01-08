@@ -26,7 +26,7 @@ const PostModerator = ({ postIdModerator }) => {
     //retrieve images from API
     const getImages = async (postId) => {
         const response = await fetch(
-            `http://localhost:3001/posts/images/${postId}`
+            global.backendURL + `/posts/images/${postId}`
         );
         const data = await response.json();
         // console.log(data);
@@ -34,7 +34,7 @@ const PostModerator = ({ postIdModerator }) => {
 
         for (let i = 0; i < data.images.length; i++) {
             const image = data.images[i];
-            data.images[i] = `http://localhost:3001/${image}`;
+            data.images[i] = global.backendURL + `/${image}`;
         }
     };
 
@@ -46,7 +46,7 @@ const PostModerator = ({ postIdModerator }) => {
     //Get info of one post
     const getOnePost = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/posts/retrieve/${postIdModerator}`);
+            const response = await axios.get(global.backendURL + `/posts/retrieve/${postIdModerator}`);
 
             if (response.status === 200) {
                 console.log('====================================');
@@ -72,7 +72,7 @@ const PostModerator = ({ postIdModerator }) => {
     // Mutations
     const mutationKeep = useMutation({
         mutationFn: () => {
-            return axios.put(`http://localhost:3001/user/moderator/keep`, {
+            return axios.put(global.backendURL + `/user/moderator/keep`, {
                 postId: postIdModerator,
             });
         },
@@ -94,7 +94,7 @@ const PostModerator = ({ postIdModerator }) => {
     // Mutations
     const mutationRemove = useMutation({
         mutationFn: () => {
-            return axios.put(`http://localhost:3001/user/moderator/remove`, {
+            return axios.put(global.backendURL + `/user/moderator/remove`, {
                 postId: postIdModerator,
             });
         },

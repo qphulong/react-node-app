@@ -25,7 +25,7 @@ const Friends = () => {
         queryFn: async () => {
             try {
                 return await axios
-                    .get(`http://localhost:3001/user/friends/${currentUser.userId}`)
+                    .get(global.backendURL + `/user/friends/${currentUser.userId}`)
                     .then((response) => {
                         console.log('====================================');
                         console.log(response.data);
@@ -40,7 +40,7 @@ const Friends = () => {
 
     const responseData = async (friendIdPro) => {
         try {
-            const res = await axios.delete("http://localhost:3001/user/friends", {
+            const res = await axios.delete(global.backendURL + "/user/friends", {
                 data: { userId: currentUser.userId, friendId: friendIdPro }
             });
 
@@ -65,7 +65,7 @@ const Friends = () => {
     // // Mutations
     // const mutationDelete = useMutation({
     //     mutationFn: (friendId) => {
-    //     return axios.delete(`http://localhost:3001/user/friends`,{
+    //     return axios.delete(global.backendURL + `/user/friends`,{
     //         userId: currentUser.userId,
     //         friendId: friendId
     //     });
@@ -163,7 +163,7 @@ const Friends = () => {
     const [profileImages, setProfileImages] = useState({});
     const fetchProfileImage = async (id) => {
         try {
-            const response = await axios.get(`http://localhost:3001/user/profile-pic/${id}`);
+            const response = await axios.get(global.backendURL + `/user/profile-pic/${id}`);
 
             if (response.status === 200) {
                 const imageFilename = response.data

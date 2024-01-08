@@ -31,7 +31,7 @@ const Invitations = () => {
 
     const checkIsFriend = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/user/friends/check/${currentUser.userId}/${userIdAdd}`);
+            const response = await axios.get(global.backendURL + `/user/friends/check/${currentUser.userId}/${userIdAdd}`);
         
             if (response.status === 200) {
                 // console.log('====================================');
@@ -95,7 +95,7 @@ const Invitations = () => {
     //add friend
     const addFriend = async () => {
         try {
-            const response = await axios.put(`http://localhost:3001/user/add-friends/${link}`,{
+            const response = await axios.put(global.backendURL + `/user/add-friends/${link}`,{
                 friendId: currentUser.userId,
                 linkPassword: passwordLinkInvite
             });

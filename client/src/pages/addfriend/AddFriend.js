@@ -56,7 +56,7 @@ const AddFriend = () => {
 
     const handleRandomLink = () => {
         try {
-            return axios.post("http://localhost:3001/user/add-friends", {
+            return axios.post(global.backendURL + "/user/add-friends", {
                 userId: currentUser.userId,
                 linkPassword: passWord
             }).then((res) => {

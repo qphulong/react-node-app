@@ -11,7 +11,7 @@ function RightBar(){
         queryFn: async () => {
         try {
             return await axios
-            .get(`http://localhost:3001/user/friends/${currentUser.userId}`)
+            .get(global.backendURL + `/user/friends/${currentUser.userId}`)
             .then((response) => {
                 return response.data;
             });
@@ -24,7 +24,7 @@ function RightBar(){
     //fetch image profile
     const fetchProfileImage = async (userId) => {
         try {
-          const response = await axios.get(`http://localhost:3001/user/profile-pic/${userId}`);
+          const response = await axios.get(global.backendURL + `/user/profile-pic/${userId}`);
     
           if (response.status === 200) {
             const imageFilename = response.data;

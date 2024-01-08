@@ -274,7 +274,7 @@ router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
           return res.status(400).send("User not found.");
         }
 
-        user.profilePic = `http://localhost:3001/${savedPath}`;
+        user.profilePic = global.backendURL + `/${savedPath}`;
         user.save();
 
         res.send(user.profilePic);
@@ -295,7 +295,7 @@ router.get("/profile-pic/:userId", (req, res) => {
       return res.status(500).send(err);
     }
 
-    res.json({ profilePic: `http://localhost:3001/${folderPath}/${files[0]}` });
+    res.json({ profilePic: global.backendURL + `/${folderPath}/${files[0]}` });
   });
 });
 

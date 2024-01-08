@@ -18,7 +18,7 @@ const LeftBar = () => {
   // const [profileImage,setProfileImage] = useState("https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
   // const fetchProfileImage = async () => {
   //   try {
-  //     const response = await axios.get(`http://localhost:3001/user/profile-pic/${currentUser.userId}`);
+  //     const response = await axios.get(global.backendURL + `/user/profile-pic/${currentUser.userId}`);
   
   //     if (response.status === 200) {
   //       const imageFilename = response.data

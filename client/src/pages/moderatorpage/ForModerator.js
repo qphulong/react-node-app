@@ -14,7 +14,7 @@ const ForModerator = () => {
     //Check moderator
     const CheckIsModerator = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/user/${currentUser.userId}/moderator`);
+            const response = await axios.get(global.backendURL + `/user/${currentUser.userId}/moderator`);
         
             if (response.status === 200) {
                 console.log('====================================');
@@ -41,7 +41,7 @@ const ForModerator = () => {
         queryFn: async () => {
         try {
             return await axios
-            .get(`http://localhost:3001/user/moderator`)
+            .get(global.backendURL + `/user/moderator`)
             .then((response) => {
                 return response.data;
             });

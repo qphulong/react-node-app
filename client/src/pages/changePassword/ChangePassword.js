@@ -75,7 +75,7 @@ const ChangePassword = () => {
             return;
         }
         try {
-            const response = await axios.put(`http://localhost:3001/user/password`, {
+            const response = await axios.put(global.backendURL + `/user/password`, {
                 userId: currentUser.userId,
                 newPassword: newPassword,
                 confirmPassword: oldPassword
@@ -106,7 +106,7 @@ const ChangePassword = () => {
         // Do something with the social links
         // You can access facebookLink, instagramLink, linkedInLink here
         try {
-            const response = await axios.put(`http://localhost:3001/user/social-media`, {
+            const response = await axios.put(global.backendURL + `/user/social-media`, {
                 userId: currentUser.userId,
                 link: socialLink
             });

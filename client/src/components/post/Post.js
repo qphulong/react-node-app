@@ -48,7 +48,7 @@ const Post = ({ post }) => {
   //retrieve images from API
   const getImages = async (postId) => {
     const response = await fetch(
-      `http://localhost:3001/posts/images/${postId}`
+      global.backendURL + `/posts/images/${postId}`
     );
     const data = await response.json();
     // console.log(data);
@@ -56,7 +56,7 @@ const Post = ({ post }) => {
 
     for (let i = 0; i < data.images.length; i++) {
       const image = data.images[i];
-      data.images[i] = `http://localhost:3001/${image}`;
+      data.images[i] = global.backendURL + `/${image}`;
     }
   };
 
@@ -82,7 +82,7 @@ const Post = ({ post }) => {
   //Report post
   const ReportPost = async () => {
     try {
-      const response = await axios.post(`http://localhost:3001/posts/report`, {
+      const response = await axios.post(global.backendURL + `/posts/report`, {
         postId: post.postId
       });
 
@@ -142,7 +142,7 @@ const Post = ({ post }) => {
     queryFn: async () => {
       try {
         return await axios
-          .get(`http://localhost:3001/posts/comments/${post.postId}`)
+          .get(global.backendURL + `/posts/comments/${post.postId}`)
           .then((response) => {
             return response.data;
           });
@@ -160,7 +160,7 @@ const Post = ({ post }) => {
     queryFn: async () => {
       try {
         return await axios
-          .get(`http://localhost:3001/posts/${post.postId}/likes`)
+          .get(global.backendURL + `/posts/${post.postId}/likes`)
           .then((response) => {
             return response.data;
           });
@@ -175,7 +175,7 @@ const Post = ({ post }) => {
   // Mutations
   const mutationLike = useMutation({
     mutationFn: () => {
-      return axios.put("http://localhost:3001/posts/likes", {
+      return axios.put(global.backendURL + "/posts/likes", {
         userId: currentUser.userId,
         postId: post.postId
       })
@@ -205,7 +205,7 @@ const Post = ({ post }) => {
 
   async function fetchLikeData() {
     try {
-      const response = await axios.get(`http://localhost:3001/posts/${currentUser.userId}/${post.postId}/liked`);
+      const response = await axios.get(global.backendURL + `/posts/${currentUser.userId}/${post.postId}/liked`);
       // console.log(dem);
       // console.log(response.data.liked);
       if (dem == 0) setLike(response.data.liked)
@@ -220,7 +220,7 @@ const Post = ({ post }) => {
   const [profileImageNewsFeed, setProfileImageNewsFeed] = useState("https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
   const fetchProfileImage = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:3001/user/profile-pic/${userId}`);
+      const response = await axios.get(global.backendURL + `/user/profile-pic/${userId}`);
 
       if (response.status === 200) {
         const imageFilename = response.data

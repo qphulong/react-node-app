@@ -22,7 +22,7 @@ const AdminPage = () => {
     // Check admin
     const CheckIsAdmin = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/user/${currentUser.userId}/admin`);
+            const response = await axios.get(global.backendURL + `/user/${currentUser.userId}/admin`);
 
             if (response.status === 200) {
                 // console.log('====================================');
@@ -45,7 +45,7 @@ const AdminPage = () => {
     // get all users
     const GetAllUsers = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/user/admin`);
+            const response = await axios.get(global.backendURL + `/user/admin`);
 
             if (response.status === 200) {
                 // console.log('====================================');

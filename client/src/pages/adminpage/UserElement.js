@@ -12,7 +12,7 @@ const UserElement = ({ userIdElement }) => {
     //check moderator or not
     const CheckModeratorOrNot = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/user/${userIdElement}/moderator`);
+            const response = await axios.get(global.backendURL + `/user/${userIdElement}/moderator`);
 
             if (response.status === 200) {
                 // console.log('====================================');
@@ -35,7 +35,7 @@ const UserElement = ({ userIdElement }) => {
     // assign moderator 
     const AssignModerator = async () => {
         try {
-            const response = await axios.put(`http://localhost:3001/user/admin/assign`, {
+            const response = await axios.put(global.backendURL + `/user/admin/assign`, {
                 userId: userIdElement
             });
 
@@ -62,7 +62,7 @@ const UserElement = ({ userIdElement }) => {
     // delete moderator 
     const DeleteModerator = async () => {
         try {
-            const response = await axios.put(`http://localhost:3001/user/admin/unassign`, {
+            const response = await axios.put(global.backendURL + `/user/admin/unassign`, {
                 userId: userIdElement
             });
 

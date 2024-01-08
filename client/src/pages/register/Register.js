@@ -21,7 +21,7 @@ const Register = () => {
     const handleClick = async (e) => {
         e.preventDefault()
          try{
-            const response = await axios.post("http://localhost:3001/user/sign-up",{
+            const response = await axios.post(global.backendURL + "/user/sign-up",{
                 userId: inputs.username,
                 password: inputs.password
             })

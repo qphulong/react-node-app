@@ -20,7 +20,7 @@ const PostsProfile = ({userId,imageProfile}) => {
         queryFn: () => {
         try {
             return axios
-            .get(`http://localhost:3001/user/${userId}`)
+            .get(global.backendURL + `/user/${userId}`)
             .then((response) => {
                 // console.log(response.data);
                 return response.data;

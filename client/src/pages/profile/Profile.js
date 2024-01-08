@@ -46,7 +46,7 @@ const Profile = () => {
     const [profileImageFriend, setProfileImageFriend] = useState("https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
     const fetchProfileImage = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/user/profile-pic/${userId}`);
+            const response = await axios.get(global.backendURL + `/user/profile-pic/${userId}`);
 
             if (response.status === 200) {
                 const imageFilename = response.data
@@ -72,7 +72,7 @@ const Profile = () => {
         if (currentUser.userId !== userId) {
             const fetchIsFriend = async () => {
                 try {
-                    const response = await axios.get(`http://localhost:3001/user/friends/check/${currentUser.userId}/${userId}`);
+                    const response = await axios.get(global.backendURL + `/user/friends/check/${currentUser.userId}/${userId}`);
                     setAreFriends(response.data.isFriend);
                 } catch (error) {
                     console.error("Error checking friendship:", error);
@@ -125,7 +125,7 @@ const Profile = () => {
             const formData = new FormData();
             formData.append("image", newFile);
             const response = await axios.post(
-                `http://localhost:3001/user/profile-pic/${currentUser.userId}`,
+                global.backendURL + `/user/profile-pic/${currentUser.userId}`,
                 formData
             );
 
@@ -154,7 +154,7 @@ const Profile = () => {
     // display social media
     const handleClickDisplaySocialMedia = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/user/social-media/${userId}`);
+            const response = await axios.get(global.backendURL + `/user/social-media/${userId}`);
 
             if (response.status === 200) {
                 console.log('====================================');
@@ -181,7 +181,7 @@ const Profile = () => {
 
     const deleteLink = async (social) => {
         try {
-            const response = await axios.put(`http://localhost:3001/user/social-media/${currentUser.userId}`, {
+            const response = await axios.put(global.backendURL + `/user/social-media/${currentUser.userId}`, {
                 socialMedia: social.link
             });
 

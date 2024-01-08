@@ -62,7 +62,7 @@ const Share = () => {
   // Mutations
   const mutation = useMutation({
     mutationFn: (newPost) => {
-      return axios.post("http://localhost:3001/posts", {
+      return axios.post(global.backendURL + "/posts", {
         content: desc,
         userId: currentUser.userId,
       });
@@ -107,7 +107,7 @@ const Share = () => {
       // console.log(newPostUpdate.post);
       // console.log('====================================');
       const response = await axios.post(
-        `http://localhost:3001/storage/upload/${newPostUpdate.post}`,
+        global.backendURL + `/storage/upload/${newPostUpdate.post}`,
         formData
       );
 
