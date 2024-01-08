@@ -1,178 +1,189 @@
-import { AuthContext } from '../../context/authContext'
-import './comments.scss'
-import { useContext } from 'react'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import axios from 'axios'
-import { useState, useEffect } from 'react'
-import { v4 as uuidv4 } from 'uuid';
-import moment from 'moment';
+import { AuthContext } from "../../context/authContext";
+import "./comments.scss";
+import { useContext } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+import moment from "moment";
 
 const Comments = ({ postId }) => {
+  //user
+  const { currentUser, profileImage } = useContext(AuthContext);
+  const [content, setContent] = useState("");
 
-    //user
-    const { currentUser, profileImage } = useContext(AuthContext)
-    const [content, setContent] = useState("");
+  // =================================================================================================
+  // =================================================================================================
+  // check limit word
 
-    // =================================================================================================
-    // =================================================================================================
-    // check limit word
+  // =================================================================================================
+  // =================================================================================================
 
-    // =================================================================================================
-    // =================================================================================================
+  //post comment - up comment
+  const queryClient = useQueryClient();
 
-    //post comment - up comment
-    const queryClient = useQueryClient();
+  // Mutations
+  const mutation = useMutation({
+    mutationFn: () => {
+      return axios.post(window.backendURL + "/posts/comments", {
+        postId: postId,
+        userId: currentUser.userId,
+        comment: content,
+      });
+    },
+    onSuccess: (response) => {
+      console.log("Newly added comment:", response.data);
 
-    // Mutations
-    const mutation = useMutation({
-        mutationFn: () => {
-            return axios.post(global.backendURL + "/posts/comments", {
-                postId: postId,
-                userId: currentUser.userId,
-                comment: content,
-            })
-        },
-        onSuccess: (response) => {
-            console.log("Newly added comment:", response.data);
+      queryClient.invalidateQueries({ queryKey: ["Comments", postId] });
+      queryClient.invalidateQueries({ queryKey: ["cmts", postId] });
+      queryClient.invalidateQueries({ queryKey: ["cmtsProfile", postId] });
+    },
+    onError: (error, variables, context) => {
+      console.log("====================================");
+      console.log("error");
+      console.log("====================================");
+    },
+    onSettled: (data, error, variables, context) => {
+      console.log("====================================");
+      console.log("settle");
+      console.log("====================================");
+    },
+  });
 
-            queryClient.invalidateQueries({ queryKey: ["Comments", postId] });
-            queryClient.invalidateQueries({ queryKey: ["cmts", postId] });
-            queryClient.invalidateQueries({ queryKey: ["cmtsProfile", postId] });
-
+  const handleClick = async (e) => {
+    e.preventDefault();
+    mutation.mutate(
+      { content, userId: currentUser.userId },
+      {
+        onSuccess: (data, variables, context) => {
+          console.log("====================================");
+          console.log("success");
+          console.log("====================================");
+          setContent("");
         },
         onError: (error, variables, context) => {
-            console.log('====================================');
-            console.log("error");
-            console.log('====================================');
+          // I will fire second!
+          console.log("====================================");
+          console.log(error);
+          console.log("====================================");
         },
         onSettled: (data, error, variables, context) => {
-            console.log('====================================');
-            console.log("settle");
-            console.log('====================================');
+          // I will fire second!
+          console.log("====================================");
+          console.log("settle");
+          console.log("====================================");
         },
-    });
+      }
+    );
+  };
 
+  // Queries
+  const {
+    isLoading,
+    error,
+    data: Comments,
+  } = useQuery({
+    queryKey: ["Comments", postId],
+    queryFn: async () => {
+      try {
+        return await axios
+          .get(window.backendURL + `/posts/comments/${postId}`)
+          .then((response) => {
+            return response.data;
+          });
+      } catch (error) {
+        throw error;
+      }
+    },
+  });
 
-    const handleClick = async (e) => {
-        e.preventDefault();
-        mutation.mutate({ content, userId: currentUser.userId }, {
-            onSuccess: (data, variables, context) => {
-                console.log('====================================');
-                console.log("success");
-                console.log('====================================');
-                setContent('');
-            },
-            onError: (error, variables, context) => {
-                // I will fire second!
-                console.log('====================================');
-                console.log(error);
-                console.log('====================================');
-            },
-            onSettled: (data, error, variables, context) => {
-                // I will fire second!
-                console.log('====================================');
-                console.log("settle");
-                console.log('====================================');
-            },
+  //fetch image profile
+  const fetchProfileImage = async (userId) => {
+    try {
+      const response = await axios.get(
+        window.backendURL + `/user/profile-pic/${userId}`
+      );
+
+      if (response.status === 200) {
+        const imageFilename = response.data;
+        return imageFilename.profilePic;
+      } else {
+        // console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+        return "https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
+      }
+    } catch (error) {
+      //   console.error('Error fetching profile image:', error.message);
+      return "https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
+    }
+  };
+
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (Comments && Comments.comments) {
+        const promises = Comments.comments.map(async (comment) => {
+          const profileImage = await fetchProfileImage(comment.user);
+          return profileImage;
         });
+
+        const newImages = await Promise.all(promises);
+
+        setImages(newImages);
+      }
     };
 
-    // Queries
-    const { isLoading, error, data: Comments } = useQuery({
-        queryKey: ["Comments", postId],
-        queryFn: async () => {
-            try {
-                return await axios
-                    .get(global.backendURL + `/posts/comments/${postId}`)
-                    .then((response) => {
-                        return response.data;
-                    });
-            } catch (error) {
-                throw error;
-            }
-        },
-    });
+    fetchData();
+  }, [Comments]);
 
-    //fetch image profile
-    const fetchProfileImage = async (userId) => {
-        try {
-            const response = await axios.get(global.backendURL + `/user/profile-pic/${userId}`);
+  if (isLoading) {
+    return <h3>Loading...</h3>;
+  }
 
-            if (response.status === 200) {
-                const imageFilename = response.data;
-                return imageFilename.profilePic;
-            } else {
-                // console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
-                return "https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
-            }
-        } catch (error) {
-            //   console.error('Error fetching profile image:', error.message);
-            return "https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
-        }
-    };
+  if (error) {
+    return <h3>Error: {error.message}</h3>;
+  }
 
-    const [images, setImages] = useState([]);
+  if (mutation.isLoading) {
+    return <h3>Updating...</h3>;
+  }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if (Comments && Comments.comments) {
-                const promises = Comments.comments.map(async (comment) => {
-                    const profileImage = await fetchProfileImage(comment.user);
-                    return profileImage;
-                });
+  if (mutation.isError) {
+    return <h3>Error while updating. {mutation.error.message}</h3>;
+  }
 
-                const newImages = await Promise.all(promises);
-
-                setImages(newImages);
-            }
-        };
-
-        fetchData();
-    }, [Comments]);
-
-    if (isLoading) {
-        return <h3>Loading...</h3>;
-    }
-
-    if (error) {
-        return <h3>Error: {error.message}</h3>;
-    }
-
-    if (mutation.isLoading) {
-        return <h3>Updating...</h3>;
-    }
-
-    if (mutation.isError) {
-        return <h3>Error while updating. {mutation.error.message}</h3>;
-    }
-
-    return (
-        <div className='comments'>
-            <div className='write'>
-                <img src={profileImage} alt='' />
-                <input type='text' placeholder='Write a comment' onChange={(e) => setContent(e.target.value)} value={content}/>
-                <button onClick={handleClick}>Send</button>
+  return (
+    <div className="comments">
+      <div className="write">
+        <img src={profileImage} alt="" />
+        <input
+          type="text"
+          placeholder="Write a comment"
+          onChange={(e) => setContent(e.target.value)}
+          value={content}
+        />
+        <button onClick={handleClick}>Send</button>
+      </div>
+      {Comments.comments?.map((comment, index) => {
+        return (
+          <div className="comment" key={uuidv4()}>
+            <div className="user-image">
+              <img src={images[index]} alt="" />
             </div>
-            {Comments.comments?.map((comment, index) => {
-                return <div className='comment' key={uuidv4()}>
-                    <div className='user-image'>
-                        <img src={images[index]} alt="" />
+            <div className="comment-container">
+              <div className="comment-info">
+                <span className="user-name">{comment.user}</span>
+                <span className="date">
+                  {moment(comment.createdAt).fromNow()}
+                </span>
+              </div>
+              <div className="comment-content">{comment.content}</div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
-                    </div>
-                    <div className='comment-container'>
-                        <div className='comment-info'>
-                            <span className='user-name'>{comment.user}</span>
-                            <span className='date'>{moment(comment.createdAt).fromNow()}</span>
-                        </div>
-                        <div className='comment-content'>
-                            {comment.content}
-                        </div>
-
-                    </div>
-                </div>
-            })}
-        </div>
-    )
-}
-
-export default Comments
+export default Comments;

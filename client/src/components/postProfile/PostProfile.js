@@ -8,14 +8,14 @@ import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import Comments from "../comments/Comments.js";
 import { useContext, useEffect, useState, useRef } from "react";
-import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
+import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 import PostsProfile from "../postsProfile/PostsProfile.js";
 import { AuthContext } from "../../context/authContext.js";
-import EditNoteIcon from '@mui/icons-material/EditNote';
-import DeleteIcon from '@mui/icons-material/Delete';
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import moment from 'moment';
+import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
 
 const PostProfile = ({ imageProfile, userId, post }) => {
@@ -24,14 +24,14 @@ const PostProfile = ({ imageProfile, userId, post }) => {
   const [editedContent, setEditedContent] = useState(post.content);
   //comment state
   const [commentOpen, setCommentOpen] = useState(false);
-  const [like, setLike] = useState(false)
+  const [like, setLike] = useState(false);
 
   //Dropdown state
   const [openDropdown, setOpenDropdown] = useState(false);
   const toggleDropdown = () => setOpenDropdown(!openDropdown);
   const dropdownRef = useRef(null);
   const postRef = useRef(null);
-  const isOwnProfile = currentUser.userId === userId
+  const isOwnProfile = currentUser.userId === userId;
   const [timestamp, setTimestamp] = useState(post.createdAt); // Replace with your actual API data
   useEffect(() => {
     const formattedTimestamp = moment(timestamp).fromNow(); // Use moment.js to format
@@ -41,31 +41,31 @@ const PostProfile = ({ imageProfile, userId, post }) => {
     // console.log('====================================');
   }, [post.createdAt]);
 
-  const items = [{
-    id: 1,
-    value: "Edit content",
-    icon: <EditNoteIcon style={{ fontSize: 25 }} />,
-  },
-  {
-    id: 2,
-    value: "Delete post",
-    icon: <DeleteIcon style={{ fontSize: 25 }} />,
-  }]
+  const items = [
+    {
+      id: 1,
+      value: "Edit content",
+      icon: <EditNoteIcon style={{ fontSize: 25 }} />,
+    },
+    {
+      id: 2,
+      value: "Delete post",
+      icon: <DeleteIcon style={{ fontSize: 25 }} />,
+    },
+  ];
 
   //images
   const [images, setImages] = useState([]); //images = [image1, image2, ...
   //retrieve images from API
   const getImages = async (postId) => {
-    const response = await fetch(
-      global.backendURL + `/posts/images/${postId}`
-    );
+    const response = await fetch(window.backendURL + `/posts/images/${postId}`);
     const data = await response.json();
     // console.log(data);
     setImages(data.images);
 
     for (let i = 0; i < data.images.length; i++) {
       const image = data.images[i];
-      data.images[i] = global.backendURL + `/${image}`;
+      data.images[i] = window.backendURL + `/${image}`;
     }
   };
 
@@ -85,7 +85,7 @@ const PostProfile = ({ imageProfile, userId, post }) => {
   function handleOnClick(item) {
     if (isOwnProfile) {
       if (item.id == 1) {
-        setOpenDropdown(!openDropdown)
+        setOpenDropdown(!openDropdown);
         setIsEditing(true);
       } else if (item.id == 2) {
         console.log("2");
@@ -114,7 +114,7 @@ const PostProfile = ({ imageProfile, userId, post }) => {
   // Mutations
   const mutation = useMutation({
     mutationFn: () => {
-      return axios.put(global.backendURL + `/posts`, {
+      return axios.put(window.backendURL + `/posts`, {
         postId: post.postId,
         newContent: editedContent,
       });
@@ -122,8 +122,10 @@ const PostProfile = ({ imageProfile, userId, post }) => {
     onSuccess: () => {
       // Invalidate and refetch
       setIsEditing(false);
-      queryClient.invalidateQueries({ queryKey: ["postsProfile", currentUser.userId] });
-      toast.success("Edit post successfully!!!")
+      queryClient.invalidateQueries({
+        queryKey: ["postsProfile", currentUser.userId],
+      });
+      toast.success("Edit post successfully!!!");
     },
   });
 
@@ -143,12 +145,14 @@ const PostProfile = ({ imageProfile, userId, post }) => {
   // Mutations
   const mutationDelete = useMutation({
     mutationFn: () => {
-      return axios.delete(global.backendURL + `/posts/${post.postId}`);
+      return axios.delete(window.backendURL + `/posts/${post.postId}`);
     },
     onSuccess: () => {
       console.log("Delete post success!");
-      queryClient.invalidateQueries({ queryKey: ["postsProfile", currentUser.userId] });
-      toast.success("Delete post successfully!!!")
+      queryClient.invalidateQueries({
+        queryKey: ["postsProfile", currentUser.userId],
+      });
+      toast.success("Delete post successfully!!!");
     },
     onError: (error) => {
       console.error("Delete post error:", error);
@@ -174,12 +178,16 @@ const PostProfile = ({ imageProfile, userId, post }) => {
   };
   //get comment quantity
   // Queries
-  const { isLoading, error, data: cmtsProfile } = useQuery({
+  const {
+    isLoading,
+    error,
+    data: cmtsProfile,
+  } = useQuery({
     queryKey: ["cmtsProfile", post.postId],
     queryFn: async () => {
       try {
         return await axios
-          .get(global.backendURL + `/posts/comments/${post.postId}`)
+          .get(window.backendURL + `/posts/comments/${post.postId}`)
           .then((response) => {
             return response.data;
           });
@@ -197,7 +205,7 @@ const PostProfile = ({ imageProfile, userId, post }) => {
     queryFn: async () => {
       try {
         return await axios
-          .get(global.backendURL + `/posts/${post.postId}/likes`)
+          .get(window.backendURL + `/posts/${post.postId}/likes`)
           .then((response) => {
             return response.data;
           });
@@ -210,74 +218,81 @@ const PostProfile = ({ imageProfile, userId, post }) => {
   // Mutations
   const mutationLike = useMutation({
     mutationFn: () => {
-      return axios.put(global.backendURL + "/posts/likes", {
+      return axios.put(window.backendURL + "/posts/likes", {
         userId: currentUser.userId,
-        postId: post.postId
-      })
+        postId: post.postId,
+      });
     },
     onSuccess: (response) => {
       console.log("Newly added like:", response.data);
 
-      queryClient.invalidateQueries({ queryKey: ["likesProfile", post.postId] });
+      queryClient.invalidateQueries({
+        queryKey: ["likesProfile", post.postId],
+      });
     },
     onError: (error, variables, context) => {
-      console.log('====================================');
+      console.log("====================================");
       console.log("error");
-      console.log('====================================');
+      console.log("====================================");
     },
     onSettled: (data, error, variables, context) => {
-      console.log('====================================');
+      console.log("====================================");
       console.log("settle");
-      console.log('====================================');
+      console.log("====================================");
     },
   });
 
   const handleClickLike = (e) => {
     e.preventDefault();
     fetchLikeData();
-    mutationLike.mutate({ user: currentUser.userId, postId: post.postId })
-  }
+    mutationLike.mutate({ user: currentUser.userId, postId: post.postId });
+  };
 
   async function fetchLikeData() {
     try {
-      const response = await axios.get(global.backendURL + `/posts/${currentUser.userId}/${post.postId}/liked`);
+      const response = await axios.get(
+        window.backendURL + `/posts/${currentUser.userId}/${post.postId}/liked`
+      );
       // console.log(response.data.liked);
-      if (dem == 0) setLike(response.data.liked)
-      else setLike(!response.data.liked)
+      if (dem == 0) setLike(response.data.liked);
+      else setLike(!response.data.liked);
     } catch (err) {
       console.log(err);
     }
   }
 
-  const [dem, setDem] = useState(0)
+  const [dem, setDem] = useState(0);
   // Call the async function
   useEffect(() => {
     fetchLikeData();
-    setDem(dem + 1)
-  }, [])
+    setDem(dem + 1);
+  }, []);
 
   // console.log('====================================');
   // console.log(cmtsProfile?.comments.length);
   // console.log('====================================');
-
 
   return (
     <div className="post">
       <div className="container">
         <div className="user">
           <div className="userInfo">
-            <img
-              src={imageProfile}
-              atl=""
-            />
+            <img src={imageProfile} atl="" />
             <div className="details">
               <span>{userId}</span>
               <span className="date">{timestamp}</span>
             </div>
           </div>
           <div className="extra-functions">
-            {isOwnProfile ? <MoreHorizIcon onClick={() => toggleDropdown(!openDropdown)} ref={postRef} className="icon" /> :
-              <MoreHorizIcon className="icon" />}
+            {isOwnProfile ? (
+              <MoreHorizIcon
+                onClick={() => toggleDropdown(!openDropdown)}
+                ref={postRef}
+                className="icon"
+              />
+            ) : (
+              <MoreHorizIcon className="icon" />
+            )}
             {/* 1. Change post
             2. Delete post */}
             <div className="dropdown" ref={dropdownRef}>
@@ -295,7 +310,6 @@ const PostProfile = ({ imageProfile, userId, post }) => {
               )}
             </div>
           </div>
-
         </div>
 
         <div className="content">
@@ -307,31 +321,41 @@ const PostProfile = ({ imageProfile, userId, post }) => {
                 className="edit-text"
               />
               <div className="edit-button">
-                <button onClick={handleEditConfirm} className="save-button">Save</button>
-                <button onClick={handleEditCancel} className="cancel-button">Cancel</button>
+                <button onClick={handleEditConfirm} className="save-button">
+                  Save
+                </button>
+                <button onClick={handleEditCancel} className="cancel-button">
+                  Cancel
+                </button>
               </div>
-
             </div>
           ) : (
             <p>{post.content}</p>
           )}
-          {images &&
-            <section className='slider'>
+          {images && (
+            <section className="slider">
               {images.map((image, index) => {
                 return (
                   <div
-                    className={index === current ? 'slide active' : 'slide'}
+                    className={index === current ? "slide active" : "slide"}
                     key={index}
                   >
-                    <FaArrowAltCircleLeft className='left-arrow' onClick={prevSlide} />
-                    <FaArrowAltCircleRight className='right-arrow' onClick={nextSlide} />
+                    <FaArrowAltCircleLeft
+                      className="left-arrow"
+                      onClick={prevSlide}
+                    />
+                    <FaArrowAltCircleRight
+                      className="right-arrow"
+                      onClick={nextSlide}
+                    />
                     {index === current && (
-                      <img src={image} alt='travel image' className='image' />
+                      <img src={image} alt="travel image" className="image" />
                     )}
                   </div>
                 );
               })}
-            </section>}
+            </section>
+          )}
 
           {/* {images.map((image, index) => (
             <img
@@ -349,9 +373,7 @@ const PostProfile = ({ imageProfile, userId, post }) => {
               {like ? <FavoriteIcon /> : <FavoriteBorderIcon />}
               {likesProfile?.likes}
             </div>
-            <div className="tool-tip">
-              Like
-            </div>
+            <div className="tool-tip">Like</div>
           </div>
 
           <div className="item-container">
@@ -359,20 +381,15 @@ const PostProfile = ({ imageProfile, userId, post }) => {
               <CommentOutlinedIcon />
               {cmtsProfile?.comments.length}
             </div>
-            <div className="tool-tip">
-              Comment
-            </div>
+            <div className="tool-tip">Comment</div>
           </div>
 
           <div className="item-container">
             <div className="item">
               <ShareOutlinedIcon />
             </div>
-            <div className="tool-tip">
-              Share
-            </div>
+            <div className="tool-tip">Share</div>
           </div>
-
         </div>
 
         {/* <div
@@ -390,7 +407,7 @@ const PostProfile = ({ imageProfile, userId, post }) => {
         </div> */}
         {commentOpen && <Comments postId={post.postId} />}
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };

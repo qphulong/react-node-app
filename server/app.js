@@ -17,7 +17,7 @@ const { CurrentUser } = require("./appController");
 var app = express();
 app.use("/public", express.static("public")); //static folder for public
 
-global.currentUser = new CurrentUser(); //current user
+window.currentUser = new CurrentUser(); //current user
 
 app.use(cors());
 

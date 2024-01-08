@@ -23,7 +23,7 @@ import AddFriendTest from "./pages/addfriendtest/AddFriendTest";
 import AdminPage from "./pages/adminpage/AdminPage";
 function App() {
   const isProd = process.env.PROD || false;
-  global.backendURL = isProd ? process.env.PROD_URL : "http://localhost:3001";
+  window.backendURL = isProd ? process.env.PROD_URL : "http://localhost:3001";
 
   //Protected Route
   const { currentUser } = useContext(AuthContext);
