@@ -22,8 +22,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AddFriendTest from "./pages/addfriendtest/AddFriendTest";
 import AdminPage from "./pages/adminpage/AdminPage";
 function App() {
-  const isProd = process.env.PROD === "true" || false;
-  window.backendURL = isProd ? process.env.PROD_URL : "http://localhost:3001";
+  const isTest = process.env.REACT_APP_TEST === "true" || false;
+  console.log(process.env.REACT_APP_TEST);
+  window.backendURL = isTest
+    ? "http://localhost:3001"
+    : process.env.REACT_APP_PROD_URL;
 
   //Protected Route
   const { currentUser } = useContext(AuthContext);

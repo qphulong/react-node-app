@@ -43,7 +43,7 @@ exports.signIn = async (req, res) => {
   const userId = req.body.userId;
   const password = req.body.password;
 
-  await userFunctions.signIn(window.currentUser, userId, password, res);
+  await userFunctions.signIn(userId, password, res);
 };
 
 exports.changePassword = (req, res) => {
