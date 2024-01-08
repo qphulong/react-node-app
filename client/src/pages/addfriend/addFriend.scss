@@ -112,6 +112,10 @@
                             align-items: center;
                             font-size: 14px;
                             border-radius: 10px;
+                            
+                            .default-link{
+                                opacity: 0.3;
+                            }
 
                             .tool-tip {
                                 margin-left: -4px;
@@ -135,12 +139,14 @@
                         }
 
                         .get-link-button {
-                            width: 100px;
+                            width: 120px;
                             background-color: themed("logo");
                             border: none;
                             border-radius: 12px;
                             color: themed("bg");
                             padding: 10px 10px;
+                            font-size: 14px;
+                            font-weight: bold;
                             cursor: pointer;
                         }
 
@@ -218,6 +224,8 @@
                             color: themed("bg");
                             padding: 10px 10px;
                             cursor: pointer;
+                            font-size: 14px;
+                            font-weight: bold;
                         }
 
                         .change-password-button:hover{

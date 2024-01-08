@@ -70,13 +70,14 @@
                                     display: flex;
                                     justify-content: space-between;
                                     background-color: transparent;
+                                    font-weight: bold;
                                     font-size: 12px;
                                     padding: 10px 15px 10px 15px;
                                     border: none;
                                     width: 100%;
                                     text-align: left;
                                     align-items: center;
-                                    border-radius: 8px;
+                                    border-radius: 12px;
                                     color: themed("textColor");
 
                                     &:hover,

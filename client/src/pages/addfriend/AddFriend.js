@@ -167,7 +167,7 @@ const AddFriend = () => {
                         <div className='get-link'>
                             <p>Give this link to someone you want to add</p>                        
                                 <div className='random-link-container'>
-                                    {randomLink ? (<span>{randomLink}</span>):(<span>Here is your link</span>)}
+                                    {randomLink ? (<span>{randomLink}</span>):(<span className='default-link'>Your link</span>)}
                                     
                                     <div>
                                         <ContentCopyIcon style={{ fontSize: 30 }} onClick={copyLinkToClipboard} className='logo'/>

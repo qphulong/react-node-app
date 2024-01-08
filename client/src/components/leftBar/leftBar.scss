@@ -6,7 +6,6 @@
     margin: 0;
 }
 
-
 .leftBar {
     @include themify($themes) {
         flex: 2;
@@ -61,6 +60,8 @@
                 margin-top: 40px;
 
                 button {
+                    font-weight: bold;
+                    font-size: 20px;
                     background-color: themed("logo");
                     color: themed("bg");
                     border: none;

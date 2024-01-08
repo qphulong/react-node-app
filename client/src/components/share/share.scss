@@ -12,17 +12,20 @@
 
     .container {
       padding: 20px;
+
       .top {
         display: flex;
         align-items: center;
         gap: 20px;
+
         img {
           width: 40px;
           height: 40px;
           border-radius: 50%;
           object-fit: cover;
         }
-        input{
+
+        input {
           border: none;
           outline: none;
           padding: 20px 10px;
@@ -58,6 +61,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+
         .left {
           display: flex;
           align-items: center;
@@ -81,27 +85,30 @@
             }
           }
 
-          .item:hover{
+          .item:hover {
             background-color: themed("hovercomment");
           }
         }
+
         .right {
           button {
+            font-weight: bold;
+            font-size: 16px;
             border: none;
             padding: 12px 10px;
             color: themed("bg");
             cursor: pointer;
-            
+
             background-color: themed("logo");
             border-radius: 16px;
           }
 
-          button:hover{
-            filter:brightness(90%)
+          button:hover {
+            filter: brightness(90%)
           }
 
-          button:active{
-            filter:brightness(80%)
+          button:active {
+            filter: brightness(80%)
           }
         }
       }
@@ -111,34 +118,36 @@
         flex-wrap: wrap;
         gap: 10px;
         margin-top: 10px;
-      
+
         .imagePreview {
           position: relative;
-      
+
           img {
             width: 100px;
             height: 100px;
             object-fit: cover;
             border-radius: 5px;
           }
-          .remove-container{
+
+          .remove-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            
+
             button {
               position: absolute;
               top: 5px;
               right: 5px;
               border: none;
-              background-color: themed("logo"); /* Customize the color as needed */
+              background-color: themed("logo");
+              /* Customize the color as needed */
               color: themed("bg");
               padding: 5px 9px;
               cursor: pointer;
               border-radius: 50%;
             }
 
-            .tool-tip{
+            .tool-tip {
               // visibility: hidden;
               position: absolute;
               z-index: 1;
@@ -153,18 +162,18 @@
               transition: opacity 0.15s;
             }
 
-            button:hover + .tool-tip{
+            button:hover+.tool-tip {
               opacity: 1;
-              
+
             }
-            
-            button:hover{
-              filter:brightness(90%)
+
+            button:hover {
+              filter: brightness(90%)
             }
           }
-          
+
         }
-      }      
+      }
     }
   }
 }
