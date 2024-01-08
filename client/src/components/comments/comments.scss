@@ -29,11 +29,18 @@
 
             button{
                 border: none;
-                background-color: #B26457;
-                color: white;
+                background-color: themed("logo");
+                color: themed("bg");
                 padding: 10px;
                 cursor: pointer;
-                border-radius: 3px;
+                border-radius: 6px;
+            }
+
+            button:hover{
+                filter:brightness(90%)
+            }
+            button:active{
+                filter: brightness(80%);
             }
         }
 
