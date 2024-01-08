@@ -22,15 +22,17 @@ const AddFriend = () => {
     //     console.log("Current Link:", randomLinkInvitation);
     //  }, [randomLinkInvitation]);
 
+
     // const data = "add-friends/tmk3010-e5eaee39-819d-45b8-991f-de9a997fb4b4"
     // const extractedValue = data.split('/')[1].split('-')[0]; // "tmk3010"
     // console.log('====================================');
     // console.log(extractedValue);
     // console.log('====================================');
 
+
     //Constant
-    const MAX_PASSWORD_CHAR = 16
-    const MIN_PASSWORD_CHAR = 8
+    const MAX_PASSWORD_CHAR = 16//Maximum password length
+    const MIN_PASSWORD_CHAR = 8//Minimum password length
 
     const handleToggleEditPassword = () => {
         // Check password length when changing the mode

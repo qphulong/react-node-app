@@ -1,4 +1,4 @@
-import './addFriendTest.scss'
+import './addFriendTest.scss'// Path: client/src/pages/addfriendtest/AddFriendTest.js
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 const AddFriendTest = () => {
     return (
