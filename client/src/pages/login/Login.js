@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 const Login = () => {
   const navigate = useNavigate();
   const { currentUser, login, logout } = useContext(AuthContext);
@@ -30,6 +31,7 @@ const Login = () => {
     } catch (err) {
       console.log("====================================");
       console.log(err);
+      toast.error("Please input again!!!")
       console.log("====================================");
     }
   };
@@ -69,6 +71,7 @@ const Login = () => {
           </form>
         </div>
       </div>
+      {<ToastContainer/>}
     </div>
   );
 };

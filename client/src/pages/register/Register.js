@@ -30,6 +30,7 @@ const Register = () => {
                 console.log("Sign-up successful!");
                 setCheckToast(true)
                 toast.success('Registration successful!!!'); // Display success toast
+                window.location.reload()    
                 // Handle successful sign-up, e.g., redirect to a different page or display a success message.
               } 
          }
