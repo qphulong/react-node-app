@@ -193,7 +193,7 @@ const Friends = () => {
         <div className='friends'>
             <div className="title">
                 <p>Friends</p>
-                <AutoAwesomeIcon style={{ fontSize: 20 }} />
+                <AutoAwesomeIcon style={{ fontSize: 20 }} className='logo' />
             </div>
             <div className="content-container">
                 {FriendsInfo && FriendsInfo.friends.map((friend) => (

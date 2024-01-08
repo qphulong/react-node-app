@@ -6,7 +6,8 @@ $themes: (
     bgSoft: #f6f3f3,
     textColorSoft: #555,
     border: lightgray,
-    hovercomment: darken(white, 5%)
+    hovercomment: darken(white, 5%),
+    backgroundChange: white,
   ),
   dark: (
     textColor: whitesmoke,
@@ -15,7 +16,8 @@ $themes: (
     bgSoft: #333,
     textColorSoft: lightgray,
     border: #444,
-    hovercomment: #383838
+    hovercomment: #383838,
+    backgroundChange: #6d6d6d,
   ),
 );
 

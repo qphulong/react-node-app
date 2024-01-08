@@ -8,7 +8,6 @@
 
 .friends {
     @include themify($themes) {
-        height: 100%;
         padding: 10px 50px 20px 50px;
         background-color: themed("bgSoft");
 
@@ -21,6 +20,10 @@
                 color: themed("textColor");
                 font-size: 26px;
                 font-weight: 700;
+            }
+
+            .logo{
+                color: themed("textColor");
             }
         }
 
@@ -79,6 +82,10 @@
 
                     button:hover {
                         background-color: darken(themed("logo"), 5%);
+                    }
+
+                    .logo{
+                        color: themed('textColor')
                     }
 
                     .extra-function-dropdown {
