@@ -42,14 +42,14 @@ app.use("/user", userRoute); //for route user
 
 app.use("/storage", storageRoute); //storage route
 
-// // Have Node serve the files for our built React app
-// app.use(express.static(path.resolve(__dirname, "../client/build")));
+// Have Node serve the files for our built React app
+app.use(express.static(path.resolve(__dirname, "../client/build")));
 
-// // All other GET requests not handled before will return our React app
-// app.get("*", (req, res) => {
-//   res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
-// });
-// //long
+// All other GET requests not handled before will return our React app
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
+});
+//long
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
