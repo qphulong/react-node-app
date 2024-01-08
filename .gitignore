@@ -1,6 +1,5 @@
 .env
 **/.env.me 
-**/.env.vault
 *.png
 *.jpeg
 *.jpg
