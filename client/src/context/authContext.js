@@ -16,7 +16,7 @@ export const AuthContextProvider = ({ children }) => {
   // parse a JSON string and convert it into a JavaScript object.
   const login = async (inputs) => {
     console.log(inputs);
-    const res = await axios.post("http://localhost:3001/user/sign-in", inputs);
+    const res = await axios.post(window.backendURL + "/user/sign-in", inputs);
 
     // console.log(res.data);
 
@@ -35,33 +35,39 @@ export const AuthContextProvider = ({ children }) => {
 
   //===================================================================================================================
   //profile image
-  const [profileImage,setProfileImage] = useState("https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
+  const [profileImage, setProfileImage] = useState(
+    "https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  );
   const fetchProfileImage = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/user/profile-pic/${currentUser.userId}`);
-  
+      const response = await axios.get(
+        window.backendURL + `/user/profile-pic/${currentUser.userId}`
+      );
+
       if (response.status === 200) {
-        const imageFilename = response.data
+        const imageFilename = response.data;
         // console.log('====================================');
         // console.log(imageFilename.profilePic);
         // console.log('====================================');
-        setProfileImage(imageFilename.profilePic)
+        setProfileImage(imageFilename.profilePic);
       } else {
         console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
       }
     } catch (error) {
-      console.error('Error fetching profile image:', error.message);
+      console.error("Error fetching profile image:", error.message);
     }
   };
   useEffect(() => {
     fetchProfileImage();
-  },[])
+  }, []);
   //===================================================================================================================
-  
+
   //===================================================================================================================
-  
+
   return (
-    <AuthContext.Provider value={{ currentUser, login, logout,profileImage,setProfileImage}}>
+    <AuthContext.Provider
+      value={{ currentUser, login, logout, profileImage, setProfileImage }}
+    >
       {children}
     </AuthContext.Provider>
   );

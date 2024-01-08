@@ -43,7 +43,7 @@ exports.signIn = async (req, res) => {
   const userId = req.body.userId;
   const password = req.body.password;
 
-  await userFunctions.signIn(global.currentUser, userId, password, res);
+  await userFunctions.signIn(window.currentUser, userId, password, res);
 };
 
 exports.changePassword = (req, res) => {
@@ -86,7 +86,7 @@ exports.acceptFriendLink = async (req, res) => {
   const userId = parts[0]; // Get the user ID, assuming it's always at index 2
   console.log("UserId" + userId);
 
-  const friendId = req.body.friendId; 
+  const friendId = req.body.friendId;
   const linkPassword = req.body.linkPassword;
 
   parts.shift();

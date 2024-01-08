@@ -10,30 +10,32 @@ import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import Comments from "../comments/Comments.js";
 import { useEffect, useState, useRef, useContext } from "react";
 import ImageSlider from "./ImageSlider.js";
-import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
+import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
-import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
+import ReportGmailerrorredIcon from "@mui/icons-material/ReportGmailerrorred";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { AuthContext } from "../../context/authContext.js";
-import moment from 'moment';
+import moment from "moment";
 const Post = ({ post }) => {
-  const items = [{
-    id: 1,
-    value: "Report",
-    icon: <ReportGmailerrorredIcon style={{ fontSize: 25 }} />
-  }]
+  const items = [
+    {
+      id: 1,
+      value: "Report",
+      icon: <ReportGmailerrorredIcon style={{ fontSize: 25 }} />,
+    },
+  ];
   //comment state
   const [commentOpen, setCommentOpen] = useState(false);
-  const [like, setLike] = useState(false)
-  const { currentUser, profileImage } = useContext(AuthContext)
+  const [like, setLike] = useState(false);
+  const { currentUser, profileImage } = useContext(AuthContext);
 
   //Dropdown state
   const [openDropdown, setOpenDropdown] = useState(false);
   const toggleDropdown = () => setOpenDropdown(!openDropdown);
   const dropdownRef = useRef(null);
   const postRef = useRef(null);
-  const [clickReport, setClickReport] = useState(0)
+  const [clickReport, setClickReport] = useState(0);
   const [timestamp, setTimestamp] = useState(post.createdAt); // Replace with your actual API data
   useEffect(() => {
     const formattedTimestamp = moment(timestamp).fromNow(); // Use moment.js to format
@@ -47,16 +49,14 @@ const Post = ({ post }) => {
   const [images, setImages] = useState([]); //images = [image1, image2, ...
   //retrieve images from API
   const getImages = async (postId) => {
-    const response = await fetch(
-      `http://localhost:3001/posts/images/${postId}`
-    );
+    const response = await fetch(window.backendURL + `/posts/images/${postId}`);
     const data = await response.json();
     // console.log(data);
     setImages(data.images);
 
     for (let i = 0; i < data.images.length; i++) {
       const image = data.images[i];
-      data.images[i] = `http://localhost:3001/${image}`;
+      data.images[i] = window.backendURL + `/${image}`;
     }
   };
 
@@ -72,9 +72,9 @@ const Post = ({ post }) => {
   function handleOnClick(item) {
     if (item.id == 1) {
       console.log("100");
-      setClickReport(clickReport + 1)
-      toast.success("Report successfully!")
-      setOpenDropdown(!openDropdown)
+      setClickReport(clickReport + 1);
+      toast.success("Report successfully!");
+      setOpenDropdown(!openDropdown);
     }
   }
   //================================================================================
@@ -82,27 +82,26 @@ const Post = ({ post }) => {
   //Report post
   const ReportPost = async () => {
     try {
-      const response = await axios.post(`http://localhost:3001/posts/report`, {
-        postId: post.postId
+      const response = await axios.post(window.backendURL + `/posts/report`, {
+        postId: post.postId,
       });
 
       if (response.status === 200) {
-        console.log('====================================');
+        console.log("====================================");
         console.log("Report successfully");
-        console.log('====================================');
-      }
-      else {
+        console.log("====================================");
+      } else {
         console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
       }
     } catch (error) {
-      console.error('Error:', error.message);
+      console.error("Error:", error.message);
     }
   };
 
   useEffect(() => {
     // ReportPost()
-    if (clickReport > 0) ReportPost()
-  }, [clickReport])
+    if (clickReport > 0) ReportPost();
+  }, [clickReport]);
   //================================================================================
   //================================================================================
   const handleClick = (e) => {
@@ -137,12 +136,16 @@ const Post = ({ post }) => {
   //========================================================================
   //get comment quantity
   // Queries
-  const { isLoading, error, data: cmts } = useQuery({
+  const {
+    isLoading,
+    error,
+    data: cmts,
+  } = useQuery({
     queryKey: ["cmts", post.postId],
     queryFn: async () => {
       try {
         return await axios
-          .get(`http://localhost:3001/posts/comments/${post.postId}`)
+          .get(window.backendURL + `/posts/comments/${post.postId}`)
           .then((response) => {
             return response.data;
           });
@@ -160,7 +163,7 @@ const Post = ({ post }) => {
     queryFn: async () => {
       try {
         return await axios
-          .get(`http://localhost:3001/posts/${post.postId}/likes`)
+          .get(window.backendURL + `/posts/${post.postId}/likes`)
           .then((response) => {
             return response.data;
           });
@@ -175,10 +178,10 @@ const Post = ({ post }) => {
   // Mutations
   const mutationLike = useMutation({
     mutationFn: () => {
-      return axios.put("http://localhost:3001/posts/likes", {
+      return axios.put(window.backendURL + "/posts/likes", {
         userId: currentUser.userId,
-        postId: post.postId
-      })
+        postId: post.postId,
+      });
     },
     onSuccess: (response) => {
       console.log("Newly added like:", response.data);
@@ -186,30 +189,32 @@ const Post = ({ post }) => {
       queryClient.invalidateQueries({ queryKey: ["likes", post.postId] });
     },
     onError: (error, variables, context) => {
-      console.log('====================================');
+      console.log("====================================");
       console.log("error");
-      console.log('====================================');
+      console.log("====================================");
     },
     onSettled: (data, error, variables, context) => {
-      console.log('====================================');
+      console.log("====================================");
       console.log("settle");
-      console.log('====================================');
+      console.log("====================================");
     },
   });
 
   const handleClickLike = (e) => {
     e.preventDefault();
     fetchLikeData();
-    mutationLike.mutate({ user: currentUser.userId, postId: post.postId })
-  }
+    mutationLike.mutate({ user: currentUser.userId, postId: post.postId });
+  };
 
   async function fetchLikeData() {
     try {
-      const response = await axios.get(`http://localhost:3001/posts/${currentUser.userId}/${post.postId}/liked`);
+      const response = await axios.get(
+        window.backendURL + `/posts/${currentUser.userId}/${post.postId}/liked`
+      );
       // console.log(dem);
       // console.log(response.data.liked);
-      if (dem == 0) setLike(response.data.liked)
-      else setLike(!response.data.liked)
+      if (dem == 0) setLike(response.data.liked);
+      else setLike(!response.data.liked);
     } catch (err) {
       console.log(err);
     }
@@ -217,37 +222,38 @@ const Post = ({ post }) => {
   //==============================================================================================================
   //===================================================================================================================
   //profile image
-  const [profileImageNewsFeed, setProfileImageNewsFeed] = useState("https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
+  const [profileImageNewsFeed, setProfileImageNewsFeed] = useState(
+    "https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  );
   const fetchProfileImage = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:3001/user/profile-pic/${userId}`);
+      const response = await axios.get(
+        window.backendURL + `/user/profile-pic/${userId}`
+      );
 
       if (response.status === 200) {
-        const imageFilename = response.data
+        const imageFilename = response.data;
         // console.log('====================================');
         // console.log(imageFilename.profilePic);
         // console.log('====================================');
-        setProfileImageNewsFeed(imageFilename.profilePic)
+        setProfileImageNewsFeed(imageFilename.profilePic);
       } else {
         console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
       }
     } catch (error) {
-      console.error('Error fetching profile image:', error.message);
+      console.error("Error fetching profile image:", error.message);
     }
   };
   //===================================================================================================================
-  const [dem, setDem] = useState(0)
+  const [dem, setDem] = useState(0);
   // Call the async function
   useEffect(() => {
     fetchLikeData();
-    fetchProfileImage(post.user.userId)
-    setDem(dem + 1)
-  }, [])
+    fetchProfileImage(post.user.userId);
+    setDem(dem + 1);
+  }, []);
 
   ///=====================================================================================================================
-
-
-
 
   // console.log('====================================');
   // console.log(likes?.likes);
@@ -261,10 +267,7 @@ const Post = ({ post }) => {
       <div className="container">
         <div className="user">
           <div className="userInfo">
-            <img
-              src={profileImageNewsFeed}
-              atl=""
-            />
+            <img src={profileImageNewsFeed} atl="" />
             <div className="details">
               <Link
                 to={`/profile/${post.user.userId}`}
@@ -276,7 +279,11 @@ const Post = ({ post }) => {
             </div>
           </div>
           <div className="extra-functions">
-            <MoreHorizIcon onClick={() => toggleDropdown(!openDropdown)} ref={postRef} className="icon" />
+            <MoreHorizIcon
+              onClick={() => toggleDropdown(!openDropdown)}
+              ref={postRef}
+              className="icon"
+            />
 
             <div className="dropdown" ref={dropdownRef}>
               {openDropdown && (
@@ -297,23 +304,30 @@ const Post = ({ post }) => {
 
         <div className="content">
           <p>{post.content}</p>
-          {images &&
-            <section className='slider'>
+          {images && (
+            <section className="slider">
               {images.map((image, index) => {
                 return (
                   <div
-                    className={index === current ? 'slide active' : 'slide'}
+                    className={index === current ? "slide active" : "slide"}
                     key={index}
                   >
-                    <FaArrowAltCircleLeft className='left-arrow' onClick={prevSlide} />
-                    <FaArrowAltCircleRight className='right-arrow' onClick={nextSlide} />
+                    <FaArrowAltCircleLeft
+                      className="left-arrow"
+                      onClick={prevSlide}
+                    />
+                    <FaArrowAltCircleRight
+                      className="right-arrow"
+                      onClick={nextSlide}
+                    />
                     {index === current && (
-                      <img src={image} alt='travel image' className='image' />
+                      <img src={image} alt="travel image" className="image" />
                     )}
                   </div>
                 );
               })}
-            </section>}
+            </section>
+          )}
 
           {/* {images.map((image, index) => (
             <img
@@ -330,34 +344,24 @@ const Post = ({ post }) => {
             <div className="item" onClick={handleClickLike}>
               {like ? <FavoriteIcon /> : <FavoriteBorderIcon />}
               {likes?.likes || 0}
-              
             </div>
-            <div className="tool-tip">
-                Like
-              </div>
+            <div className="tool-tip">Like</div>
           </div>
 
           <div className="item-container">
             <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
               <CommentOutlinedIcon />
               {cmts?.comments.length}
-              
             </div>
-            <div className="tool-tip">
-                Comment
-              </div>
+            <div className="tool-tip">Comment</div>
           </div>
 
           <div className="item-container">
             <div className="item">
               <ShareOutlinedIcon />
-              
             </div>
-            <div className="tool-tip">
-                Share
-              </div>
+            <div className="tool-tip">Share</div>
           </div>
-
         </div>
 
         {/* <div

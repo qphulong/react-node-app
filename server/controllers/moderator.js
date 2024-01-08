@@ -1,4 +1,3 @@
-const moderatorFunctions = require("../functions/moderator");
 const PostForModeration = require("../models/postForModeration");
 
 exports.working = async (req, res) => {

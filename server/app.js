@@ -12,12 +12,8 @@ const postFunctions = require("./functions/post");
 const userRoute = require("./routes/user");
 const storageRoute = require("./routes/storage");
 
-const { CurrentUser } = require("./appController");
-
 var app = express();
 app.use("/public", express.static("public")); //static folder for public
-
-global.currentUser = new CurrentUser(); //current user
 
 app.use(cors());
 
@@ -26,6 +22,9 @@ const PORT = process.env.PORT || 3001;
 
 const uri = process.env.DB_URI; //get uri from env (for secure reasons)
 mongoose.connect(uri).then(() => console.log("Connected to db"));
+
+const isProd = process.env.PROD === "true" || false;
+global.backendURL = isProd ? process.env.PROD_URL : "http://localhost:3001";
 
 mongoose.connection.on("error", (err) => {
   console.log(`DB connection error: ${err.messsage}`);
@@ -54,5 +53,3 @@ app.get("*", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
-
-module.exports = { currentUser };

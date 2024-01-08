@@ -33,6 +33,7 @@ const Login = () => {
       console.log(err);
       toast.error("Please input again!!!")
       console.log("====================================");
+      setInputs("")
     }
   };
 
@@ -60,12 +61,14 @@ const Login = () => {
               placeholder="Username"
               name="username"
               onChange={handleChange}
+              value={inputs.username}
             />
             <input
               type="password"
               placeholder="Password"
               name="password"
               onChange={handleChange}
+              value={inputs.password}
             />
             <button onClick={handleLogin}>Login</button>
           </form>

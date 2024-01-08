@@ -14,11 +14,11 @@ const Posts = () => {
     error,
     data: posts,
   } = useQuery({
-    queryKey: ["posts",currentUser.userId],
+    queryKey: ["posts", currentUser.userId],
     queryFn: () => {
       try {
         return axios
-          .get(`http://localhost:3001/posts/${currentUser.userId}`)
+          .get(window.backendURL + `/posts/${currentUser.userId}`)
           .then((response) => {
             // console.log(response.data);
             return response.data;
