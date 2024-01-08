@@ -56,6 +56,10 @@ const ChangePassword = () => {
 
     const handleClickChangePassword = async () => {
         var isError = false;
+        if(oldPassword === newPassword){
+            toast.error("OldPassword must be different from newpassword")
+            isError = true;
+        }
         if (!passwordsMatch()) {
             toast.error('Passwords do not match');
             isError = true;
@@ -65,6 +69,9 @@ const ChangePassword = () => {
             isError = true;
         }
         if (isError){
+            setOldPassword("")
+            setNewPassword("")
+            setConfirmPassword("")
             return;
         }
         try {
@@ -79,6 +86,9 @@ const ChangePassword = () => {
                 console.log("update successfully");
                 console.log('====================================');
                 toast.success('Change password successfully'); // Display success toast
+                setOldPassword("")
+                setNewPassword("")
+                setConfirmPassword("")
             }
             else {
                 console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
@@ -106,6 +116,7 @@ const ChangePassword = () => {
                 console.log("update successfully");
                 console.log('====================================');
                 toast.success('Add social link successfully'); // Display success toast
+                setSocialLink("")
             }
             else {
                 console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
@@ -124,15 +135,15 @@ const ChangePassword = () => {
                 <div className="change-password-container">
                     <div className="password-container">
                         <p>Old password</p>
-                        <input className="input-old-password" type="password" onChange={handleOldPasswordChange} />
+                        <input className="input-old-password" type="password" onChange={handleOldPasswordChange} value={oldPassword}/>
                     </div>
                     <div className="password-container">
                         <p>New password</p>
-                        <input className="input-new-password" type="password" onChange={handleNewPasswordChange} />
+                        <input className="input-new-password" type="password" onChange={handleNewPasswordChange} value={newPassword}/>
                     </div>
                     <div className="password-container">
                         <p>Confirm password</p>
-                        <input className="input-confirm-password" type="password" onChange={handleConfirmPasswordChange} />
+                        <input className="input-confirm-password" type="password" onChange={handleConfirmPasswordChange} value={confirmPassword}/>
                     </div>
                     <div>
                         <button className="change-button" onClick={handleClickChangePassword}>Change password</button>
@@ -147,7 +158,7 @@ const ChangePassword = () => {
                 <div className="change-social-link-container">
                     <div className="link-container">
                         <FaLink style={{ fontSize: 30 }} className="logo" />
-                        <input className="input-facebook-link" type="text" onChange={handleSocialLinkChange} />
+                        <input className="input-facebook-link" type="text" onChange={handleSocialLinkChange} value={socialLink}/>
                     </div>
                     <div>
                         <button className="change-button" onClick={handleChangeSocialLink}>Add social link</button>
