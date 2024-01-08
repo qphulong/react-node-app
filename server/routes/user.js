@@ -196,31 +196,10 @@ router.get("/:userId", (req, res) => {
         return res.status(404).json({ error: "User not found" });
       }
 
-      // // check if current user is friends with the userId
-      // const friends = user.friends.map((friend) => friend._id);
-
-      // User.find({ _id: { $in: friends } })
-      //   .select("userId")
-      //   .then((users) => {
-      //     var isFriend = false;
-      //     for (let i = 0; i < users.length; i++) {
-      //       if (users[i].userId == currentUser.userId) {
-      //         isFriend = true;
-      //         break;
-      //       }
-      //     }
-      //     if (isFriend == false) {
-      //       res
-      //         .status(400)
-      //         .json({ error: "You are not friends with this user" });
-      //       return;
-      //     }
-      //   })
-      //   .catch((err) => res.status(500).json({ error: err }));
-
       // find all posts of the user with matching userId
       Post.find({ user: user })
         .select("user.userId content postId createdAt") // Only select the userId field
+        .sort({ createdAt: -1 }) // Sort by createdAt descending
         .then((posts) => {
           res.json({ user: user.userId, posts: posts });
         })

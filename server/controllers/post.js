@@ -87,11 +87,13 @@ exports.getPosts = (req, res) => {
       // add current user's id to the list of friends
       friends.push(user._id);
 
+      console.log(friends);
+
       Post.find({ user: { $in: friends } })
         // add user field (reference to the User schema) and select userId field (of the referenced schema)
         .populate("user", "userId")
         .select("user content postId createdAt likes") // Specify the fields you want to retrieve from Post //sort by time
-        .sort({ createdAt: -1 })
+        .sort({ createdAt: -1 }) // sorted by time (newest first)
         .then((posts) => {
           res.json({ posts: posts });
         })
