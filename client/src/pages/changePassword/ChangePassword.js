@@ -56,6 +56,10 @@ const ChangePassword = () => {
 
     const handleClickChangePassword = async () => {
         var isError = false;
+        if(oldPassword === newPassword){
+            toast.error("OldPassword must be different from newpassword")
+            isError = true;
+        }
         if (!passwordsMatch()) {
             toast.error('Passwords do not match');
             isError = true;
@@ -106,6 +110,7 @@ const ChangePassword = () => {
                 console.log("update successfully");
                 console.log('====================================');
                 toast.success('Add social link successfully'); // Display success toast
+                setSocialLink("")
             }
             else {
                 console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
@@ -147,7 +152,7 @@ const ChangePassword = () => {
                 <div className="change-social-link-container">
                     <div className="link-container">
                         <FaLink style={{ fontSize: 30 }} className="logo" />
-                        <input className="input-facebook-link" type="text" onChange={handleSocialLinkChange} />
+                        <input className="input-facebook-link" type="text" onChange={handleSocialLinkChange} value={socialLink}/>
                     </div>
                     <div>
                         <button className="change-button" onClick={handleChangeSocialLink}>Add social link</button>
