@@ -140,7 +140,7 @@ const Share = () => {
           <img src={profileImage} alt="" />
           <textarea
             type="text"
-            placeholder={`What's on your mind ${currentUser.name}?`}
+            placeholder={`What's on your mind?`}
             onChange={(e) => handleContentChange(e)}
             value={desc}
           />

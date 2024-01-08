@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Invitations = () => {
 
@@ -52,8 +53,16 @@ const Invitations = () => {
 
     if(userIdAdd === currentUser.userId){
         return (
-            <div>
-                You are currentuser so you can't access this link
+            <div className='current-user-page'>
+                <div className='notification'>
+                    You cannot be here. You cannot access to the invitation from yourself. <br></br>
+                    Please go back to your previous page.
+                </div>
+                <div className='back-container'>
+                    {/* <Link to={"/"}> */}
+                        <LogoutIcon style={{fontSize: 60, color: 'white'}}/>
+                    {/* </Link> */}
+                </div>
             </div>
         )
     }
@@ -66,8 +75,17 @@ const Invitations = () => {
 
     if(isFriendOrNot === true){
         return (
-            <div>
-                You are already friend with {userIdAdd}
+            <div className='already-friend-page'>
+                <div className='notification'>
+                    You cannot be here. You are already friend with {userIdAdd} <br></br>
+                    Please go back to your previous page.
+                </div>
+                <div className='back-container'>
+                    <div>
+                        <LogoutIcon style={{fontSize: 60, color: 'white'}}/>
+                    </div>
+                </div>
+                
             </div>
         )
     }
