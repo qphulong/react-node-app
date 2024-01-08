@@ -21,8 +21,18 @@ import ChangePassword from "./pages/changePassword/ChangePassword";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AddFriendTest from "./pages/addfriendtest/AddFriendTest";
 import AdminPage from "./pages/adminpage/AdminPage";
+import axios from "axios";
+
 function App() {
   window.backendURL = "https://only-me-web.onrender.com";
+
+  const instance = axios.create({
+    withCredentials: true,
+  });
+
+  instance.get(window.backendURL + "/user");
+  instance.get(window.backendURL + "/posts");
+  instance.get(window.backendURL + "/storage");
 
   //Protected Route
   const { currentUser } = useContext(AuthContext);
