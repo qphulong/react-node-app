@@ -132,6 +132,10 @@ exports.getImages = async (req, res) => {
 
   const post = await Post.findOne({ postId: postId });
 
+  if (!post) {
+    return res.status(404).json({ message: "Post not found" });
+  }
+
   res.json({ images: post.retrieveImages() });
 };
 
