@@ -16,6 +16,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import moment from 'moment';
+import { ToastContainer, toast } from "react-toastify";
 
 const PostProfile = ({ imageProfile, userId, post }) => {
   const { currentUser, login, logout } = useContext(AuthContext);
@@ -122,6 +123,7 @@ const PostProfile = ({ imageProfile, userId, post }) => {
       // Invalidate and refetch
       setIsEditing(false);
       queryClient.invalidateQueries({ queryKey: ["postsProfile", currentUser.userId] });
+      toast.success("Edit post successfully!!!")
     },
   });
 
@@ -146,6 +148,7 @@ const PostProfile = ({ imageProfile, userId, post }) => {
     onSuccess: () => {
       console.log("Delete post success!");
       queryClient.invalidateQueries({ queryKey: ["postsProfile", currentUser.userId] });
+      toast.success("Delete post successfully!!!")
     },
     onError: (error) => {
       console.error("Delete post error:", error);
@@ -387,6 +390,7 @@ const PostProfile = ({ imageProfile, userId, post }) => {
         </div> */}
         {commentOpen && <Comments postId={post.postId} />}
       </div>
+      {<ToastContainer/>}
     </div>
   );
 };
