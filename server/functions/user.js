@@ -35,14 +35,21 @@ async function changePassword(userId, newPassword, confirmPassword, res) {
   console.log("isPasswordValid" + isPasswordValid);
 
   if (isPasswordValid) {
-    //check if the existing password is the same as the confirm password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(newPassword, salt); //hash password next
+    const oldNewPassword = await bcrypt.compare(confirmPassword, newPassword);
+    if (oldNewPassword) {
+      res.status(400).send("New password must be different from old password!");
+      return;
+    } else {
+      //check if the existing password is the same as the confirm password
+      const salt = await bcrypt.genSalt(10);
 
-    await User.updateOne({ userId: userId }, { password: hashedPassword });
-    res.send("Password updated successfully!");
+      const hashedPassword = await bcrypt.hash(newPassword, salt); //hash password next
+
+      await User.updateOne({ userId: userId }, { password: hashedPassword });
+      res.send("Password updated successfully!");
+    }
   } else {
-    res.status(400).send("Password doesn't match!");
+    res.status(400).send("Password doesn't match with old password!");
   }
 }
 
