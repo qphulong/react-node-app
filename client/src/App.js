@@ -22,7 +22,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AddFriendTest from "./pages/addfriendtest/AddFriendTest";
 import AdminPage from "./pages/adminpage/AdminPage";
 function App() {
-  window.backendURL = "https://only-me-web.onrender.com/";
+  window.backendURL = "https://only-me-web.onrender.com";
 
   //Protected Route
   const { currentUser } = useContext(AuthContext);
