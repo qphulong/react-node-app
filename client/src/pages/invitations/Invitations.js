@@ -6,7 +6,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-import { Link, useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 const Invitations = () => {
@@ -60,9 +59,9 @@ const Invitations = () => {
                     Please go back to your previous page.
                 </div>
                 <div className='back-container'>
-                    <Link to={"/"}>
+                    {/* <Link to={"/"}> */}
                         <LogoutIcon style={{fontSize: 60, color: 'white'}}/>
-                    </Link>
+                    {/* </Link> */}
                 </div>
             </div>
         )
@@ -82,9 +81,9 @@ const Invitations = () => {
                     Please go back to your previous page.
                 </div>
                 <div className='back-container'>
-                    <Link to={"/"}>
+                    <div>
                         <LogoutIcon style={{fontSize: 60, color: 'white'}}/>
-                    </Link>
+                    </div>
                 </div>
                 
             </div>
