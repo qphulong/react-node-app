@@ -1,121 +1,127 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital@0;1&family=Lily+Script+One&display=swap');
-
+@import "../../style.scss";
 .post-moderator {
-    -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
-    -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
-    box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
-    border-radius: 20px;
-    background-color: white;
-    color: black;
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    padding: 30px 40px;
-    gap: 0;
-    margin: 30px 100px;
-
-    .middle-part {
+    @include themify($themes) {
+        -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+        -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+        box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+        border-radius: 20px;
+        background-color: themed('bg');
+        color: themed('textColor');
+        margin-top: 20px;
         display: flex;
         flex-direction: column;
-        margin-top: 15px;
-        font-size: 20px;
-        gap: 20px;
-        span{
-            font-weight: 300;
-            font-family: "Lily Script One", sans-serif;
-        }
-        .content {
-            .post-content{
-                margin-top: 20px;
-                background-color: #f6f3f3;
-                padding: 30px 30px;
-                border-radius: 12px;
-            }
-        }
+        padding: 30px 40px;
+        gap: 0;
+        margin: 30px 100px;
 
-        .slider {
-            position: relative;
+        .middle-part {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-            .left-arrow {
-                position: absolute;
-                top: 50%;
-                left: 32px;
-                font-size: 3rem;
-                color: #000;
-                z-index: 10;
+            flex-direction: column;
+            margin-top: 15px;
+            font-size: 20px;
+            gap: 20px;
+
+            span {
+                font-weight: 300;
+                font-family: "Lily Script One", sans-serif;
+            }
+
+            .content {
+                .post-content {
+                    margin-top: 20px;
+                    background-color: themed('bgSoft');
+                    padding: 30px 30px;
+                    border-radius: 12px;
+                }
+            }
+
+            .slider {
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 20px;
+
+                .left-arrow {
+                    position: absolute;
+                    top: 50%;
+                    left: 32px;
+                    font-size: 3rem;
+                    color: #000;
+                    z-index: 10;
+                    cursor: pointer;
+                    user-select: none;
+                }
+
+                .right-arrow {
+                    position: absolute;
+                    top: 50%;
+                    right: 32px;
+                    font-size: 3rem;
+                    color: #000;
+                    z-index: 10;
+                    cursor: pointer;
+                    user-select: none;
+                }
+
+                img {
+                    width: 100%;
+                    max-height: 500px;
+                    object-fit: cover;
+                    margin-top: 5px;
+                    border-radius: 20px;
+                }
+
+                .slide {
+                    opacity: 0;
+                    transition-duration: 1s ease;
+                }
+
+                .slide.active {
+                    opacity: 1;
+                    transition-duration: 1s;
+                    transform: scale(1);
+                }
+
+            }
+        }
+
+        .bottom-part {
+            margin-top: 10px;
+            display: flex;
+            justify-content: end;
+            gap: 10px;
+
+            .accept-btn {
+                border-radius: 12px;
+                border: none;
+                padding: 10px 20px;
+                background-color: themed("logo");
+                font-size: 20px;
+                color: themed("bg");
                 cursor: pointer;
-                user-select: none;
             }
 
-            .right-arrow {
-                position: absolute;
-                top: 50%;
-                right: 32px;
-                font-size: 3rem;
-                color: #000;
-                z-index: 10;
-                cursor: pointer;
-                user-select: none;
+            .reject-btn {
+                border-radius: 12px;
+                border: none;
+                padding: 10px 20px;
+                background-color: themed('textColorSoft');
+                font-size: 20px;
+                color: themed('bg');
             }
 
-            img {
-                width: 100%;
-                max-height: 500px;
-                object-fit: cover;
-                margin-top: 5px;
-                border-radius: 20px;
+            .accept-btn:hover,
+            .reject-btn:hover {
+                filter: brightness(90%);
             }
 
-            .slide {
-                opacity: 0;
-                transition-duration: 1s ease;
+            .accept-btn:active,
+            .reject-btn:active {
+                filter: brightness(80%);
             }
-
-            .slide.active {
-                opacity: 1;
-                transition-duration: 1s;
-                transform: scale(1);
-            }
-
         }
     }
 
-    .bottom-part {
-        margin-top: 10px;
-        display: flex;
-        justify-content: end;
-        gap: 10px;
-
-        .accept-btn {
-            border-radius: 6px;
-            border: none;
-            padding: 10px 20px;
-            background-color: green;
-            font-size: 20px;
-            color: white;
-            cursor: pointer;
-        }
-
-        .reject-btn {
-            border-radius: 6px;
-            border: none;
-            padding: 10px 20px;
-            background-color: red;
-            font-size: 20px;
-            color: white;
-        }
-
-        .accept-btn:hover,
-        .reject-btn:hover {
-            filter: brightness(90%);
-        }
-
-        .accept-btn:active,
-        .reject-btn:active {
-            filter: brightness(80%);
-        }
-    }
 }
