@@ -12,12 +12,8 @@ const postFunctions = require("./functions/post");
 const userRoute = require("./routes/user");
 const storageRoute = require("./routes/storage");
 
-const { CurrentUser } = require("./appController");
-
 var app = express();
 app.use("/public", express.static("public")); //static folder for public
-
-window.currentUser = new CurrentUser(); //current user
 
 app.use(cors());
 
@@ -54,5 +50,3 @@ app.get("*", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
-
-module.exports = { currentUser };

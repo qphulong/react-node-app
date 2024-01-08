@@ -2,7 +2,7 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const uuid = require("uuid");
 
-async function signIn(currentUser, userId, inputPassword, res) {
+async function signIn(userId, inputPassword, res) {
   const user = await User.findOne({ userId: userId });
 
   if (!user) {
