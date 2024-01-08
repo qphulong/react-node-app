@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/authContext';
 import axios from 'axios';
 import UserElement from './UserElement';
-
+import Datetime from '../../components/datetime/Datetime';
 const AdminPage = () => {
     const { currentUser, login, logout, profileImage } = useContext(AuthContext);
     const navigate = useNavigate()
@@ -94,11 +94,11 @@ const AdminPage = () => {
                 </div>
                 <div className='middle'>
                     <div className='datetime'>
-                        Date
+                        {<Datetime/>}
                     </div>
                 </div>
                 <div className='right'>
-                    <LogoutIcon style={{ fontSize: 40 }} onClick={handleLogOut}/>
+                    <LogoutIcon style={{ fontSize: 40 ,cursor: "pointer"}} onClick={handleLogOut}/>
                 </div>
             </div>
             <div className='list-user'>

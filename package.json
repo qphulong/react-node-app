@@ -2,7 +2,8 @@
     "name": "react-node-app",
     "version": "1.0.0",
     "description": "",
-    "main": "app.js",
+    "main": "server/app.js",
+    "bin": "server/app.js",
     "scripts": {
         "server": "cd server && npx nodemon app.js",
         "client": "cd client && npm start",
