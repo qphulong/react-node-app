@@ -69,6 +69,9 @@ const ChangePassword = () => {
             isError = true;
         }
         if (isError){
+            setOldPassword("")
+            setNewPassword("")
+            setConfirmPassword("")
             return;
         }
         try {
@@ -83,6 +86,9 @@ const ChangePassword = () => {
                 console.log("update successfully");
                 console.log('====================================');
                 toast.success('Change password successfully'); // Display success toast
+                setOldPassword("")
+                setNewPassword("")
+                setConfirmPassword("")
             }
             else {
                 console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
@@ -129,15 +135,15 @@ const ChangePassword = () => {
                 <div className="change-password-container">
                     <div className="password-container">
                         <p>Old password</p>
-                        <input className="input-old-password" type="password" onChange={handleOldPasswordChange} />
+                        <input className="input-old-password" type="password" onChange={handleOldPasswordChange} value={oldPassword}/>
                     </div>
                     <div className="password-container">
                         <p>New password</p>
-                        <input className="input-new-password" type="password" onChange={handleNewPasswordChange} />
+                        <input className="input-new-password" type="password" onChange={handleNewPasswordChange} value={newPassword}/>
                     </div>
                     <div className="password-container">
                         <p>Confirm password</p>
-                        <input className="input-confirm-password" type="password" onChange={handleConfirmPasswordChange} />
+                        <input className="input-confirm-password" type="password" onChange={handleConfirmPasswordChange} value={confirmPassword}/>
                     </div>
                     <div>
                         <button className="change-button" onClick={handleClickChangePassword}>Change password</button>
