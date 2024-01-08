@@ -7,13 +7,6 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 1,
-    maxlength: 300,
-    validate: {
-      validator: function (content) {
-        return content.length <= 1000;
-      },
-      message: "Too many characters. Maximum allowed is 1000.",
-    },
   },
 
   postId: {

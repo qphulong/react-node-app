@@ -62,7 +62,7 @@ exports.createPost = async (req, res) => {
     .catch((error) => {
       // Handle error if the post couldn't be saved
       res.status(500).json({
-        error: "Error saving the post to the database",
+        error: error.message,
       });
       console.error(error);
     });

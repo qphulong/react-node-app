@@ -4,7 +4,7 @@ import "./share.scss";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 import { useState } from "react";
-import { toast, ToastContainer } from "react-toastify"
+import { toast, ToastContainer } from "react-toastify";
 import {
   useMutation,
   QueryClient,
@@ -25,37 +25,34 @@ const Share = () => {
 
   // console.log(file)
 
-
   const handleContentChange = (e) => {
-    const content = e.target.value.split(" ")
-    setDescWord(content.length)
+    const content = e.target.value.split(" ");
+    setDescWord(content.length);
 
     if (content.length <= MAX_WORD) {
-      setDesc(e.target.value)
+      setDesc(e.target.value);
 
-      if (e.target.value == '') {
-        setDescWord(0)
+      if (e.target.value == "") {
+        setDescWord(0);
       }
-    }
-    else {
-      setDesc(e.target.value.slice(0, desc.length))
+    } else {
+      setDesc(e.target.value.slice(0, desc.length));
       toast.warning("Your content is out of limit", {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
-  }
+  };
 
   const handleImageLimit = (e) => {
-
-    setFile(e.target.files)
-    const imageLength = e.target.files.length
+    setFile(e.target.files);
+    const imageLength = e.target.files.length;
     if (imageLength > MAX_IMAGE) {
       toast.warning("Your image is out of limit", {
         position: toast.POSITION.TOP_RIGHT,
       });
-      setFile(null)
+      setFile(null);
     }
-  }
+  };
 
   // =================================================================================================
   // =================================================================================================
@@ -83,7 +80,9 @@ const Share = () => {
       setFile(null);
 
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["posts", currentUser.userId] });
+      queryClient.invalidateQueries({
+        queryKey: ["posts", currentUser.userId],
+      });
     },
   });
 
@@ -92,7 +91,6 @@ const Share = () => {
     mutation.mutate({ desc });
     // print
     // console.log(newPostId);
-
   };
 
   //upload
@@ -139,15 +137,11 @@ const Share = () => {
     <div className="share">
       <div className="container">
         <div className="top">
-          <img
-            src={profileImage}
-            alt=""
-          />
+          <img src={profileImage} alt="" />
           <textarea
             type="text"
             placeholder={`What's on your mind ${currentUser.name}?`}
-            onChange={(e) => handleContentChange(e)
-            }
+            onChange={(e) => handleContentChange(e)}
             value={desc}
           />
         </div>
@@ -183,7 +177,6 @@ const Share = () => {
                   <button onClick={() => removeImage(index)}>X</button>
                   <div className="tool-tip">Remove</div>
                 </div>
-
               </div>
             ))}
         </div>

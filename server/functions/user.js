@@ -216,7 +216,6 @@ async function linkAddFriend(userId, linkPassword, friendId, linkId, res) {
   if (isPasswordValid) {
     // Add friend if the authentication password is correct
     var message = await addFriend(userId, friendId);
-    console.log(message);
     return res.send(message);
   } else {
     res.status(403).send("Incorrect authentication password");

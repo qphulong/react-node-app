@@ -3,7 +3,7 @@ const Comment = require("../models/comment");
 const User = require("../models/user");
 const PostForModeration = require("../models/postForModeration");
 
-const MAX_LETTERS_LIMIT = 900;
+const MAX_LETTERS_LIMIT = 300;
 
 //find a specific post and a like to it
 async function addLike(postId) {
