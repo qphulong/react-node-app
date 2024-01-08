@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/authContext';
 import axios from 'axios';
 import UserElement from './UserElement';
+
 const AdminPage = () => {
     const { currentUser, login, logout, profileImage } = useContext(AuthContext);
     const navigate = useNavigate()
@@ -72,7 +73,7 @@ const AdminPage = () => {
                     You cannot be here. Only Admins have permission to access this page. <br></br>
                     Please go back to your previous page.
                 </div>
-                <div className='back-container'>
+                <div className='back-container'>    
                     <LogoutIcon style={{fontSize: 60, color: 'white'}}/>
                 </div>
             </div>
@@ -91,7 +92,7 @@ const AdminPage = () => {
                 </div>
                 <div className='middle'>
                     <div className='datetime'>
-                        14th December 2023
+                        Date
                     </div>
                 </div>
                 <div className='right'>
