@@ -1,6 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital@0;1&family=Lily+Script+One&display=swap');
 @import "../../style.scss";
 
+.not-moderator-page {
+    @include themify($themes) {
+        display: flex;
+        flex-direction: column;
+        padding: 60px;
+        text-align: center;
+        align-items: center;
+        gap: 30px;
+        background-color: themed('bgSoft');
+        color: themed('textColor');
+        min-height: 1000px;
+
+        .notification {
+            font-size: 36px;
+        }
+
+        .back-container {
+            width: 80px;
+            display: flex;
+            flex-direction: row;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            background-color: themed("logo");
+            color: themed("bg");
+            border: none;
+            border-radius: 20px;
+            padding: 20px 30px;
+            cursor: pointer;
+        }
+
+        .back-container:hover {
+            filter: brightness(90%);
+        }
+
+
+        .back-container:active {
+            filter: brightness(80%);
+        }
+    }
+}
+
 .moderator-page {
     @include themify($themes) {
         font-family: 'Josefin Sans', sans-serif;

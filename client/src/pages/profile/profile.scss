@@ -9,6 +9,9 @@
         text-align: center;
         align-items: center;
         gap: 30px;
+        background-color: themed('bgSoft');
+        color: themed('textColor');
+        min-height: 1000px;
 
         .notification {
             font-size: 36px;
@@ -37,9 +40,8 @@
         .back-container:active {
             filter: brightness(80%);
         }
-    }
 
-}
+}}
 
 .profile {
     @include themify($themes) {
