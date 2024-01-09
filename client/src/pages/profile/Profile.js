@@ -141,8 +141,8 @@ const Profile = () => {
         formData
       );
 
-      if (response.status === 200) {
-        console.log("oke 200");
+      if (response.status == 200) {
+        console.log(response.data);
         return response.data;
       } else {
         console.error("Upload failed:", response.statusText);

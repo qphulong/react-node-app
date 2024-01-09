@@ -280,7 +280,7 @@ router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
         user.profilePic = global.backendURL + `/${savedPath}`;
         user.save();
 
-        res.send(user.profilePic);
+        res.status(200).send(user.profilePic);
       })
       .catch((err) => console.log(err));
   });
