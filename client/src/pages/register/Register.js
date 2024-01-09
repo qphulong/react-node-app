@@ -4,12 +4,29 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { set } from "mongoose";
 const Register = () => {
   const [checkToast, setCheckToast] = useState(false);
   const [inputs, setInputs] = useState({
     username: "",
     password: "",
   });
+
+  //Limit digit here
+  //Constant
+  const MAX_PASSWORD_CHAR = 16;
+  const MIN_PASSWORD_CHAR = 8;
+
+  const validatePassword = (password) => {
+    if (
+      password.length < MIN_PASSWORD_CHAR ||
+      password.length > MAX_PASSWORD_CHAR
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   const handleChange = (e) => {
     setInputs((preV) => ({ ...preV, [e.target.name]: e.target.value }));
@@ -18,7 +35,16 @@ const Register = () => {
   // console.log(inputs);
   // console.log('====================================');
   const handleClick = async (e) => {
+    console.log(validatePassword(inputs.password));
+    if (!validatePassword(inputs.password)) {
+      toast.error(
+        `Password must be between ${MIN_PASSWORD_CHAR} and ${MAX_PASSWORD_CHAR} characters`
+      );
+      return;
+    }
+
     e.preventDefault();
+
     try {
       const response = await axios.post(window.backendURL + "/user/sign-up", {
         userId: inputs.username,

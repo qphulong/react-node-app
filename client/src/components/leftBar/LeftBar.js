@@ -13,6 +13,29 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 const LeftBar = () => {
   const { currentUser, profileImage } = useContext(AuthContext);
+  const [isModerator, setIsModerator] = useState(false);
+
+  const fetchModeratorStatus = async () => {
+    try {
+      const response = await axios.get(
+        window.backendURL + `/user/${currentUser.userId}/moderator`
+      );
+
+      console.log(response.data);
+
+      if (response.status === 200) {
+        setIsModerator(response.data.isModerator);
+      } else {
+        console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
+      }
+    } catch (error) {
+      console.error("Error fetching moderator status:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchModeratorStatus();
+  }, []);
   //===================================================================================================================
   //profile image
   // const [profileImage,setProfileImage] = useState("https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
@@ -79,13 +102,15 @@ const LeftBar = () => {
             <span>Change</span>
           </Link>
 
-          <Link to={"/moderators"} className="item">
-            <AddModeratorOutlinedIcon
-              style={{ fontSize: 30 }}
-              className="logo"
-            />
-            <span>Moderators</span>
-          </Link>
+          {isModerator && (
+            <Link to={"/moderators"} className="item">
+              <AddModeratorOutlinedIcon
+                style={{ fontSize: 30 }}
+                className="logo"
+              />
+              <span>Moderators</span>
+            </Link>
+          )}
         </div>
         <div className="button-container">
           <Link to="/">

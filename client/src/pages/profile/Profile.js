@@ -53,12 +53,15 @@ const Profile = () => {
         window.backendURL + `/user/profile-pic/${userId}`
       );
 
+      console.log(response);
+
       if (response.status === 200) {
-        const imageFilename = response.data;
+        // get the image filename from res.json
+        const imageFilename = await response.data.profilePic;
         // console.log('====================================');
         // console.log(imageFilename.profilePic);
         // console.log('====================================');
-        setProfileImageFriend(imageFilename.profilePic);
+        setProfileImageFriend(imageFilename);
       } else {
         console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
       }
@@ -138,8 +141,10 @@ const Profile = () => {
         formData
       );
 
-      if (response.status === 200) {
-        console.log("oke 200");
+      console.log(response.data);
+
+      if (response.status == 200) {
+        console.log(response.data);
         return response.data;
       } else {
         console.error("Upload failed:", response.statusText);
@@ -151,12 +156,14 @@ const Profile = () => {
     }
   };
 
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     if (isOwnProfile) {
       const file = event.target.files[0];
-      if (file) upload(file);
-      setImage(file);
-      window.location.reload();
+      if (file) {
+        await upload(file);
+        setImage(file);
+        window.location.reload();
+      }
     }
   };
 

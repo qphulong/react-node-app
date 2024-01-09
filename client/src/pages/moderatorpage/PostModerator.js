@@ -3,6 +3,7 @@ import "./postModerator.scss";
 import { useEffect, useState, useRef, useContext } from "react";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const PostModerator = ({ postIdModerator }) => {
   // const [images, setImages] = useState(['https://pbs.twimg.com/media/GCfJUsAaEAATOon?format=jpg&name=4096x4096',
@@ -11,7 +12,7 @@ const PostModerator = ({ postIdModerator }) => {
   const [images, setImages] = useState([]);
   const [current, setCurrent] = useState(0);
   const [currentPost, setCurrentPost] = useState(null);
-  const length = images.length;
+  const length = images?.length;
 
   const nextSlide = () => {
     setCurrent((prevCurrent) =>
@@ -31,11 +32,13 @@ const PostModerator = ({ postIdModerator }) => {
     const response = await fetch(window.backendURL + `/posts/images/${postId}`);
     const data = await response.json();
     // console.log(data);
-    setImages(data.images);
+    if (data && data.images) {
+      setImages(data.images);
 
-    for (let i = 0; i < data.images.length; i++) {
-      const image = data.images[i];
-      data.images[i] = window.backendURL + `/${image}`;
+      for (let i = 0; i < data.images.length; i++) {
+        const image = data.images[i];
+        data.images[i] = window.backendURL + `/${image}`;
+      }
     }
   };
 
@@ -84,6 +87,7 @@ const PostModerator = ({ postIdModerator }) => {
       console.log("====================================");
       console.log("Keep: ", postIdModerator);
       console.log("====================================");
+      toast.success("Post kept successfully!");
     },
   });
   const handleKeep = (e) => {
@@ -106,6 +110,7 @@ const PostModerator = ({ postIdModerator }) => {
       console.log("====================================");
       console.log("Remove: ", postIdModerator);
       console.log("====================================");
+      toast.success("Post removed successfully!");
     },
   });
   const handleRemove = (e) => {
@@ -162,6 +167,7 @@ const PostModerator = ({ postIdModerator }) => {
           Remove
         </button>
       </div>
+      {<ToastContainer />}
     </div>
   );
 };

@@ -3,7 +3,6 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import "./share.scss";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
-import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import {
   useMutation,
@@ -11,10 +10,11 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import axios from "axios";
+import React, { useState } from "react";
 const Share = () => {
   const { currentUser, profileImage } = useContext(AuthContext);
   const [file, setFile] = useState(null);
-  const [desc, setDesc] = useState("");
+  const [desc, setDesc] = useState(``);
 
   // =================================================================================================
   // =================================================================================================
@@ -23,7 +23,14 @@ const Share = () => {
   const MAX_IMAGE = 5;
   const [descWord, setDescWord] = useState(0);
 
-  // console.log(file)
+  const handleKeyPress = (e) => {
+    if (e.key == "Enter") {
+      console.log("enter");
+      e.preventDefault();
+      setDesc(desc + `\n`);
+      console.log(desc);
+    }
+  };
 
   const handleContentChange = (e) => {
     const content = e.target.value.split(" ");
@@ -41,6 +48,8 @@ const Share = () => {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
+
+    console.log(desc);
   };
 
   const handleImageLimit = (e) => {
@@ -67,13 +76,15 @@ const Share = () => {
         userId: currentUser.userId,
       });
     },
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       // Access the newly created post object here
       // setNewPost(response.data);
 
       // const newPostObject = response.data;
       // console.log("Newly added post:", typeof(newPostObject));
-      if (file) upload(response.data);
+      if (file) {
+        await upload(response.data);
+      }
 
       // add more
       setDesc("");
@@ -111,7 +122,9 @@ const Share = () => {
         formData
       );
 
-      if (response.status === 200) {
+      console.log(response.data);
+
+      if (response.status == 200) {
         // console.log("oke 200");
         return response.data;
       } else {
@@ -142,6 +155,7 @@ const Share = () => {
             type="text"
             placeholder={`What's on your mind?`}
             onChange={(e) => handleContentChange(e)}
+            onKeyDown={(e) => handleKeyPress(e)}
             value={desc}
           />
         </div>

@@ -56,7 +56,7 @@ router.get("/:userId/moderator", async (req, res) => {
 
   console.log(user);
 
-  return res.json({ isModerator: user.isContentModerator });
+  return res.status(200).json({ isModerator: user.isContentModerator });
 });
 
 router.post(
@@ -98,6 +98,9 @@ router.get("/moderator", async (req, res) => {
 
   for (const post of posts) {
     const curentPost = await Post.findOne({ _id: post.post });
+    if (!curentPost) {
+      continue;
+    }
     postIds.add(curentPost.postId);
   }
 
@@ -228,6 +231,7 @@ const upload = multer({ storage: storage });
 
 router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
   const uploadedFile = req.files;
+  console.log(uploadedFile[0].filename);
 
   if (!uploadedFile || uploadedFile.length === 0) {
     return res.status(400).send("No files were uploaded.");
@@ -252,38 +256,30 @@ router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
     if (files.length > 1) {
       // file different from the one just uploaded
       const existingFile = files.filter(
-        (file) => file !== uploadedFile[0].filename
+        (file) => file != uploadedFile[0].filename
       );
 
       for (const file of existingFile) {
         fs.unlink(path.join(folderPath, file), (err) => {
           if (err) {
-            return res.status(500).send("Error deleting existing profile pic.");
+            return res.status(500).send(err);
           }
         });
       }
     }
 
+    console.log(uploadedFile[0].filename);
+
     // Remove the leading ".." from the beginning of the path
     const savedPath = `public/profile_pics/${userId}/${uploadedFile[0].filename}`;
 
-    // Save the new profile pic
-    const user = User.findOne({ userId: userId })
-      .then((user) => {
-        if (!user) {
-          return res.status(400).send("User not found.");
-        }
+    console.log(savedPath);
 
-        user.profilePic = global.backendURL + `/${savedPath}`;
-        user.save();
-
-        res.send(user.profilePic);
-      })
-      .catch((err) => console.log(err));
+    res.status(200).send(global.backendURL + `/${savedPath}`);
   });
 });
 
-router.get("/profile-pic/:userId", (req, res) => {
+router.get("/profile-pic/:userId", async (req, res) => {
   const userId = req.params.userId;
   const folderPath = path.join(`./public/profile_pics/${userId}`);
 
@@ -295,7 +291,11 @@ router.get("/profile-pic/:userId", (req, res) => {
       return res.status(500).send(err);
     }
 
-    res.json({ profilePic: global.backendURL + `/${folderPath}/${files[0]}` });
+    console.log(global.backendURL + `/${folderPath}/${files[0]}`);
+
+    return res
+      .status(200)
+      .json({ profilePic: global.backendURL + `/${folderPath}/${files[0]}` });
   });
 });
 
@@ -368,5 +368,7 @@ router.get("/friends/check/:userId/:friendId", async (req, res) => {
       res.status(500).json({ error: err });
     });
 });
+
+router.use("/profile-pic", express.static("profile_pics"));
 
 module.exports = router;
