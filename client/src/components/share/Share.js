@@ -26,6 +26,12 @@ const Share = () => {
   // console.log(file)
 
   const handleContentChange = (e) => {
+    if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") {
+      e.preventDefault();
+      setDesc(desc + "\n");
+      return;
+    }
+
     const content = e.target.value.split(" ");
     setDescWord(content.length);
 
@@ -139,6 +145,7 @@ const Share = () => {
         <div className="top">
           <img src={profileImage} alt="" />
           <textarea
+            tagName="TEXTAREA"
             type="text"
             placeholder={`What's on your mind?`}
             onChange={(e) => handleContentChange(e)}
