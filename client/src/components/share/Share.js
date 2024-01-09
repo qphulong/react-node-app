@@ -26,7 +26,7 @@ const Share = () => {
   // console.log(file)
 
   const handleContentChange = (e) => {
-    if (e.key === "Enter" && e.target.tagName == "TEXTAREA") {
+    if (e.key == "Enter") {
       console.log("enter");
       e.preventDefault();
       setDesc(desc + "\n");
