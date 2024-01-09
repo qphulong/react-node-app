@@ -53,8 +53,11 @@ const Profile = () => {
         window.backendURL + `/user/profile-pic/${userId}`
       );
 
+      console.log(response);
+
       if (response.status === 200) {
-        const imageFilename = response.data;
+        // get the image filename from res.json
+        const imageFilename = await response.data.profilePic;
         // console.log('====================================');
         // console.log(imageFilename.profilePic);
         // console.log('====================================');
