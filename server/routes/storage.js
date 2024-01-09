@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// POST endpoint for uploading files
+// upload files
 router.post("/upload/:postId", upload.array("images", 5), (req, res) => {
   const uploadedFiles = req.files;
 

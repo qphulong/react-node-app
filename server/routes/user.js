@@ -376,4 +376,6 @@ router.get("/friends/check/:userId/:friendId", async (req, res) => {
     });
 });
 
+router.use("/profile-pic", express.static("uploads"));
+
 module.exports = router;
