@@ -76,13 +76,15 @@ const Share = () => {
         userId: currentUser.userId,
       });
     },
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       // Access the newly created post object here
       // setNewPost(response.data);
 
       // const newPostObject = response.data;
       // console.log("Newly added post:", typeof(newPostObject));
-      if (file) upload(response.data);
+      if (file) {
+        await upload(response.data);
+      }
 
       // add more
       setDesc("");
