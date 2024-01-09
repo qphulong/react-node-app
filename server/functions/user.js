@@ -3,7 +3,9 @@ const bcrypt = require("bcryptjs");
 const uuid = require("uuid");
 
 async function signIn(userId, inputPassword, res) {
-  const user = await User.findOne({ userId: userId });
+  const user = await User.findOne({
+    userId: { $regex: new RegExp(`^${userId}$`, "i") },
+  });
 
   if (!user) {
     res.status(404).send("User not found");
@@ -26,7 +28,9 @@ async function signIn(userId, inputPassword, res) {
 }
 
 async function changePassword(userId, newPassword, confirmPassword, res) {
-  const user = await User.findOne({ userId: userId }); //find user
+  const user = await User.findOne({
+    userId: { $regex: new RegExp(`^${userId}$`, "i") },
+  });
 
   if (!user) {
     res.status(404).send("User not found!");
@@ -64,7 +68,9 @@ async function removeFriend(userId, friendId, res) {
     return;
   }
 
-  const user = await User.findOne({ userId: userId }); //find user
+  const user = await User.findOne({
+    userId: { $regex: new RegExp(`^${userId}$`, "i") },
+  });
 
   if (!user) {
     res.status(400).send("User not found!");
@@ -103,7 +109,9 @@ async function addFriend(userId, friendId, res) {
     return;
   }
 
-  const user = await User.findOne({ userId: userId }); //find user
+  const user = await User.findOne({
+    userId: { $regex: new RegExp(`^${userId}$`, "i") },
+  });
 
   if (!user) {
     if (res) {

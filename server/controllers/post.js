@@ -18,7 +18,9 @@ exports.getPost = (req, res) => {
 exports.createPost = async (req, res) => {
   const { content, deleteAfter, userId, postId } = req.body; //get from json
 
-  const user = await User.findOne({ userId: userId }); //find user
+  const user = await User.findOne({
+    userId: { $regex: new RegExp(`^${userId}$`, "i") },
+  });
   if (!user) {
     return res.status(400).json({ message: "User not found" });
   }
