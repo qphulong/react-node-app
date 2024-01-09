@@ -230,28 +230,53 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
-  const userId = req.params.userId;
-  const uploadedFiles = req.files;
+  const uploadedFile = req.files;
+  console.log(uploadedFile[0].filename);
 
-  if (
-    !uploadedFiles ||
-    uploadedFiles.length === 0 ||
-    uploadedFiles.length > 1
-  ) {
+  if (!uploadedFile || uploadedFile.length === 0) {
     return res.status(400).send("No files were uploaded.");
   }
 
-  if (!uploadedFiles[0].mimetype.startsWith("image")) {
+  // only allow pictures
+  if (!uploadedFile[0].mimetype.startsWith("image")) {
     return res.status(400).send("Only image files are allowed.");
   }
 
-  const folderPath = path.join(`./public/profile-pics/${userId}`);
-  const files = fs.readdirSync(folderPath);
+  const userId = req.params.userId;
+  const folderPath = path.join(`./public/profile_pics/${userId}`);
 
-  const n = files.length;
+  // Check if the folder already contains a profile pic
+  fs.readdir(folderPath, (err, files) => {
+    if (err) {
+      return res.status(500).send("Error reading folder.");
+    }
 
-  // send path of image to client
-  res.status(200).send(global.backendURL + `/${folderPath}/${files[n - 1]}`);
+    // Remove existing profile pic if found
+    console.log(files.length);
+    if (files.length > 1) {
+      // file different from the one just uploaded
+      const existingFile = files.filter(
+        (file) => file != uploadedFile[0].filename
+      );
+
+      for (const file of existingFile) {
+        fs.unlink(path.join(folderPath, file), (err) => {
+          if (err) {
+            return res.status(500).send(err);
+          }
+        });
+      }
+    }
+
+    console.log(uploadedFile[0].filename);
+
+    // Remove the leading ".." from the beginning of the path
+    const savedPath = `public/profile_pics/${userId}/${uploadedFile[0].filename}`;
+
+    console.log(savedPath);
+
+    res.status(200).send(global.backendURL + `/${savedPath}`);
+  });
 });
 
 router.get("/profile-pic/:userId", async (req, res) => {
@@ -266,15 +291,11 @@ router.get("/profile-pic/:userId", async (req, res) => {
       return res.status(500).send(err);
     }
 
-    const n = files.length;
+    console.log(global.backendURL + `/${folderPath}/${files[0]}`);
 
-    console.log(files);
-
-    console.log(global.backendURL + `/${folderPath}/${files[n - 1]}`);
-
-    return res.status(200).json({
-      profilePic: global.backendURL + `/${folderPath}/${files[n - 1]}`,
-    });
+    return res
+      .status(200)
+      .json({ profilePic: global.backendURL + `/${folderPath}/${files[0]}` });
   });
 });
 
