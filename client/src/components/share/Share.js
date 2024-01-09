@@ -3,7 +3,6 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import "./share.scss";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
-import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import {
   useMutation,
@@ -11,6 +10,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import axios from "axios";
+import React, { useState } from "react";
 const Share = () => {
   const { currentUser, profileImage } = useContext(AuthContext);
   const [file, setFile] = useState(null);
@@ -23,15 +23,15 @@ const Share = () => {
   const MAX_IMAGE = 5;
   const [descWord, setDescWord] = useState(0);
 
-  // console.log(file)
-
-  const handleContentChange = (e) => {
+  const handleKeyPress = (e) => {
     if (e.key == "Enter") {
       console.log("enter");
       e.preventDefault();
       setDesc(desc + "\n");
     }
+  };
 
+  const handleContentChange = (e) => {
     const content = e.target.value.split(" ");
     setDescWord(content.length);
 
@@ -145,10 +145,10 @@ const Share = () => {
         <div className="top">
           <img src={profileImage} alt="" />
           <textarea
-            tagName="TEXTAREA"
             type="text"
             placeholder={`What's on your mind?`}
             onChange={(e) => handleContentChange(e)}
+            onKeyDown={(e) => handleKeyPress(e)}
             value={desc}
           />
         </div>
