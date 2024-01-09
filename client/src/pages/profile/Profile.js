@@ -156,12 +156,14 @@ const Profile = () => {
     }
   };
 
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     if (isOwnProfile) {
       const file = event.target.files[0];
-      if (file) upload(file);
-      setImage(file);
-      window.location.reload();
+      if (file) {
+        await upload(file);
+        setImage(file);
+        window.location.reload();
+      }
     }
   };
 
