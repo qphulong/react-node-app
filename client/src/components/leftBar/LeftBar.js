@@ -11,7 +11,7 @@ import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import AddModeratorOutlinedIcon from "@mui/icons-material/AddModeratorOutlined";
 import axios from "axios";
 import { Link } from "react-router-dom";
-const LeftBar = async () => {
+const LeftBar = () => {
   const { currentUser, profileImage } = useContext(AuthContext);
   const [isModerator, setIsModerator] = useState(false);
 
