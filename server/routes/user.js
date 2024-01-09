@@ -261,7 +261,7 @@ router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
       for (const file of existingFile) {
         fs.unlink(path.join(folderPath, file), (err) => {
           if (err) {
-            return res.status(500).send("Error deleting existing profile pic.");
+            return res.status(500).send(err);
           }
         });
       }

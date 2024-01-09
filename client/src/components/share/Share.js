@@ -120,7 +120,9 @@ const Share = () => {
         formData
       );
 
-      if (response.status === 200) {
+      console.log(response.data);
+
+      if (response.status == 200) {
         // console.log("oke 200");
         return response.data;
       } else {
