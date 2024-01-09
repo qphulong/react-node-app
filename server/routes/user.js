@@ -245,14 +245,13 @@ router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
     res.status(400).send("Only image files are allowed.");
   }
 
-  const folderPath = path.join(`./public/uploads/profile-pics/${userId}`);
+  const folderPath = path.join(`./public/profile-pics/${userId}`);
   const files = fs.readdirSync(folderPath);
-  if (files.length > 1) {
-    return res.status(400).send("Maximum 1 files allowed.");
-  }
+
+  const n = files.length;
 
   // send path of image to client
-  res.status(200).send(global.backendURL + `/${folderPath}/${files[0]}`);
+  res.status(200).send(global.backendURL + `/${folderPath}/${files[n - 1]}`);
 });
 
 router.get("/profile-pic/:userId", async (req, res) => {
