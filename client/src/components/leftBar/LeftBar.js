@@ -102,13 +102,15 @@ const LeftBar = () => {
             <span>Change</span>
           </Link>
 
-          <Link to={"/moderators"} className="item">
-            <AddModeratorOutlinedIcon
-              style={{ fontSize: 30 }}
-              className="logo"
-            />
-            {isModerator && <span>Moderators</span>}
-          </Link>
+          {isModerator && (
+            <Link to={"/moderators"} className="item">
+              <AddModeratorOutlinedIcon
+                style={{ fontSize: 30 }}
+                className="logo"
+              />
+              <span>Moderators</span>
+            </Link>
+          )}
         </div>
         <div className="button-container">
           <Link to="/">
