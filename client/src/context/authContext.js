@@ -48,7 +48,7 @@ export const AuthContextProvider = ({ children }) => {
 
       if (response.status === 200) {
         // get the image filename from res.json
-        const imageFilename = await response.data;
+        const imageFilename = await response.data.profilePic;
         // console.log('====================================');
         // console.log(imageFilename.profilePic);
         // console.log('====================================');
