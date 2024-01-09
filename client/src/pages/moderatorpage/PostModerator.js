@@ -11,7 +11,7 @@ const PostModerator = ({ postIdModerator }) => {
   const [images, setImages] = useState([]);
   const [current, setCurrent] = useState(0);
   const [currentPost, setCurrentPost] = useState(null);
-  const length = images.length;
+  const length = images?.length;
 
   const nextSlide = () => {
     setCurrent((prevCurrent) =>
@@ -31,11 +31,13 @@ const PostModerator = ({ postIdModerator }) => {
     const response = await fetch(window.backendURL + `/posts/images/${postId}`);
     const data = await response.json();
     // console.log(data);
-    setImages(data.images);
+    if (data && data.images) {
+      setImages(data.images);
 
-    for (let i = 0; i < data.images.length; i++) {
-      const image = data.images[i];
-      data.images[i] = window.backendURL + `/${image}`;
+      for (let i = 0; i < data.images.length; i++) {
+        const image = data.images[i];
+        data.images[i] = window.backendURL + `/${image}`;
+      }
     }
   };
 

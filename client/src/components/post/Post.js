@@ -52,11 +52,13 @@ const Post = ({ post }) => {
     const response = await fetch(window.backendURL + `/posts/images/${postId}`);
     const data = await response.json();
     // console.log(data);
-    setImages(data.images);
+    if (data && data.images) {
+      setImages(data.images);
 
-    for (let i = 0; i < data.images.length; i++) {
-      const image = data.images[i];
-      data.images[i] = window.backendURL + `/${image}`;
+      for (let i = 0; i < data.images.length; i++) {
+        const image = data.images[i];
+        data.images[i] = window.backendURL + `/${image}`;
+      }
     }
   };
 
@@ -83,7 +85,7 @@ const Post = ({ post }) => {
   const ReportPost = async () => {
     try {
       const response = await axios.post(window.backendURL + `/posts/report`, {
-        postId: post.postId,
+        postId: post?.postId,
       });
 
       if (response.status === 200) {
@@ -115,15 +117,15 @@ const Post = ({ post }) => {
   };
 
   useEffect(() => {
-    getImages(post.postId);
+    getImages(post?.postId);
   }, []);
 
   //console.log('====================================');
-  //console.log(post.postId);
+  //console.log(post?.postId);
   //console.log(images);
   //console.log('====================================');
   const [current, setCurrent] = useState(0);
-  const length = images.length;
+  const length = images?.length;
 
   const nextSlide = () => {
     setCurrent(current === length - 1 ? 0 : current + 1);
@@ -351,7 +353,7 @@ const Post = ({ post }) => {
           <div className="item-container">
             <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
               <CommentOutlinedIcon />
-              {cmts?.comments.length}
+              {cmts?.comments?.length}
             </div>
             <div className="tool-tip">Comment</div>
           </div>

@@ -236,11 +236,6 @@ router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
     return res.status(400).send("No files were uploaded.");
   }
 
-  // only allow pictures
-  if (!uploadedFile[0].mimetype.startsWith("image")) {
-    return res.status(400).send("Only image files are allowed.");
-  }
-
   const userId = req.params.userId;
   const folderPath = path.join(`./public/profile_pics/${userId}`);
 
@@ -298,7 +293,9 @@ router.get("/profile-pic/:userId", (req, res) => {
       return res.status(500).send(err);
     }
 
-    res.json({ profilePic: global.backendURL + `/${folderPath}/${files[0]}` });
+    res
+      .status(200)
+      .json({ profilePic: global.backendURL + `/${folderPath}/${files[0]}` });
   });
 });
 
