@@ -124,6 +124,7 @@ const Post = ({ post }) => {
   //console.log(post?.postId);
   //console.log(images);
   //console.log('====================================');
+  console.log(post.content);
   const [current, setCurrent] = useState(0);
   const length = images?.length;
 
