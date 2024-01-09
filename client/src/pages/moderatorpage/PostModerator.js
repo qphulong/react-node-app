@@ -3,6 +3,7 @@ import "./postModerator.scss";
 import { useEffect, useState, useRef, useContext } from "react";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const PostModerator = ({ postIdModerator }) => {
   // const [images, setImages] = useState(['https://pbs.twimg.com/media/GCfJUsAaEAATOon?format=jpg&name=4096x4096',
@@ -86,6 +87,7 @@ const PostModerator = ({ postIdModerator }) => {
       console.log("====================================");
       console.log("Keep: ", postIdModerator);
       console.log("====================================");
+      toast.success("Post kept successfully!");
     },
   });
   const handleKeep = (e) => {
@@ -108,6 +110,7 @@ const PostModerator = ({ postIdModerator }) => {
       console.log("====================================");
       console.log("Remove: ", postIdModerator);
       console.log("====================================");
+      toast.success("Post removed successfully!");
     },
   });
   const handleRemove = (e) => {
@@ -164,6 +167,7 @@ const PostModerator = ({ postIdModerator }) => {
           Remove
         </button>
       </div>
+      {<ToastContainer />}
     </div>
   );
 };
