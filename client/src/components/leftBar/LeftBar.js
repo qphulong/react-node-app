@@ -19,6 +19,8 @@ const LeftBar = async () => {
     window.backendURL + `/user/${currentUser.userId}/moderator`
   );
 
+  console.log(response.data);
+
   if (response.status === 200) {
     setIsModerator(response.data.isModerator);
   }
