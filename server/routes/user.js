@@ -242,7 +242,7 @@ router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
   }
 
   if (!uploadedFiles[0].mimetype.startsWith("image")) {
-    res.status(400).send("Only image files are allowed.");
+    return res.status(400).send("Only image files are allowed.");
   }
 
   const folderPath = path.join(`./public/profile-pics/${userId}`);
@@ -267,6 +267,8 @@ router.get("/profile-pic/:userId", async (req, res) => {
     }
 
     const n = files.length;
+
+    console.log(files);
 
     console.log(global.backendURL + `/${folderPath}/${files[n - 1]}`);
 
@@ -346,6 +348,6 @@ router.get("/friends/check/:userId/:friendId", async (req, res) => {
     });
 });
 
-router.use("/profile-pic", express.static("uploads"));
+router.use("/profile-pic", express.static("profile_pics"));
 
 module.exports = router;
