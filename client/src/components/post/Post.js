@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import Comments from "../comments/Comments.js";
-import { useEffect, useState, useRef, useContext } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import ImageSlider from "./ImageSlider.js";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
@@ -305,7 +305,16 @@ const Post = ({ post }) => {
         </div>
 
         <div className="content">
-          <p>{post.content}</p>
+          <p>
+            {post.content.includes("\n")
+              ? post.content.split("\n").map((line, index) => (
+                  <React.Fragment key={index}>
+                    {line}
+                    <br />
+                  </React.Fragment>
+                ))
+              : post.content}
+          </p>
           {images && (
             <section className="slider">
               {images.map((image, index) => {
