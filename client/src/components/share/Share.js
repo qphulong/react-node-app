@@ -14,7 +14,7 @@ import React, { useState } from "react";
 const Share = () => {
   const { currentUser, profileImage } = useContext(AuthContext);
   const [file, setFile] = useState(null);
-  const [desc, setDesc] = useState("");
+  const [desc, setDesc] = useState(``);
 
   // =================================================================================================
   // =================================================================================================
@@ -27,7 +27,8 @@ const Share = () => {
     if (e.key == "Enter") {
       console.log("enter");
       e.preventDefault();
-      setDesc(desc + "\n");
+      setDesc(desc + `\n`);
+      console.log(desc);
     }
   };
 
@@ -47,6 +48,8 @@ const Share = () => {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
+
+    console.log(desc);
   };
 
   const handleImageLimit = (e) => {
