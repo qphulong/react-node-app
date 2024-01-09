@@ -161,29 +161,6 @@ const AddFriend = () => {
           </div>
 
           <div className="invitation">
-            <div className="get-link">
-              <p>Give this link to someone you want to add</p>
-              <div className="random-link-container">
-                {randomLink ? (
-                  <span>{randomLink}</span>
-                ) : (
-                  <span className="default-link">Your link</span>
-                )}
-
-                <div>
-                  <ContentCopyIcon
-                    style={{ fontSize: 30 }}
-                    onClick={copyLinkToClipboard}
-                    className="logo"
-                  />
-                  <div className="tool-tip">Copy link</div>
-                </div>
-              </div>
-
-              <button className="get-link-button" onClick={handleRandomLink}>
-                Generate link
-              </button>
-            </div>
             <div className="get-password">
               <p>Password to add</p>
               <div className="password-container">
@@ -229,6 +206,30 @@ const AddFriend = () => {
                 onClick={handleToggleEditPassword}
               >
                 {isEditablePassword ? "Save" : "Change"}
+              </button>
+            </div>
+
+            <div className="get-link">
+              <p>Give this link to someone you want to add</p>
+              <div className="random-link-container">
+                {randomLink ? (
+                  <span>{randomLink}</span>
+                ) : (
+                  <span className="default-link">Your link</span>
+                )}
+
+                <div>
+                  <ContentCopyIcon
+                    style={{ fontSize: 30 }}
+                    onClick={copyLinkToClipboard}
+                    className="logo"
+                  />
+                  <div className="tool-tip">Copy link</div>
+                </div>
+              </div>
+
+              <button className="get-link-button" onClick={handleRandomLink}>
+                Generate link
               </button>
             </div>
           </div>
