@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "./register.scss";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { set } from "mongoose";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/authContext";
 const Register = () => {
+  const navigate = useNavigate();
+  const { currentUser, login, logout } = useContext(AuthContext);
   const [checkToast, setCheckToast] = useState(false);
   const [inputs, setInputs] = useState({
     username: "",
@@ -55,7 +59,22 @@ const Register = () => {
         console.log("Sign-up successful!");
         setCheckToast(true);
         toast.success("Registration successful!!!"); // Display success toast
-        window.location.reload();
+        try {
+          const res = await login({
+            userId: inputs.username,
+            password: inputs.password,
+          });
+
+          if (res) {
+            navigate("/");
+          }
+        } catch (err) {
+          console.log("====================================");
+          console.log(err);
+          toast.error("Please input again!!!");
+          console.log("====================================");
+          setInputs("");
+        }
         // Handle successful sign-up, e.g., redirect to a different page or display a success message.
       }
     } catch (err) {
