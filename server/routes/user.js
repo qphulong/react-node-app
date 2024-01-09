@@ -98,6 +98,9 @@ router.get("/moderator", async (req, res) => {
 
   for (const post of posts) {
     const curentPost = await Post.findOne({ _id: post.post });
+    if (!curentPost) {
+      continue;
+    }
     postIds.add(curentPost.postId);
   }
 
