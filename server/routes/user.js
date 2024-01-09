@@ -56,7 +56,7 @@ router.get("/:userId/moderator", async (req, res) => {
 
   console.log(user);
 
-  return res.json({ isModerator: user.isContentModerator });
+  return res.status(200).json({ isModerator: user.isContentModerator });
 });
 
 router.post(

@@ -11,8 +11,17 @@ import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import AddModeratorOutlinedIcon from "@mui/icons-material/AddModeratorOutlined";
 import axios from "axios";
 import { Link } from "react-router-dom";
-const LeftBar = () => {
+const LeftBar = async () => {
   const { currentUser, profileImage } = useContext(AuthContext);
+  const { isModerator, setIsModerator } = useState(false);
+
+  const response = await axios.get(
+    window.backendURL + `/user/${currentUser.userId}/moderator`
+  );
+
+  if (response.status === 200) {
+    setIsModerator(response.data.isModerator);
+  }
   //===================================================================================================================
   //profile image
   // const [profileImage,setProfileImage] = useState("https://images.pexels.com/photos/2783848/pexels-photo-2783848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
@@ -84,7 +93,7 @@ const LeftBar = () => {
               style={{ fontSize: 30 }}
               className="logo"
             />
-            <span>Moderators</span>
+            {isModerator && <span>Moderators</span>}
           </Link>
         </div>
         <div className="button-container">
