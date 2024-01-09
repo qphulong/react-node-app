@@ -61,7 +61,7 @@ const Profile = () => {
         // console.log('====================================');
         // console.log(imageFilename.profilePic);
         // console.log('====================================');
-        setProfileImageFriend(imageFilename.profilePic);
+        setProfileImageFriend(imageFilename);
       } else {
         console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
       }

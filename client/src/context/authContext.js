@@ -44,12 +44,15 @@ export const AuthContextProvider = ({ children }) => {
         window.backendURL + `/user/profile-pic/${currentUser.userId}`
       );
 
+      console.log(response);
+
       if (response.status === 200) {
-        const imageFilename = response.data;
+        // get the image filename from res.json
+        const imageFilename = await response.data;
         // console.log('====================================');
         // console.log(imageFilename.profilePic);
         // console.log('====================================');
-        setProfileImage(imageFilename.profilePic);
+        setProfileImage(imageFilename);
       } else {
         console.log(`Unexpected response: ${JSON.stringify(response.data)}`);
       }

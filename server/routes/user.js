@@ -286,7 +286,7 @@ router.post("/profile-pic/:userId", upload.array("image", 1), (req, res) => {
   });
 });
 
-router.get("/profile-pic/:userId", (req, res) => {
+router.get("/profile-pic/:userId", async (req, res) => {
   const userId = req.params.userId;
   const folderPath = path.join(`./public/profile_pics/${userId}`);
 
@@ -298,7 +298,9 @@ router.get("/profile-pic/:userId", (req, res) => {
       return res.status(500).send(err);
     }
 
-    res
+    console.log(global.backendURL + `/${folderPath}/${files[0]}`);
+
+    return res
       .status(200)
       .json({ profilePic: global.backendURL + `/${folderPath}/${files[0]}` });
   });
